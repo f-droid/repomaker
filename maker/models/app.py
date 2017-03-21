@@ -8,8 +8,8 @@ from django.forms import ModelForm
 from django.utils import timezone
 from fdroidserver import metadata
 
-from .repository import Repository
 from maker.storage import get_media_file_path_for_app
+from .repository import Repository
 
 
 class App(models.Model):
@@ -33,7 +33,7 @@ class App(models.Model):
         meta.WebSite = self.website
         meta.Summary = self.summary
         meta.Description = self.description
-#        app.added = self.added_date  # TODO can't compare offset-naive and offset-aware datetimes
+        meta.added = timezone.make_naive(self.added_date)
         meta.Categories = ["Test"]  # TODO categories
         return meta
 
