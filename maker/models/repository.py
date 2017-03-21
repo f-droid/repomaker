@@ -251,10 +251,10 @@ class RepositoryForm(ModelForm):
 
 
 class Options:
-    verbose = True
+    verbose = settings.DEBUG
+    pretty = settings.DEBUG
+    quiet = not settings.DEBUG
     clean = False
     nosign = False
-    pretty = True
     no_checksum = False
-    quiet = False
     identity_file = None
