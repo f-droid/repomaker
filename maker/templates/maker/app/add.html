@@ -1,0 +1,5 @@
+<form action="{% url 'add_app' repo_id %}" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Upload APK"/>
+</form>

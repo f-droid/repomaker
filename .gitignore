@@ -1,0 +1,6 @@
+db.sqlite3
+.idea
+*.pyc
+media/user_*
+localrepo
+credentials

@@ -1,0 +1,54 @@
+<h3>Repository</h3>
+
+<div style="float:right">
+    <img src="{{ repo.qrcode.url }}"/>
+</div>
+
+<ul>
+    <li><img src="{{ repo.icon.url }}"/></li>
+    <li>Name: {{ repo.name }}</li>
+    <li>Desc: {{ repo.description }}</li>
+    <li>URL: <a href="{{ repo.get_fingerprint_url }}">{{ repo.url }}</a></li>
+    <li>Fingerprint: {{ repo.fingerprint }}</li>
+    <li>Icon: {{ repo.icon }}</li>
+    <li>Created: {{ repo.created_date }}</li>
+    <li>Last Updated: {{ repo.last_updated_date }}</li>
+</ul>
+
+<p>
+    <a href="{% url 'index' %}">Back to repository list!</a>
+</p>
+
+{% if storages %}
+Storage
+<ul>
+    {% for storage in storages %}
+    <li>{{ storage }}</li>
+    {% endfor %}
+</ul>
+<p>
+    <a href="{% url 'publish' repo.id %}">Publish repository!</a>
+</p>
+{% else %}
+<p>No storage option given.</p>
+{% endif %}
+
+<h3>Apps</h3>
+
+{% if apps %}
+<ul>
+    {% for app in apps %}
+    <li>
+        <a href="{% url 'app' repo.id app.id %}">
+            <img src="{{ app.icon.url }}"/>
+            {{ app.name }}
+        </a> - {{ app.summary }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No apps in this repository.</p>
+{% endif %}
+
+<p>
+    <a href="{% url 'add_app' repo.id %}">Add app!</a>
+</p>

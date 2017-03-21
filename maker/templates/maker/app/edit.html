@@ -1,0 +1,14 @@
+<ul>
+    <li><img src="{{ app.icon.url }}"/></li>
+    <li>Package ID: {{app.package_id }} </li>
+    <li>Name: {{ app.name }}</li>
+    <li>Repo: <a href="{% url 'repo' app.repo.id %}">{{ app.repo }}</a></li>
+    <li>Added: {{ app.added_date }}</li>
+    <li>Last Updated: {{ app.last_updated_date }}</li>
+</ul>
+
+<form action="{% url 'edit_app' repo_id app.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit"/>
+</form>

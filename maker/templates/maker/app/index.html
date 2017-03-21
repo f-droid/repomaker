@@ -1,0 +1,45 @@
+<ul>
+    <li><img src="{{ app.icon.url }}"/></li>
+    <li>Package ID: {{app.package_id }} </li>
+    <li>Name: {{ app.name }}</li>
+    {% if app.summary %}
+        <li>Summary: {{ app.summary }}</li>
+    {% endif %}
+    {% if app.description %}
+        <li>Description: {{ app.description }}</li>
+    {% endif %}
+    {% if app.website %}
+        <li>Website: <a href="{{ app.website }}">{{ app.website }}</a></li>
+    {% endif %}
+    <li>Repo: <a href="{% url 'repo' app.repo.id %}">{{ app.repo }}</a></li>
+    <li>Added: {{ app.added_date }}</li>
+    <li>Last Updated: {{ app.last_updated_date }}</li>
+</ul>
+
+<p>
+    <a href="{% url 'edit_app' app.repo.id app.id %}">Edit App Details</a>
+</p>
+
+<p>
+    <a href="{% url 'delete_app' app.repo.id app.id %}">Delete App</a>
+</p>
+
+{% if apks %}
+<ul>
+    {% for apk in apks %}
+    <li>
+        <ul>
+            <li>File: {{ apk.file.name }}</li>
+            <li>Version Name: {{ apk.version_name }}</li>
+            <li>Version Code: {{ apk.version_code }}</li>
+            <li>Size: {{ apk.size }} Bytes</li>
+            <li>Signature: {{ apk.signature }}</li>
+            <li>Hash: {{ apk.hash }}</li>
+            <li>Hash Type: {{ apk.hash_type }}</li>
+        </ul>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<a href="{% url 'add_app' app.repo.id %}">Add Update</a>

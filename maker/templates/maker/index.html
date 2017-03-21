@@ -1,0 +1,10 @@
+{% if repositories %}
+<ul>
+    {% for repo in repositories %}
+    <li><a href="{% url 'repo' repo.id %}"><img src="{{ repo.icon.url }}"/> {{ repo.name }}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No repositories are available.</p>
+{% endif %}
+<a href="{% url 'add_repo' %}">Add new repository!</a>
