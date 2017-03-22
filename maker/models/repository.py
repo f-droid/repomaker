@@ -1,6 +1,5 @@
 import logging
 import os
-import pickle
 from io import BytesIO
 
 import qrcode
@@ -31,7 +30,7 @@ class Repository(models.Model):
     description = models.TextField()
     url = models.URLField(max_length=2048)
     icon = models.ImageField(upload_to=get_media_file_path, default=settings.REPO_DEFAULT_ICON)
-    # TODO cache pubkey here
+    public_key = models.TextField(blank=True)
     fingerprint = models.CharField(max_length=512, blank=True)
     qrcode = models.ImageField(upload_to=get_media_file_path, blank=True)
     created_date = models.DateTimeField(default=timezone.now)
@@ -66,8 +65,9 @@ class Repository(models.Model):
             'keystorepassfile': '.fdroid.keystorepass.txt',
             'keypass': "uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes=",  # common.genpassword(),
             'keypassfile': '.fdroid.keypass.txt',
-            # TODO 'repo_pubkey': repo.pubkey
         }
+        if self.public_key is not None:
+            config['repo_pubkey'] = self.public_key
         common.fill_config_defaults(config)
         common.config = config
         common.options = Options
@@ -100,13 +100,9 @@ class Repository(models.Model):
                 os.makedirs(icon_dir)
 
         # Generate keystore
-        if not os.path.exists(config['keystore']):
-            common.genkeystore(config)
-
-        # Extract and save fingerprint
-        # TODO improve upstream
-        update.extract_pubkey()
-        self.fingerprint = update.repo_pubkey_fingerprint.replace(" ", "")
+        pubkey, fingerprint = common.genkeystore(config)
+        self.public_key = pubkey
+        self.fingerprint = fingerprint.replace(" ", "")
 
         # Generate and save QR Code
         self.generate_qrcode()
@@ -167,14 +163,7 @@ class Repository(models.Model):
 
         # Gather information about all the apk files in the repo directory, using
         # cached data if possible.
-        apkcachefile = os.path.join('tmp', 'apkcache')
-        if os.path.exists(apkcachefile):
-            with open(apkcachefile, 'rb') as cf:
-                apkcache = pickle.load(cf, encoding='utf-8')
-            if apkcache.get("METADATA_VERSION") != update.METADATA_VERSION:
-                apkcache = {}
-        else:
-            apkcache = {}
+        apkcache = update.get_cache()
 
         # Scan all apks in the main repo
         knownapks = common.KnownApks()
@@ -192,39 +181,7 @@ class Repository(models.Model):
             except ObjectDoesNotExist:
                 logging.warning("App '%s' not found in database" % apk['packageName'])
 
-        # Some information from the apks needs to be applied up to the application
-        # level. When doing this, we use the info from the most recent version's apk.
-        # We deal with figuring out when the app was added and last updated at the
-        # same time.
-        for appid, app in apps.items():
-            bestver = UNSET_VERSION_CODE
-            for apk in apks:
-                if apk['packageName'] == appid:
-                    if apk['versionCode'] > bestver:
-                        bestver = apk['versionCode']
-                        bestapk = apk
-                    if 'added' in apk:
-                        if not app.added or apk['added'] < app.added:
-                            app.added = apk['added']
-                        if not app.lastUpdated or apk['added'] > app.lastUpdated:
-                            app.lastUpdated = apk['added']
-
-            if not app.added:
-                logging.debug("Don't know when " + appid + " was added")
-            if not app.lastUpdated:
-                logging.debug("Don't know when " + appid + " was last updated")
-
-            if bestver == UNSET_VERSION_CODE:
-                if app.Name is None:
-                    app.Name = app.AutoName or appid
-                app.icon = None
-                logging.debug("Application " + appid + " has no packages")
-            else:
-                if app.Name is None:
-                    app.Name = bestapk['name']
-                app.icon = bestapk['icon'] if 'icon' in bestapk else None
-                if app.CurrentVersionCode is None:
-                    app.CurrentVersionCode = str(bestver)
+        update.apply_info_from_latest_apk(apps, apks)
 
         # Sort the app list by name
         sortedids = sorted(apps.keys(), key=lambda app_id: apps[app_id].Name.upper())
@@ -235,12 +192,7 @@ class Repository(models.Model):
 
         # Update cache if it changed
         if cachechanged:
-            cache_path = os.path.dirname(apkcachefile)
-            if not os.path.exists(cache_path):
-                os.makedirs(cache_path)
-            apkcache["METADATA_VERSION"] = update.METADATA_VERSION
-            with open(apkcachefile, 'wb') as cf:
-                pickle.dump(apkcache, cf)
+            update.write_cache(apkcache)
 
     def publish(self):
         """

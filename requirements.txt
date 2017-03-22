@@ -3,5 +3,5 @@ qrcode
 git+https://github.com/apache/libcloud.git@516018d050a5470afe4a07d33d1fcb26d0e1df18#egg=apache-libcloud
 django-background-tasks
 #fdroidserver>=0.7.0
-#git+https://gitlab.com/grote/fdroidserver.git@f18b453b0f492c5d5896f97f55253f40cb23e22c#egg=fdroidserver
-git+https://gitlab.com/fdroid/fdroidserver.git@9b12aa6f7131a279841229293fcf799b8bd8cd0e#egg=fdroidserver
+git+https://gitlab.com/grote/fdroidserver.git@c9b76eb8086407f13a8c4ea8bbf1ed0c6c5b4375#egg=fdroidserver
+#git+https://gitlab.com/fdroid/fdroidserver.git@3c9eeff7f3244122f42b0b5b7ff54837cb843c22#egg=fdroidserver
