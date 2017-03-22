@@ -17,6 +17,7 @@ from fdroidserver import update
 
 from maker.storage import REPO_DIR
 from maker.storage import get_media_file_path, get_repo_path
+from maker.tasks import update_repo
 
 keydname = "CN=localhost.localdomain, OU=F-Droid"
 
@@ -34,7 +35,10 @@ class Repository(models.Model):
     fingerprint = models.CharField(max_length=512, blank=True)
     qrcode = models.ImageField(upload_to=get_media_file_path, blank=True)
     created_date = models.DateTimeField(default=timezone.now)
+    update_scheduled = models.BooleanField(default=False)
+    is_updating = models.BooleanField(default=False)
     last_updated_date = models.DateTimeField(auto_now=True)
+    last_publication_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -141,7 +145,23 @@ class Repository(models.Model):
             file.write(self.get_fingerprint_url())
             file.write('</a>')
 
+    def update_async(self):
+        """
+        Schedules the repository to be updated (and published)
+        """
+        if self.update_scheduled:
+            return  # no need to update a repo twice with same data
+        self.update_scheduled = True
+        self.save()
+        update_repo(self.id)
+
     def update(self):
+        """
+        Updates the repository on disk, generates index, categories, etc.
+
+        You normally don't need to call this directly
+        as it is meant to be run in a background task scheduled by update_async().
+        """
         self.chdir()
         self.get_config()
 
@@ -222,9 +242,13 @@ class Repository(models.Model):
             with open(apkcachefile, 'wb') as cf:
                 pickle.dump(apkcache, cf)
 
-        self.save()
-
     def publish(self):
+        """
+        Publishes the repository to the available storage locations
+
+        You normally don't need to call this manually
+        as it is intended to be called automatically after each update.
+        """
         # TODO SSH/SFTP upload
         # local = self.get_repo_path()
         # remote = "user@host:/home/user/www/path/to/fdroid/"
@@ -233,6 +257,8 @@ class Repository(models.Model):
         from maker.models.s3storage import S3Storage
         for storage in S3Storage.objects.filter(repo=self):
             storage.publish()
+
+        self.last_publication_date = timezone.now()
 
     class Meta:
         verbose_name_plural = "Repositories"

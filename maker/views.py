@@ -90,7 +90,7 @@ def add_app(request, repo_id):
                 apk.delete()
                 app.delete()
                 return result
-            repo.update()
+            repo.update_async()
 
             if app.id == apk.app.id:  # app did not exist already
                 return HttpResponseRedirect(reverse('edit_app', args=[repo_id, apk.app.id]))
@@ -131,7 +131,7 @@ def edit_app(request, repo_id, app_id):
         form = AppForm(request.POST, instance=app)
         if form.is_valid():
             form.save()
-            app.repo.update()
+            app.repo.update_async()
             return HttpResponseRedirect(reverse('app', args=[repo_id, app.id]))
         else:
             return HttpResponseServerError("Invalid Form")
@@ -158,10 +158,11 @@ def update(request, repo_id):
     if repo.user != request.user:
         return HttpResponseForbidden()
 
-    repo.update()
+    repo.update_async()
     return HttpResponse("Updated")
 
 
+# TODO remove when automatic publishing has been activated
 def publish(request, repo_id):
     repo = get_object_or_404(Repository, pk=repo_id)
     if repo.user != request.user:

@@ -13,6 +13,7 @@
     <li>Icon: {{ repo.icon }}</li>
     <li>Created: {{ repo.created_date }}</li>
     <li>Last Updated: {{ repo.last_updated_date }}</li>
+    <li>Last Publication: {% if repo.last_publication_date %} {{ repo.last_publication_date }} {% else %} Never {% endif %}</li>
 </ul>
 
 <p>

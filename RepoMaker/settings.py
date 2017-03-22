@@ -41,6 +41,7 @@ REPO_DEFAULT_ICON = "fdroid-icon.png"
 
 INSTALLED_APPS = [
     'maker.apps.MakerConfig',
+    'background_task',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
