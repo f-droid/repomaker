@@ -1,7 +1,6 @@
 import logging
 
 from django.db import models
-from django.forms import ModelForm, PasswordInput
 from fdroidserver import server
 from libcloud.storage.types import Provider
 
@@ -36,15 +35,3 @@ class S3Storage(models.Model):
         config['awsaccesskeyid'] = self.accesskeyid
         config['awssecretkey'] = self.secretkey
         server.update_awsbucket(REPO_DIR)
-
-
-class S3StorageForm(ModelForm):
-    class Meta:
-        model = S3Storage
-        fields = ['region', 'bucket', 'accesskeyid', 'secretkey']
-        help_texts = {
-            'region': 'Other regions are currently not supported.',
-        }
-        widgets = {
-            'secretkey': PasswordInput(),
-        }

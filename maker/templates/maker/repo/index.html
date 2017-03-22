@@ -20,18 +20,23 @@
     <a href="{% url 'index' %}">Back to repository list!</a>
 </p>
 
+<h3>Storage</h3>
 {% if storages %}
-Storage
 <ul>
     {% for storage in storages %}
-    <li>{{ storage }}</li>
+    <li>
+        {{ storage }}
+        [<a href="{% url 'storage_s3_update' repo.id storage.id %}">Edit</a>]
+        [<a href="{% url 'storage_s3_delete' repo.id storage.id %}">Delete</a>]
+    </li>
     {% endfor %}
 </ul>
 <p>
     <a href="{% url 'publish' repo.id %}">Publish repository!</a>
 </p>
 {% else %}
-<p>No storage option given.</p>
+<p><b>Attention:</b> This repository has no remote storage. Add one to get your repository published.</p>
+<p><a href="{% url 'storage_s3_add' repo.id %}">Add Amazon S3 Storage!</a></p>
 {% endif %}
 
 <h3>Apps</h3>

@@ -3,11 +3,10 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidde
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from .models import Repository, S3Storage, App, Apk
-from .models.apk import ApkForm
-from .models.app import AppForm
-from .models.repository import RepositoryForm
-from .models.s3storage import S3StorageForm
+from maker.models import Repository, S3Storage, App, Apk
+from maker.models.apk import ApkForm
+from maker.models.app import AppForm
+from maker.models.repository import RepositoryForm
 
 
 def index(request):
@@ -31,25 +30,15 @@ def add_repo(request):
             repo.save()
             form.save_m2m()
 
-            # get and save storage option
-            storage_form = S3StorageForm(request.POST)
-            if not storage_form.is_valid():
-                return HttpResponseServerError("Invalid Form")
-            storage = storage_form.save(commit=False)
-            storage.repo = repo
-            storage.save()
-            storage_form.save_m2m()
-
             # generate repo, QR Code, etc. on disk
             repo.create()
 
             return HttpResponseRedirect(reverse('repo', args=[repo.id]))
         else:
-            return HttpResponseServerError("Invalid Form")
+            return HttpResponseServerError("Invalid Form: " + str(form.errors))
     else:
         form = RepositoryForm()
-        storage_form = S3StorageForm()
-        return render(request, 'maker/repo/add.html', {'form': form, 'storage_form': storage_form})
+        return render(request, 'maker/repo/add.html', {'form': form})
 
 
 def show_repo(request, repo_id):
