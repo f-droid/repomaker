@@ -36,7 +36,6 @@ class Apk(models.Model):
         Scans self.file and stores the retrieved data
         :return: Instance of HttpResponse in case of error, None otherwise
         """
-        app = self.app
         repo = self.app.repo
         repo.get_config()
         filename = os.path.basename(self.file.name)

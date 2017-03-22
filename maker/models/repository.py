@@ -20,9 +20,6 @@ from maker.tasks import update_repo
 
 keydname = "CN=localhost.localdomain, OU=F-Droid"
 
-# less than the valid range of versionCode, i.e. Java's Integer.MIN_VALUE
-UNSET_VERSION_CODE = -0x100000000
-
 
 class Repository(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
