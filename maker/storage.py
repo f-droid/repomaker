@@ -27,6 +27,10 @@ def get_apk_file_path(apk, filename):
     return os.path.join(get_repo_path(apk.app.repo), REPO_DIR, filename)
 
 
+def get_identity_file_path(storage, filename):
+    return os.path.join(get_repo_path(storage.repo), filename)
+
+
 class RepoStorage(FileSystemStorage):
     def __init__(self, file_permissions_mode=None, directory_permissions_mode=None):
         super().__init__(settings.REPO_ROOT, None, file_permissions_mode,

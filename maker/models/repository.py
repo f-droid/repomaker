@@ -198,10 +198,12 @@ class Repository(models.Model):
         You normally don't need to call this manually
         as it is intended to be called automatically after each update.
         """
-        # TODO SSH/SFTP upload
-        # local = self.get_repo_path()
-        # remote = "user@host:/home/user/www/path/to/fdroid/"
+        # Publish to SSH Storage
+        from maker.models.sshstorage import SshStorage
+        for storage in SshStorage.objects.filter(repo=self):
+            storage.publish()
 
+        # Publish to Amazon S3
         self.chdir()  # expected by server.update_awsbucket()
         from maker.models.s3storage import S3Storage
         for storage in S3Storage.objects.filter(repo=self):

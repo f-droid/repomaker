@@ -1,8 +1,10 @@
 <h3>Repository</h3>
 
+{% if repo.last_publication_date %}
 <div style="float:right">
     <img src="{{ repo.qrcode.url }}"/>
 </div>
+{% endif %}
 
 <ul>
     <li><img src="{{ repo.icon.url }}"/></li>
@@ -21,9 +23,16 @@
 </p>
 
 <h3>Storage</h3>
-{% if storages %}
+{% if ssh_storage or s3_storage %}
 <ul>
-    {% for storage in storages %}
+    {% for storage in ssh_storage %}
+    <li>
+        {{ storage }}
+        [<a href="{% url 'storage_ssh_update' repo.id storage.id %}">Edit</a>]
+        [<a href="{% url 'storage_ssh_delete' repo.id storage.id %}">Delete</a>]
+    </li>
+    {% endfor %}
+    {% for storage in s3_storage %}
     <li>
         {{ storage }}
         [<a href="{% url 'storage_s3_update' repo.id storage.id %}">Edit</a>]
@@ -31,11 +40,18 @@
     </li>
     {% endfor %}
 </ul>
-<p>
-    <a href="{% url 'publish' repo.id %}">Publish repository!</a>
-</p>
+    {% if apps %}
+    <p>
+        <a href="{% url 'publish' repo.id %}">Publish repository!</a>
+    </p>
+    {% else %}
+    <p>
+        Add at least one app before you can publish your repository.
+    </p>
+    {% endif %}
 {% else %}
 <p><b>Attention:</b> This repository has no remote storage. Add one to get your repository published.</p>
+<p><a href="{% url 'storage_ssh_add' repo.id %}">Add SSH Storage!</a></p>
 <p><a href="{% url 'storage_s3_add' repo.id %}">Add Amazon S3 Storage!</a></p>
 {% endif %}
 

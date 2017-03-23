@@ -14,8 +14,7 @@ def update_repo(repo_id):
     repo.save()
 
     repo.update()
-    # TODO always publish after each update
-#    repo.publish()
+    repo.publish()
 
     repo.is_updating = False
     repo.save()

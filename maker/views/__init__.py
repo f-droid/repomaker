@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidde
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from maker.models import Repository, S3Storage, App, Apk
+from maker.models import Repository, SshStorage, S3Storage, App, Apk
 from maker.models.apk import ApkForm
 from maker.models.app import AppForm
 from maker.models.repository import RepositoryForm
@@ -49,9 +49,10 @@ def show_repo(request, repo_id):
     if repo.user != request.user:
         return HttpResponseForbidden()
 
-    storages = S3Storage.objects.filter(repo=repo)
+    ssh_storage = SshStorage.objects.filter(repo=repo)
+    s3_storage = S3Storage.objects.filter(repo=repo)
     apps = App.objects.filter(repo=repo)
-    context = {'repo': repo, 'storages': storages, 'apps': apps}
+    context = {'repo': repo, 'ssh_storage': ssh_storage, 's3_storage': s3_storage, 'apps': apps}
     return render(request, 'maker/repo/index.html', context)
 
 
