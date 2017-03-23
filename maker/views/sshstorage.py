@@ -1,7 +1,5 @@
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.forms import ModelForm, BooleanField
-from django.utils.decorators import method_decorator
 
 from maker.models import SshStorage
 from .storage import StorageCreateView, StorageUpdateView, StorageDeleteView
@@ -22,18 +20,15 @@ class SshStorageForm(ModelForm):
         }
 
 
-@method_decorator(login_required, name='dispatch')
 class SshStorageCreate(StorageCreateView):
     model = SshStorage
     form_class = SshStorageForm
 
 
-@method_decorator(login_required, name='dispatch')
 class SshStorageUpdate(StorageUpdateView):
     model = SshStorage
     form_class = SshStorageForm
 
 
-@method_decorator(login_required, name='dispatch')
 class SshStorageDelete(StorageDeleteView):
     model = SshStorage

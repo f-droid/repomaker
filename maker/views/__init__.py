@@ -1,8 +1,13 @@
+from django.conf import settings
+from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden, \
     HttpResponseServerError
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
+from maker import DEFAULT_USER_NAME
 from maker.models import Repository, SshStorage, S3Storage, App, Apk
 from maker.models.apk import ApkForm
 from maker.models.app import AppForm
@@ -160,3 +165,17 @@ def publish(request, repo_id):
 
     repo.publish()
     return HttpResponse("Published")
+
+
+class LoginOrSingleUserRequiredMixin(LoginRequiredMixin):
+    """
+    Mixin that should be used for all class-based views within this project.
+    It verifies that the current user is authenticated
+    or logs in the default user in single-user mode.
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        if settings.SINGLE_USER_MODE and not request.user.is_authenticated:
+            user = User.objects.get(username=DEFAULT_USER_NAME)
+            login(request, user)
+        return super().dispatch(request, *args, **kwargs)
