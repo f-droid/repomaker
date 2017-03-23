@@ -13,8 +13,9 @@ def update_repo(repo_id):
     repo.is_updating = True
     repo.save()
 
-    repo.update()
-    repo.publish()
-
-    repo.is_updating = False
-    repo.save()
+    try:
+        repo.update()
+        repo.publish()
+    finally:
+        repo.is_updating = False
+        repo.save()

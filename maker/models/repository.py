@@ -86,7 +86,7 @@ class Repository(models.Model):
     def create(self):
         """
         Creates the repository on disk including the keystore.
-        This also sets the fingerprint for :param repo.
+        This also sets the public key and fingerprint for :param repo.
         """
         self.chdir()
         config = self.get_config()

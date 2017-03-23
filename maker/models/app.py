@@ -2,6 +2,7 @@ import logging
 
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.forms import ModelForm
@@ -9,6 +10,7 @@ from django.utils import timezone
 from fdroidserver import metadata
 
 from maker.storage import get_media_file_path_for_app
+from .category import Category
 from .repository import Repository
 
 
@@ -21,6 +23,7 @@ class App(models.Model):
     website = models.URLField(max_length=2048, blank=True)
     icon = models.ImageField(upload_to=get_media_file_path_for_app,
                              default=settings.REPO_DEFAULT_ICON)
+    category = models.ManyToManyField(Category, blank=True, limit_choices_to={'user': None})
     added_date = models.DateTimeField(default=timezone.now)
     last_updated_date = models.DateTimeField(auto_now=True)
 
@@ -34,7 +37,7 @@ class App(models.Model):
         meta.Summary = self.summary
         meta.Description = self.description
         meta.added = timezone.make_naive(self.added_date)
-        meta.Categories = ["Test"]  # TODO categories
+        meta.Categories = [category.name for category in self.category.all()]
         return meta
 
     class Meta:
@@ -50,6 +53,14 @@ def app_post_delete_handler(**kwargs):
 
 
 class AppForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(AppForm, self).__init__(*args, **kwargs)
+        if self.instance.category:
+            # Show only own and default categories
+            self.fields['category'].queryset = Category.objects.filter(
+                Q(user=None) | Q(user=self.instance.repo.user))
+
     class Meta:
         model = App
-        fields = ['summary', 'description', 'website']
+        fields = ['summary', 'description', 'website', 'category']

@@ -11,6 +11,14 @@
     {% if app.website %}
         <li>Website: <a href="{{ app.website }}">{{ app.website }}</a></li>
     {% endif %}
+    <li>
+        Categories:
+        {% if app.category.exists %}
+        {{ app.category.all|join:", " }}
+        {% else %}
+        None
+        {% endif %}
+    </li>
     <li>Repo: <a href="{% url 'repo' app.repo.id %}">{{ app.repo }}</a></li>
     <li>Added: {{ app.added_date }}</li>
     <li>Last Updated: {{ app.last_updated_date }}</li>
