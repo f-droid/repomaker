@@ -8,57 +8,9 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
 from maker import DEFAULT_USER_NAME
-from maker.models import Repository, SshStorage, S3Storage, App, Apk
+from maker.models import Repository, App, Apk
 from maker.models.apk import ApkForm
 from maker.models.app import AppForm
-from maker.models.repository import RepositoryForm
-
-
-def index(request):
-    if request.user.is_authenticated:
-        repositories = Repository.objects.filter(user=request.user)
-        context = {'repositories': repositories}
-        return render(request, 'maker/index.html', context)
-    else:
-        return HttpResponseRedirect('/admin/login/')
-
-
-def add_repo(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect('/admin/login/')
-    if request.method == 'POST':
-        form = RepositoryForm(request.POST, request.FILES)
-        if form.is_valid():
-            # get and save repo
-            repo = form.save(commit=False)
-            repo.user = request.user
-            repo.save()
-            form.save_m2m()
-
-            # generate repo, QR Code, etc. on disk
-            repo.create()
-
-            return HttpResponseRedirect(reverse('repo', args=[repo.id]))
-        else:
-            return HttpResponseServerError("Invalid Form: " + str(form.errors))
-    else:
-        form = RepositoryForm()
-        return render(request, 'maker/repo/add.html', {'form': form})
-
-
-def show_repo(request, repo_id):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect('/admin/login/')
-
-    repo = get_object_or_404(Repository, pk=repo_id)
-    if repo.user != request.user:
-        return HttpResponseForbidden()
-
-    ssh_storage = SshStorage.objects.filter(repo=repo)
-    s3_storage = S3Storage.objects.filter(repo=repo)
-    apps = App.objects.filter(repo=repo)
-    context = {'repo': repo, 'ssh_storage': ssh_storage, 's3_storage': s3_storage, 'apps': apps}
-    return render(request, 'maker/repo/index.html', context)
 
 
 def add_app(request, repo_id):

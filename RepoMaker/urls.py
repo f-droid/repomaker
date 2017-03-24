@@ -18,10 +18,10 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 
-from maker import views
+from maker.views.repository import RepositoryListView
 
 urlpatterns = [
-    url(r'^$', views.index, name="index"),
+    url(r'^$', RepositoryListView.as_view(), name="index"),
     url(r'^repo/', include('maker.urls')),
     url(r'^admin/', admin.site.urls),
 ]

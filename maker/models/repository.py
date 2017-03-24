@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from django.db import models
-from django.forms import ModelForm
+from django.urls import reverse
 from django.utils import timezone
 from fdroidserver import common
 from fdroidserver import server
@@ -38,6 +38,9 @@ class Repository(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('repo', kwargs={'repo_id': self.pk})
 
     def get_path(self):
         return os.path.join(settings.REPO_ROOT, get_repo_path(self))
@@ -213,18 +216,6 @@ class Repository(models.Model):
 
     class Meta:
         verbose_name_plural = "Repositories"
-
-
-class RepositoryForm(ModelForm):
-    class Meta:
-        model = Repository
-        fields = ['name', 'description', 'url', 'icon']
-        labels = {
-            'url': 'Main URL',
-        }
-        help_texts = {
-            'url': 'This is the primary location where your repository will be made available.',
-        }
 
 
 class Options:

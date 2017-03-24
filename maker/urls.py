@@ -1,5 +1,6 @@
 from django.conf.urls import url
 
+from maker.views.repository import RepositoryListView, RepositoryCreateView, RepositoryDetailView
 from maker.views.s3storage import S3StorageCreate, S3StorageUpdate, S3StorageDelete
 from maker.views.sshstorage import SshStorageCreate, SshStorageUpdate, SshStorageDelete
 from . import views
@@ -7,9 +8,9 @@ from . import views
 
 urlpatterns = [
     # Repo
-    url(r'^$', views.index, name='index'),
-    url(r'^add$', views.add_repo, name='add_repo'),
-    url(r'^(?P<repo_id>[0-9]+)/$', views.show_repo, name='repo'),
+    url(r'^$', RepositoryListView.as_view(), name='index'),
+    url(r'^add$', RepositoryCreateView.as_view(), name='add_repo'),
+    url(r'^(?P<repo_id>[0-9]+)/$', RepositoryDetailView.as_view(), name='repo'),
     # App
     url(r'^(?P<repo_id>[0-9]+)/app/add/$', views.add_app, name='add_app'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/$', views.show_app, name='app'),

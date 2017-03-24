@@ -1,0 +1,58 @@
+from django.forms import ModelForm
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView
+
+from maker.models import Repository
+from maker.models import SshStorage, S3Storage, App
+from . import LoginOrSingleUserRequiredMixin
+
+
+class RepositoryListView(LoginOrSingleUserRequiredMixin, ListView):
+    model = Repository
+    context_object_name = 'repositories'
+    template_name = "maker/index.html"
+
+    def get_queryset(self):
+        return Repository.objects.filter(user=self.request.user)
+
+
+class RepositoryForm(ModelForm):
+    class Meta:
+        model = Repository
+        fields = ['name', 'description', 'url', 'icon']
+        labels = {
+            'url': 'Main URL',
+        }
+        help_texts = {
+            'url': 'This is the primary location where your repository will be made available.',
+        }
+
+
+class RepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
+    model = Repository
+    form_class = RepositoryForm
+    template_name = "maker/repo/add.html"
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        result = super(RepositoryCreateView, self).form_valid(form)
+        # TODO show loading screen
+        form.instance.create()  # generate repo, QR Code, etc. on disk
+        return result
+
+
+class RepositoryDetailView(LoginOrSingleUserRequiredMixin, DetailView):
+    model = Repository
+    pk_url_kwarg = 'repo_id'
+    context_object_name = 'repo'
+    template_name = 'maker/repo/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(RepositoryDetailView, self).get_context_data(**kwargs)
+        repo = context['repo']
+        if repo.fingerprint is None or repo.fingerprint == '':
+            raise RuntimeError("Repository has not been created properly.")
+        context['ssh_storage'] = SshStorage.objects.filter(repo=repo)
+        context['s3_storage'] = S3Storage.objects.filter(repo=repo)
+        context['apps'] = App.objects.filter(repo=repo)
+        return context
