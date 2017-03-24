@@ -1,10 +1,27 @@
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.forms import ModelForm
+from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
 
 from maker.models import Repository
 from maker.models import SshStorage, S3Storage, App
 from . import LoginOrSingleUserRequiredMixin
+
+
+# noinspection PyUnresolvedReferences
+class RepositoryAuthorizationMixin(LoginOrSingleUserRequiredMixin, UserPassesTestMixin):
+    """
+    Mixin that checks if the current users is authorized to view this repository.
+    It raises a PermissionDenied exception if the user is not authorized.
+    """
+    raise_exception = True
+
+    def get_repo(self):
+        return get_object_or_404(Repository, pk=self.kwargs['repo_id'])
+
+    def test_func(self):
+        return self.get_repo().user == self.request.user
 
 
 class RepositoryListView(LoginOrSingleUserRequiredMixin, ListView):
@@ -41,11 +58,14 @@ class RepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
         return result
 
 
-class RepositoryDetailView(LoginOrSingleUserRequiredMixin, DetailView):
+class RepositoryDetailView(RepositoryAuthorizationMixin, DetailView):
     model = Repository
     pk_url_kwarg = 'repo_id'
     context_object_name = 'repo'
     template_name = 'maker/repo/index.html'
+
+    def get_repo(self):
+        return self.get_object()
 
     def get_context_data(self, **kwargs):
         context = super(RepositoryDetailView, self).get_context_data(**kwargs)

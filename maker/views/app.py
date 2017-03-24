@@ -1,7 +1,6 @@
 from django.db.models import Q
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
@@ -9,7 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from maker.models import Repository, App, Apk
 from maker.models.category import Category
-from . import LoginOrSingleUserRequiredMixin
+from .repository import RepositoryAuthorizationMixin
 
 
 class ApkForm(ModelForm):
@@ -18,13 +17,13 @@ class ApkForm(ModelForm):
         fields = ['file']
 
 
-class AppCreateView(LoginOrSingleUserRequiredMixin, CreateView):
+class AppCreateView(RepositoryAuthorizationMixin, CreateView):
     model = Apk
     form_class = ApkForm
     template_name = "maker/app/add.html"
 
     def form_valid(self, form):
-        repo = get_object_or_404(Repository, pk=self.kwargs['repo_id'])
+        repo = self.get_repo()
         app = App(repo=repo)  # create temporary app for APK
         app.save()
         form.instance.app = app
@@ -53,11 +52,14 @@ class AppCreateView(LoginOrSingleUserRequiredMixin, CreateView):
                                                 'app_id': self.object.app.pk})
 
 
-class AppDetailView(LoginOrSingleUserRequiredMixin, DetailView):
+class AppDetailView(RepositoryAuthorizationMixin, DetailView):
     model = App
     pk_url_kwarg = 'app_id'
     context_object_name = 'app'
     template_name = 'maker/app/index.html'
+
+    def get_repo(self):
+        return self.get_object().repo
 
     def get_context_data(self, **kwargs):
         context = super(AppDetailView, self).get_context_data(**kwargs)
@@ -82,11 +84,14 @@ class AppForm(ModelForm):
         fields = ['summary', 'description', 'website', 'category']
 
 
-class AppUpdateView(LoginOrSingleUserRequiredMixin, UpdateView):
+class AppUpdateView(RepositoryAuthorizationMixin, UpdateView):
     model = App
     form_class = AppForm
     pk_url_kwarg = 'app_id'
     template_name = 'maker/app/edit.html'
+
+    def get_repo(self):
+        return self.get_object().repo
 
     def form_valid(self, form):
         result = super(AppUpdateView, self).form_valid(form)
@@ -94,10 +99,13 @@ class AppUpdateView(LoginOrSingleUserRequiredMixin, UpdateView):
         return result
 
 
-class AppDeleteView(LoginOrSingleUserRequiredMixin, DeleteView):
+class AppDeleteView(RepositoryAuthorizationMixin, DeleteView):
     model = App
     pk_url_kwarg = 'app_id'
     template_name = 'maker/app/delete.html'
+
+    def get_repo(self):
+        return self.get_object().repo
 
     def get_success_url(self):
         return reverse_lazy('repo', kwargs={'repo_id': self.kwargs['repo_id']})
