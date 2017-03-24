@@ -2,10 +2,9 @@ import logging
 
 from django.conf import settings
 from django.db import models
-from django.db.models import Q
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
-from django.forms import ModelForm
+from django.urls import reverse
 from django.utils import timezone
 from fdroidserver import metadata
 
@@ -30,6 +29,9 @@ class App(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('app', kwargs={'repo_id': self.repo.pk, 'app_id': self.pk})
+
     def to_metadata_app(self):
         meta = metadata.App()
         meta.id = self.package_id
@@ -50,17 +52,3 @@ def app_post_delete_handler(**kwargs):
     if app.icon is not None and app.icon != settings.REPO_DEFAULT_ICON:
         logging.info("Deleting app icon: %s" % app.icon.name)
         app.icon.delete(False)
-
-
-class AppForm(ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(AppForm, self).__init__(*args, **kwargs)
-        if self.instance.category:
-            # Show only own and default categories
-            self.fields['category'].queryset = Category.objects.filter(
-                Q(user=None) | Q(user=self.instance.repo.user))
-
-    class Meta:
-        model = App
-        fields = ['summary', 'description', 'website', 'category']

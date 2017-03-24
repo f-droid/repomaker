@@ -1,5 +1,6 @@
 from django.conf.urls import url
 
+from maker.views.app import AppCreateView, AppDetailView, AppUpdateView, AppDeleteView
 from maker.views.repository import RepositoryListView, RepositoryCreateView, RepositoryDetailView
 from maker.views.s3storage import S3StorageCreate, S3StorageUpdate, S3StorageDelete
 from maker.views.sshstorage import SshStorageCreate, SshStorageUpdate, SshStorageDelete
@@ -12,10 +13,11 @@ urlpatterns = [
     url(r'^add$', RepositoryCreateView.as_view(), name='add_repo'),
     url(r'^(?P<repo_id>[0-9]+)/$', RepositoryDetailView.as_view(), name='repo'),
     # App
-    url(r'^(?P<repo_id>[0-9]+)/app/add/$', views.add_app, name='add_app'),
-    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/$', views.show_app, name='app'),
-    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/edit/$', views.edit_app, name='edit_app'),
-    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/delete/$', views.delete_app,
+    url(r'^(?P<repo_id>[0-9]+)/app/add/$', AppCreateView.as_view(), name='add_app'),
+    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/$', AppDetailView.as_view(), name='app'),
+    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/edit/$', AppUpdateView.as_view(),
+        name='edit_app'),
+    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/delete/$', AppDeleteView.as_view(),
         name='delete_app'),
     # Repo Operations
     url(r'^(?P<repo_id>[0-9]+)/update/$$', views.update, name='update'),

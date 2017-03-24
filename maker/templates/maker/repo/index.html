@@ -64,7 +64,10 @@
         <a href="{% url 'app' repo.id app.id %}">
             <img src="{{ app.icon.url }}"/>
             {{ app.name }}
-        </a> - {{ app.summary }}</li>
+        </a> - {{ app.summary }}
+        [ <a href="{% url 'edit_app' repo.id app.id %}">Edit</a> ]
+        [ <a href="{% url 'delete_app' repo.id app.id %}">Delete</a> ]
+    </li>
     {% endfor %}
 </ul>
 {% else %}

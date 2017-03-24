@@ -7,7 +7,6 @@ from django.core.files import File
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
-from django.forms import ModelForm
 from django.http import HttpResponseServerError
 from django.utils import timezone
 from fdroidserver import common
@@ -77,6 +76,7 @@ class Apk(models.Model):
             if 'icon' in apk_info and apk_info['icon'] is not None:
                 icon_path = os.path.join(repo.get_repo_path(), "icons", apk_info['icon'])
                 if os.path.isfile(icon_path):
+                    # TODO delete old icon from disk
                     self.app.icon.save(apk_info['icon'], File(open(icon_path, 'rb')))
 
         # save APK and app
@@ -94,9 +94,3 @@ def apk_post_delete_handler(**kwargs):
     if apk.file is not None and apk.file != settings.REPO_DEFAULT_ICON:
         logging.info("Deleting APK: %s" % apk.file.name)
         apk.file.delete(False)
-
-
-class ApkForm(ModelForm):
-    class Meta:
-        model = Apk
-        fields = ['file']

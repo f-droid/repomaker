@@ -7,7 +7,7 @@
     <li>Last Updated: {{ app.last_updated_date }}</li>
 </ul>
 
-<form action="{% url 'edit_app' repo_id app.id %}" method="post">
+<form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit"/>
