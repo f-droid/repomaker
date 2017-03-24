@@ -37,6 +37,7 @@ MEDIA_URL = "/media/"
 # Location for private data such as the repo signing key
 REPO_ROOT = os.path.join(BASE_DIR, 'localrepo')
 REPO_DEFAULT_ICON = "fdroid-icon.png"
+APP_DEFAULT_ICON = "fdroid-icon.png"
 
 # Application definition
 

@@ -21,7 +21,7 @@ class App(models.Model):
     description = models.TextField(blank=True)
     website = models.URLField(max_length=2048, blank=True)
     icon = models.ImageField(upload_to=get_media_file_path_for_app,
-                             default=settings.REPO_DEFAULT_ICON)
+                             default=settings.APP_DEFAULT_ICON)
     category = models.ManyToManyField(Category, blank=True, limit_choices_to={'user': None})
     added_date = models.DateTimeField(default=timezone.now)
     last_updated_date = models.DateTimeField(auto_now=True)
@@ -49,6 +49,6 @@ class App(models.Model):
 @receiver(post_delete, sender=App)
 def app_post_delete_handler(**kwargs):
     app = kwargs['instance']
-    if app.icon is not None and app.icon != settings.REPO_DEFAULT_ICON:
+    if app.icon is not None and app.icon != settings.APP_DEFAULT_ICON:
         logging.info("Deleting app icon: %s" % app.icon.name)
         app.icon.delete(False)

@@ -76,7 +76,8 @@ class Apk(models.Model):
             if 'icon' in apk_info and apk_info['icon'] is not None:
                 icon_path = os.path.join(repo.get_repo_path(), "icons", apk_info['icon'])
                 if os.path.isfile(icon_path):
-                    # TODO delete old icon from disk
+                    if self.app.icon != settings.APP_DEFAULT_ICON:
+                        self.app.icon.delete(save=False)
                     self.app.icon.save(apk_info['icon'], File(open(icon_path, 'rb')))
 
         # save APK and app
@@ -91,6 +92,6 @@ class Apk(models.Model):
 @receiver(post_delete, sender=Apk)
 def apk_post_delete_handler(**kwargs):
     apk = kwargs['instance']
-    if apk.file is not None and apk.file != settings.REPO_DEFAULT_ICON:
+    if apk.file is not None:
         logging.info("Deleting APK: %s" % apk.file.name)
         apk.file.delete(False)
