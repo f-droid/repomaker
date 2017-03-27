@@ -1,0 +1,29 @@
+@import "_material-design-icons";
+
+$roboto-font-path: unquote(get-setting(NODE_MODULES_URL) + "roboto-fontface/fonts");
+@import "roboto-fontface/css/roboto/sass/roboto-fontface";
+
+@import "material-components-web/material-components-web";
+
+body {
+	margin: 0;
+}
+
+main {
+	margin: 16px;
+}
+
+a.rm-no-underline {
+	text-decoration: none;
+}
+
+.mdc-toolbar .material-icons {
+    text-decoration: none;
+    cursor: pointer;
+    padding-right: 8px;
+}
+
+.mdc-card img {
+	float: left;
+	margin-right: 1em;
+}

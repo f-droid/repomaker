@@ -1,18 +1,36 @@
 {% extends "./base.html" %}
+{% load humanize %}
 
 {% block title %}Repository List{% endblock %}
 
 {% block content %}
 
 {% if repositories %}
-<ul>
-    {% for repo in repositories %}
-    <li><a href="{% url 'repo' repo.id %}"><img src="{{ repo.icon.url }}"/> {{ repo.name }}</a></li>
-    {% endfor %}
-</ul>
+
+<div class="mdc-layout-grid">
+	{% for repo in repositories %}
+	<a href="{% url 'repo' repo.id %}" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4 rm-no-underline">
+		<div class="mdc-card mdc-ripple-surface">
+			<section class="mdc-card__primary">
+				<img src="{{ repo.icon.url }}"/>
+				<h1 class="mdc-card__title mdc-card__title">{{ repo.name }}</h1>
+				<h2 class="mdc-card__subtitle">Last published: {{repo.last_publication_date|naturaltime|default:"Never" }}</h2>
+			</section>
+			<section class="mdc-card__supporting-text">{{ repo.description }}</section>
+		</div>
+	</a>
+	{% endfor %}
+</div>
 {% else %}
 <p>No repositories are available.</p>
 {% endif %}
-<a href="{% url 'add_repo' %}">Add new repository!</a>
+
+<div class="mdc-layout-grid">
+	<a href="{% url 'add_repo' %}" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 rm-no-underline" style="text-align: right;">
+		<button class="mdc-fab material-icons">
+			<span class="mdc-fab__icon">add</span>
+		</button>
+	</a>
+</div>
 
 {% endblock content %}

@@ -43,6 +43,7 @@ APP_DEFAULT_ICON = "fdroid-icon.png"
 
 INSTALLED_APPS = [
     'maker.apps.MakerConfig',
+    'sass_processor',
     'background_task',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -135,3 +136,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = [
+    ('node_modules', os.path.join(BASE_DIR, 'node_modules')),
+]
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
+]
+
+SASS_PROCESSOR_INCLUDE_DIRS = [
+    os.path.join(BASE_DIR, 'node_modules'),
+]
+
+NODE_MODULES_URL = STATIC_URL + 'node_modules/'

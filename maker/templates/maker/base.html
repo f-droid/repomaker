@@ -1,12 +1,26 @@
 <!DOCTYPE html>
+{% load sass_tags %}
 <html lang="en">
 <head>
-    <title>Repo Maker - {% block title %}{% endblock %}</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Repo Maker - {% block title %}{% endblock %}</title>
+	<link href="{% sass_src 'maker/css/style.scss' %}" rel="stylesheet" type="text/css" media="all">
 </head>
 
-<body>
-<div id="content">
-    {% block content %}{% endblock %}
-</div>
+<body class="mdc-typography ">
+<header class="mdc-toolbar">
+	<section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+		<a class="material-icons">menu</a>
+		<span class="mdc-toolbar__title">Repo Maker</span>
+	</section>
+	<section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
+	</section>
+</header>
+<main>
+	<div id="content">
+		{% block content %}{% endblock %}
+	</div>
+</main>
 </body>
 </html>
