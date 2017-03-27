@@ -1,4 +1,5 @@
 {% extends "../base.html" %}
+{% load humanize %}
 
 {% block title %}{{ repo.name }}{% endblock %}
 
@@ -19,9 +20,9 @@
     <li>URL: <a href="{{ repo.get_fingerprint_url }}">{{ repo.url }}</a></li>
     <li>Fingerprint: {{ repo.fingerprint }}</li>
     <li>Icon: {{ repo.icon }}</li>
-    <li>Created: {{ repo.created_date|date:"SHORT_DATE_FORMAT" }}</li>
-    <li>Last Updated: {{ repo.last_updated_date|date:"SHORT_DATE_FORMAT" }}</li>
-    <li>Last Publication: {{ repo.last_publication_date|date:"SHORT_DATE_FORMAT"|default:"Never" }}</li>
+    <li>Created: {{ repo.created_date|naturaltime }} ({{ repo.created_date|date:"SHORT_DATE_FORMAT" }})</li>
+    <li>Last Updated: {{ repo.last_updated_date|naturaltime }} ({{ repo.last_updated_date|date:"SHORT_DATE_FORMAT" }})</li>
+    <li>Last Publication: {{ repo.last_publication_date|naturaltime|default:"" }} ({{ repo.last_publication_date|date:"SHORT_DATE_FORMAT"|default:"Never" }})</li>
 </ul>
 
 <p>

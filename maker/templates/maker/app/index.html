@@ -1,4 +1,5 @@
 {% extends "../base.html" %}
+{% load humanize %}
 
 {% block title %}{{ app.name }}{% endblock %}
 
@@ -30,7 +31,7 @@
     </li>
     <li>Repo: <a href="{% url 'repo' app.repo.id %}">{{ app.repo }}</a></li>
     <li>Added: {{ app.added_date|date:"SHORT_DATE_FORMAT" }}</li>
-    <li>Last Updated: {{ app.last_updated_date|date:"SHORT_DATE_FORMAT" }}</li>
+    <li>Last Updated: {{ app.last_updated_date|naturaltime }} ({{ app.last_updated_date|date:"SHORT_DATE_FORMAT" }})</li>
 </ul>
 
 <p>
