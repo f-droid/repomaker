@@ -1,3 +1,9 @@
+{% extends "./base.html" %}
+
+{% block title %}Repository List{% endblock %}
+
+{% block content %}
+
 {% if repositories %}
 <ul>
     {% for repo in repositories %}
@@ -8,3 +14,5 @@
 <p>No repositories are available.</p>
 {% endif %}
 <a href="{% url 'add_repo' %}">Add new repository!</a>
+
+{% endblock content %}

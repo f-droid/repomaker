@@ -1,6 +1,15 @@
+{% extends "../base.html" %}
+
+{% block title %}Add App{% endblock %}
+
+
+{% block content %}
+
 <h1>Add new App</h1>
 <form action="" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Upload APK"/>
 </form>
+
+{% endblock content %}

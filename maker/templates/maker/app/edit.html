@@ -1,3 +1,12 @@
+{% extends "../base.html" %}
+
+{% block title %}Edit App{% endblock %}
+
+
+{% block content %}
+
+<h1>Edit {{ app.name }}</h1>
+
 <ul>
     <li><img src="{{ app.icon.url }}"/></li>
     <li>Package ID: {{app.package_id }} </li>
@@ -10,5 +19,7 @@
 <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Submit"/>
+    <input type="submit" value="Save"/>
 </form>
+
+{% endblock content %}

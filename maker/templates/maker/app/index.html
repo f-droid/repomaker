@@ -1,3 +1,12 @@
+{% extends "../base.html" %}
+
+{% block title %}{{ app.name }}{% endblock %}
+
+
+{% block content %}
+
+<h1>{{ app.name }}</h1>
+
 <ul>
     <li><img src="{{ app.icon.url }}"/></li>
     <li>Package ID: {{app.package_id }} </li>
@@ -9,7 +18,7 @@
         <li>Description: {{ app.description }}</li>
     {% endif %}
     {% if app.website %}
-        <li>Website: <a href="{{ app.website }}">{{ app.website }}</a></li>
+        <li>Website: {{ app.website|urlize }}</li>
     {% endif %}
     <li>
         Categories:
@@ -20,8 +29,8 @@
         {% endif %}
     </li>
     <li>Repo: <a href="{% url 'repo' app.repo.id %}">{{ app.repo }}</a></li>
-    <li>Added: {{ app.added_date }}</li>
-    <li>Last Updated: {{ app.last_updated_date }}</li>
+    <li>Added: {{ app.added_date|date:"SHORT_DATE_FORMAT" }}</li>
+    <li>Last Updated: {{ app.last_updated_date|date:"SHORT_DATE_FORMAT" }}</li>
 </ul>
 
 <p>
@@ -40,7 +49,7 @@
             <li>File: {{ apk.file.name }}</li>
             <li>Version Name: {{ apk.version_name }}</li>
             <li>Version Code: {{ apk.version_code }}</li>
-            <li>Size: {{ apk.size }} Bytes</li>
+            <li>Size: {{ apk.size|filesizeformat }}</li>
             <li>Signature: {{ apk.signature }}</li>
             <li>Hash: {{ apk.hash }}</li>
             <li>Hash Type: {{ apk.hash_type }}</li>
@@ -51,3 +60,5 @@
 {% endif %}
 
 <a href="{% url 'add_app' app.repo.id %}">Add Update</a>
+
+{% endblock content %}
