@@ -4,6 +4,8 @@ from django.forms import ModelForm, BooleanField
 from maker.models import SshStorage
 from .storage import StorageCreateView, StorageUpdateView, StorageDeleteView
 
+NAME = "SSH Storage"
+
 
 class SshStorageForm(ModelForm):
     if settings.SINGLE_USER_MODE:
@@ -24,10 +26,16 @@ class SshStorageCreate(StorageCreateView):
     model = SshStorage
     form_class = SshStorageForm
 
+    def get_storage_name(self):
+        return NAME
+
 
 class SshStorageUpdate(StorageUpdateView):
     model = SshStorage
     form_class = SshStorageForm
+
+    def get_storage_name(self):
+        return NAME
 
 
 class SshStorageDelete(StorageDeleteView):
