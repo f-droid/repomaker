@@ -1,14 +1,22 @@
 {% extends "../base.html" %}
+{% load sass_tags %}
 
 {% block title %}Delete App{% endblock %}
+{% block toolbar-title %}<a href="{% url 'repo' app.repo.id %}">{{ app.repo.name }}</a>{% endblock %}
+
+{% block head %}
+<link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
+{% endblock head %}
 
 
 {% block content %}
 
-<form action="" method="post">
-    {% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    <input type="submit" value="Confirm" />
-</form>
+<div class="rm-form">
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete your app "{{ object }}"?</p>
+        <input type="submit" value="Confirm"/>
+    </form>
+</div>
 
 {% endblock content %}

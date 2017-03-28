@@ -6,8 +6,9 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from maker.models import Repository, App, Apk
+from maker.models import App, Apk
 from maker.models.category import Category
+from . import BaseModelForm
 from .repository import RepositoryAuthorizationMixin
 
 
@@ -15,6 +16,9 @@ class ApkForm(ModelForm):
     class Meta:
         model = Apk
         fields = ['file']
+        labels = {
+            'file': 'Select APK file for upload',
+        }
 
 
 class AppCreateView(RepositoryAuthorizationMixin, CreateView):
@@ -70,7 +74,7 @@ class AppDetailView(RepositoryAuthorizationMixin, DetailView):
         return context
 
 
-class AppForm(ModelForm):
+class AppForm(BaseModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AppForm, self).__init__(*args, **kwargs)

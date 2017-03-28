@@ -33,7 +33,7 @@ def publish(request, repo_id):
 class BaseModelForm(ModelForm):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
-        super().__init__(*args, **kwargs)
+        super(BaseModelForm, self).__init__(*args, **kwargs)
 
 
 class LoginOrSingleUserRequiredMixin(LoginRequiredMixin):

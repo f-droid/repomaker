@@ -1,25 +1,24 @@
 {% extends "../base.html" %}
+{% load sass_tags %}
 
 {% block title %}Edit App{% endblock %}
+{% block toolbar-title %}<a href="{% url 'repo' app.repo.id %}">{{ app.repo.name }}</a>{% endblock %}
+
+{% block head %}
+<link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
+{% endblock head %}
 
 
 {% block content %}
 
-<h1>Edit {{ app.name }}</h1>
+<h1><img src="{{ app.icon.url }}"/> Edit {{ app.name }}</h1>
 
-<ul>
-    <li><img src="{{ app.icon.url }}"/></li>
-    <li>Package ID: {{app.package_id }} </li>
-    <li>Name: {{ app.name }}</li>
-    <li>Repo: <a href="{% url 'repo' app.repo.id %}">{{ app.repo }}</a></li>
-    <li>Added: {{ app.added_date }}</li>
-    <li>Last Updated: {{ app.last_updated_date }}</li>
-</ul>
-
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save"/>
-</form>
+<div class="rm-form">
+    <form action="" method="post">
+        {% csrf_token %}
+        {% include '../form.html' %}
+        <input type="submit" value="Save Changes"/>
+    </form>
+</div>
 
 {% endblock content %}
