@@ -10,7 +10,7 @@
 <div class="mdc-layout-grid">
 	{% for repo in repositories %}
 	<a href="{% url 'repo' repo.id %}" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4 rm-no-underline">
-		<div class="mdc-card mdc-ripple-surface">
+		<div class="rm-repo-card mdc-card mdc-ripple-surface">
 			<section class="mdc-card__primary">
 				<img src="{{ repo.icon.url }}"/>
 				<h1 class="mdc-card__title mdc-card__title">{{ repo.name }}</h1>

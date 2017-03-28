@@ -17,13 +17,18 @@ a.rm-no-underline {
 	text-decoration: none;
 }
 
+.mdc-toolbar__title a, a.material-icons, .mdc-list-item a {
+	text-decoration: none;
+	color: unset;
+}
+
 .mdc-toolbar .material-icons {
     text-decoration: none;
     cursor: pointer;
     padding-right: 8px;
 }
 
-.mdc-card img {
+.rm-repo-card img {
 	float: left;
 	margin-right: 1em;
 }

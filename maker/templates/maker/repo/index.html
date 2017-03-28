@@ -6,56 +6,61 @@
 
 {% block content %}
 
-<h1>Repository {{ repo.name }}</h1>
+<h1 style="vertical-align: middle;"><img src="{{ repo.icon.url }}"/> {{ repo.name }}</h1>
+<p>{{ repo.description }}</p>
 
 {% if repo.last_publication_date %}
-<div style="float:right">
-    <img src="{{ repo.qrcode.url }}"/>
+<div class="mdc-card mdc-ripple-surface" style="float: right;">
+	<a href="{{ repo.get_fingerprint_url }}">
+		<img src="{{ repo.qrcode.url }}"/>
+	</a>
 </div>
 {% endif %}
 
-<ul>
-    <li><img src="{{ repo.icon.url }}"/></li>
-    <li>Desc: {{ repo.description }}</li>
-    <li>URL: <a href="{{ repo.get_fingerprint_url }}">{{ repo.url }}</a></li>
-    <li>Fingerprint: {{ repo.fingerprint }}</li>
-    <li>Icon: {{ repo.icon }}</li>
-    <li>Created: {{ repo.created_date|naturaltime }} ({{ repo.created_date|date:"SHORT_DATE_FORMAT" }})</li>
-    <li>Last Updated: {{ repo.last_updated_date|naturaltime }} ({{ repo.last_updated_date|date:"SHORT_DATE_FORMAT" }})</li>
-    <li>Last Publication: {{ repo.last_publication_date|naturaltime|default:"" }} ({{ repo.last_publication_date|date:"SHORT_DATE_FORMAT"|default:"Never" }})</li>
+<ul class="mdc-list mdc-list--dense">
+    <li class="mdc-list-item">
+	    <i class="mdc-list-item__start-detail material-icons">insert_link</i>
+	    URL: <a href="{{ repo.get_fingerprint_url }}">{{ repo.url }}</a>
+    </li>
+    <li class="mdc-list-item">
+	    <i class="mdc-list-item__start-detail material-icons">fingerprint</i>
+	    Fingerprint: {{ repo.fingerprint }}
+    </li>
+    <li class="mdc-list-item">
+	    <i class="mdc-list-item__start-detail material-icons">watch_later</i>
+	    Created: {{ repo.created_date|naturaltime }} ({{ repo.created_date|date:"SHORT_DATE_FORMAT" }})
+    </li>
+    <li class="mdc-list-item">
+	    <i class="mdc-list-item__start-detail material-icons">update</i>
+	    Last Updated: {{ repo.last_updated_date|naturaltime }} ({{ repo.last_updated_date|date:"SHORT_DATE_FORMAT" }})
+    </li>
+	<li class="mdc-list-item">
+		<i class="mdc-list-item__start-detail material-icons">schedule</i>
+		Last Publication: {{ repo.last_publication_date|naturaltime|default:"" }}
+		({{ repo.last_publication_date|date:"SHORT_DATE_FORMAT"|default:"Never" }})
+	</li>
 </ul>
 
-<p>
-    <a href="{% url 'index' %}">Back to repository list!</a>
-</p>
-
-<h2>Storage</h2>
+<h2 style="float: clear;">Storage</h2>
 {% if ssh_storage or s3_storage %}
-<ul>
+<ul class="mdc-list">
     {% for storage in ssh_storage %}
-    <li>
+    <li class="mdc-list-item">
+	    <i class="mdc-list-item__start-detail material-icons">cloud</i>
         {{ storage }}
-        [<a href="{% url 'storage_ssh_update' repo.id storage.id %}">Edit</a>]
-        [<a href="{% url 'storage_ssh_delete' repo.id storage.id %}">Delete</a>]
+        <a href="{% url 'storage_ssh_update' repo.id storage.id %}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">edit</a>
+        <a href="{% url 'storage_ssh_delete' repo.id storage.id %}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">delete</a>
     </li>
     {% endfor %}
     {% for storage in s3_storage %}
-    <li>
+    <li class="mdc-list-item">
+	    <i class="mdc-list-item__start-detail material-icons">cloud</i>
         {{ storage }}
-        [<a href="{% url 'storage_s3_update' repo.id storage.id %}">Edit</a>]
-        [<a href="{% url 'storage_s3_delete' repo.id storage.id %}">Delete</a>]
+        <a href="{% url 'storage_s3_update' repo.id storage.id %}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">edit</a>
+        <a href="{% url 'storage_s3_delete' repo.id storage.id %}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">delete</a>
     </li>
     {% endfor %}
 </ul>
-    {% if apps %}
-    <p>
-        <a href="{% url 'publish' repo.id %}">Publish repository!</a>
-    </p>
-    {% else %}
-    <p>
-        Add at least one app before you can publish your repository.
-    </p>
-    {% endif %}
 {% else %}
 <p><b>Attention:</b> This repository has no remote storage. Add one to get your repository published.</p>
 <p><a href="{% url 'storage_ssh_add' repo.id %}">Add SSH Storage!</a></p>
@@ -64,23 +69,28 @@
 
 <h2>Apps</h2>
 
-<ul>
-    {% for app in apps %}
-    <li>
-        <a href="{% url 'app' repo.id app.id %}">
-            <img src="{{ app.icon.url }}"/>
-            {{ app.name }}
-        </a> - {{ app.summary }}
-        [ <a href="{% url 'edit_app' repo.id app.id %}">Edit</a> ]
-        [ <a href="{% url 'delete_app' repo.id app.id %}">Delete</a> ]
-    </li>
-    {% empty %}
-    <li>No apps in this repository.</li>
-    {% endfor %}
+<ul class="mdc-list mdc-list--two-line">
+	{% for app in apps %}
+	<li class="mdc-list-item">
+		<a href="{% url 'app' repo.id app.id %}" class="mdc-ripple-surface">
+			<img src="{{ app.icon.url }}" style="float: left; margin-right: 1em;"/>
+			<span class="mdc-list-item__text" style="margin-right: 1em;">
+                <span class="mdc-list-item__text__primary">{{ app.name }}</span>
+                <span class="mdc-list-item__text__secondary">{{ app.summary }}</span>
+			</span>
+			<a href="{% url 'edit_app' repo.id app.id %}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">edit</a>
+			<a href="{% url 'delete_app' repo.id app.id %}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">delete</a>
+		</a>
+	</li>
+	{% empty %}
+	<li class="mdc-list-item">No apps in this repository.</li>
+	{% endfor %}
 </ul>
 
-<p>
-    <a href="{% url 'add_app' repo.id %}">Add app!</a>
-</p>
+<a href="{% url 'add_app' repo.id %}" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 rm-no-underline">
+	<button class="mdc-fab material-icons">
+		<span class="mdc-fab__icon">add</span>
+	</button>
+</a>
 
 {% endblock content %}
