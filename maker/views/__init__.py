@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 
@@ -27,6 +28,12 @@ def publish(request, repo_id):
 
     repo.publish()
     return HttpResponse("Published")
+
+
+class BaseModelForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super().__init__(*args, **kwargs)
 
 
 class LoginOrSingleUserRequiredMixin(LoginRequiredMixin):

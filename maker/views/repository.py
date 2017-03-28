@@ -1,12 +1,12 @@
+from django import forms
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.forms import ModelForm
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
 
 from maker.models import Repository
 from maker.models import SshStorage, S3Storage, App
-from . import LoginOrSingleUserRequiredMixin
+from . import BaseModelForm, LoginOrSingleUserRequiredMixin
 
 
 # noinspection PyUnresolvedReferences
@@ -33,12 +33,13 @@ class RepositoryListView(LoginOrSingleUserRequiredMixin, ListView):
         return Repository.objects.filter(user=self.request.user)
 
 
-class RepositoryForm(ModelForm):
+class RepositoryForm(BaseModelForm):
     class Meta:
         model = Repository
         fields = ['name', 'description', 'url', 'icon']
         labels = {
             'url': 'Main URL',
+            'icon': 'Upload Repository Icon',
         }
         help_texts = {
             'url': 'This is the primary location where your repository will be made available.',
