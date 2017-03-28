@@ -2,12 +2,13 @@ from django.conf import settings
 from django.forms import ModelForm, BooleanField
 
 from maker.models import SshStorage
+from . import BaseModelForm
 from .storage import StorageCreateView, StorageUpdateView, StorageDeleteView
 
 NAME = "SSH Storage"
 
 
-class SshStorageForm(ModelForm):
+class SshStorageForm(BaseModelForm):
     if settings.SINGLE_USER_MODE:
         ignore_identity_file = BooleanField(required=False, initial=True, disabled=True,
                                             label='Use local default SSH Key')

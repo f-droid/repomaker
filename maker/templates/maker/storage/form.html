@@ -1,16 +1,23 @@
 {% extends "../base.html" %}
+{% load sass_tags %}
 
 {% block title %}{% if object %}Update{% else %}Add{% endif %} {{ storage_name }}{% endblock %}
+
+{% block head %}
+<link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
+{% endblock head %}
 
 
 {% block content %}
 
 <h1>{% if object %}Update{% else %}Add{% endif %} {{ storage_name }}</h1>
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="{% if object %}Update{% else %}Add{% endif %}"/>
-</form>
+<div class="rm-form">
+	<form action="" method="post">
+		{% csrf_token %}
+		{% include '../form.html' %}
+		<input type="submit" value="{% if object %}Update{% else %}Add{% endif %}"/>
+	</form>
+</div>
 
 {% endblock content %}

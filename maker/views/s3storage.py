@@ -1,12 +1,13 @@
 from django.forms import ModelForm, PasswordInput
 
 from maker.models import S3Storage
+from . import BaseModelForm
 from .storage import StorageCreateView, StorageUpdateView, StorageDeleteView
 
 NAME = "Amazon S3 Storage"
 
 
-class S3StorageForm(ModelForm):
+class S3StorageForm(BaseModelForm):
     class Meta:
         model = S3Storage
         fields = ['region', 'bucket', 'accesskeyid', 'secretkey']
