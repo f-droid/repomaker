@@ -4,3 +4,5 @@ db.sqlite3
 media/user_*
 localrepo
 credentials
+node_modules/
+static/

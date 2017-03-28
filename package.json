@@ -1,0 +1,14 @@
+{
+  "name": "RepoMaker",
+  "version": "0.0.1",
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/fdroid/repomaker.git"
+  },
+  "dependencies": {
+    "material-components-web": "*",
+    "material-design-icons": "*",
+    "roboto-fontface": "*"
+  }
+}
