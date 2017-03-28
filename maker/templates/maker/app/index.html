@@ -2,64 +2,108 @@
 {% load humanize %}
 
 {% block title %}{{ app.name }}{% endblock %}
-
+{% block toolbar-title %}<a href="{% url 'repo' app.repo.id %}">{{ app.repo.name }}</a>{% endblock %}
 
 {% block content %}
 
-<h1>{{ app.name }}</h1>
+<div class="mdc-layout-grid">
 
-<ul>
-    <li><img src="{{ app.icon.url }}"/></li>
-    <li>Package ID: {{app.package_id }} </li>
-    <li>Name: {{ app.name }}</li>
-    {% if app.summary %}
-        <li>Summary: {{ app.summary }}</li>
-    {% endif %}
-    {% if app.description %}
-        <li>Description: {{ app.description }}</li>
-    {% endif %}
-    {% if app.website %}
-        <li>Website: {{ app.website|urlize }}</li>
-    {% endif %}
-    <li>
-        Categories:
-        {% if app.category.exists %}
-        {{ app.category.all|join:", " }}
-        {% else %}
-        None
-        {% endif %}
-    </li>
-    <li>Repo: <a href="{% url 'repo' app.repo.id %}">{{ app.repo }}</a></li>
-    <li>Added: {{ app.added_date|date:"SHORT_DATE_FORMAT" }}</li>
-    <li>Last Updated: {{ app.last_updated_date|naturaltime }} ({{ app.last_updated_date|date:"SHORT_DATE_FORMAT" }})</li>
-</ul>
+	<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
 
-<p>
-    <a href="{% url 'edit_app' app.repo.id app.id %}">Edit App Details</a>
-</p>
+		<h1><img src="{{ app.icon.url }}"/> {{ app.name }}</h1>
 
-<p>
-    <a href="{% url 'delete_app' app.repo.id app.id %}">Delete App</a>
-</p>
+		{% if app.summary %}
+		<h3>{{ app.summary }}</h3>
+		{% endif %}
 
-{% if apks %}
-<ul>
-    {% for apk in apks %}
-    <li>
-        <ul>
-            <li>File: {{ apk.file.name }}</li>
-            <li>Version Name: {{ apk.version_name }}</li>
-            <li>Version Code: {{ apk.version_code }}</li>
-            <li>Size: {{ apk.size|filesizeformat }}</li>
-            <li>Signature: {{ apk.signature }}</li>
-            <li>Hash: {{ apk.hash }}</li>
-            <li>Hash Type: {{ apk.hash_type }}</li>
-        </ul>
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}
+		<ul class="mdc-list mdc-list--dense">
+			<li class="mdc-list-item">
+				<i class="mdc-list-item__start-detail material-icons">info_outline</i>
+				Package ID: {{app.package_id }}
+			</li>
+			<li class="mdc-list-item">
+				<i class="mdc-list-item__start-detail material-icons">style</i>
+				Categories:
+				{% if app.category.exists %}
+				{{ app.category.all|join:", " }}
+				{% else %}
+				None
+				{% endif %}
+			</li>
+			{% if app.website %}
+			<li class="mdc-list-item">
+				<i class="mdc-list-item__start-detail material-icons">insert_link</i>
+				Website: {{ app.website|urlize }}
+			</li>
+			{% endif %}
+			{% if app.description %}
+			<li class="mdc-list-item">
+				<i class="mdc-list-item__start-detail material-icons">description</i>
+				Description: {{ app.description }}
+			</li>
+			{% endif %}
+			{% if apks %}
+			<li class="mdc-list-item">
+				<i class="mdc-list-item__start-detail material-icons">gesture</i>
+				Signature: {{ apks.0.signature }}
+			</li>
+			{% endif %}
+			<li class="mdc-list-item">
+				<i class="mdc-list-item__start-detail material-icons">watch_later</i>
+				Added: {{ app.added_date|date:"SHORT_DATE_FORMAT" }}
+			</li>
+			<li class="mdc-list-item">
+				<i class="mdc-list-item__start-detail material-icons">update</i>
+				Last Updated: {{ app.last_updated_date|naturaltime }} ({{ app.last_updated_date|date:"SHORT_DATE_FORMAT" }})
+			</li>
+		</ul>
 
-<a href="{% url 'add_app' app.repo.id %}">Add Update</a>
+		<p>
+			<a href="{% url 'edit_app' app.repo.id app.id %}" class="rm-no-underline">
+				<button class="mdc-button mdc-button--primary mdc-button--raised">
+					<i class="material-icons">edit</i>
+					Edit App Details
+				</button>
+			</a>
+
+			<a href="{% url 'delete_app' app.repo.id app.id %}" class="rm-no-underline">
+				<button class="mdc-button mdc-button--raised">
+					<i class="material-icons">delete</i>
+					Delete App
+				</button>
+			</a>
+		</p>
+
+	</div>
+
+	<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+
+		<h2>Versions</h2>
+
+		{% if apks %}
+		<ul class="mdc-list">
+			{% for apk in apks %}
+			<li><h4>{{ apk.version_name }} <span style="font-weight: normal; font-size: 75%;">({{ apk.version_code }})</span></h4>
+				<ul class="mdc-list mdc-list--dense">
+					<li class="mdc-list-item">Size: {{ apk.size|filesizeformat }}</li>
+					<li class="mdc-list-item">File: {{ apk.file.name }}</li>
+					<li class="mdc-list-item">Hash ({{ apk.hash_type }}): {{ apk.hash }}</li>
+				</ul>
+			</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+
+		<div style="text-align: right; margin: 2em;">
+			<a href="{% url 'add_app' app.repo.id %}" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 rm-no-underline">
+				<button class="mdc-fab material-icons">
+					<span class="mdc-fab__icon">add</span>
+				</button>
+			</a>
+		</div>
+
+	</div>
+
+</div>
 
 {% endblock content %}
