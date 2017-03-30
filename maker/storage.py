@@ -23,6 +23,10 @@ def get_repo_path(repo):
     return os.path.join(get_private_user_path(repo), 'repo_{0}'.format(repo.pk))
 
 
+def get_remote_repo_path(repo):
+    return os.path.join('remote', 'repo_{0}'.format(repo.pk))
+
+
 def get_apk_file_path(apk, filename):
     return os.path.join(get_repo_path(apk.app.repo), REPO_DIR, filename)
 

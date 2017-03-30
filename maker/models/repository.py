@@ -16,35 +16,34 @@ from fdroidserver import server
 from fdroidserver import update
 
 from maker.storage import REPO_DIR
-from maker.storage import get_media_file_path, get_repo_path
+from maker.storage import get_media_file_path, get_remote_repo_path, get_repo_path
 from maker.tasks import update_repo
 
 keydname = "CN=localhost.localdomain, OU=F-Droid"
 
 
-class Repository(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class AbstractRepository(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     url = models.URLField(max_length=2048)
     icon = models.ImageField(upload_to=get_media_file_path, default=settings.REPO_DEFAULT_ICON)
     public_key = models.TextField(blank=True)
     fingerprint = models.CharField(max_length=512, blank=True)
-    qrcode = models.ImageField(upload_to=get_media_file_path, blank=True)
-    created_date = models.DateTimeField(default=timezone.now)
     update_scheduled = models.BooleanField(default=False)
     is_updating = models.BooleanField(default=False)
     last_updated_date = models.DateTimeField(auto_now=True)
-    last_publication_date = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        abstract = True
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('repo', kwargs={'repo_id': self.pk})
+        raise NotImplementedError()
 
     def get_path(self):
-        return os.path.join(settings.REPO_ROOT, get_repo_path(self))
+        raise NotImplementedError()
 
     def get_repo_path(self):
         return os.path.join(self.get_path(), REPO_DIR)
@@ -53,8 +52,50 @@ class Repository(models.Model):
         return self.url + "?fingerprint=" + self.fingerprint
 
     def get_config(self):
-        # Setup config
-        config = {
+        config = {}
+        common.fill_config_defaults(config)
+        common.config = config
+        common.options = Options
+        index.config = config
+        index.options = Options
+        update.config = config
+        update.options = Options
+        server.config = config
+        server.options = Options
+        return config
+
+
+class RemoteRepository(AbstractRepository):
+    users = models.ManyToManyField(User)
+    pre_installed = models.BooleanField(default=False)
+    last_change_date = models.DateTimeField(auto_now=True)
+
+    def get_absolute_url(self):
+        # TODO
+        return reverse('repo', kwargs={'repo_id': self.pk})
+
+    def get_path(self):
+        return os.path.join(settings.REPO_ROOT, get_remote_repo_path(self))
+
+    class Meta:
+        verbose_name_plural = "Remote Repositories"
+
+
+class Repository(AbstractRepository):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    qrcode = models.ImageField(upload_to=get_media_file_path, blank=True)
+    created_date = models.DateTimeField(default=timezone.now)
+    last_publication_date = models.DateTimeField(null=True, blank=True)
+
+    def get_absolute_url(self):
+        return reverse('repo', kwargs={'repo_id': self.pk})
+
+    def get_path(self):
+        return os.path.join(settings.REPO_ROOT, get_repo_path(self))
+
+    def get_config(self):
+        config = super().get_config()
+        config.update({
             'repo_url': self.url,
             'repo_name': self.name,
             'repo_icon': os.path.join(settings.MEDIA_ROOT, self.icon.name),
@@ -66,18 +107,9 @@ class Repository(models.Model):
             'keystorepassfile': '.fdroid.keystorepass.txt',
             'keypass': "uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes=",  # common.genpassword(),
             'keypassfile': '.fdroid.keypass.txt',
-        }
+        })
         if self.public_key is not None:
             config['repo_pubkey'] = self.public_key
-        common.fill_config_defaults(config)
-        common.config = config
-        common.options = Options
-        index.config = config
-        index.options = Options
-        update.config = config
-        update.options = Options
-        server.config = config
-        server.options = Options
         return config
 
     def chdir(self):
