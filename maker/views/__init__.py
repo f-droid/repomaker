@@ -32,7 +32,7 @@ def publish(request, repo_id):
 
 class BaseModelForm(ModelForm):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('label_suffix', '')
+        kwargs.setdefault('label_suffix', ':')  # TODO remove ':'
         super(BaseModelForm, self).__init__(*args, **kwargs)
 
 

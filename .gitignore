@@ -5,4 +5,4 @@ media/user_*
 localrepo
 credentials
 node_modules/
-static/
+/static/

@@ -1,17 +1,20 @@
 {% for field in form %}
-<div class="mdc-textfield {% if field.name == 'description' %}mdc-textfield--multiline{% endif %}" style="display: block; margin-top: 1em;">
+<div class="mdc-textfield {% if field.name == 'description' %}mdc-textfield--multiline{% endif %}{% if field.errors %} mdc-textfield--invalid{% endif %}" style="display: block; margin-top: 1em;">
 	{% if field.field.widget.input_type == 'file' %}
 	<label for="{{ field.id_for_label }}" class="rm-file-upload"><i class="material-icons">file_upload</i> {{ field.label }}</label>
 	{% else %}
 	{{ field.label_tag }}
 	{% endif %}
-	{{ field.errors }}
 	{{ field }}
 </div>
 
-{% if field.help_text %}
-<p id="username-helptext" class="mdc-textfield-helptext mdc-textfield-helptext--persistent">
+{% if field.help_text or field.errors %}
+<p class="mdc-textfield-helptext mdc-textfield-helptext--persistent{% if field.errors %} mdc-textfield-helptext--validation-msg{% endif %}" role="alert">
+	{% if field.errors %}
+	{{ field.errors }}
+	{% else %}
 	{{ field.help_text }}
+	{% endif %}
 </p>
 {% endif %}
 

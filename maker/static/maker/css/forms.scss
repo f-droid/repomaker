@@ -1,0 +1,49 @@
+@import "@material/textfield/mdc-textfield";
+@import "@material/list/mdc-list";
+@import "@material/select/mdc-select";
+@import "@material/checkbox/mdc-checkbox";
+@import "@material/button/mdc-button";
+
+.rm-form {
+
+	input, textarea {
+		@extend .mdc-textfield__input;
+	}
+
+	input[type="submit"] {
+		@extend .mdc-button, .mdc-button--raised, .mdc-button--primary;
+	}
+
+	input[type="checkbox"] {
+		@extend .mdc-checkbox;
+	}
+
+	input[type="file"] {
+		display: none;
+	}
+
+	input:required {
+		@extend .mdc-textfield__input:required;
+	}
+
+	select {
+		@extend .mdc-multi-select, .mdc-list;
+
+		option {
+			@extend .mdc-list-item;
+		}
+	}
+
+	label {
+		@extend .mdc-textfield__label;
+
+		// until properly styled
+		position: initial;
+		vertical-align: top;
+	}
+
+	label.rm-file-upload {
+		@extend .mdc-button, .mdc-button--accent;
+	}
+
+}
