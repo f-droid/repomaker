@@ -11,6 +11,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from fdroidserver import common
+from fdroidserver import index
 from fdroidserver import server
 from fdroidserver import update
 
@@ -71,6 +72,8 @@ class Repository(models.Model):
         common.fill_config_defaults(config)
         common.config = config
         common.options = Options
+        index.config = config
+        index.options = Options
         update.config = config
         update.options = Options
         server.config = config
@@ -187,7 +190,7 @@ class Repository(models.Model):
         sortedids = sorted(apps.keys(), key=lambda app_id: apps[app_id].Name.upper())
 
         # Make the index for the repo
-        update.make_index(apps, sortedids, apks, REPO_DIR, False)
+        index.make(apps, sortedids, apks, REPO_DIR, False)
         update.make_categories_txt(REPO_DIR, categories)
 
         # Update cache if it changed
