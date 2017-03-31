@@ -15,7 +15,10 @@ def get_media_file_path(repo, filename):
 
 
 def get_media_file_path_for_app(app, filename):
-    return 'user_{0}/{1}'.format(app.repo.user.pk, filename)
+    if hasattr(app.repo, 'user'):
+        return 'user_{0}/{1}'.format(app.repo.user.pk, filename)
+    else:
+        return 'remote_repo_{0}/{1}'.format(app.repo.pk, filename)
 
 
 def get_private_user_path(repo):

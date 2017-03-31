@@ -1,3 +1,4 @@
+import datetime
 import logging
 import os
 from io import BytesIO
@@ -50,6 +51,11 @@ class AbstractRepository(models.Model):
     def get_fingerprint_url(self):
         return self.url + "?fingerprint=" + self.fingerprint
 
+    def delete_old_icon(self):
+        icon_path = os.path.dirname(self.icon.path)
+        if icon_path != settings.MEDIA_ROOT:
+            self.icon.delete(save=False)
+
     def get_config(self):
         config = {}
         common.fill_config_defaults(config)
@@ -70,7 +76,7 @@ class RemoteRepository(AbstractRepository):
     def get_path(self):
         return os.path.join(settings.REPO_ROOT, get_remote_repo_path(self))
 
-    def update_index(self):
+    def update_index(self, update_apps=True):
         """
         Downloads the remote index and passes it to update()
 
@@ -78,35 +84,66 @@ class RemoteRepository(AbstractRepository):
         """
         self.get_config()
         repo_index = index.download_repo_index(self.get_fingerprint_url())
-        self.update(repo_index)
+        self._update(repo_index, update_apps)
 
-    def update(self, repo_index):
+    def _update(self, repo_index, update_apps):
         """
         Updates this remote repository with the given index
 
         :param repo_index: The repository index v1 in JSON format
+        :param update_apps: False if apps should not be updated as well
         """
+        # bail out if the repo did not change since last update
+        repo_change = datetime.datetime.fromtimestamp(repo_index['repo']['timestamp'] / 1000,
+                                                      timezone.utc)
+        if self.last_change_date and self.last_change_date >= repo_change:
+            return
+
+        # update repository's metadata
         self.name = repo_index['repo']['name']
         self.description = repo_index['repo']['description']
         self.last_change_date = repo_index['repo']['timestamp']
-        self.public_key = repo_index['repo']['pubkey']
+        if not self.public_key:
+            self.public_key = repo_index['repo']['pubkey']
 
         # download and save repository icon
         icon_url = self.url + '/' + repo_index['repo']['icon']
         try:
+            # TODO use eTag like in RemoteApp._update_icon()
             r = requests.get(icon_url)
             if r.status_code != requests.codes.ok:
                 r.raise_for_status()
             self.save()  # to ensure the primary key exists, to be used for the file path
-            if self.icon != settings.REPO_DEFAULT_ICON:
-                self.icon.delete(save=False)
+            self.delete_old_icon()
             self.icon.save(repo_index['repo']['icon'], BytesIO(r.content), save=False)
+            self.save()
         except Exception as e:
             logging.warning("Could not download repository icon from %s. %s" % (icon_url, e))
 
-        # TODO insert app/apk information as well
-        # repo_index['apps'])
-        # repo_index['packages'])
+        if update_apps:
+            self._update_apps(repo_index['apps'])
+            # TODO update apk information as well
+            # repo_index['packages'])
+
+    def _update_apps(self, apps):
+        from maker.models.app import RemoteApp
+        # update the apps from this repo and remember all package names we have seen
+        package_names = []
+        for app in apps:
+            if self.pk:
+                query_set = RemoteApp.objects.filter(repo__pk=self.pk,
+                                                     package_id=app['packageName'])
+                if query_set.exists():
+                    query_set.get().update_from_json(app)
+                    package_names.append(app['packageName'])
+                    continue
+            # app does not exist, so update it
+            new_app = RemoteApp(package_id=app['packageName'], repo=self)
+            new_app.update_from_json(app)
+            package_names.append(app['packageName'])
+
+        # TODO remove apps that no longer exist
+        print(package_names)
 
     class Meta(AbstractRepository.Meta):
         verbose_name_plural = "Remote Repositories"

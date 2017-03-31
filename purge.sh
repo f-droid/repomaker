@@ -1,5 +1,6 @@
 rm -r localrepo/user*
 rm -r media/user*
+rm -r media/remote_repo*
 rm maker/migrations/0*
 mv maker/migrations/default_user.py maker/migrations/default_user.py.bak
 mv maker/migrations/default_categories.py maker/migrations/default_categories.py.bak
