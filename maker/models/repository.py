@@ -3,6 +3,7 @@ import os
 from io import BytesIO
 
 import qrcode
+import requests
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
@@ -35,12 +36,10 @@ class AbstractRepository(models.Model):
 
     class Meta:
         abstract = True
+        unique_together = (("url", "fingerprint"),)
 
     def __str__(self):
         return self.name
-
-    def get_absolute_url(self):
-        raise NotImplementedError()
 
     def get_path(self):
         raise NotImplementedError()
@@ -56,8 +55,6 @@ class AbstractRepository(models.Model):
         common.fill_config_defaults(config)
         common.config = config
         common.options = Options
-        index.config = config
-        index.options = Options
         update.config = config
         update.options = Options
         server.config = config
@@ -70,15 +67,50 @@ class RemoteRepository(AbstractRepository):
     pre_installed = models.BooleanField(default=False)
     last_change_date = models.DateTimeField(auto_now=True)
 
-    def get_absolute_url(self):
-        # TODO
-        return reverse('repo', kwargs={'repo_id': self.pk})
-
     def get_path(self):
         return os.path.join(settings.REPO_ROOT, get_remote_repo_path(self))
 
-    class Meta:
+    def update_index(self):
+        """
+        Downloads the remote index and passes it to update()
+
+        :raises: VerificationException() if the index can not be validated anymore
+        """
+        self.get_config()
+        repo_index = index.download_repo_index(self.get_fingerprint_url())
+        self.update(repo_index)
+
+    def update(self, repo_index):
+        """
+        Updates this remote repository with the given index
+
+        :param repo_index: The repository index v1 in JSON format
+        """
+        self.name = repo_index['repo']['name']
+        self.description = repo_index['repo']['description']
+        self.last_change_date = repo_index['repo']['timestamp']
+        self.public_key = repo_index['repo']['pubkey']
+
+        # download and save repository icon
+        icon_url = self.url + '/' + repo_index['repo']['icon']
+        try:
+            r = requests.get(icon_url)
+            if r.status_code != requests.codes.ok:
+                r.raise_for_status()
+            self.save()  # to ensure the primary key exists, to be used for the file path
+            if self.icon != settings.REPO_DEFAULT_ICON:
+                self.icon.delete(save=False)
+            self.icon.save(repo_index['repo']['icon'], BytesIO(r.content), save=False)
+        except Exception as e:
+            logging.warning("Could not download repository icon from %s. %s" % (icon_url, e))
+
+        # TODO insert app/apk information as well
+        # repo_index['apps'])
+        # repo_index['packages'])
+
+    class Meta(AbstractRepository.Meta):
         verbose_name_plural = "Remote Repositories"
+        unique_together = (("url", "fingerprint"),)
 
 
 class Repository(AbstractRepository):
@@ -161,6 +193,7 @@ class Repository(AbstractRepository):
         # save in database/media location
         f = BytesIO()
         try:
+            # TODO delete old QR code if there was one
             img.save(f, format='png')
             self.qrcode.save(self.fingerprint + ".png", ContentFile(f.getvalue()), False)
         finally:
@@ -249,7 +282,7 @@ class Repository(AbstractRepository):
 
         self.last_publication_date = timezone.now()
 
-    class Meta:
+    class Meta(AbstractRepository.Meta):
         verbose_name_plural = "Repositories"
 
 

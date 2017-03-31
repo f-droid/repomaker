@@ -8,7 +8,10 @@ REPO_DIR = 'repo'
 
 
 def get_media_file_path(repo, filename):
-    return 'user_{0}/{1}'.format(repo.user.pk, filename)
+    if hasattr(repo, 'user'):
+        return 'user_{0}/{1}'.format(repo.user.pk, filename)
+    else:
+        return 'remote_repo_{0}/{1}'.format(repo.pk, filename)
 
 
 def get_media_file_path_for_app(app, filename):

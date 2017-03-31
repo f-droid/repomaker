@@ -2,6 +2,7 @@ db.sqlite3
 .idea
 *.pyc
 media/user_*
+media/remote_repo_*
 localrepo
 credentials
 node_modules/
