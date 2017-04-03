@@ -65,14 +65,20 @@ class RemoteApp(AbstractApp):
 
     def update_from_json(self, app):
         self.name = app['name']
-        self.summary = app['summary']
-        self.description = app['description']
-        self.website = app['webSite']
-        self._update_icon(app['icon'])
-        self._update_categories(app['categories'])
-        date_added = datetime.datetime.fromtimestamp(app['added'] / 1000, timezone.utc)
-        if self.added_date > date_added:
-            self.added_date = date_added
+        if 'summary' in app:
+            self.summary = app['summary']
+        if 'description' in app:
+            self.description = app['description']
+        if 'webSite' in app:
+            self.website = app['webSite']
+        if 'icon' in app:
+            self._update_icon(app['icon'])
+        if 'categories' in app:
+            self._update_categories(app['categories'])
+        if 'added' in app:
+            date_added = datetime.datetime.fromtimestamp(app['added'] / 1000, timezone.utc)
+            if self.added_date > date_added:
+                self.added_date = date_added
         self.save()
 
     def _update_icon(self, icon_name):

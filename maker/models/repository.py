@@ -116,9 +116,10 @@ class RemoteRepository(AbstractRepository):
             self.save()  # to ensure the primary key exists, to be used for the file path
             self.delete_old_icon()
             self.icon.save(repo_index['repo']['icon'], BytesIO(r.content), save=False)
-            self.save()
         except Exception as e:
             logging.warning("Could not download repository icon from %s. %s" % (icon_url, e))
+
+        self.save()
 
         if update_apps:
             self._update_apps(repo_index['apps'])
