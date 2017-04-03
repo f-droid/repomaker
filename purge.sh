@@ -1,4 +1,5 @@
 rm -r localrepo/user*
+rm -r localrepo/packages
 rm -r media/user*
 rm -r media/remote_repo*
 rm maker/migrations/0*

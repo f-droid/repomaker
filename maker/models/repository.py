@@ -318,6 +318,7 @@ class Repository(AbstractRepository):
         for storage in S3Storage.objects.filter(repo=self):
             storage.publish()
 
+        # TODO only set this if something was actually published
         self.last_publication_date = timezone.now()
 
     class Meta(AbstractRepository.Meta):

@@ -82,12 +82,12 @@
 
 		{% if apks %}
 		<ul class="mdc-list">
-			{% for apk in apks %}
-			<li><h4>{{ apk.version_name }} <span style="font-weight: normal; font-size: 75%;">({{ apk.version_code }})</span></h4>
+			{% for pointer in apks %}
+			<li><h4>{{ pointer.apk.version_name }} <span style="font-weight: normal; font-size: 75%;">({{ pointer.apk.version_code }})</span></h4>
 				<ul class="mdc-list mdc-list--dense">
-					<li class="mdc-list-item">Size: {{ apk.size|filesizeformat }}</li>
-					<li class="mdc-list-item">File: {{ apk.file.name }}</li>
-					<li class="mdc-list-item">Hash ({{ apk.hash_type }}): {{ apk.hash }}</li>
+					<li class="mdc-list-item">Size: {{ pointer.apk.size|filesizeformat }}</li>
+					<li class="mdc-list-item">File: {{ pointer.file.name }}</li>
+					<li class="mdc-list-item">Hash ({{ pointer.apk.hash_type }}): {{ pointer.apk.hash }}</li>
 				</ul>
 			</li>
 			{% endfor %}

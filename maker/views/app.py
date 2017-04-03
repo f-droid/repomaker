@@ -1,12 +1,11 @@
 from django.db.models import Q
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from maker.models import App, Apk
+from maker.models import App, ApkPointer
 from maker.models.category import Category
 from . import BaseModelForm
 from .repository import RepositoryAuthorizationMixin
@@ -14,7 +13,7 @@ from .repository import RepositoryAuthorizationMixin
 
 class ApkForm(ModelForm):
     class Meta:
-        model = Apk
+        model = ApkPointer
         fields = ['file']
         labels = {
             'file': 'Select APK file for upload',
@@ -22,37 +21,26 @@ class ApkForm(ModelForm):
 
 
 class AppCreateView(RepositoryAuthorizationMixin, CreateView):
-    model = Apk
+    model = ApkPointer
     form_class = ApkForm
     template_name = "maker/app/add.html"
 
     def form_valid(self, form):
-        repo = self.get_repo()
-        app = App(repo=repo)  # create temporary app for APK
-        app.save()
-        form.instance.app = app
-
+        form.instance.repo = self.get_repo()
+        pointer = form.save()  # needed to save file to disk for scanning
         try:
-            result = super(AppCreateView, self).form_valid(form)
-            apk = self.object
-            apk_result = apk.store_data_from_file()
-            if apk_result is not None:
-                apk.delete()
-                app.delete()
-                return apk_result
+            pointer.initialize()
         except Exception as e:
-            form.instance.delete()
-            if app.id == form.instance.app.id:  # app did not exist already
-                app.delete()
+            pointer.delete()
             raise e
 
-        if app.id != apk.app.id:  # app did exist already, show it
-            return HttpResponseRedirect(reverse('app', args=[repo.pk, apk.app.pk]))
-        return result
+        if pointer.app.summary != '':  # app did exist already, show it
+            return HttpResponseRedirect(reverse('app', args=[pointer.repo.pk, pointer.app.pk]))
+        return super(AppCreateView, self).form_valid(form)
 
     def get_success_url(self):
         # edit new app
-        return reverse_lazy('edit_app', kwargs={'repo_id': self.object.app.repo.pk,
+        return reverse_lazy('edit_app', kwargs={'repo_id': self.object.repo.pk,
                                                 'app_id': self.object.app.pk})
 
 
@@ -70,7 +58,7 @@ class AppDetailView(RepositoryAuthorizationMixin, DetailView):
         app = context['app']
         if app.name is None or app.name == '':
             raise RuntimeError("App has not been created properly.")
-        context['apks'] = Apk.objects.filter(app=app).order_by('-version_code')
+        context['apks'] = ApkPointer.objects.filter(app=app).order_by('-apk__version_code')
         return context
 
 

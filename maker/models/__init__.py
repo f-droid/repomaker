@@ -1,4 +1,4 @@
-from .apk import Apk
+from .apk import Apk, ApkPointer, RemoteApkPointer
 from .app import App, RemoteApp
 from .category import Category
 from .repository import Repository, RemoteRepository
