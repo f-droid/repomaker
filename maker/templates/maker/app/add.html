@@ -20,4 +20,37 @@
 	</form>
 </div>
 
+<p></p>
+
+{% if repos and apps %}
+<div class="mdc-layout-grid">
+	<div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-2"
+		 style="padding:1em; justify-content: flex-start;">
+		Remote Repos
+		{% for repo in repos %}
+		<p><img src="{{ repo.icon.url }}" style="height: 32px;"/> {{ repo }}</p>
+		{% endfor %}
+		<p></p>
+		<section class="mdc-card__actions">
+			<a href="{% url 'add_remote_repo' %}">
+				<button class="mdc-button mdc-button--raised mdc-button--compact mdc-card__action">Add</button>
+			</a>
+		</section>
+	</div>
+
+	<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-10">
+		{% for app in apps %}
+		<div class="mdc-card mdc-ripple-surface" style="width: 250px;height:400px;padding:10px;display:inline-table;margin-right:10px;margin-bottom:10px;">
+			<section class="mdc-card__media"
+					 style="background-image: url('{{ app.icon.url }}'); background-size: cover;  background-repeat: no-repeat;  height: 230px;"></section>
+			<section class="mdc-card__primary">
+				<h1 class="mdc-card__title mdc-card__title--large">{{ app.name }}</h1>
+				<h2 class="mdc-card__subtitle">{{ app.summary }}</h2>
+			</section>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endif %}
+
 {% endblock content %}

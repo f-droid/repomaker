@@ -5,7 +5,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from maker.models import App, ApkPointer
+from maker.models import RemoteRepository, App, RemoteApp, ApkPointer
 from maker.models.category import Category
 from . import BaseModelForm
 from .repository import RepositoryAuthorizationMixin
@@ -24,6 +24,12 @@ class AppCreateView(RepositoryAuthorizationMixin, CreateView):
     model = ApkPointer
     form_class = ApkForm
     template_name = "maker/app/add.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(AppCreateView, self).get_context_data(**kwargs)
+        context['repos'] = RemoteRepository.objects.filter(users__id=self.request.user.id)
+        context['apps'] = RemoteApp.objects.filter(repo__in=context['repos'])
+        return context
 
     def form_valid(self, form):
         form.instance.repo = self.get_repo()
