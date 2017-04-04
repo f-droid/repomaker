@@ -1,4 +1,5 @@
 import datetime
+import logging
 import os
 from io import BytesIO
 
@@ -27,7 +28,6 @@ class AbstractApp(models.Model):
                              default=settings.APP_DEFAULT_ICON)
     category = models.ManyToManyField(Category, blank=True, limit_choices_to={'user': None})
     added_date = models.DateTimeField(default=timezone.now)
-    last_updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -54,6 +54,7 @@ class AbstractApp(models.Model):
 
 class App(AbstractApp):
     repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
+    last_updated_date = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
         return reverse('app', kwargs={'repo_id': self.repo.pk, 'app_id': self.pk})
@@ -66,8 +67,23 @@ class App(AbstractApp):
 class RemoteApp(AbstractApp):
     repo = models.ForeignKey(RemoteRepository, on_delete=models.CASCADE)
     icon_etag = models.CharField(max_length=128, blank=True)
+    last_updated_date = models.DateTimeField(blank=True)
 
     def update_from_json(self, app):
+        """
+        Updates the data for this app.
+        :param app: A JSON app object from the repository v1 index.
+        :return: True if app changed, False otherwise
+        """
+
+        # don't update if app hasn't changed since last update
+        last_update = datetime.datetime.fromtimestamp(app['lastUpdated'] / 1000, timezone.utc)
+        if self.last_updated_date and self.last_updated_date >= last_update:
+            logging.info("Skipping update of %s, because did not change." % self)
+            return False
+        else:
+            self.last_updated_date = last_update
+
         self.name = app['name']
         if 'summary' in app:
             self.summary = app['summary']
@@ -84,6 +100,7 @@ class RemoteApp(AbstractApp):
             if self.added_date > date_added:
                 self.added_date = date_added
         self.save()
+        return True
 
     def _update_icon(self, icon_name):
         url = self.repo.url + '/icons-640/' + icon_name

@@ -1,3 +1,4 @@
+import datetime
 import logging
 import os
 
@@ -27,7 +28,29 @@ class Apk(models.Model):
     added_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.file.name
+        return self.package_id + " " + str(self.version_code) + " " + self.file.name
+
+    @staticmethod
+    def from_json(package_info):
+        """
+        Returns an Apk object created from index v1 JSON package information.
+
+        Attention: This only returns the object, but does not save it.
+        """
+        apk = Apk(
+            package_id=package_info['packageName'],
+            version_name=package_info['versionName'],
+            size=package_info['size'],
+            hash=package_info['hash'],
+            hash_type=package_info['hashType'],
+            added_date=datetime.datetime.fromtimestamp(package_info['added'] / 1000,
+                                                       timezone.utc)
+        )
+        if 'versionCode' in package_info:
+            apk.version_code = package_info['versionCode']
+        if 'sig' in package_info:
+            apk.signature = package_info['sig']
+        return apk
 
     def delete_if_no_pointers(self):
         # TODO delete Apk if there are no other pointers
@@ -103,14 +126,16 @@ class ApkPointer(AbstractApkPointer):
                 hash=apk_info['hash'],
                 hash_type=apk_info['hashType']
             )
-            # hardlink/copy file
+            apk.save()
+            self.apk = apk
+
+        # hardlink/copy file if it does not exist, yet
+        if not self.apk.file:
             source = self.file.name
             target = get_apk_file_path(None, os.path.basename(self.file.name))
             target = self.file.storage.link(source, target)
-            apk.file.name = target
-
-            apk.save()
-            self.apk = apk
+            self.apk.file.name = target
+            self.apk.save()
 
     def _attach_app(self, apk_info):
         """
@@ -150,6 +175,9 @@ class ApkPointer(AbstractApkPointer):
                     self.app.icon.save(apk_info['icon'], File(open(icon_path, 'rb')), save=False)
             self.app.save()
 
+    class Meta(AbstractApkPointer.Meta):
+        unique_together = (("apk", "app"),)
+
 
 class RemoteApkPointer(AbstractApkPointer):
     app = models.ForeignKey(RemoteApp, on_delete=models.CASCADE)
@@ -157,6 +185,9 @@ class RemoteApkPointer(AbstractApkPointer):
 
     def __str__(self):
         return self.app.__str__() + " - " + super().__str__()
+
+    class Meta(AbstractApkPointer.Meta):
+        unique_together = (("apk", "app"),)
 
 
 @receiver(post_delete, sender=Apk)

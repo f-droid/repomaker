@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^(?P<repo_id>[0-9]+)/$', RepositoryDetailView.as_view(), name='repo'),
     # Remote Repo
     url(r'^remote/add$', RemoteRepositoryCreateView.as_view(), name='add_remote_repo'),
+    url(r'^remote/(?P<repo_id>[0-9]+)/update/$$', views.remote_update, name='remote_update'),
     # App
     url(r'^(?P<repo_id>[0-9]+)/app/add/$', AppCreateView.as_view(), name='add_app'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/$', AppDetailView.as_view(), name='app'),

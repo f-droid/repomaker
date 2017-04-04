@@ -122,29 +122,55 @@ class RemoteRepository(AbstractRepository):
         self.save()
 
         if update_apps:
-            self._update_apps(repo_index['apps'])
-            # TODO update apk information as well
-            # repo_index['packages'])
+            self._update_apps(repo_index['apps'], repo_index['packages'])
 
-    def _update_apps(self, apps):
+    def _update_apps(self, apps, packages):
         from maker.models.app import RemoteApp
         # update the apps from this repo and remember all package names we have seen
         package_names = []
         for app in apps:
+            if app['packageName'] not in packages:
+                logging.info("App %s has no packages, so ignore it." % app['packageName'])
+                continue
+
+            # query for existing remote apps, if this repo was already saved
             if self.pk:
-                query_set = RemoteApp.objects.filter(repo__pk=self.pk,
-                                                     package_id=app['packageName'])
-                if query_set.exists():
-                    query_set.get().update_from_json(app)
-                    package_names.append(app['packageName'])
-                    continue
-            # app does not exist, so update it
-            new_app = RemoteApp(package_id=app['packageName'], repo=self)
-            new_app.update_from_json(app)
+                query_set = RemoteApp.objects.filter(repo=self, package_id=app['packageName'])
+
+            # update existing app or create a new one
+            if self.pk and query_set.exists():
+                app_obj = query_set.get()
+            else:
+                app_obj = RemoteApp(package_id=app['packageName'], repo=self)
             package_names.append(app['packageName'])
+            changed = app_obj.update_from_json(app)  # this also saves the app_obj
+
+            if changed:
+                # update packages belonging to app
+                for package in packages[app['packageName']]:
+                    self._update_package(app_obj, package)
 
         # TODO remove apps that no longer exist
         print(package_names)
+
+    def _update_package(self, app, package_info):
+        from maker.models import Apk, RemoteApkPointer
+
+        apks = Apk.objects.filter(package_id=package_info['packageName'], hash=package_info['hash'])
+        if apks.exists():
+            apk = apks.get()
+        else:
+            apk = Apk.from_json(package_info)
+            apk.save()
+
+        pointers = RemoteApkPointer.objects.filter(apk=apk, app=app)
+        if not pointers.exists():
+            pointer = RemoteApkPointer(
+                apk=apk,
+                app=app,
+                url=self.url + "/" + package_info['apkName'],
+            )
+            pointer.save()
 
     class Meta(AbstractRepository.Meta):
         verbose_name_plural = "Remote Repositories"

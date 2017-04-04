@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 
 from maker import DEFAULT_USER_NAME
-from maker.models import Repository
+from maker.models import RemoteRepository, Repository
 
 
 # TODO remove when not needed anymore for testing
@@ -28,6 +28,16 @@ def publish(request, repo_id):
 
     repo.publish()
     return HttpResponse("Published")
+
+
+# TODO remove when not needed anymore for testing
+def remote_update(request, repo_id):
+    repo = get_object_or_404(RemoteRepository, pk=repo_id)
+    if request.user not in repo.users.all():
+        return HttpResponseForbidden()
+
+    repo.update_index()
+    return HttpResponse("Remote Repo Updated")
 
 
 class BaseModelForm(ModelForm):
