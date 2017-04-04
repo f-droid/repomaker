@@ -5,7 +5,7 @@ from io import BytesIO
 
 import requests
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
@@ -62,6 +62,16 @@ class App(AbstractApp):
     def delete_app_icons_from_repo(self):
         # TODO actually delete the app icons in REPODIR from disk
         pass
+
+    @staticmethod
+    def from_remote_app(repo, app):
+        """
+        Returns an App in :param repo from the given RemoteApp :param app.
+
+        Note that it does exclude the category. You need to add these after saving the app.
+        """
+        return App(repo=repo, package_id=app.package_id, name=app.name, summary=app.summary,
+                   description=app.description, website=app.website, icon=app.icon)
 
 
 class RemoteApp(AbstractApp):
@@ -124,6 +134,38 @@ class RemoteApp(AbstractApp):
             except ObjectDoesNotExist:
                 # Drop the unknown category, don't create new categories automatically here
                 pass
+
+    def get_latest_apk(self):
+        """
+        Returns this app's latest Apk object.
+        """
+        from .apk import RemoteApkPointer
+        pointer = RemoteApkPointer.objects.filter(app=self).order_by('-apk__version_code').all()[0]
+        return pointer.apk
+
+    def add_to_repo(self, repo):
+        from .apk import ApkPointer
+        apps = App.objects.filter(repo=repo, package_id=self.package_id)
+        if apps.exists():
+            raise ValidationError("This app does already exist in your repository.")
+
+        # add app
+        app = App.from_remote_app(repo, self)
+        app.save()
+        app.category = self.category.all()
+        app.save()
+
+        # add only latest APK and download it if necessary
+        apk = self.get_latest_apk()
+        if not apk.file:
+            # TODO download APK file
+            pass
+
+        # create a local pointer to the APK
+        pointer = ApkPointer(apk=apk, repo=repo, app=app)
+        # TODO link/copy file to local repo
+        pointer.save()
+        return app
 
 
 @receiver(post_delete, sender=App)

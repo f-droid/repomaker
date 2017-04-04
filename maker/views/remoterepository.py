@@ -1,11 +1,12 @@
 import urllib.parse
 
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from fdroidserver import index
 
-from maker.models import RemoteRepository, Repository
+from maker.models import RemoteRepository, Repository, RemoteApp
+from maker.views.repository import RepositoryAuthorizationMixin
 from . import BaseModelForm, LoginOrSingleUserRequiredMixin
 
 
@@ -69,3 +70,36 @@ class RemoteRepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
     def get_success_url(self):
         # TODO point this to some sort of remote repo overview or detail view
         return reverse_lazy('index')
+
+
+class RemoteAppCreateView(RepositoryAuthorizationMixin, CreateView):
+    template_name = "maker/app/remote_add.html"
+    fields = []
+    object = None
+
+    def get_queryset(self):
+        remote_repo_id = self.kwargs['remote_repo_id']
+        app_id = self.kwargs['app_id']
+        return RemoteApp.objects.filter(repo__id=remote_repo_id,
+                                        repo__users__id=self.request.user.id, pk=app_id)
+
+    def get_context_data(self, **kwargs):
+        context = super(RemoteAppCreateView, self).get_context_data(**kwargs)
+        context['app'] = self.get_queryset().get()
+        context['repo'] = self.get_repo()
+        return context
+
+    def form_valid(self, form):
+        # ignore the form
+        if not self.get_queryset().exists():
+            return Http404()
+
+        remote_app = self.get_queryset().get()
+        self.object = remote_app.add_to_repo(self.get_repo())
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        # edit new app
+        return reverse_lazy('app', kwargs={'repo_id': self.object.repo.pk,
+                                           'app_id': self.object.pk})

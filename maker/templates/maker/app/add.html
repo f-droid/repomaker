@@ -27,8 +27,15 @@
 	<div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-2"
 		 style="padding:1em; justify-content: flex-start;">
 		Remote Repos
+		<p>
+			<a href="{% url 'add_app' repo_id %}">All</a>
+		</p>
 		{% for repo in repos %}
-		<p><img src="{{ repo.icon.url }}" style="height: 32px;"/> {{ repo }}</p>
+		<p>
+			<a href="{% url 'add_app_from_remote' repo_id repo.id %}">
+				<img src="{{ repo.icon.url }}" style="height: 32px;"/> {{ repo }}
+			</a>
+		</p>
 		{% endfor %}
 		<p></p>
 		<section class="mdc-card__actions">
@@ -40,14 +47,17 @@
 
 	<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-10">
 		{% for app in apps %}
-		<div class="mdc-card mdc-ripple-surface" style="width: 250px;height:400px;padding:10px;display:inline-table;margin-right:10px;margin-bottom:10px;">
-			<section class="mdc-card__media"
-					 style="background-image: url('{{ app.icon.url }}'); background-size: cover;  background-repeat: no-repeat;  height: 230px;"></section>
-			<section class="mdc-card__primary">
-				<h1 class="mdc-card__title mdc-card__title--large">{{ app.name }}</h1>
-				<h2 class="mdc-card__subtitle">{{ app.summary }}</h2>
-			</section>
-		</div>
+		<a href="{% url 'add_remote_app' repo_id app.repo.id app.id %}" class="rm-no-underline">
+			<div class="mdc-card mdc-ripple-surface"
+				 style="width: 250px;height:400px;padding:10px;display:inline-table;margin-right:10px;margin-bottom:10px;">
+				<section class="mdc-card__media"
+						 style="background-image: url('{{ app.icon.url }}'); background-size: cover;  background-repeat: no-repeat;  height: 230px;"></section>
+				<section class="mdc-card__primary">
+					<h1 class="mdc-card__title mdc-card__title--large">{{ app.name }}</h1>
+					<h2 class="mdc-card__subtitle">{{ app.summary }}</h2>
+				</section>
+			</div>
+		</a>
 		{% endfor %}
 	</div>
 </div>

@@ -1,0 +1,34 @@
+{% extends "../base.html" %}
+{% load sass_tags %}
+
+{% block title %}Add App{% endblock %}
+
+{% block head %}
+<link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
+{% endblock head %}
+
+
+{% block content %}
+
+<h1>Add {{ app.name }} to {{ repo.name }}</h1>
+
+<div class="mdc-card"
+	 style="height:400px;padding:10px;display:inline-table;margin-right:10px;margin-bottom:10px;">
+	<section class="mdc-card__media"
+			 style="background-image: url('{{ app.icon.url }}'); background-size: contain;  background-repeat: no-repeat;  height: 230px;"></section>
+	<section class="mdc-card__primary">
+		<h1 class="mdc-card__title mdc-card__title--large">{{ app.name }} {{ app.get_latest_apk.version_name }}</h1>
+		<h2 class="mdc-card__subtitle">{{ app.summary }}</h2>
+	</section>
+	<section class="mdc-card__supporting-text">{{ app.description }}</section>
+</div>
+
+<div class="rm-form">
+	<form action="" enctype="multipart/form-data" method="post">
+		{% csrf_token %}
+		{% include '../form.html' %}
+		<input type="submit" value="Add App to {{ repo.name }}"/>
+	</form>
+</div>
+
+{% endblock content %}

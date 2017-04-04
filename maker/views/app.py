@@ -27,8 +27,12 @@ class AppCreateView(RepositoryAuthorizationMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(AppCreateView, self).get_context_data(**kwargs)
+        context['repo_id'] = self.kwargs['repo_id']
         context['repos'] = RemoteRepository.objects.filter(users__id=self.request.user.id)
-        context['apps'] = RemoteApp.objects.filter(repo__in=context['repos'])
+        if 'remote_repo_id' in self.kwargs:
+            context['apps'] = RemoteApp.objects.filter(repo__pk=self.kwargs['remote_repo_id'])
+        else:
+            context['apps'] = RemoteApp.objects.filter(repo__in=context['repos'])
         return context
 
     def form_valid(self, form):

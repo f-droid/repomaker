@@ -31,12 +31,12 @@ def publish(request, repo_id):
 
 
 # TODO remove when not needed anymore for testing
-def remote_update(request, repo_id):
-    repo = get_object_or_404(RemoteRepository, pk=repo_id)
-    if request.user not in repo.users.all():
+def remote_update(request, remote_repo_id):
+    remote_repo = get_object_or_404(RemoteRepository, pk=remote_repo_id)
+    if request.user not in remote_repo.users.all():
         return HttpResponseForbidden()
 
-    repo.update_index()
+    remote_repo.update_index()
     return HttpResponse("Remote Repo Updated")
 
 
@@ -52,6 +52,8 @@ class LoginOrSingleUserRequiredMixin(LoginRequiredMixin):
     It verifies that the current user is authenticated
     or logs in the default user in single-user mode.
     """
+    request = None
+    kwargs = None
 
     def dispatch(self, request, *args, **kwargs):
         if settings.SINGLE_USER_MODE and not request.user.is_authenticated:
