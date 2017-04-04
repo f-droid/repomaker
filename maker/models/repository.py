@@ -150,8 +150,8 @@ class RemoteRepository(AbstractRepository):
                 for package in packages[app['packageName']]:
                     self._update_package(app_obj, package)
 
-        # TODO remove apps that no longer exist
-        print(package_names)
+        # remove apps that no longer exist
+        self._remove_old_apps(package_names)
 
     def _update_package(self, app, package_info):
         from maker.models import Apk, RemoteApkPointer
@@ -171,6 +171,18 @@ class RemoteRepository(AbstractRepository):
                 url=self.url + "/" + package_info['apkName'],
             )
             pointer.save()
+
+    def _remove_old_apps(self, packages):
+        """
+        Removes old apps from the database and this repository.
+
+        :param packages: A list of package names that should not be removed
+        """
+        from maker.models.app import RemoteApp
+        old_apps = RemoteApp.objects.filter(repo=self).exclude(package_id__in=packages)
+        if old_apps.exists():
+            for app in old_apps.all():
+                app.delete()
 
     class Meta(AbstractRepository.Meta):
         verbose_name_plural = "Remote Repositories"
