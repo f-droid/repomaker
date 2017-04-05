@@ -57,7 +57,8 @@ class RemoteRepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
 
         # download repo index and apply information to instance
         try:
-            form.instance.update_index()
+            form.instance.update_index(update_apps=False)
+            form.instance.update_async()  # schedule an async update for the apps as well
         except index.VerificationException as e:
             form.add_error('url', "Could not validate repository: %s" % e)
             return self.form_invalid(form)

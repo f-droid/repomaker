@@ -17,9 +17,9 @@ from fdroidserver import index
 from fdroidserver import server
 from fdroidserver import update
 
+from maker import tasks
 from maker.storage import REPO_DIR
 from maker.storage import get_media_file_path, get_remote_repo_path, get_repo_path
-from maker.tasks import update_repo
 
 keydname = "CN=localhost.localdomain, OU=F-Droid"
 
@@ -71,10 +71,20 @@ class AbstractRepository(models.Model):
 class RemoteRepository(AbstractRepository):
     users = models.ManyToManyField(User)
     pre_installed = models.BooleanField(default=False)
-    last_change_date = models.DateTimeField(auto_now=True)
+    last_change_date = models.DateTimeField()
 
     def get_path(self):
         return os.path.join(settings.REPO_ROOT, get_remote_repo_path(self))
+
+    def update_async(self):
+        """
+        Schedules the repository to be updated asynchronously from remote location
+        """
+        if self.update_scheduled:
+            return  # no need to update a repo twice with same data
+        self.update_scheduled = True
+        self.save()
+        tasks.update_remote_repo(self.id)
 
     def update_index(self, update_apps=True):
         """
@@ -102,7 +112,11 @@ class RemoteRepository(AbstractRepository):
         # update repository's metadata
         self.name = repo_index['repo']['name']
         self.description = repo_index['repo']['description']
-        self.last_change_date = repo_index['repo']['timestamp']
+        if update_apps:
+            self.last_change_date = repo_change
+        else:
+            # apps will be updated asynchronously soon, so this allows the update to pass
+            self.last_change_date = datetime.datetime.fromtimestamp(0, timezone.utc)
         if not self.public_key:
             self.public_key = repo_index['repo']['pubkey']
 
@@ -293,7 +307,7 @@ class Repository(AbstractRepository):
             return  # no need to update a repo twice with same data
         self.update_scheduled = True
         self.save()
-        update_repo(self.id)
+        tasks.update_repo(self.id)
 
     def update(self):
         """

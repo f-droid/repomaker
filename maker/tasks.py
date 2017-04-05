@@ -21,6 +21,24 @@ def update_repo(repo_id):
         repo.save()
 
 
+# TODO update remote repositories periodically
+# http://django-background-tasks.readthedocs.io/en/latest/#repeating-tasks
+@background(schedule=timezone.now())
+def update_remote_repo(remote_repo_id):
+    remote_repo = maker.models.repository.RemoteRepository.objects.get(pk=remote_repo_id)
+    if remote_repo.is_updating:
+        return  # don't update the same repo concurrently
+    remote_repo.update_scheduled = False
+    remote_repo.is_updating = True
+    remote_repo.save()
+
+    try:
+        remote_repo.update_index()
+    finally:
+        remote_repo.is_updating = False
+        remote_repo.save()
+
+
 @background(schedule=timezone.now())
 def download_apk(apk_id, url):
     apk = maker.models.apk.Apk.objects.get(pk=apk_id)
