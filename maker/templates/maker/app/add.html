@@ -22,7 +22,6 @@
 
 <p></p>
 
-{% if repos and apps %}
 <div class="mdc-layout-grid">
 	<div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-2"
 		 style="padding:1em; justify-content: flex-start;">
@@ -36,6 +35,8 @@
 				<img src="{{ repo.icon.url }}" style="height: 32px;"/> {{ repo }}
 			</a>
 		</p>
+		{% empty %}
+		<p>Sorry, but there are no remote repositories at the moment. Don't despair, you can add one below.</p>
 		{% endfor %}
 		<p></p>
 		<section class="mdc-card__actions">
@@ -58,9 +59,11 @@
 				</section>
 			</div>
 		</a>
+		{% empty %}
+		<p>There are no apps from remote repositories :(</p>
+		<p>If you just added a remote repository, wait for the apps to download and try again later.</p>
 		{% endfor %}
 	</div>
 </div>
-{% endif %}
 
 {% endblock content %}
