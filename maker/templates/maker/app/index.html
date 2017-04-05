@@ -37,7 +37,7 @@
 			</li>
 			{% endif %}
 			{% if app.description %}
-			<li class="mdc-list-item">
+			<li class="mdc-list-item" style="overflow: auto;">
 				<i class="mdc-list-item__start-detail material-icons">description</i>
 				Description: {{ app.description }}
 			</li>
@@ -45,7 +45,7 @@
 			{% if apks %}
 			<li class="mdc-list-item">
 				<i class="mdc-list-item__start-detail material-icons">gesture</i>
-				Signature: {{ apks.0.signature }}
+				Signature: {{ apks.0.apk.signature }}
 			</li>
 			{% endif %}
 			<li class="mdc-list-item">
@@ -84,11 +84,15 @@
 		<ul class="mdc-list">
 			{% for pointer in apks %}
 			<li><h4>{{ pointer.apk.version_name }} <span style="font-weight: normal; font-size: 75%;">({{ pointer.apk.version_code }})</span></h4>
+				{% if pointer.file %}
 				<ul class="mdc-list mdc-list--dense">
 					<li class="mdc-list-item">Size: {{ pointer.apk.size|filesizeformat }}</li>
 					<li class="mdc-list-item">File: {{ pointer.file.name }}</li>
 					<li class="mdc-list-item">Hash ({{ pointer.apk.hash_type }}): {{ pointer.apk.hash }}</li>
 				</ul>
+				{% else %}
+				<em>APK is still downloading...</em>
+				{% endif %}
 			</li>
 			{% endfor %}
 		</ul>
