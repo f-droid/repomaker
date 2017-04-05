@@ -1,7 +1,9 @@
 import datetime
 import logging
 import os
+from io import BytesIO
 
+import requests
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.exceptions import ValidationError
 from django.core.files import File
@@ -12,6 +14,7 @@ from django.utils import timezone
 from fdroidserver import common
 from fdroidserver import update
 
+from maker import tasks
 from maker.storage import get_apk_file_path, RepoStorage
 from .app import Repository, RemoteApp, App
 
@@ -26,9 +29,40 @@ class Apk(models.Model):
     hash = models.CharField(max_length=512, blank=True)
     hash_type = models.CharField(max_length=32, blank=True)
     added_date = models.DateTimeField(default=timezone.now)
+    is_downloading = models.BooleanField(default=False)
 
     def __str__(self):
         return self.package_id + " " + str(self.version_code) + " " + self.file.name
+
+    def download_async(self, url):
+        """
+        Downloads the APK file asynchronously if it is still missing.
+        """
+        if not self.file:
+            tasks.download_apk(self.pk, url)
+
+    def download(self, url):
+        """
+        Starts a blocking download of the APK file if it is still missing
+        and then saves it.
+
+        This also updates all pointers and links/copies the file to them.
+        """
+        if self.file:
+            return
+
+        # download and store file
+        file_name = get_apk_file_path(self, url.rsplit('/', 1)[-1])
+        r = requests.get(url)
+        if r.status_code != requests.codes.ok:
+            r.raise_for_status()
+        self.file.save(file_name, BytesIO(r.content), save=True)
+
+        # update apk pointers
+        pointers = ApkPointer.objects.filter(apk=self).all()
+        for pointer in pointers:
+            pointer.link_file_from_apk()
+            pointer.repo.update_async()
 
     @staticmethod
     def from_json(package_info):
@@ -97,6 +131,7 @@ class ApkPointer(AbstractApkPointer):
         """
         Scans the APK file and returns a dictionary of information.
         It also extracts icons and stores them in the repository on disk.
+
         :return: A dict of APK information or None
         """
         self.repo.get_config()
@@ -174,6 +209,24 @@ class ApkPointer(AbstractApkPointer):
                     self.app.delete_old_icon()
                     self.app.icon.save(apk_info['icon'], File(open(icon_path, 'rb')), save=False)
             self.app.save()
+
+    def link_file_from_apk(self):
+        """
+        Hardlinks/copies the APK file from Apk if it does not exist, yet.
+
+        This is the reverse of what happens in _attach_apk()
+        """
+        if self.file:
+            return  # there's a file already, so nothing to do here
+
+        # create the link/copy from source to target APK
+        source = self.apk.file.name
+        target = get_apk_file_path(self, os.path.basename(self.apk.file.name))
+        target = self.apk.file.storage.link(source, target)
+
+        # store the target filename in this pointer
+        self.file.name = target
+        self.save()
 
     class Meta(AbstractApkPointer.Meta):
         unique_together = (("apk", "app"),)

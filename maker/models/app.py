@@ -135,15 +135,26 @@ class RemoteApp(AbstractApp):
                 # Drop the unknown category, don't create new categories automatically here
                 pass
 
+    def get_latest_apk_pointer(self):
+        """
+        Returns this app's latest RemoteApkPointer object.
+        """
+        from .apk import RemoteApkPointer
+        return RemoteApkPointer.objects.filter(app=self).order_by('-apk__version_code').all()[0]
+
     def get_latest_apk(self):
         """
         Returns this app's latest Apk object.
         """
-        from .apk import RemoteApkPointer
-        pointer = RemoteApkPointer.objects.filter(app=self).order_by('-apk__version_code').all()[0]
-        return pointer.apk
+        return self.get_latest_apk_pointer().apk
 
     def add_to_repo(self, repo):
+        """
+        Adds this RemoteApp to the given local repository.
+
+        :param repo: The local repository the app should be added to
+        :return: The added App object
+        """
         from .apk import ApkPointer
         apps = App.objects.filter(repo=repo, package_id=self.package_id)
         if apps.exists():
@@ -155,16 +166,18 @@ class RemoteApp(AbstractApp):
         app.category = self.category.all()
         app.save()
 
-        # add only latest APK and download it if necessary
-        apk = self.get_latest_apk()
-        if not apk.file:
-            # TODO download APK file
-            pass
+        # add only latest APK
+        remote_pointer = self.get_latest_apk_pointer()
+        apk = remote_pointer.apk
 
         # create a local pointer to the APK
         pointer = ApkPointer(apk=apk, repo=repo, app=app)
-        # TODO link/copy file to local repo
         pointer.save()
+
+        # schedule APK file download if necessary, also updates all local pointers to that APK
+        if not apk.file:
+            apk.download_async(remote_pointer.url)
+
         return app
 
 

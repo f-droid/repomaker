@@ -19,3 +19,18 @@ def update_repo(repo_id):
     finally:
         repo.is_updating = False
         repo.save()
+
+
+@background(schedule=timezone.now())
+def download_apk(apk_id, url):
+    apk = maker.models.apk.Apk.objects.get(pk=apk_id)
+    if apk.is_downloading:
+        return  # don't download the same apk concurrently
+    apk.is_downloading = True
+    apk.save()
+
+    try:
+        apk.download(url)
+    finally:
+        apk.is_downloading = False
+        apk.save()
