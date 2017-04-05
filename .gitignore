@@ -7,3 +7,6 @@ localrepo
 credentials
 node_modules/
 /static/
+
+.idea/*
+!.idea/codeStyleSettings.xml

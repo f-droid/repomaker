@@ -1,4 +1,4 @@
-pip3 install -r requirements.txt && \
+pip3 install -r requirements.txt --user && \
 npm install && \
 python3 manage.py makemigrations background_task && \
 python3 manage.py makemigrations maker && \
