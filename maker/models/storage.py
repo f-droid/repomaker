@@ -6,12 +6,58 @@ from django.db import models
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import ugettext_lazy as _
 from fdroidserver import server
+from libcloud.storage.types import Provider
 
-from maker.storage import get_identity_file_path, RepoStorage
+from maker.storage import get_identity_file_path, RepoStorage, REPO_DIR
 from .repository import Repository
 
-
 UL = '\u00a1-\uffff'  # unicode letters range (must be a unicode string, not a raw string)
+
+
+class AbstractStorage(models.Model):
+    repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
+
+    @staticmethod
+    def get_name():
+        raise NotImplementedError()
+
+    def get_url(self):
+        raise NotImplementedError()
+
+    class Meta:
+        abstract = True
+
+
+class S3Storage(AbstractStorage):
+    REGION_CHOICES = (
+        (Provider.S3, 'US Standard'),
+    )
+    region = models.CharField(max_length=32, choices=REGION_CHOICES, default=Provider.S3)
+    bucket = models.CharField(max_length=128)
+    accesskeyid = models.CharField(max_length=128)
+    secretkey = models.CharField(max_length=255)
+
+    def __str__(self):
+        return 's3://' + str(self.bucket)
+
+    @staticmethod
+    def get_name():
+        return "Amazon S3 Storage"
+
+    def get_url(self):
+        # This needs to be changed when more region choices are added
+        return "https://s3.amazonaws.com/" + str(self.bucket)
+
+    def get_repo_url(self):
+        return self.get_url() + "/fdroid/" + REPO_DIR
+
+    def publish(self):
+        logging.info("Publishing '%s' to %s" % (self.repo, self))
+        config = self.repo.get_config()
+        config['awsbucket'] = self.bucket
+        config['awsaccesskeyid'] = self.accesskeyid
+        config['awssecretkey'] = self.secretkey
+        server.update_awsbucket(REPO_DIR)
 
 
 @deconstructible
@@ -62,19 +108,23 @@ class PathValidator(RegexValidator):
     message = _('Enter a valid path.')
 
 
-class SshStorage(models.Model):
-    repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
+class SshStorage(AbstractStorage):
     username = models.CharField(max_length=64, validators=[UsernameValidator()])
     host = models.CharField(max_length=256, validators=[HostnameValidator()])
     path = models.CharField(max_length=512, validators=[PathValidator()])
     identity_file = models.FileField(upload_to=get_identity_file_path, storage=RepoStorage(),
                                      blank=True)
+    url = models.URLField(max_length=2048)
 
     def __str__(self):
-        return self.get_url()
+        return '%s@%s:%s' % (self.username, self.host, self.path)
+
+    @staticmethod
+    def get_name():
+        return "SSH Storage"
 
     def get_url(self):
-        return '%s@%s:%s' % (self.username, self.host, self.path)
+        return self.url
 
     def publish(self):
         logging.info("Publishing '%s' to %s" % (self.repo, self))

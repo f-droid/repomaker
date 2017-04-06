@@ -72,6 +72,7 @@ class RemoteRepository(AbstractRepository):
     users = models.ManyToManyField(User)
     pre_installed = models.BooleanField(default=False)
     last_change_date = models.DateTimeField()
+    # TODO save mirrors from index
 
     def get_path(self):
         return os.path.join(settings.REPO_ROOT, get_remote_repo_path(self))
@@ -229,10 +230,24 @@ class Repository(AbstractRepository):
             'keystorepassfile': '.fdroid.keystorepass.txt',
             'keypass': "uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes=",  # common.genpassword(),
             'keypassfile': '.fdroid.keypass.txt',
+            'nonstandardwebroot': True,  # TODO remove this when storage URLs are standardized
         })
         if self.public_key is not None:
             config['repo_pubkey'] = self.public_key
         return config
+
+    def add_storage_to_config(self, config):
+        """
+        Adds storage locations to config as mirrors.
+
+        This is done separately, because it requires extra database lookups.
+        """
+        from maker.models.storage import S3Storage, SshStorage
+        config['mirrors'] = []
+        for storage in S3Storage.objects.filter(repo=self).all():
+            config['mirrors'].append(storage.get_url())
+        for storage in SshStorage.objects.filter(repo=self).all():
+            config['mirrors'].append(storage.get_url())
 
     def chdir(self):
         """
@@ -317,7 +332,8 @@ class Repository(AbstractRepository):
         as it is meant to be run in a background task scheduled by update_async().
         """
         self.chdir()
-        self.get_config()
+        config = self.get_config()
+        self.add_storage_to_config(config)
 
         # Gather information about all the apk files in the repo directory, using
         # cached data if possible.
@@ -360,13 +376,13 @@ class Repository(AbstractRepository):
         as it is intended to be called automatically after each update.
         """
         # Publish to SSH Storage
-        from maker.models.sshstorage import SshStorage
+        from maker.models.storage import SshStorage
         for storage in SshStorage.objects.filter(repo=self):
             storage.publish()
 
         # Publish to Amazon S3
         self.chdir()  # expected by server.update_awsbucket()
-        from maker.models.s3storage import S3Storage
+        from maker.models import S3Storage
         for storage in S3Storage.objects.filter(repo=self):
             storage.publish()
 

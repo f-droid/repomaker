@@ -63,9 +63,16 @@
 </ul>
 {% else %}
 <p><b>Attention:</b> This repository has no remote storage. Add one to get your repository published.</p>
-<p><a href="{% url 'storage_ssh_add' repo.id %}">Add SSH Storage!</a></p>
-<p><a href="{% url 'storage_s3_add' repo.id %}">Add Amazon S3 Storage!</a></p>
 {% endif %}
+
+<p>
+	<a href="{% url 'storage_ssh_add' repo.id %}" class="rm-no-underline" style="margin-right:1em;">
+		<button class="mdc-button mdc-button--raised">Add SSH Storage</button>
+	</a>
+	<a href="{% url 'storage_s3_add' repo.id %}" class="rm-no-underline">
+		<button class="mdc-button mdc-button--raised">Add Amazon S3 Storage</button>
+	</a>
+</p>
 
 <h2>Apps</h2>
 

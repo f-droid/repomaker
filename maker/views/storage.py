@@ -7,12 +7,9 @@ from .repository import RepositoryAuthorizationMixin
 class StorageCreateView(RepositoryAuthorizationMixin, CreateView):
     template_name = 'maker/storage/form.html'
 
-    def get_storage_name(self):
-        raise NotImplementedError("Please implement this method")
-
     def get_context_data(self, **kwargs):
         context = super(StorageCreateView, self).get_context_data(**kwargs)
-        context['storage_name'] = self.get_storage_name()
+        context['storage_name'] = self.model.get_name()
         return context
 
     def form_valid(self, form):
@@ -26,12 +23,9 @@ class StorageCreateView(RepositoryAuthorizationMixin, CreateView):
 class StorageUpdateView(RepositoryAuthorizationMixin, UpdateView):
     template_name = 'maker/storage/form.html'
 
-    def get_storage_name(self):
-        raise NotImplementedError("Please implement this method")
-
     def get_context_data(self, **kwargs):
         context = super(StorageUpdateView, self).get_context_data(**kwargs)
-        context['storage_name'] = self.get_storage_name()
+        context['storage_name'] = self.model.get_name()
         return context
 
     def get_success_url(self):

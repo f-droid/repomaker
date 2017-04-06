@@ -1,11 +1,9 @@
 from django.conf import settings
-from django.forms import ModelForm, BooleanField
+from django.forms import BooleanField
 
 from maker.models import SshStorage
 from . import BaseModelForm
 from .storage import StorageCreateView, StorageUpdateView, StorageDeleteView
-
-NAME = "SSH Storage"
 
 
 class SshStorageForm(BaseModelForm):
@@ -15,11 +13,15 @@ class SshStorageForm(BaseModelForm):
 
     class Meta:
         model = SshStorage
-        fields = ['username', 'host', 'path']
+        fields = ['username', 'host', 'path', 'url']
         if settings.SINGLE_USER_MODE:
             fields += ['ignore_identity_file']
         labels = {
             'username': 'User Name',
+            'url': 'URL',
+        }
+        help_texts = {
+            'url': 'This is the location where the uploaded files can be accessed from.',
         }
 
 
@@ -27,16 +29,10 @@ class SshStorageCreate(StorageCreateView):
     model = SshStorage
     form_class = SshStorageForm
 
-    def get_storage_name(self):
-        return NAME
-
 
 class SshStorageUpdate(StorageUpdateView):
     model = SshStorage
     form_class = SshStorageForm
-
-    def get_storage_name(self):
-        return NAME
 
 
 class SshStorageDelete(StorageDeleteView):
