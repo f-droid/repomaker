@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "material-components-web": "*",
-    "material-design-icons": "*",
+    "material-design-icons-iconfont": ">=3.0.3",
     "roboto-fontface": "*"
   }
 }

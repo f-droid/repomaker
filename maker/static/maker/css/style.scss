@@ -1,4 +1,5 @@
-@import "_material-design-icons";
+$material-design-icons-font-path: unquote(get-setting(NODE_MODULES_URL) + 'material-design-icons-iconfont/dist/fonts/');
+@import "material-design-icons-iconfont/dist/material-design-icons.scss";
 
 $roboto-font-path: unquote(get-setting(NODE_MODULES_URL) + "roboto-fontface/fonts");
 @import "roboto-fontface/css/roboto/sass/roboto-fontface";
@@ -15,6 +16,10 @@ main {
 
 a.rm-no-underline {
 	text-decoration: none;
+}
+
+.mdc-toolbar {
+    padding: 1em;  // this became necessary with an update, bug?
 }
 
 .mdc-toolbar__title a, a.material-icons, .mdc-list-item a {
