@@ -7,10 +7,21 @@ and start from scratch after each update.
 
 # Requirements
 
+## Install
+
+* pip for installation of Python 3 dependencies `apt install python3-pip`
+
+## Runtime
+
 * keytool from Java Runtime Environment (JRE)
-  `apt install openjdk-7-jre-headless`
-* jarsigner from Java Development Kit (JDK)
-  `apt install openjdk-7-jdk`
+  `apt install openjdk-8-jre-headless`
+* apksigner `apt install apksigner` or alternatively jarsigner from Java Development Kit (JDK)
+  `apt install openjdk-8-jdk`
+* Android Asset Packaging Tool (aapt) `apt install aapt`
+
+## Development
+
+* npm to fetch CSS and JavaScript dependencies `apt install npm`
 
 # License
 
