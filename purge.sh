@@ -5,9 +5,11 @@ rm -r media/remote_repo*
 rm maker/migrations/0*
 mv maker/migrations/default_user.py maker/migrations/default_user.py.bak
 mv maker/migrations/default_categories.py maker/migrations/default_categories.py.bak
+mv maker/migrations/default_remote_repositories.py maker/migrations/default_remote_repositories.py.bak
 rm db.sqlite3
 python3 manage.py makemigrations maker
 mv maker/migrations/default_user.py.bak maker/migrations/default_user.py
 mv maker/migrations/default_categories.py.bak maker/migrations/default_categories.py
+mv maker/migrations/default_remote_repositories.py.bak maker/migrations/default_remote_repositories.py
 python3 manage.py migrate
 
