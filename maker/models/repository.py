@@ -298,7 +298,8 @@ class Repository(AbstractRepository):
         # save in database/media location
         f = BytesIO()
         try:
-            # TODO delete old QR code if there was one
+            if self.qrcode:
+                self.qrcode.delete(save=False)
             img.save(f, format='png')
             self.qrcode.save(self.fingerprint + ".png", ContentFile(f.getvalue()), False)
         finally:
