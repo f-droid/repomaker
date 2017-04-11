@@ -1,10 +1,14 @@
 import os
+import re
 
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
 
 REPO_DIR = 'repo'
+
+USER_RE = re.compile('^user_([0-9]+)$')
+REMOTE_REPO_RE = re.compile('^remote_repo_([0-9]+)$')
 
 
 def get_media_file_path(repo, filename):
