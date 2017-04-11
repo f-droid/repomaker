@@ -203,6 +203,7 @@ class ApkPointer(AbstractApkPointer):
         # apply latest info to the app itself
         if self.apk.version_code == latest_version:
             self.app.name = apk_info['name']
+            # TODO check if the icon will update automatically, if so just set path once above
             if 'icon' in apk_info and apk_info['icon'] is not None:
                 icon_path = os.path.join(self.repo.get_repo_path(), "icons-640", apk_info['icon'])
                 if os.path.isfile(icon_path):

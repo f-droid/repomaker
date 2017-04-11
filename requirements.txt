@@ -5,5 +5,5 @@ django-compressor
 django-sass-processor
 git+https://github.com/apache/libcloud.git@516018d050a5470afe4a07d33d1fcb26d0e1df18#egg=apache-libcloud
 #fdroidserver>=0.8.0
-#git+https://gitlab.com/grote/fdroidserver.git@7c34dd96f4b94b02bfb683e00827dfaa5ee7a149#egg=fdroidserver
-git+https://gitlab.com/fdroid/fdroidserver.git@d6310ed52c4b9be5dce9ea7ddbdc9b7c9b47e4b3#egg=fdroidserver
+git+https://gitlab.com/grote/fdroidserver.git@4d25113fa0f6ad923b6b71ff9c8cb139042b1f9e#egg=fdroidserver
+#git+https://gitlab.com/fdroid/fdroidserver.git@cb942168d5e58fcc20b7e23113374f3ae49c50d0#egg=fdroidserver

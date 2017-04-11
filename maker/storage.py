@@ -11,47 +11,44 @@ USER_RE = re.compile('^user_([0-9]+)$')
 REMOTE_REPO_RE = re.compile('^remote_repo_([0-9]+)$')
 
 
-def get_media_file_path(repo, filename):
+def get_repo_file_path(repo, filename):
     if hasattr(repo, 'user'):
-        return 'user_{0}/{1}'.format(repo.user.pk, filename)
+        return os.path.join(get_repo_path(repo), filename)
     else:
-        return 'remote_repo_{0}/{1}'.format(repo.pk, filename)
+        return os.path.join(get_remote_repo_path(repo), filename)
 
 
-def get_media_file_path_for_app(app, filename):
-    if hasattr(app.repo, 'user'):
-        return 'user_{0}/{1}'.format(app.repo.user.pk, filename)
-    else:
-        return 'remote_repo_{0}/{1}'.format(app.repo.pk, filename)
+def get_repo_file_path_for_app(app, filename):
+    return get_repo_file_path(app.repo, filename)
 
 
-def get_private_user_path(repo):
-    return 'user_{0}'.format(repo.user.pk)
+def get_repo_root_path(repo):
+    return os.path.join('user_{0}'.format(repo.user.pk), 'repo_{0}'.format(repo.pk))
 
 
 def get_repo_path(repo):
-    return os.path.join(get_private_user_path(repo), 'repo_{0}'.format(repo.pk))
+    return os.path.join(get_repo_root_path(repo), REPO_DIR)
 
 
 def get_remote_repo_path(repo):
-    return os.path.join('remote', 'repo_{0}'.format(repo.pk))
+    return os.path.join('remote_repo_{0}'.format(repo.pk))
 
 
 def get_apk_file_path(apk, filename):
     if hasattr(apk, 'repo'):
-        return os.path.join(get_repo_path(apk.repo), REPO_DIR, filename)
+        return os.path.join(apk.repo.get_repo_path(), filename)
     else:
         return os.path.join('packages', filename)
 
 
 def get_identity_file_path(storage, filename):
-    return os.path.join(get_repo_path(storage.repo), filename)
+    return os.path.join(storage.repo.get_private_path(), filename)
 
 
 class RepoStorage(FileSystemStorage):
     def __init__(self, file_permissions_mode=None, directory_permissions_mode=None):
-        super(RepoStorage, self).__init__(settings.REPO_ROOT, None, file_permissions_mode,
-                                          directory_permissions_mode)
+        super(RepoStorage, self).__init__(settings.MEDIA_ROOT, settings.MEDIA_URL,
+                                          file_permissions_mode, directory_permissions_mode)
 
     def link(self, source, target):
         """

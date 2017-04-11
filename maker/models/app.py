@@ -13,7 +13,7 @@ from django.urls import reverse
 from django.utils import timezone
 from fdroidserver import metadata
 
-from maker.storage import get_media_file_path_for_app
+from maker.storage import get_repo_file_path_for_app
 from .category import Category
 from .repository import Repository, RemoteRepository
 
@@ -24,7 +24,7 @@ class AbstractApp(models.Model):
     summary = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
     website = models.URLField(max_length=2048, blank=True)
-    icon = models.ImageField(upload_to=get_media_file_path_for_app,
+    icon = models.ImageField(upload_to=get_repo_file_path_for_app,
                              default=settings.APP_DEFAULT_ICON)
     category = models.ManyToManyField(Category, blank=True, limit_choices_to={'user': None})
     added_date = models.DateTimeField(default=timezone.now)
@@ -60,7 +60,7 @@ class App(AbstractApp):
         return reverse('app', kwargs={'repo_id': self.repo.pk, 'app_id': self.pk})
 
     def delete_app_icons_from_repo(self):
-        # TODO actually delete the app icons in REPODIR from disk
+        # TODO actually delete the app icons in self.repo.get_repo_dir()/icons* from disk
         pass
 
     @staticmethod
@@ -70,6 +70,7 @@ class App(AbstractApp):
 
         Note that it does exclude the category. You need to add these after saving the app.
         """
+        # TODO make our own copy of the icon
         return App(repo=repo, package_id=app.package_id, name=app.name, summary=app.summary,
                    description=app.description, website=app.website, icon=app.icon)
 

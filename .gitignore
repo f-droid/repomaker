@@ -3,7 +3,7 @@ db.sqlite3
 *.pyc
 media/user_*
 media/remote_repo_*
-localrepo
+private_repo
 credentials
 node_modules/
 /static/

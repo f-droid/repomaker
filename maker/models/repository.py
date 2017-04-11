@@ -19,7 +19,8 @@ from fdroidserver import update
 
 from maker import tasks
 from maker.storage import REPO_DIR
-from maker.storage import get_media_file_path, get_remote_repo_path, get_repo_path
+from maker.storage import get_repo_file_path, get_remote_repo_path, get_repo_root_path, \
+    get_repo_path
 
 keydname = "CN=localhost.localdomain, OU=F-Droid"
 
@@ -28,7 +29,7 @@ class AbstractRepository(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     url = models.URLField(max_length=2048)
-    icon = models.ImageField(upload_to=get_media_file_path, default=settings.REPO_DEFAULT_ICON)
+    icon = models.ImageField(upload_to=get_repo_file_path, default=settings.REPO_DEFAULT_ICON)
     public_key = models.TextField(blank=True)
     fingerprint = models.CharField(max_length=512, blank=True)
     update_scheduled = models.BooleanField(default=False)
@@ -75,7 +76,7 @@ class RemoteRepository(AbstractRepository):
     # TODO save mirrors from index
 
     def get_path(self):
-        return os.path.join(settings.REPO_ROOT, get_remote_repo_path(self))
+        return os.path.join(settings.MEDIA_ROOT, get_remote_repo_path(self))
 
     def update_async(self):
         """
@@ -206,15 +207,18 @@ class RemoteRepository(AbstractRepository):
 
 class Repository(AbstractRepository):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    qrcode = models.ImageField(upload_to=get_media_file_path, blank=True)
+    qrcode = models.ImageField(upload_to=get_repo_file_path, blank=True)
     created_date = models.DateTimeField(default=timezone.now)
     last_publication_date = models.DateTimeField(null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('repo', kwargs={'repo_id': self.pk})
 
+    def get_private_path(self):
+        return os.path.join(settings.PRIVATE_REPO_ROOT, get_repo_root_path(self))
+
     def get_path(self):
-        return os.path.join(settings.REPO_ROOT, get_repo_path(self))
+        return os.path.join(settings.MEDIA_ROOT, get_repo_root_path(self))
 
     def get_config(self):
         config = super().get_config()
@@ -225,11 +229,10 @@ class Repository(AbstractRepository):
             'repo_description': self.description,
             'repo_keyalias': "Key Alias",
             'keydname': keydname,
-            'keystore': "keystore.jks",  # common.default_config['keystore'],
-            'keystorepass': "uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes=",  # common.genpassword(),
-            'keystorepassfile': '.fdroid.keystorepass.txt',
-            'keypass': "uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes=",  # common.genpassword(),
-            'keypassfile': '.fdroid.keypass.txt',
+            'keystore': os.path.join(self.get_private_path(), 'keystore.jks'),
+            # TODO generate random passwords with common.genpassword() and store them in DB
+            'keystorepass': "uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes=",
+            'keypass': "uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes=",
             'nonstandardwebroot': True,  # TODO remove this when storage URLs are standardized
         })
         if self.public_key is not None:
@@ -301,12 +304,9 @@ class Repository(AbstractRepository):
             if self.qrcode:
                 self.qrcode.delete(save=False)
             img.save(f, format='png')
-            self.qrcode.save(self.fingerprint + ".png", ContentFile(f.getvalue()), False)
+            self.qrcode.save('qrcode.png', ContentFile(f.getvalue()), False)
         finally:
             f.close()
-
-        # save in repo
-        img.save(os.path.join(self.get_repo_path(), 'qrcode.png'), format='png')
 
     def generate_page(self):
         with open(os.path.join(self.get_repo_path(), 'index.html'), 'w') as file:
