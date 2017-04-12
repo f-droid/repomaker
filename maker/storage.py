@@ -4,7 +4,6 @@ import re
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
-
 REPO_DIR = 'repo'
 
 USER_RE = re.compile('^user_([0-9]+)$')
@@ -39,6 +38,11 @@ def get_apk_file_path(apk, filename):
         return os.path.join(apk.repo.get_repo_path(), filename)
     else:
         return os.path.join('packages', filename)
+
+
+def get_screenshot_file_path(screenshot, filename):
+    path = os.path.join(get_repo_path(screenshot.app.repo), screenshot.get_relative_path())
+    return os.path.join(path, filename)
 
 
 def get_identity_file_path(storage, filename):

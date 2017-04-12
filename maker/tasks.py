@@ -52,3 +52,9 @@ def download_apk(apk_id, url):
     finally:
         apk.is_downloading = False
         apk.save()
+
+
+@background(schedule=timezone.now())
+def download_remote_screenshot(screenshot_id, app_id):
+    screenshot = maker.models.screenshot.RemoteScreenshot.objects.get(pk=screenshot_id)
+    screenshot.download(app_id)

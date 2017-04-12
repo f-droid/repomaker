@@ -108,6 +108,13 @@
 
 	</div>
 
+	<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
+		 style="display: block; white-space: nowrap; overflow: auto; margin-right: 10px; margin-bottom: 10px;">
+		{% for screenshot in app.screenshot_set.all %}
+		<img src="{{ screenshot.get_url }}" style="display: inline-block; margin: 10px 0px 10px 10px;"/>
+		{% endfor %}
+	</div>
+
 </div>
 
 {% endblock content %}

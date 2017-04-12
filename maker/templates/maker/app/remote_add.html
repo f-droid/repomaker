@@ -23,6 +23,16 @@
 	<section class="mdc-card__supporting-text">{{ app.description }}</section>
 </div>
 
+<p></p>
+
+<div class="mdc-card" style="display: block; white-space: nowrap; overflow: auto; margin-right: 10px; margin-bottom: 10px;">
+{% for screenshot in app.remotescreenshot_set.all %}
+<img src="{{ screenshot.url }}" style="display: inline-block; margin: 10px 0px 10px 10px;"/>
+{% endfor %}
+</div>
+
+<p></p>
+
 <div class="rm-form">
 	<form action="" enctype="multipart/form-data" method="post">
 		{% csrf_token %}
@@ -30,5 +40,7 @@
 		<input type="submit" value="Add App to {{ repo.name }}"/>
 	</form>
 </div>
+
+<p></p>
 
 {% endblock content %}

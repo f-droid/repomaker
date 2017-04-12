@@ -19,8 +19,7 @@ from fdroidserver import update
 
 from maker import tasks
 from maker.storage import REPO_DIR
-from maker.storage import get_repo_file_path, get_remote_repo_path, get_repo_root_path, \
-    get_repo_path
+from maker.storage import get_repo_file_path, get_remote_repo_path, get_repo_root_path
 
 keydname = "CN=localhost.localdomain, OU=F-Droid"
 

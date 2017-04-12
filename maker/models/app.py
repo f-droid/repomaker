@@ -111,6 +111,8 @@ class RemoteApp(AbstractApp):
             if self.added_date > date_added:
                 self.added_date = date_added
         self.save()
+        if 'localized' in app:
+            self._update_screenshots(app['localized'])
         return True
 
     def _update_icon(self, icon_name):
@@ -136,6 +138,16 @@ class RemoteApp(AbstractApp):
                 # Drop the unknown category, don't create new categories automatically here
                 pass
 
+    def _update_screenshots(self, localized):
+        from maker.models import RemoteScreenshot
+        package_url = self.repo.url + '/' + self.package_id
+        for locale, types in localized.items():
+            locale_url = package_url + '/' + locale
+            for t, files in types.items():
+                type_url = locale_url + '/' + t
+                # TODO not only add, but also remove old screenshots again
+                RemoteScreenshot.add(locale, t, self, type_url, files)
+
     def get_latest_apk_pointer(self):
         """
         Returns this app's latest RemoteApkPointer object.
@@ -157,6 +169,7 @@ class RemoteApp(AbstractApp):
         :return: The added App object
         """
         from .apk import ApkPointer
+        from .screenshot import RemoteScreenshot
         apps = App.objects.filter(repo=repo, package_id=self.package_id)
         if apps.exists():
             raise ValidationError("This app does already exist in your repository.")
@@ -174,6 +187,10 @@ class RemoteApp(AbstractApp):
         # create a local pointer to the APK
         pointer = ApkPointer(apk=apk, repo=repo, app=app)
         pointer.save()
+
+        # schedule download of remote screenshots if available
+        for remote in RemoteScreenshot.objects.filter(app=self).all():
+            remote.download_async(app)
 
         # schedule APK file download if necessary, also updates all local pointers to that APK
         if not apk.file:
