@@ -4,6 +4,7 @@ from maker.views.app import AppCreateView, AppDetailView, AppUpdateView, AppDele
 from maker.views.remoterepository import RemoteRepositoryCreateView, RemoteAppCreateView
 from maker.views.repository import RepositoryListView, RepositoryCreateView, RepositoryDetailView
 from maker.views.s3storage import S3StorageCreate, S3StorageUpdate, S3StorageDelete
+from maker.views.screenshot import ScreenshotCreateView, ScreenshotDeleteView
 from maker.views.sshstorage import SshStorageCreate, SshStorageUpdate, SshStorageDelete
 from . import views
 
@@ -29,6 +30,12 @@ urlpatterns = [
         name='edit_app'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/delete/$', AppDeleteView.as_view(),
         name='delete_app'),
+
+    # App Screenshots
+    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/screenshot/add/$',
+        ScreenshotCreateView.as_view(), name='screenshot_add'),
+    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/screenshot/(?P<s_id>[0-9]+)/delete/$',
+        ScreenshotDeleteView.as_view(), name='screenshot_delete'),
 
     # Repo Operations
     url(r'^(?P<repo_id>[0-9]+)/update/$$', views.update, name='update'),
