@@ -3,6 +3,7 @@ db.sqlite3
 *.pyc
 media/user_*
 media/remote_repo_*
+media/packages
 private_repo
 credentials
 node_modules/
