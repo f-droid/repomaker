@@ -32,16 +32,6 @@ class AbstractApp(models.Model):
     def __str__(self):
         return self.name
 
-    def to_metadata_app(self):
-        meta = metadata.App()
-        meta.id = self.package_id
-        meta.WebSite = self.website
-        meta.Summary = self.summary
-        meta.Description = self.description
-        meta.added = timezone.make_naive(self.added_date)
-        meta.Categories = [category.name for category in self.category.all()]
-        return meta
-
     def delete_old_icon(self):
         icon_path = os.path.dirname(self.icon.path)
         if icon_path != settings.MEDIA_ROOT:
@@ -73,6 +63,29 @@ class App(AbstractApp):
         # TODO make our own copy of the icon
         return App(repo=repo, package_id=app.package_id, name=app.name, summary=app.summary,
                    description=app.description, website=app.website, icon=app.icon)
+
+    def to_metadata_app(self):
+        meta = metadata.App()
+        meta.id = self.package_id
+        meta.WebSite = self.website
+        meta.Summary = self.summary
+        meta.Description = self.description
+        meta.added = timezone.make_naive(self.added_date)
+        meta.Categories = [category.name for category in self.category.all()]
+        meta['localized'] = self._get_screenshot_dict()
+        return meta
+
+    def _get_screenshot_dict(self):
+        from . import Screenshot
+        localized = dict()
+        screenshots = Screenshot.objects.filter(app=self).all()
+        for s in screenshots:
+            if s.language_tag not in localized:
+                localized[s.language_tag] = dict()
+            if s.type not in localized[s.language_tag]:
+                localized[s.language_tag][s.type] = []
+            localized[s.language_tag][s.type].append(os.path.basename(s.file.name))
+        return localized
 
 
 class RemoteApp(AbstractApp):
