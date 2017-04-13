@@ -199,15 +199,16 @@ class RemoteApp(AbstractApp):
 
         # create a local pointer to the APK
         pointer = ApkPointer(apk=apk, repo=repo, app=app)
-        pointer.save()
+        if apk.file:
+            pointer.link_file_from_apk()  # this also saves the pointer
+        else:
+            pointer.save()
+            # schedule APK file download if necessary, also updates all local pointers to that APK
+            apk.download_async(remote_pointer.url)
 
         # schedule download of remote screenshots if available
         for remote in RemoteScreenshot.objects.filter(app=self).all():
             remote.download_async(app)
-
-        # schedule APK file download if necessary, also updates all local pointers to that APK
-        if not apk.file:
-            apk.download_async(remote_pointer.url)
 
         return app
 

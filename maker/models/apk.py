@@ -94,10 +94,9 @@ class Apk(models.Model):
 
 class AbstractApkPointer(models.Model):
     apk = models.ForeignKey(Apk, on_delete=models.CASCADE, null=True)
-    file = models.FileField(upload_to=get_apk_file_path, storage=RepoStorage())
 
     def __str__(self):
-        return self.file.name
+        return self.app.__str__() + " - " + str(self.apk.version_code)
 
     class Meta:
         abstract = True
@@ -106,9 +105,10 @@ class AbstractApkPointer(models.Model):
 class ApkPointer(AbstractApkPointer):
     repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
     app = models.ForeignKey(App, on_delete=models.CASCADE, null=True)
+    file = models.FileField(upload_to=get_apk_file_path, storage=RepoStorage())
 
     def __str__(self):
-        return self.app.__str__() + " - " + super().__str__()
+        return super().__str__() + " - " + self.file.name
 
     def initialize(self):
         """
@@ -236,7 +236,7 @@ class RemoteApkPointer(AbstractApkPointer):
     url = models.URLField(max_length=2048)
 
     def __str__(self):
-        return self.app.__str__() + " - " + super().__str__()
+        return super().__str__() + " - " + os.path.basename(self.url)
 
     class Meta(AbstractApkPointer.Meta):
         unique_together = (("apk", "app"),)
