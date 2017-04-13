@@ -6,6 +6,7 @@ from io import BytesIO
 import requests
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.core.files.base import ContentFile
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
@@ -60,9 +61,11 @@ class App(AbstractApp):
 
         Note that it does exclude the category. You need to add these after saving the app.
         """
-        # TODO make our own copy of the icon
+        # TODO check how the icon extracted to repo/icons-640 could be used instead
+        icon = ContentFile(app.icon.read())
+        icon.name = os.path.basename(app.icon.name)
         return App(repo=repo, package_id=app.package_id, name=app.name, summary=app.summary,
-                   description=app.description, website=app.website, icon=app.icon)
+                   description=app.description, website=app.website, icon=icon)
 
     def to_metadata_app(self):
         meta = metadata.App()
