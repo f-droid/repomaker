@@ -10,8 +10,8 @@ from django.shortcuts import get_object_or_404
 from django.views.static import serve
 
 from maker import DEFAULT_USER_NAME
-from maker.storage import USER_RE, REMOTE_REPO_RE
 from maker.models import RemoteRepository, Repository
+from maker.storage import USER_RE, REMOTE_REPO_RE
 
 
 # TODO remove when not needed anymore for testing

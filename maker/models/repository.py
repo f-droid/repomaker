@@ -12,14 +12,10 @@ from django.core.files.base import ContentFile
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-from fdroidserver import common
-from fdroidserver import index
-from fdroidserver import server
-from fdroidserver import update
+from fdroidserver import common, index, server, update
 
 from maker import tasks
-from maker.storage import REPO_DIR
-from maker.storage import get_repo_file_path, get_remote_repo_path, get_repo_root_path
+from maker.storage import REPO_DIR, get_repo_file_path, get_remote_repo_path, get_repo_root_path
 
 keydname = "CN=localhost.localdomain, OU=F-Droid"
 

@@ -3,8 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
 
-from maker.models import Repository
-from maker.models import SshStorage, S3Storage, App
+from maker.models import Repository, SshStorage, S3Storage, App
 from . import BaseModelForm, LoginOrSingleUserRequiredMixin
 
 

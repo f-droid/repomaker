@@ -4,15 +4,13 @@ import os
 from io import BytesIO
 
 import requests
-from django.core.exceptions import ObjectDoesNotExist
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.core.files import File
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.utils import timezone
-from fdroidserver import common
-from fdroidserver import update
+from fdroidserver import common, update
 
 from maker import tasks
 from maker.storage import get_apk_file_path, RepoStorage
