@@ -259,7 +259,5 @@ def apk_pointer_post_delete_handler(**kwargs):
 
 @receiver(post_delete, sender=RemoteApkPointer)
 def remote_apk_pointer_post_delete_handler(**kwargs):
-    apk = kwargs['instance']
-    logging.info("Deleting Remote APK Pointer: %s" % apk.file.name)
-    apk.file.delete(save=False)
-    apk.apk.delete_if_no_pointers()
+    remote_apk = kwargs['instance']
+    remote_apk.apk.delete_if_no_pointers()
