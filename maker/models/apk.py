@@ -85,8 +85,10 @@ class Apk(models.Model):
         return apk
 
     def delete_if_no_pointers(self):
-        # TODO delete Apk if there are no other pointers
-        pass
+        apk_pointers_exist = ApkPointer.objects.filter(apk=self).exists()
+        remote_apk_pointers_exist = RemoteApkPointer.objects.filter(apk=self).exists()
+        if not apk_pointers_exist and not remote_apk_pointers_exist:
+            self.delete()
 
     class Meta:
         unique_together = (("package_id", "hash"),)
