@@ -189,8 +189,8 @@ class ApkPointer(AbstractApkPointer):
                     latest_version = pointer.apk.version_code
                 if pointer.apk.signature != self.apk.signature:
                     raise ValidationError(
-                        'This app \'%s\' already exists in your repo, ' % self.apk.package_id
-                        + 'but has a different signature.')
+                        'This app \'%s\' already exists in your repo, ' % self.apk.package_id +
+                        'but has a different signature.')
             self.app = old_app
         except ObjectDoesNotExist:
             app = App.objects.create(

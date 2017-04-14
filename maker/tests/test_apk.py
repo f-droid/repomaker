@@ -20,7 +20,8 @@ class ApkTestCase(TestCase):
         apk.file.save('test.apk', BytesIO(b'content'), save=True)
 
         # Create Repository
-        repository = Repository(name="Test", description="Test", url="https://f-droid.org", user_id=1)
+        repository = Repository(name="Test", description="Test", url="https://f-droid.org",
+                                user_id=1)
         repository.save()
 
         # Create RemoteRepository
