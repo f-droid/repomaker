@@ -10,5 +10,6 @@ test:
     - python3 manage.py makemigrations background_task
     - python3 manage.py makemigrations maker
     - python3 manage.py migrate
-    # Run the actual tests
-    - python3 manage.py test
+    # Run the actual tests with coverage
+    - coverage3 run --source='.' manage.py test
+    - coverage3 report

@@ -4,6 +4,7 @@ django-background-tasks
 django-compressor
 django-sass-processor
 git+https://github.com/apache/libcloud.git@516018d050a5470afe4a07d33d1fcb26d0e1df18#egg=apache-libcloud
+coverage
 #fdroidserver>=0.8.0
 #git+https://gitlab.com/grote/fdroidserver.git@4d25113fa0f6ad923b6b71ff9c8cb139042b1f9e#egg=fdroidserver
 git+https://gitlab.com/fdroid/fdroidserver.git@89b0dea2fa7a7372e8cdabd1a86c6adae016047f#egg=fdroidserver

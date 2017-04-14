@@ -8,6 +8,7 @@ private_repo
 credentials
 node_modules/
 /static/
+.coverage
 
 .idea/*
 !.idea/codeStyleSettings.xml
