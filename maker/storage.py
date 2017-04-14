@@ -50,9 +50,6 @@ def get_identity_file_path(storage, filename):
 
 
 class RepoStorage(FileSystemStorage):
-    def __init__(self, file_permissions_mode=None, directory_permissions_mode=None):
-        super(RepoStorage, self).__init__(settings.MEDIA_ROOT, settings.MEDIA_URL,
-                                          file_permissions_mode, directory_permissions_mode)
 
     def link(self, source, target):
         """
