@@ -24,6 +24,9 @@ class AbstractStorage(models.Model):
     def get_url(self):
         raise NotImplementedError()
 
+    def publish(self):
+        raise NotImplementedError()
+
     class Meta:
         abstract = True
 
