@@ -26,6 +26,8 @@ and start from scratch after each update.
 
 * npm to fetch CSS and JavaScript dependencies `apt install npm`
 
+Then run `npm install` to install these dependencies.
+
 # License
 
 This program is free software: you can redistribute it and/or modify it
