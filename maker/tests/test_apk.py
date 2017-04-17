@@ -1,8 +1,7 @@
+import datetime
 import os
 import shutil
 from io import BytesIO
-
-import datetime
 
 from django.test import TestCase, override_settings
 from django.utils import timezone

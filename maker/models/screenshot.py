@@ -106,5 +106,5 @@ def is_supported_type(s_type):
 @receiver(post_delete, sender=Screenshot)
 def screenshot_post_delete_handler(**kwargs):
     apk = kwargs['instance']
-    logging.info("Deleting Screenshot: %s" % apk.file.name)
+    logging.info("Deleting Screenshot: %s", apk.file.name)
     apk.file.delete(save=False)

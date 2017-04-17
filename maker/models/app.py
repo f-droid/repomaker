@@ -106,7 +106,7 @@ class RemoteApp(AbstractApp):
         # don't update if app hasn't changed since last update
         last_update = datetime.datetime.fromtimestamp(app['lastUpdated'] / 1000, timezone.utc)
         if self.last_updated_date and self.last_updated_date >= last_update:
-            logging.info("Skipping update of %s, because did not change." % self)
+            logging.info("Skipping update of %s, because did not change.", self)
             return False
         else:
             self.last_updated_date = last_update

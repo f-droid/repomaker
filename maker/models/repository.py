@@ -128,7 +128,7 @@ class RemoteRepository(AbstractRepository):
             self.delete_old_icon()
             self.icon.save(repo_index['repo']['icon'], BytesIO(r.content), save=False)
         except Exception as e:
-            logging.warning("Could not download repository icon from %s. %s" % (icon_url, e))
+            logging.warning("Could not download repository icon from %s. %s", icon_url, e)
 
         self.save()
 
@@ -141,7 +141,7 @@ class RemoteRepository(AbstractRepository):
         package_names = []
         for app in apps:
             if app['packageName'] not in packages:
-                logging.info("App %s has no packages, so ignore it." % app['packageName'])
+                logging.info("App %s has no packages, so ignore it.", app['packageName'])
                 continue
 
             # query for existing remote apps, if this repo was already saved
@@ -349,7 +349,7 @@ class Repository(AbstractRepository):
                 apps[app.id] = app
                 categories.update(app.Categories)
             except ObjectDoesNotExist:
-                logging.warning("App '%s' not found in database" % apk['packageName'])
+                logging.warning("App '%s' not found in database", apk['packageName'])
 
         update.apply_info_from_latest_apk(apps, apks)
 

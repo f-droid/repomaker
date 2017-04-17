@@ -55,7 +55,7 @@ class S3Storage(AbstractStorage):
         return self.get_url() + "/fdroid/" + REPO_DIR
 
     def publish(self):
-        logging.info("Publishing '%s' to %s" % (self.repo, self))
+        logging.info("Publishing '%s' to %s", self.repo, self)
         config = self.repo.get_config()
         config['awsbucket'] = self.bucket
         config['awsaccesskeyid'] = self.accesskeyid
@@ -80,17 +80,16 @@ class HostnameValidator(RegexValidator):
     # Max length for domain name labels is 63 characters per RFC 1034 sec. 3.1
     domain_re = r'(?:\.(?!-)[a-z' + UL + r'0-9-]{1,63}(?<!-))*'
     tld_re = (
-        '\.'                                # dot
-        '(?!-)'                             # can't start with a dash
-        '(?:[a-z' + UL + '-]{2,63}'         # domain label
-                         '|xn--[a-z0-9]{1,59})'              # or punycode label
-                         '(?<!-)'                            # can't end with a dash
-                         '\.?'                               # may have a trailing dot
+        r'\.'  # dot
+        r'(?!-)'  # can't start with a dash
+        r'(?:[a-z' + UL + '-]{2,63}'  # domain label
+                          r'|xn--[a-z0-9]{1,59})'  # or punycode label
+                          r'(?<!-)'  # can't end with a dash
+                          r'\.?'  # may have a trailing dot
     )
     host_re = '(' + hostname_re + domain_re + tld_re + '|localhost)'
 
-    regex = re.compile(r'(?:' + ipv4_re + '|' + ipv6_re + '|' + host_re + ')\Z',
-                       re.IGNORECASE)
+    regex = re.compile(r'(?:' + ipv4_re + r'|' + ipv6_re + r'|' + host_re + r')\Z', re.IGNORECASE)
     message = _('Enter a valid hostname.')
 
     def __call__(self, value):
@@ -130,7 +129,7 @@ class SshStorage(AbstractStorage):
         return self.url
 
     def publish(self):
-        logging.info("Publishing '%s' to %s" % (self.repo, self))
+        logging.info("Publishing '%s' to %s", self.repo, self)
         config = self.repo.get_config()
         if self.identity_file is not None and self.identity_file != '':
             config['identity_file'] = self.identity_file.name
