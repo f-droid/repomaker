@@ -4,10 +4,11 @@ before_script:
   - apt-get update -qq
   - apt-get install -y -qq python3-rjsmin python3-rcssmin build-essential
   - pip3 install -r requirements.txt
+  - pip3 install -r requirements-dev.txt
+  - ln -s /usr/bin/pylint3 /usr/local/bin/pylint
 
 test:
   script:
-    - python3 manage.py makemigrations background_task
     - python3 manage.py makemigrations maker
     - python3 manage.py migrate
     - ./run-tests.sh

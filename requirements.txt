@@ -1,9 +1,9 @@
 django
-django-background-tasks==1.1.6
+#django-background-tasks>=1.1.9
+git+https://github.com/arteria/django-background-tasks.git@v1.1.9#egg=django-background-tasks
 django-compressor
 django-sass-processor
 qrcode
-coverage
 apache-libcloud>=2.0.0rc2
 #fdroidserver>=0.8.0
 #git+https://gitlab.com/grote/fdroidserver.git@4d25113fa0f6ad923b6b71ff9c8cb139042b1f9e#egg=fdroidserver
