@@ -1,14 +1,9 @@
-image: registry.gitlab.com/fdroid/ci-images:server-latest
+image: registry.gitlab.com/fdroid/ci-images-repomaker:latest
 
 before_script:
-  - apt-get update -qq
-  - apt-get install -y -qq python3-rjsmin python3-rcssmin build-essential
-  - pip3 install -r requirements.txt
+  - ./setup.sh
   - pip3 install -r requirements-dev.txt
-  - ln -s /usr/bin/pylint3 /usr/local/bin/pylint
 
 test:
   script:
-    - python3 manage.py makemigrations maker
-    - python3 manage.py migrate
     - ./run-tests.sh
