@@ -4,7 +4,12 @@ $material-design-icons-font-path: unquote(get-setting(NODE_MODULES_URL) + 'mater
 $roboto-font-path: unquote(get-setting(NODE_MODULES_URL) + "roboto-fontface/fonts");
 @import "roboto-fontface/css/roboto/sass/roboto-fontface";
 
+// TODO maybe only import directly the things we really need?
+@import "material-design-lite/src/material-design-lite";
+
+// TODO remove material-components-web when fully migrated to material-design-lite
 @import "material-components-web/material-components-web";
+
 
 body {
 	margin: 0;
