@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 python3 manage.py runserver &
 PID=$!
 python3 manage.py process_tasks
