@@ -32,7 +32,7 @@ class ApkTestCase(TestCase):
         )
 
         # Create RemoteApp
-        remote_app = RemoteApp.objects.create(
+        RemoteApp.objects.create(
             repo=remote_repository,
             last_updated_date=datetime.datetime.fromtimestamp(0, timezone.utc)
         )

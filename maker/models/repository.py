@@ -90,6 +90,7 @@ class RemoteRepository(AbstractRepository):
         :raises: VerificationException() if the index can not be validated anymore
         """
         self.get_config()
+        # TODO add eTag support here and use it
         repo_index = index.download_repo_index(self.get_fingerprint_url())
         self._update(repo_index, update_apps)
 
