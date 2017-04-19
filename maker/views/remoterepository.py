@@ -2,6 +2,7 @@ import urllib.parse
 
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import CreateView
 from fdroidserver import index
 
@@ -15,7 +16,7 @@ class RemoteRepositoryForm(BaseModelForm):
         model = RemoteRepository
         fields = ['url']
         labels = {
-            'url': 'Repository URL',
+            'url': _('Repository URL'),
         }
 
 
@@ -31,14 +32,14 @@ class RemoteRepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
         url = urllib.parse.urlsplit(form.instance.url)
         query = urllib.parse.parse_qs(url.query)
         if 'fingerprint' not in query:
-            form.add_error('url', "Please use a URL with a fingerprint at the end" +
-                           ", so we can validate the authenticity of the repository.")
+            form.add_error('url', _("Please use a URL with a fingerprint at the end" +
+                           ", so we can validate the authenticity of the repository."))
             return self.form_invalid(form)
 
         # check if the user is trying to add their own repo here
         fingerprint = query['fingerprint'][0]
         if Repository.objects.filter(user=user, fingerprint=fingerprint).exists():
-            form.add_error('url', "Please don't add one of your own repositories here.")
+            form.add_error('url', _("Please don't add one of your own repositories here."))
             return self.form_invalid(form)
 
         # update URL and fingerprint to final values
@@ -61,7 +62,7 @@ class RemoteRepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
             form.instance.update_index(update_apps=False)
             form.instance.update_async()  # schedule an async update for the apps as well
         except index.VerificationException as e:
-            form.add_error('url', "Could not validate repository: %s" % e)
+            form.add_error('url', _("Could not validate repository: %s") % e)
             return self.form_invalid(form)
 
         result = super(RemoteRepositoryCreateView, self).form_valid(form)

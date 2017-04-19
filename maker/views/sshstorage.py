@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.forms import BooleanField
+from django.utils.translation import ugettext_lazy as _
 
 from maker.models import SshStorage
 from . import BaseModelForm
@@ -17,11 +18,11 @@ class SshStorageForm(BaseModelForm):
         if settings.SINGLE_USER_MODE:
             fields += ['ignore_identity_file']
         labels = {
-            'username': 'User Name',
-            'url': 'URL',
+            'username': _('User Name'),
+            'url': _('URL'),
         }
         help_texts = {
-            'url': 'This is the location where the uploaded files can be accessed from.',
+            'url': _('This is the location where the uploaded files can be accessed from.'),
         }
 
 

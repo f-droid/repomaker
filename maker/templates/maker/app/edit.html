@@ -1,7 +1,8 @@
 {% extends "../base.html" %}
+{% load i18n %}
 {% load sass_tags %}
 
-{% block title %}Edit App{% endblock %}
+{% block title %}{% trans 'Edit App' %}{% endblock %}
 {% block toolbar-title %}<a href="{% url 'repo' app.repo.id %}">{{ app.repo.name }}</a>{% endblock %}
 
 {% block head %}
@@ -11,13 +12,13 @@
 
 {% block content %}
 
-<h1><img src="{{ app.icon.url }}"/> Edit {{ app.name }}</h1>
+<h1><img src="{{ app.icon.url }}"/>{% blocktrans %}Edit {{ app.name }}{% endblocktrans %}</h1>
 
 <div class="rm-form">
     <form action="" method="post">
         {% csrf_token %}
         {% include '../form.html' %}
-        <input type="submit" value="Save Changes"/>
+        <input type="submit" value="{% trans 'Save Changes' %}"/>
     </form>
 </div>
 

@@ -1,7 +1,8 @@
 {% extends "../base.html" %}
+{% load i18n %}
 {% load sass_tags %}
 
-{% block title %}Add App{% endblock %}
+{% block title %}{% trans 'Add App' %}{% endblock %}
 
 {% block head %}
 <link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
@@ -10,7 +11,7 @@
 
 {% block content %}
 
-<h1>Add {{ app.name }} to {{ repo.name }}</h1>
+<h1>{% blocktrans with app=app.name repo=repo.name %}Add {{ app }} to {{ repo }}{% endblocktrans %}</h1>
 
 <div class="mdc-card"
 	 style="height:400px;padding:10px;display:inline-table;margin-right:10px;margin-bottom:10px;">
@@ -37,7 +38,7 @@
 	<form action="" enctype="multipart/form-data" method="post">
 		{% csrf_token %}
 		{% include '../form.html' %}
-		<input type="submit" value="Add App to {{ repo.name }}"/>
+		<input type="submit" value="{% blocktrans with repo=repo.name %}Add App to {{ repo }}{% endblocktrans %}"/>
 	</form>
 </div>
 

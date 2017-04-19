@@ -1,4 +1,5 @@
 from django.forms import PasswordInput
+from django.utils.translation import pgettext_lazy as _
 
 from maker.models import S3Storage
 from . import BaseModelForm
@@ -10,12 +11,12 @@ class S3StorageForm(BaseModelForm):
         model = S3Storage
         fields = ['region', 'bucket', 'accesskeyid', 'secretkey']
         labels = {
-            'bucket': 'Bucket Name',
-            'accesskeyid': 'Access Key ID',
-            'secretkey': 'Secret Access Key',
+            'bucket': _('Bucket Name'),
+            'accesskeyid': _('Access Key ID'),
+            'secretkey': _('Secret Access Key'),
         }
         help_texts = {
-            'region': 'Other regions are currently not supported.',
+            'region': _('Other regions are currently not supported.'),
         }
         widgets = {
             'secretkey': PasswordInput(),

@@ -1,7 +1,8 @@
 {% extends "../base.html" %}
+{% load i18n %}
 {% load sass_tags %}
 
-{% block title %}Add Repository{% endblock title %}
+{% block title %}{% trans 'Add Repository' %}{% endblock title %}
 
 {% block head %}
 <link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
@@ -10,13 +11,13 @@
 
 {% block content %}
 
-<h2>Add New Repository</h2>
+<h2>{% trans 'Add New Repository' %}</h2>
 
 <div class="rm-form">
 	<form action="" enctype="multipart/form-data" method="post">
 		{% csrf_token %}
 		{% include '../form.html' %}
-		<input type="submit" value="Add"/>
+		<input type="submit" value="{% trans 'Add' %}"/>
 	</form>
 </div>
 

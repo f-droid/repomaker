@@ -1,7 +1,8 @@
 {% extends "./base.html" %}
+{% load i18n %}
 {% load humanize %}
 
-{% block title %}Repository List{% endblock %}
+{% block title %}{% trans 'Repository List' %}{% endblock %}
 
 {% block content %}
 
@@ -14,7 +15,9 @@
 			<section class="mdc-card__primary">
 				<img src="{{ repo.icon.url }}"/>
 				<h1 class="mdc-card__title mdc-card__title">{{ repo.name }}</h1>
-				<h2 class="mdc-card__subtitle">Last published: {{repo.last_publication_date|naturaltime|default:"Never" }}</h2>
+				<h2 class="mdc-card__subtitle">
+					{% blocktrans with date=repo.last_publication_date|naturaltime|default:"Never" %}Last published: {{ date }}.{% endblocktrans %}
+				</h2>
 			</section>
 			<section class="mdc-card__supporting-text">{{ repo.description }}</section>
 		</div>
@@ -22,7 +25,7 @@
 	{% endfor %}
 </div>
 {% else %}
-<p>No repositories are available.</p>
+<p>{% trans "No repositories are available." %}</p>
 {% endif %}
 
 <div class="mdc-layout-grid">

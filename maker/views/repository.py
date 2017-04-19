@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
 
@@ -36,11 +37,11 @@ class RepositoryForm(BaseModelForm):
         model = Repository
         fields = ['name', 'description', 'url', 'icon']
         labels = {
-            'url': 'Main URL',
-            'icon': 'Upload Repository Icon',
+            'url': _('Main URL'),
+            'icon': _('Upload Repository Icon'),
         }
         help_texts = {
-            'url': 'This is the primary location where your repository will be made available.',
+            'url': _('This is the primary location where your repository will be made available.'),
         }
 
 

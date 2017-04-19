@@ -1,7 +1,8 @@
 {% extends "../base.html" %}
+{% load i18n %}
 {% load sass_tags %}
 
-{% block title %}Add Screenshot{% endblock %}
+{% block title %}{% trans 'Add Screenshot' %}{% endblock %}
 
 {% block head %}
 <link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
@@ -10,13 +11,13 @@
 
 {% block content %}
 
-<h1>Add Screenshot</h1>
+<h1>{% trans 'Add Screenshot' %}</h1>
 
 <div class="rm-form">
 	<form action="" enctype="multipart/form-data" method="post">
 		{% csrf_token %}
 		{% include '../form.html' %}
-		<input type="submit" value="Upload Screenshot"/>
+		<input type="submit" value="{% trans 'Upload Screenshot' %}"/>
 	</form>
 </div>
 

@@ -1,4 +1,5 @@
 {% extends "../base.html" %}
+{% load i18n %}
 {% load humanize %}
 
 {% block title %}{{ app.name }}{% endblock %}
@@ -19,42 +20,41 @@
 		<ul class="mdc-list mdc-list--dense">
 			<li class="mdc-list-item">
 				<i class="mdc-list-item__start-detail material-icons">info_outline</i>
-				Package ID: {{app.package_id }}
+				{% blocktrans with package_id=app.package_id %}Package ID: {{ package_id }}{% endblocktrans %}
 			</li>
 			<li class="mdc-list-item">
 				<i class="mdc-list-item__start-detail material-icons">style</i>
-				Categories:
-				{% if app.category.exists %}
-				{{ app.category.all|join:", " }}
-				{% else %}
-				None
-				{% endif %}
+					{% if app.category.exists %}
+					{% blocktrans with category=app.category.all|join:", "%}Categories: {{ category }}{% endblocktrans %}
+					{% else %}
+					{% blocktrans with category=app.category.all|join:", "%}Categories: {{ category }}{% endblocktrans %}
+					{% endif %}
 			</li>
 			{% if app.website %}
 			<li class="mdc-list-item">
 				<i class="mdc-list-item__start-detail material-icons">insert_link</i>
-				Website: {{ app.website|urlize }}
+				{% blocktrans with website=app.website|urlize %}Website: {{ website }}{% endblocktrans %}
 			</li>
 			{% endif %}
 			{% if app.description %}
 			<li class="mdc-list-item" style="overflow: auto;">
 				<i class="mdc-list-item__start-detail material-icons">description</i>
-				Description: {{ app.description }}
+				{% blocktrans with description=app.description %}Description: {{ description }}{% endblocktrans %}
 			</li>
 			{% endif %}
 			{% if apks %}
 			<li class="mdc-list-item">
 				<i class="mdc-list-item__start-detail material-icons">gesture</i>
-				Signature: {{ apks.0.apk.signature }}
+				{% blocktrans with signature=apks.0.apk.signature %}Signature: {{ signature }}{% endblocktrans %}
 			</li>
 			{% endif %}
 			<li class="mdc-list-item">
 				<i class="mdc-list-item__start-detail material-icons">watch_later</i>
-				Added: {{ app.added_date|date:"SHORT_DATE_FORMAT" }}
+				{% blocktrans with date=app.added_date|date:"SHORT_DATE_FORMAT" %}Added: {{ date }}{% endblocktrans %}
 			</li>
 			<li class="mdc-list-item">
 				<i class="mdc-list-item__start-detail material-icons">update</i>
-				Last Updated: {{ app.last_updated_date|naturaltime }} ({{ app.last_updated_date|date:"SHORT_DATE_FORMAT" }})
+				{% blocktrans with date_1=app.last_updated_date|naturaltime date_2=app.last_updated_date|date:"SHORT_DATE_FORMAT" %}Last Updated: {{ date_1 }} ({{ date_2 }}){% endblocktrans %}
 			</li>
 		</ul>
 
@@ -62,21 +62,21 @@
 			<a href="{% url 'edit_app' app.repo.id app.id %}" class="rm-no-underline">
 				<button class="mdc-button mdc-button--primary mdc-button--raised">
 					<i class="material-icons">edit</i>
-					Edit App Details
+					{% trans 'Edit App Details' %}
 				</button>
 			</a>
 
 			<a href="{% url 'screenshot_add' app.repo.id app.id %}" class="rm-no-underline">
 				<button class="mdc-button mdc-button--primary mdc-button--raised">
 					<i class="material-icons">add</i>
-					Add Screenshot
+					{% trans 'Add Screenshot' %}
 				</button>
 			</a>
 
 			<a href="{% url 'delete_app' app.repo.id app.id %}" class="rm-no-underline">
 				<button class="mdc-button mdc-button--raised">
 					<i class="material-icons">delete</i>
-					Delete App
+					{% trans 'Delete App' %}
 				</button>
 			</a>
 		</p>
@@ -85,7 +85,7 @@
 
 	<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
 
-		<h2>Versions</h2>
+		<h2>{% trans 'Versions' %}</h2>
 
 		{% if apks %}
 		<ul class="mdc-list">
@@ -93,12 +93,18 @@
 			<li><h4>{{ pointer.apk.version_name }} <span style="font-weight: normal; font-size: 75%;">({{ pointer.apk.version_code }})</span></h4>
 				{% if pointer.file %}
 				<ul class="mdc-list mdc-list--dense">
-					<li class="mdc-list-item">Size: {{ pointer.apk.size|filesizeformat }}</li>
-					<li class="mdc-list-item">File: {{ pointer.file.name }}</li>
-					<li class="mdc-list-item">Hash ({{ pointer.apk.hash_type }}): {{ pointer.apk.hash }}</li>
+					<li class="mdc-list-item">
+						{% blocktrans with size=pointer.apk.size|filesizeformat %}Size: {{ size }}{% endblocktrans %}
+					</li>
+					<li class="mdc-list-item">
+						{% blocktrans with file=pointer.file.name %}File: {{ file }}{% endblocktrans %}
+					</li>
+					<li class="mdc-list-item">
+						{% blocktrans with hash_type=pointer.apk.hash_type hash=pointer.apk.hash %}Hash ({{ hash_type }}): {{ hash }}{% endblocktrans %}
+					</li>
 				</ul>
 				{% else %}
-				<em>APK is still downloading...</em>
+				<em>{% trans 'APK is still downloading...' %}</em>
 				{% endif %}
 			</li>
 			{% endfor %}

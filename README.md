@@ -28,6 +28,19 @@ and start from scratch after each update.
 
 Then run `npm install` to install these dependencies.
 
+## Translation
+
+* GNU gettext `apt install gettext`
+
+# Translating
+
+To update translations,
+run `./update-translations.sh`.
+
+To add a new translation,
+run `python3 manage.py makemessages -l <lg>`
+where `<lg>` is the language code, e.g. `de`.
+
 # License
 
 This program is free software: you can redistribute it and/or modify it

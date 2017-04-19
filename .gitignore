@@ -12,3 +12,5 @@ node_modules/
 
 .idea/*
 !.idea/codeStyleSettings.xml
+
+*.mo

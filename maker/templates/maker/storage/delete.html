@@ -1,7 +1,8 @@
 {% extends "../base.html" %}
+{% load i18n %}
 {% load sass_tags %}
 
-{% block title %}Delete Storage{% endblock %}
+{% block title %}{% trans 'Delete Storage' %}{% endblock %}
 {% block toolbar-title %}<a href="{% url 'repo' object.repo.id %}">{{ object.repo.name }}</a>{% endblock %}
 
 {% block head %}
@@ -11,13 +12,13 @@
 
 {% block content %}
 
-<h1>Confirm Removal</h1>
+<h1>{% trans 'Confirm Removal' %}</h1>
 
 <div class="rm-form">
 	<form action="" method="post">
 		{% csrf_token %}
-		<p>Are you sure you want to remove the remote storage at "{{ object }}"?</p>
-		<input type="submit" value="Confirm"/>
+		<p>{% blocktrans %}Are you sure you want to remove the remote storage at "{{ object }}"?{% endblocktrans %}</p>
+		<input type="submit" value="{% trans 'Confirm' %}"/>
 	</form>
 </div>
 

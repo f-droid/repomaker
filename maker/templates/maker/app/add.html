@@ -1,7 +1,8 @@
 {% extends "../base.html" %}
+{% load i18n %}
 {% load sass_tags %}
 
-{% block title %}Add App{% endblock %}
+{% block title %}{% trans 'Add App' %}{% endblock %}
 
 {% block head %}
 <link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
@@ -10,13 +11,13 @@
 
 {% block content %}
 
-<h1>Add new App</h1>
+<h1>{% trans 'Add new App' %}</h1>
 
 <div class="rm-form">
 	<form action="" enctype="multipart/form-data" method="post">
 		{% csrf_token %}
 		{% include '../form.html' %}
-		<input type="submit" value="Upload APK"/>
+		<input type="submit" value="{% trans 'Upload APK' %}"/>
 	</form>
 </div>
 
@@ -25,9 +26,9 @@
 <div class="mdc-layout-grid">
 	<div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-2"
 		 style="padding:1em; justify-content: flex-start;">
-		Remote Repos
+		{% trans 'Remote Repositories' %}
 		<p>
-			<a href="{% url 'add_app' repo_id %}">All</a>
+			<a href="{% url 'add_app' repo_id %}">{% trans 'All' %}</a>
 		</p>
 		{% for repo in repos %}
 		<p>
@@ -36,12 +37,12 @@
 			</a>
 		</p>
 		{% empty %}
-		<p>Sorry, but there are no remote repositories at the moment. Don't despair, you can add one below.</p>
+		<p>{% trans "Sorry, but there are no remote repositories at the moment. Don't despair, you can add one below." %}</p>
 		{% endfor %}
 		<p></p>
 		<section class="mdc-card__actions">
 			<a href="{% url 'add_remote_repo' %}">
-				<button class="mdc-button mdc-button--raised mdc-button--compact mdc-card__action">Add</button>
+				<button class="mdc-button mdc-button--raised mdc-button--compact mdc-card__action">{% trans 'Add' %}</button>
 			</a>
 		</section>
 	</div>
@@ -60,8 +61,8 @@
 			</div>
 		</a>
 		{% empty %}
-		<p>There are no apps from remote repositories :(</p>
-		<p>If you just added a remote repository, wait for the apps to download and try again later.</p>
+		<p>{% trans 'There are no apps from remote repositories.' %}</p>
+		<p>{% trans 'If you just added a remote repository, wait for the apps to download and try again later.' %}</p>
 		{% endfor %}
 	</div>
 </div>

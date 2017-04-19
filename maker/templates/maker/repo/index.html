@@ -1,4 +1,5 @@
 {% extends "../base.html" %}
+{% load i18n %}
 {% load humanize %}
 
 {% block title %}{{ repo.name }}{% endblock %}
@@ -20,24 +21,24 @@
 <ul class="mdc-list mdc-list--dense">
     <li class="mdc-list-item">
 	    <i class="mdc-list-item__start-detail material-icons">insert_link</i>
+		<!-- TODO: Figure out the best way to translate this -->
 	    URL: <a href="{{ repo.get_fingerprint_url }}">{{ repo.url }}</a>
     </li>
     <li class="mdc-list-item">
 	    <i class="mdc-list-item__start-detail material-icons">fingerprint</i>
-	    Fingerprint: {{ repo.fingerprint }}
+		{% blocktrans with fingerprint=repo.fingerprint %}Fingerprint: {{ fingerprint }}{% endblocktrans %}
     </li>
     <li class="mdc-list-item">
 	    <i class="mdc-list-item__start-detail material-icons">watch_later</i>
-	    Created: {{ repo.created_date|naturaltime }} ({{ repo.created_date|date:"SHORT_DATE_FORMAT" }})
+		{% blocktrans with date_1=repo.created_date|naturaltime date_2=repo.created_date|date:"SHORT_DATE_FORMAT" %} Created: {{ date_1 }} ({{ date_2 }}){% endblocktrans %}
     </li>
     <li class="mdc-list-item">
 	    <i class="mdc-list-item__start-detail material-icons">update</i>
-	    Last Updated: {{ repo.last_updated_date|naturaltime }} ({{ repo.last_updated_date|date:"SHORT_DATE_FORMAT" }})
-    </li>
+		{% blocktrans with date_1=repo.last_updated_date|naturaltime date_2=repo.last_updated_date|date:"SHORT_DATE_FORMAT" %} Last Updated: {{ date_1 }} ({{ date_2 }}){% endblocktrans %}
+	</li>
 	<li class="mdc-list-item">
 		<i class="mdc-list-item__start-detail material-icons">schedule</i>
-		Last Publication: {{ repo.last_publication_date|naturaltime|default:"" }}
-		({{ repo.last_publication_date|date:"SHORT_DATE_FORMAT"|default:"Never" }})
+		{% blocktrans with date_1=repo.last_publication_date|naturaltime date_2=repo.last_publication_date|date:"SHORT_DATE_FORMAT"|default:"Never" %} Last Publication: {{ date_1 }} ({{ date_2 }}){% endblocktrans %}
 	</li>
 </ul>
 
@@ -62,19 +63,19 @@
     {% endfor %}
 </ul>
 {% else %}
-<p><b>Attention:</b> This repository has no remote storage. Add one to get your repository published.</p>
+<p><b>{% trans 'Attention:' %}</b> {% trans 'This repository has no remote storage. Add one to get your repository published.' %}</p>
 {% endif %}
 
 <p>
 	<a href="{% url 'storage_ssh_add' repo.id %}" class="rm-no-underline" style="margin-right:1em;">
-		<button class="mdc-button mdc-button--raised">Add SSH Storage</button>
+		<button class="mdc-button mdc-button--raised">{% trans 'Add SSH Storage' %}</button>
 	</a>
 	<a href="{% url 'storage_s3_add' repo.id %}" class="rm-no-underline">
-		<button class="mdc-button mdc-button--raised">Add Amazon S3 Storage</button>
+		<button class="mdc-button mdc-button--raised">{% trans 'Add Amazon S3 Storage' %}</button>
 	</a>
 </p>
 
-<h2>Apps</h2>
+<h2>{% trans 'Apps' %}</h2>
 
 <ul class="mdc-list mdc-list--two-line">
 	{% for app in apps %}
@@ -90,7 +91,7 @@
 		</a>
 	</li>
 	{% empty %}
-	<li class="mdc-list-item">No apps in this repository.</li>
+	<li class="mdc-list-item">{% trans 'No apps in this repository.' %}</li>
 	{% endfor %}
 </ul>
 

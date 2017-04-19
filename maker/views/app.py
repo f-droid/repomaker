@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
@@ -16,7 +17,7 @@ class ApkForm(ModelForm):
         model = ApkPointer
         fields = ['file']
         labels = {
-            'file': 'Select APK file for upload',
+            'file': _('Select APK file for upload'),
         }
 
 

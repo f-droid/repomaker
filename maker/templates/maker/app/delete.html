@@ -1,7 +1,8 @@
 {% extends "../base.html" %}
+{% load i18n %}
 {% load sass_tags %}
 
-{% block title %}Delete App{% endblock %}
+{% block title %}{% trans 'Delete App' %}{% endblock %}
 {% block toolbar-title %}<a href="{% url 'repo' app.repo.id %}">{{ app.repo.name }}</a>{% endblock %}
 
 {% block head %}
@@ -14,8 +15,8 @@
 <div class="rm-form">
     <form action="" method="post">
         {% csrf_token %}
-        <p>Are you sure you want to delete your app "{{ object }}"?</p>
-        <input type="submit" value="Confirm"/>
+        <p>{% blocktrans %}Are you sure you want to delete your app "{{ object }}"?{% endblocktrans %}</p>
+        <input type="submit" value="{% trans 'Confirm' %}"/>
     </form>
 </div>
 
