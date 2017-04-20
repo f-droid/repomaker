@@ -1,0 +1,15 @@
+{% extends "./form.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block images %}
+<div>
+	{% blocktrans trimmed with gitlab='<a href="https://gitlab.com" target="_blank">Gitlab.com</a>' %}
+	Here's how to find and copy the
+	Git Repository SSH Address in your {{ gitlab }} repository:
+	{% endblocktrans %}
+	<p>
+		<img src="{% static 'maker/images/gitlab_url.png' %}" style="border: wheat solid;"/>
+	</p>
+</div>
+{% endblock images %}

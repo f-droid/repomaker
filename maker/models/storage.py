@@ -1,14 +1,16 @@
 import logging
 import re
+from itertools import chain
 
 from django.core.validators import RegexValidator, ValidationError, slug_re, force_text
 from django.db import models
+from django.urls import reverse_lazy
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import ugettext_lazy as _
 from fdroidserver import server
 from libcloud.storage.types import Provider
 
-from maker.storage import get_identity_file_path, RepoStorage, REPO_DIR
+from maker.storage import get_identity_file_path, PrivateStorage, REPO_DIR
 from .repository import Repository
 
 UL = '\u00a1-\uffff'  # unicode letters range (must be a unicode string, not a raw string)
@@ -23,6 +25,15 @@ class AbstractStorage(models.Model):
 
     def get_url(self):
         raise NotImplementedError()
+
+    def get_repo_url(self):
+        raise NotImplementedError()
+
+    def get_edit_url(self):
+        return reverse_lazy(self.edit_url_name, kwargs={'repo_id': self.repo.pk, 'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse_lazy(self.delete_url_name, kwargs={'repo_id': self.repo.pk, 'pk': self.pk})
 
     def publish(self):
         raise NotImplementedError()
@@ -39,13 +50,15 @@ class S3Storage(AbstractStorage):
     bucket = models.CharField(max_length=128)
     accesskeyid = models.CharField(max_length=128)
     secretkey = models.CharField(max_length=255)
+    edit_url_name = 'storage_s3_update'
+    delete_url_name = 'storage_s3_delete'
 
     def __str__(self):
         return 's3://' + str(self.bucket)
 
     @staticmethod
     def get_name():
-        return "Amazon S3 Storage"
+        return _("Amazon S3 Storage")
 
     def get_url(self):
         # This needs to be changed when more region choices are added
@@ -106,33 +119,114 @@ class HostnameValidator(RegexValidator):
 
 @deconstructible
 class PathValidator(RegexValidator):
-    regex = re.compile(r'(/[a-z' + UL + r'0-9-]+)+?/?\Z', re.IGNORECASE)
+    regex = re.compile(r'^(/[a-z' + UL + r'0-9-]+)+?/?$', re.IGNORECASE)
     message = _('Enter a valid path.')
 
 
-class SshStorage(AbstractStorage):
-    username = models.CharField(max_length=64, validators=[UsernameValidator()])
+class AbstractSshStorage(AbstractStorage):
     host = models.CharField(max_length=256, validators=[HostnameValidator()])
     path = models.CharField(max_length=512, validators=[PathValidator()])
-    identity_file = models.FileField(upload_to=get_identity_file_path, storage=RepoStorage(),
+    identity_file = models.FileField(upload_to=get_identity_file_path, storage=PrivateStorage(),
                                      blank=True)
     url = models.URLField(max_length=2048)
 
     def __str__(self):
-        return '%s@%s:%s' % (self.username, self.host, self.path)
+        return self.get_remote_url()
+
+    def get_remote_url(self):
+        raise NotImplementedError()
 
     @staticmethod
     def get_name():
-        return "SSH Storage"
+        raise NotImplementedError()
 
     def get_url(self):
-        return self.url
+        raise NotImplementedError()
+
+    def get_repo_url(self):
+        raise NotImplementedError()
 
     def publish(self):
         logging.info("Publishing '%s' to %s", self.repo, self)
         config = self.repo.get_config()
         if self.identity_file is not None and self.identity_file != '':
             config['identity_file'] = self.identity_file.name
+
+    class Meta:
+        abstract = True
+
+
+class SshStorage(AbstractSshStorage):
+    username = models.CharField(max_length=64, validators=[UsernameValidator()])
+    edit_url_name = 'storage_ssh_update'
+    delete_url_name = 'storage_ssh_delete'
+
+    def get_remote_url(self):
+        return '%s@%s:%s' % (self.username, self.host, self.path)
+
+    @staticmethod
+    def get_name():
+        return _("SSH Storage")
+
+    def get_url(self):
+        return self.url
+
+    def get_repo_url(self):
+        return self.get_url()  # TODO find out whether to add REPO_DIR or not
+
+    def publish(self):
+        super(SshStorage, self).publish()
         local = self.repo.get_repo_path()
-        remote = self.__str__()
+        remote = self.get_remote_url()
         server.update_serverwebroot(remote, local)
+
+
+class GitStorage(AbstractSshStorage):
+    edit_url_name = 'storage_git_update'
+    delete_url_name = 'storage_git_delete'
+
+    def get_remote_url(self):
+        return 'git@%s:%s.git' % (self.host, self.path)
+
+    @staticmethod
+    def get_name():
+        return _("Git Storage")
+
+    def get_url(self):
+        return self.url
+
+    def get_repo_url(self):
+        return self.get_url() + "/fdroid/" + REPO_DIR
+
+    def publish(self):
+        super(GitStorage, self).publish()
+        remote = [self.get_remote_url()]  # a list is expected
+        server.update_servergitmirrors(remote, REPO_DIR)
+
+
+class StorageManager:
+    # register additional storage models here
+    storage_models = [S3Storage, SshStorage, GitStorage]
+
+    @staticmethod
+    def get_storage(repo):
+        """
+        Returns all remote storage that belongs to the given repository :param: repo.
+        """
+        storage = []
+        for storage_type in StorageManager.storage_models:
+            objects = storage_type.objects.filter(repo=repo).all()
+            if objects:
+                storage.extend(list(chain(objects)))
+        return storage
+
+    @staticmethod
+    def add_to_config(repo, config):
+        """
+        Adds storage locations to config as mirrors.
+
+        This is done separately, because it requires extra database lookups.
+        """
+        config['mirrors'] = []
+        for storage in StorageManager.get_storage(repo):
+            config['mirrors'].append(storage.get_repo_url())

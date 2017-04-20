@@ -4,7 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
 
-from maker.models import Repository, SshStorage, S3Storage, App
+from maker.models import Repository, App
+from maker.models.storage import StorageManager
 from . import BaseModelForm, LoginOrSingleUserRequiredMixin
 
 
@@ -72,7 +73,7 @@ class RepositoryDetailView(RepositoryAuthorizationMixin, DetailView):
         repo = context['repo']
         if repo.fingerprint is None or repo.fingerprint == '':
             raise RuntimeError("Repository has not been created properly.")
-        context['ssh_storage'] = SshStorage.objects.filter(repo=repo)
-        context['s3_storage'] = S3Storage.objects.filter(repo=repo)
+
+        context['storage'] = StorageManager.get_storage(repo)
         context['apps'] = App.objects.filter(repo=repo)
         return context

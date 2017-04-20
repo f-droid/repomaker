@@ -1,6 +1,7 @@
 import os
 import re
 
+from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
 REPO_DIR = 'repo'
@@ -70,3 +71,11 @@ class RepoStorage(FileSystemStorage):
 
         rel_target = os.path.join(target_dir, os.path.basename(abs_target))
         return rel_target
+
+
+class PrivateStorage(FileSystemStorage):
+
+    def __init__(self, file_permissions_mode=None, directory_permissions_mode=None):
+        super(PrivateStorage, self).__init__(settings.PRIVATE_REPO_ROOT, None,
+                                             file_permissions_mode,
+                                             directory_permissions_mode)

@@ -10,7 +10,7 @@ from .storage import StorageCreateView, StorageUpdateView, StorageDeleteView
 class SshStorageForm(BaseModelForm):
     if settings.SINGLE_USER_MODE:
         ignore_identity_file = BooleanField(required=False, initial=True, disabled=True,
-                                            label='Use local default SSH Key')
+                                            label=_('Use local default SSH Key'))
 
     class Meta:
         model = SshStorage

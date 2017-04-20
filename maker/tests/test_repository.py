@@ -120,12 +120,28 @@ class RepositoryTestCase(TestCase):
         S3Storage.objects.create(repo=self.repo)
         SshStorage.objects.create(repo=self.repo)
 
+        # assert that the repo has never been published
+        self.assertIsNone(self.repo.last_publication_date)
+
         # publish the repository
         self.repo.publish()
+
+        # assert that the repo has a proper publication date now
+        self.assertTrue(datetime_is_recent(self.repo.last_publication_date, 5))
 
         # assert that the storage's publish method's have been called
         s3_publish.assert_called_once_with()
         ssh_publish.assert_called_once_with()
+
+    def test_published_date_not_updated_without_proper_publishing(self):
+        # assert that the repo has never been published
+        self.assertIsNone(self.repo.last_publication_date)
+
+        # try to publish the repository, which does nothing, because there's no storage
+        self.repo.publish()
+
+        # assert that the repo has still not been published
+        self.assertIsNone(self.repo.last_publication_date)
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
@@ -220,6 +236,6 @@ class RemoteRepositoryTestCase(TestCase):
         self.assertTrue(_update_apps.called)
 
 
-def datetime_is_recent(dt):
+def datetime_is_recent(dt, seconds=10 * 60):
     now = datetime.datetime.utcnow().timestamp()
-    return now - 10 * 60 < dt.timestamp() < now
+    return now - seconds < dt.timestamp() < now

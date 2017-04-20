@@ -1,6 +1,8 @@
 from django.conf.urls import url
 
+from maker.models import S3Storage, SshStorage, GitStorage
 from maker.views.app import AppCreateView, AppDetailView, AppUpdateView, AppDeleteView
+from maker.views.gitstorage import GitStorageCreate, GitStorageUpdate, GitStorageDelete
 from maker.views.remoterepository import RemoteRepositoryCreateView, RemoteAppCreateView
 from maker.views.repository import RepositoryListView, RepositoryCreateView, RepositoryDetailView
 from maker.views.s3storage import S3StorageCreate, S3StorageUpdate, S3StorageDelete
@@ -45,15 +47,23 @@ urlpatterns = [
     url(r'^(?P<repo_id>[0-9]+)/storage/ssh/add/$',
         SshStorageCreate.as_view(), name='storage_ssh_add'),
     url(r'^(?P<repo_id>[0-9]+)/storage/ssh/(?P<pk>[0-9]+)/$',
-        SshStorageUpdate.as_view(), name='storage_ssh_update'),
+        SshStorageUpdate.as_view(), name=SshStorage.edit_url_name),
     url(r'^(?P<repo_id>[0-9]+)/storage/ssh/(?P<pk>[0-9]+)/delete/$',
-        SshStorageDelete.as_view(), name='storage_ssh_delete'),
+        SshStorageDelete.as_view(), name=SshStorage.delete_url_name),
+
+    # Git Storage
+    url(r'^(?P<repo_id>[0-9]+)/storage/git/add/$',
+        GitStorageCreate.as_view(), name='storage_git_add'),
+    url(r'^(?P<repo_id>[0-9]+)/storage/git/(?P<pk>[0-9]+)/$',
+        GitStorageUpdate.as_view(), name=GitStorage.edit_url_name),
+    url(r'^(?P<repo_id>[0-9]+)/storage/git/(?P<pk>[0-9]+)/delete/$',
+        GitStorageDelete.as_view(), name=GitStorage.delete_url_name),
 
     # S3 Storage
     url(r'^(?P<repo_id>[0-9]+)/storage/s3/add/$',
         S3StorageCreate.as_view(), name='storage_s3_add'),
     url(r'^(?P<repo_id>[0-9]+)/storage/s3/(?P<pk>[0-9]+)/$',
-        S3StorageUpdate.as_view(), name='storage_s3_update'),
+        S3StorageUpdate.as_view(), name=S3Storage.edit_url_name),
     url(r'^(?P<repo_id>[0-9]+)/storage/s3/(?P<pk>[0-9]+)/delete/$',
-        S3StorageDelete.as_view(), name='storage_s3_delete'),
+        S3StorageDelete.as_view(), name=S3Storage.delete_url_name),
 ]

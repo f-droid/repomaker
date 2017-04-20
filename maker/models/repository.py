@@ -235,19 +235,6 @@ class Repository(AbstractRepository):
             config['repo_pubkey'] = self.public_key
         return config
 
-    def add_storage_to_config(self, config):
-        """
-        Adds storage locations to config as mirrors.
-
-        This is done separately, because it requires extra database lookups.
-        """
-        from maker.models.storage import S3Storage, SshStorage
-        config['mirrors'] = []
-        for storage in S3Storage.objects.filter(repo=self).all():
-            config['mirrors'].append(storage.get_url())
-        for storage in SshStorage.objects.filter(repo=self).all():
-            config['mirrors'].append(storage.get_url())
-
     def chdir(self):
         """
         Change into path for user's local repository
@@ -328,9 +315,10 @@ class Repository(AbstractRepository):
         You normally don't need to call this directly
         as it is meant to be run in a background task scheduled by update_async().
         """
+        from maker.models.storage import StorageManager
         self.chdir()
         config = self.get_config()
-        self.add_storage_to_config(config)
+        StorageManager.add_to_config(self, config)
 
         # Gather information about all the apk files in the repo directory, using
         # cached data if possible.
@@ -372,19 +360,17 @@ class Repository(AbstractRepository):
         You normally don't need to call this manually
         as it is intended to be called automatically after each update.
         """
-        # Publish to SSH Storage
-        from maker.models.storage import SshStorage
-        for storage in SshStorage.objects.filter(repo=self):
-            storage.publish()
-
-        # Publish to Amazon S3
+        from maker.models.storage import StorageManager
         self.chdir()  # expected by server.update_awsbucket()
-        from maker.models import S3Storage
-        for storage in S3Storage.objects.filter(repo=self):
+        remote_storage = StorageManager.get_storage(self)
+
+        # Publish to remote storage
+        for storage in remote_storage:
             storage.publish()
 
-        # TODO only set this if something was actually published
-        self.last_publication_date = timezone.now()
+        # Update the publication date if we published something
+        if len(remote_storage) > 0:
+            self.last_publication_date = timezone.now()
 
     class Meta(AbstractRepository.Meta):
         verbose_name_plural = "Repositories"

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # remove local files
-rm -r private_repo/user_*
-rm -r media/user_*
-rm -r media/remote_repo_*
-rm -r media/packages
+rm -r  private_repo/user_*
+rm -rf media/user_*
+rm -r  media/remote_repo_*
+rm -r  media/packages
 
 # remove database and move custom migrations out of the way
 rm maker/migrations/0*

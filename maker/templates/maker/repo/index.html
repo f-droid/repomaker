@@ -43,22 +43,14 @@
 </ul>
 
 <h2 style="float: clear;">Storage</h2>
-{% if ssh_storage or s3_storage %}
+{% if storage %}
 <ul class="mdc-list">
-    {% for storage in ssh_storage %}
+    {% for storage in storage %}
     <li class="mdc-list-item">
 	    <i class="mdc-list-item__start-detail material-icons">cloud</i>
         {{ storage }}
-        <a href="{% url 'storage_ssh_update' repo.id storage.id %}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">edit</a>
-        <a href="{% url 'storage_ssh_delete' repo.id storage.id %}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">delete</a>
-    </li>
-    {% endfor %}
-    {% for storage in s3_storage %}
-    <li class="mdc-list-item">
-	    <i class="mdc-list-item__start-detail material-icons">cloud</i>
-        {{ storage }}
-        <a href="{% url 'storage_s3_update' repo.id storage.id %}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">edit</a>
-        <a href="{% url 'storage_s3_delete' repo.id storage.id %}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">delete</a>
+        <a href="{{ storage.get_edit_url }}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">edit</a>
+        <a href="{{ storage.get_delete_url }}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">delete</a>
     </li>
     {% endfor %}
 </ul>
@@ -69,6 +61,9 @@
 <p>
 	<a href="{% url 'storage_ssh_add' repo.id %}" class="rm-no-underline" style="margin-right:1em;">
 		<button class="mdc-button mdc-button--raised">{% trans 'Add SSH Storage' %}</button>
+	</a>
+	<a href="{% url 'storage_git_add' repo.id %}" class="rm-no-underline" style="margin-right:1em;">
+		<button class="mdc-button mdc-button--raised">{% trans 'Add Git Storage' %}</button>
 	</a>
 	<a href="{% url 'storage_s3_add' repo.id %}" class="rm-no-underline">
 		<button class="mdc-button mdc-button--raised">{% trans 'Add Amazon S3 Storage' %}</button>
