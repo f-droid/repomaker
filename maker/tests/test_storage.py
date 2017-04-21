@@ -6,7 +6,7 @@ from django.test import TestCase, override_settings
 
 from maker.models import Repository, S3Storage, GitStorage, SshStorage
 from maker.models.storage import StorageManager
-from maker.storage import REPO_DIR
+from maker.storage import REPO_DIR, get_repo_path, get_repo_root_path
 from . import TEST_DIR
 
 
@@ -29,7 +29,6 @@ class GitStorageTestCase(TestCase):
     @patch('git.remote.Remote.push')
     def test_publish(self, push, bar):
         # create an empty fake repo
-        os.mkdir(TEST_DIR)
         os.chdir(TEST_DIR)
         os.mkdir(REPO_DIR)
 
@@ -72,4 +71,39 @@ class StorageManagerTestCase(TestCase):
         self.assertTrue(len(config['mirrors']) == 3)
         self.assertTrue('https://s3.amazonaws.com/s3_bucket/fdroid/repo' in config['mirrors'])
         self.assertTrue('ssh_url' in config['mirrors'])
-        self.assertTrue('git_url/fdroid/repo' in config['mirrors'])
+        self.assertTrue('git_url/repo' in config['mirrors'])
+
+
+@override_settings(DEFAULT_REPO_STORAGE=[(os.path.join(TEST_DIR, 'repos'), '/repos/')])
+class DefaultStorageTestCase(TestCase):
+
+    def setUp(self):
+        self.repo = Repository.objects.create(user_id=1)
+
+    @override_settings(DEFAULT_REPO_STORAGE=None)
+    def test_undefined_default_storage(self):
+        self.assertTrue(len(StorageManager.get_storage(self.repo)) == 0)
+
+    def test_returned_by_storage_manager(self):
+        self.assertTrue(len(StorageManager.get_storage(self.repo)) == 1)
+
+    def test_default_flag(self):
+        self.assertTrue(StorageManager.get_storage(self.repo)[0].is_default)
+
+    def test_add_to_config(self):
+        # add storage mirrors to config
+        config = self.repo.get_config()
+        StorageManager.add_to_config(self.repo, config)
+
+        # assert that we now have storage mirror in the config
+        self.assertTrue(len(config['mirrors']) == 1)
+        url = '/repos/' + get_repo_path(self.repo)
+        self.assertEqual(url, config['mirrors'][0])
+
+    @patch('fdroidserver.server.update_serverwebroot')
+    def test_publish(self, update_serverwebroot):
+        storage = StorageManager.get_storage(self.repo)[0]
+        storage.publish()
+        local = self.repo.get_repo_path()
+        remote = os.path.join(TEST_DIR, 'repos', get_repo_root_path(self.repo))
+        update_serverwebroot.assert_called_once_with(remote, local)

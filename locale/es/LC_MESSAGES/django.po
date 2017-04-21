@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-21 18:32+0000\n"
+"POT-Creation-Date: 2017-04-21 21:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,30 +18,38 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: maker/models/storage.py:61
+#: maker/models/storage.py:49
+msgid "US Standard"
+msgstr ""
+
+#: maker/models/storage.py:63
 msgid "Amazon S3 Storage"
 msgstr ""
 
-#: maker/models/storage.py:82
+#: maker/models/storage.py:84
 msgid ""
 "Enter a valid user name consisting of letters, numbers, underscores or "
 "hyphens."
 msgstr ""
 
-#: maker/models/storage.py:106
+#: maker/models/storage.py:108
 msgid "Enter a valid hostname."
 msgstr ""
 
-#: maker/models/storage.py:123
+#: maker/models/storage.py:126
 msgid "Enter a valid path."
 msgstr ""
 
-#: maker/models/storage.py:169
+#: maker/models/storage.py:172
 msgid "SSH Storage"
 msgstr ""
 
-#: maker/models/storage.py:193
+#: maker/models/storage.py:196
 msgid "Git Storage"
+msgstr ""
+
+#: maker/models/storage.py:256
+msgid "Default Storage"
 msgstr ""
 
 #: maker/templates/maker/app/add.html:5
@@ -245,33 +253,33 @@ msgstr ""
 msgid " Last Publication: %(date_1)s (%(date_2)s)"
 msgstr ""
 
-#: maker/templates/maker/repo/index.html:58
+#: maker/templates/maker/repo/index.html:61
 msgid "Attention:"
 msgstr ""
 
-#: maker/templates/maker/repo/index.html:58
+#: maker/templates/maker/repo/index.html:61
 msgid ""
 "This repository has no remote storage. Add one to get your repository "
 "published."
 msgstr ""
 
-#: maker/templates/maker/repo/index.html:63
+#: maker/templates/maker/repo/index.html:66
 msgid "Add SSH Storage"
 msgstr ""
 
-#: maker/templates/maker/repo/index.html:66
+#: maker/templates/maker/repo/index.html:69
 msgid "Add Git Storage"
 msgstr ""
 
-#: maker/templates/maker/repo/index.html:69
+#: maker/templates/maker/repo/index.html:72
 msgid "Add Amazon S3 Storage"
 msgstr ""
 
-#: maker/templates/maker/repo/index.html:73
+#: maker/templates/maker/repo/index.html:76
 msgid "Apps"
 msgstr ""
 
-#: maker/templates/maker/repo/index.html:89
+#: maker/templates/maker/repo/index.html:92
 msgid "No apps in this repository."
 msgstr ""
 
@@ -305,8 +313,8 @@ msgstr ""
 #: maker/templates/maker/storage/form_git.html:7
 #, python-format
 msgid ""
-"Here's how to find and copy the Git Repository SSH URL in your %(gitlab)s "
-"repository:"
+"Here's how to find and copy the Git Repository SSH Address in your "
+"%(gitlab)s repository:"
 msgstr ""
 
 #: maker/views/app.py:20

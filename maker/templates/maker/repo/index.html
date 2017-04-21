@@ -45,14 +45,17 @@
 <h2 style="float: clear;">Storage</h2>
 {% if storage %}
 <ul class="mdc-list">
-    {% for storage in storage %}
-    <li class="mdc-list-item">
-	    <i class="mdc-list-item__start-detail material-icons">cloud</i>
-        {{ storage }}
-        <a href="{{ storage.get_edit_url }}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">edit</a>
-        <a href="{{ storage.get_delete_url }}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">delete</a>
-    </li>
-    {% endfor %}
+	{% for storage in storage %}
+	<li class="mdc-list-item">
+		<i class="mdc-list-item__start-detail material-icons">cloud</i>
+		{{ storage }}
+		<a href="{{ storage.get_repo_url }}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">link</a>
+		{% if not storage.is_default %}
+		<a href="{{ storage.get_edit_url }}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">edit</a>
+		<a href="{{ storage.get_delete_url }}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">delete</a>
+		{% endif %}
+	</li>
+	{% endfor %}
 </ul>
 {% else %}
 <p><b>{% trans 'Attention:' %}</b> {% trans 'This repository has no remote storage. Add one to get your repository published.' %}</p>

@@ -1,5 +1,5 @@
 from django.forms import PasswordInput
-from django.utils.translation import pgettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 from maker.models import S3Storage
 from . import BaseModelForm

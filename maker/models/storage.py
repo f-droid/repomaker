@@ -1,16 +1,18 @@
 import logging
+import os
 import re
 from itertools import chain
 
 from django.core.validators import RegexValidator, ValidationError, slug_re, force_text
 from django.db import models
+from django.conf import settings
 from django.urls import reverse_lazy
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import ugettext_lazy as _
 from fdroidserver import server
 from libcloud.storage.types import Provider
 
-from maker.storage import get_identity_file_path, PrivateStorage, REPO_DIR
+from maker.storage import get_identity_file_path, PrivateStorage, REPO_DIR, get_repo_root_path
 from .repository import Repository
 
 UL = '\u00a1-\uffff'  # unicode letters range (must be a unicode string, not a raw string)
@@ -44,7 +46,7 @@ class AbstractStorage(models.Model):
 
 class S3Storage(AbstractStorage):
     REGION_CHOICES = (
-        (Provider.S3, 'US Standard'),
+        (Provider.S3, _('US Standard')),
     )
     region = models.CharField(max_length=32, choices=REGION_CHOICES, default=Provider.S3)
     bucket = models.CharField(max_length=128)
@@ -58,7 +60,7 @@ class S3Storage(AbstractStorage):
 
     @staticmethod
     def get_name():
-        return _("Amazon S3 Storage")
+        return _('Amazon S3 Storage')
 
     def get_url(self):
         # This needs to be changed when more region choices are added
@@ -119,7 +121,8 @@ class HostnameValidator(RegexValidator):
 
 @deconstructible
 class PathValidator(RegexValidator):
-    regex = re.compile(r'^(/[a-z' + UL + r'0-9-]+)+?/?$', re.IGNORECASE)
+    # FIXME this is probably too strict
+    regex = re.compile(r'^(/[a-z' + UL + r'0-9-.]+)+?/?$', re.IGNORECASE)
     message = _('Enter a valid path.')
 
 
@@ -196,7 +199,7 @@ class GitStorage(AbstractSshStorage):
         return self.url
 
     def get_repo_url(self):
-        return self.get_url() + "/fdroid/" + REPO_DIR
+        return self.get_url() + '/' + REPO_DIR
 
     def publish(self):
         super(GitStorage, self).publish()
@@ -218,6 +221,11 @@ class StorageManager:
             objects = storage_type.objects.filter(repo=repo).all()
             if objects:
                 storage.extend(list(chain(objects)))
+
+        if hasattr(settings, 'DEFAULT_REPO_STORAGE') and settings.DEFAULT_REPO_STORAGE:
+            for s in settings.DEFAULT_REPO_STORAGE:
+                storage.append(DefaultStorage(repo, s[0], s[1]))
+
         return storage
 
     @staticmethod
@@ -230,3 +238,34 @@ class StorageManager:
         config['mirrors'] = []
         for storage in StorageManager.get_storage(repo):
             config['mirrors'].append(storage.get_repo_url())
+
+
+class DefaultStorage:
+    is_default = True
+
+    def __init__(self, repo, path, url):
+        self.repo = repo
+        self.path = path
+        self.url = url
+
+    def __str__(self):
+        return self.get_name() + " - " + str(self.repo)
+
+    @staticmethod
+    def get_name():
+        return _('Default Storage')
+
+    def get_url(self):
+        return self.url
+
+    def get_repo_url(self):
+        return self.get_url() + get_repo_root_path(self.repo) + "/" + REPO_DIR
+
+    def publish(self):
+        logging.info("Publishing '%s' to %s", self.repo, self)
+        self.repo.get_config()
+        local = self.repo.get_repo_path()
+        remote = os.path.join(self.path, get_repo_root_path(self.repo))
+        if not os.path.exists(remote):
+            os.makedirs(remote)
+        server.update_serverwebroot(remote, local)
