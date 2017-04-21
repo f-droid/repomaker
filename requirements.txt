@@ -1,10 +1,9 @@
 django
-#django-background-tasks>=1.1.9
-git+https://github.com/arteria/django-background-tasks.git@v1.1.9#egg=django-background-tasks
+django-background-tasks>=1.1.9
 django-compressor
 django-sass-processor
 qrcode
 apache-libcloud>=2.0.0rc2
 #fdroidserver>=0.8.0
 #git+https://gitlab.com/grote/fdroidserver.git@4d25113fa0f6ad923b6b71ff9c8cb139042b1f9e#egg=fdroidserver
-git+https://gitlab.com/fdroid/fdroidserver.git@89b0dea2fa7a7372e8cdabd1a86c6adae016047f#egg=fdroidserver
+git+https://gitlab.com/fdroid/fdroidserver.git@1c25c516aa95c088c5220fb9a285d54a1c9a7099#egg=fdroidserver
