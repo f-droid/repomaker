@@ -35,7 +35,7 @@ def get_remote_repo_path(repo):
 
 def get_apk_file_path(apk, filename):
     if hasattr(apk, 'repo'):
-        return os.path.join(apk.repo.get_repo_path(), filename)
+        return os.path.join(get_repo_path(apk.repo), filename)
     else:
         return os.path.join('packages', filename)
 

@@ -14,7 +14,7 @@ from fdroidserver.update import METADATA_VERSION
 
 from maker.models import Repository, RemoteRepository, S3Storage, SshStorage
 from maker.storage import get_repo_file_path, get_remote_repo_path
-from . import TEST_DIR
+from . import TEST_DIR, datetime_is_recent
 
 TEST_MEDIA_DIR = os.path.join(TEST_DIR, 'media')
 TEST_PRIVATE_DIR = os.path.join(TEST_DIR, 'private_repo')
@@ -31,13 +31,13 @@ class RepositoryTestCase(TestCase):
             url="https://example.org",
             user_id=1
         )
-        self.repo.create()
 
     def tearDown(self):
         shutil.rmtree(TEST_DIR)
 
     def test_repository_creation(self):
         repo = self.repo
+        repo.create()
 
         # assert that metadata was not modified
         self.assertEqual('Test Name', repo.name)
@@ -81,6 +81,7 @@ class RepositoryTestCase(TestCase):
 
     def test_empty_repository_update(self):
         repo = self.repo
+        repo.create()
 
         # make sure the default icon exists in the test location
         icon_path = os.path.join(settings.MEDIA_ROOT, settings.REPO_DEFAULT_ICON)
@@ -234,8 +235,3 @@ class RemoteRepositoryTestCase(TestCase):
 
         # assert that an attempt was made to update the apps
         self.assertTrue(_update_apps.called)
-
-
-def datetime_is_recent(dt, seconds=10 * 60):
-    now = datetime.datetime.utcnow().timestamp()
-    return now - seconds < dt.timestamp() < now

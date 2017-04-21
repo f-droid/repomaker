@@ -1,6 +1,7 @@
 import datetime
 import logging
 import os
+import zipfile
 from io import BytesIO
 
 import requests
@@ -120,7 +121,11 @@ class ApkPointer(AbstractApkPointer):
 
         :return: Instance of HttpResponse in case of error, None otherwise
         """
-        apk_info = self._get_info_from_file()
+        try:
+            apk_info = self._get_info_from_file()
+        except zipfile.BadZipFile as e:
+            raise ValidationError(e)
+
         if apk_info is None:
             raise ValidationError('Invalid APK.')
         self._attach_apk(apk_info)
@@ -203,6 +208,8 @@ class ApkPointer(AbstractApkPointer):
         # apply latest info to the app itself
         if self.apk.version_code == latest_version:
             self.app.name = apk_info['name']
+            if not self.app.name:  # if the app has no name, use the package name instead
+                self.app.name = self.app.package_id
             # TODO check if the icon will update automatically, if so just set path once above
             if 'icon' in apk_info and apk_info['icon'] is not None:
                 icon_path = os.path.join(self.repo.get_repo_path(), "icons-640", apk_info['icon'])
