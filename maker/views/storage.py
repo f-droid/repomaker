@@ -17,6 +17,7 @@ class StorageCreateView(RepositoryAuthorizationMixin, CreateView):
         return super(StorageCreateView, self).form_valid(form)
 
     def get_success_url(self):
+        self.get_repo().update_async()
         return get_success_url(self)
 
 
@@ -29,6 +30,7 @@ class StorageUpdateView(RepositoryAuthorizationMixin, UpdateView):
         return context
 
     def get_success_url(self):
+        self.get_repo().update_async()
         return get_success_url(self)
 
 
