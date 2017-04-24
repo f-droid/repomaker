@@ -3,9 +3,13 @@ import os
 import re
 from itertools import chain
 
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
+from django.conf import settings
+from django.core.files.base import ContentFile
 from django.core.validators import RegexValidator, ValidationError, slug_re, force_text
 from django.db import models
-from django.conf import settings
 from django.urls import reverse_lazy
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import ugettext_lazy as _
@@ -131,6 +135,7 @@ class AbstractSshStorage(AbstractStorage):
     path = models.CharField(max_length=512, validators=[PathValidator()])
     identity_file = models.FileField(upload_to=get_identity_file_path, storage=PrivateStorage(),
                                      blank=True)
+    public_key = models.TextField(blank=True, null=True)
     url = models.URLField(max_length=2048)
 
     def __str__(self):
@@ -149,11 +154,36 @@ class AbstractSshStorage(AbstractStorage):
     def get_repo_url(self):
         raise NotImplementedError()
 
+    def create_identity_file(self):
+        if self.identity_file and self.public_key:
+            return  # no need to create a new file if one already exists
+
+        # generate a new key pair
+        key = rsa.generate_private_key(
+            public_exponent=65537,
+            key_size=4096,
+            backend=default_backend()
+        )
+        # encode and save public key to database
+        public_key = key.public_key().public_bytes(
+            encoding=serialization.Encoding.OpenSSH,
+            format=serialization.PublicFormat.OpenSSH
+        )
+        self.public_key = public_key.decode()
+        # encode and save private key to identity file
+        private_key = key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.NoEncryption()  # TODO encrypt
+        )
+        self.identity_file.save('id_%d' % self.pk + '_rsa', ContentFile(private_key))
+
     def publish(self):
         logging.info("Publishing '%s' to %s", self.repo, self)
         config = self.repo.get_config()
         if self.identity_file is not None and self.identity_file != '':
-            config['identity_file'] = self.identity_file.name
+            path = os.path.join(settings.PRIVATE_REPO_ROOT, self.identity_file.name)
+            config['identity_file'] = path
 
     class Meta:
         abstract = True

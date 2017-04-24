@@ -1,0 +1,19 @@
+{% extends "./detail.html" %}
+{% load i18n %}
+
+{% block help_text %}
+<p>
+	{% blocktrans trimmed %}
+	Please make sure to add this public SSH key to your Git account for the upload to work.
+	There are instructions for
+	<a href="https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys">Gitlab</a>
+	and
+	<a href="https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/">GitHub</a>.
+	{% endblocktrans %}
+</p>
+<p>
+	{% blocktrans trimmed %}
+	Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing.
+	{% endblocktrans %}
+</p>
+{% endblock help_text %}

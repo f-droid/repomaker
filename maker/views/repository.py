@@ -9,7 +9,6 @@ from maker.models.storage import StorageManager
 from . import BaseModelForm, LoginOrSingleUserRequiredMixin
 
 
-# noinspection PyUnresolvedReferences
 class RepositoryAuthorizationMixin(LoginOrSingleUserRequiredMixin, UserPassesTestMixin):
     """
     Mixin that checks if the current users is authorized to view this repository.

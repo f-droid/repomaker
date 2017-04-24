@@ -1,0 +1,13 @@
+{% extends "./detail.html" %}
+{% load i18n %}
+
+{% block help_text %}
+<p>
+	{% blocktrans trimmed %}
+	Please make sure to add this public SSH key to your SSH server's
+	<tt>
+		<a href="https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys">~/.ssh/authorized_keys</a>
+	</tt> file,	if you have not done so already.
+	{% endblocktrans %}
+</p>
+{% endblock help_text %}

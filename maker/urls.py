@@ -2,12 +2,14 @@ from django.conf.urls import url
 
 from maker.models import S3Storage, SshStorage, GitStorage
 from maker.views.app import AppCreateView, AppDetailView, AppUpdateView, AppDeleteView
-from maker.views.gitstorage import GitStorageCreate, GitStorageUpdate, GitStorageDelete
+from maker.views.gitstorage import GitStorageCreate, GitStorageUpdate, GitStorageDetail, \
+    GitStorageDelete
 from maker.views.remoterepository import RemoteRepositoryCreateView, RemoteAppCreateView
 from maker.views.repository import RepositoryListView, RepositoryCreateView, RepositoryDetailView
 from maker.views.s3storage import S3StorageCreate, S3StorageUpdate, S3StorageDelete
 from maker.views.screenshot import ScreenshotCreateView, ScreenshotDeleteView
-from maker.views.sshstorage import SshStorageCreate, SshStorageUpdate, SshStorageDelete
+from maker.views.sshstorage import SshStorageCreate, SshStorageUpdate, SshStorageDetail, \
+    SshStorageDelete
 from . import views
 
 
@@ -48,6 +50,8 @@ urlpatterns = [
         SshStorageCreate.as_view(), name='storage_ssh_add'),
     url(r'^(?P<repo_id>[0-9]+)/storage/ssh/(?P<pk>[0-9]+)/$',
         SshStorageUpdate.as_view(), name=SshStorage.edit_url_name),
+    url(r'^(?P<repo_id>[0-9]+)/storage/ssh/(?P<pk>[0-9]+)/detail$',
+        SshStorageDetail.as_view(), name='storage_ssh_detail'),
     url(r'^(?P<repo_id>[0-9]+)/storage/ssh/(?P<pk>[0-9]+)/delete/$',
         SshStorageDelete.as_view(), name=SshStorage.delete_url_name),
 
@@ -56,6 +60,8 @@ urlpatterns = [
         GitStorageCreate.as_view(), name='storage_git_add'),
     url(r'^(?P<repo_id>[0-9]+)/storage/git/(?P<pk>[0-9]+)/$',
         GitStorageUpdate.as_view(), name=GitStorage.edit_url_name),
+    url(r'^(?P<repo_id>[0-9]+)/storage/git/(?P<pk>[0-9]+)/detail$',
+        GitStorageDetail.as_view(), name='storage_git_detail'),
     url(r'^(?P<repo_id>[0-9]+)/storage/git/(?P<pk>[0-9]+)/delete/$',
         GitStorageDelete.as_view(), name=GitStorage.delete_url_name),
 

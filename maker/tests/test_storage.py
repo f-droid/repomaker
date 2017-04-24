@@ -2,21 +2,25 @@ import os
 import shutil
 from unittest.mock import patch
 
+from django.conf import settings
 from django.test import TestCase, override_settings
 
 from maker.models import Repository, S3Storage, GitStorage, SshStorage
 from maker.models.storage import StorageManager
-from maker.storage import REPO_DIR, get_repo_path, get_repo_root_path
+from maker.storage import REPO_DIR, get_repo_path, get_repo_root_path, PrivateStorage
 from . import TEST_DIR
+from.test_repository import TEST_MEDIA_DIR, TEST_PRIVATE_DIR
 
 
-@override_settings(MEDIA_ROOT=TEST_DIR)
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class GitStorageTestCase(TestCase):
 
     def setUp(self):
         self.repo = Repository.objects.create(user_id=1)
-        self.storage = GitStorage(repo=self.repo, host="example.org", path="user/repo",
-                                  url="https://raw.example.org/user/repo")
+        self.storage = GitStorage.objects.create(repo=self.repo,
+                                                 host="example.org",
+                                                 path="user/repo",
+                                                 url="https://raw.example.org/user/repo")
 
     def tearDown(self):
         if os.path.isdir(TEST_DIR):
@@ -25,18 +29,60 @@ class GitStorageTestCase(TestCase):
     def test_remote_url(self):
         self.assertEqual("git@example.org:user/repo.git", self.storage.get_remote_url())
 
+    @override_settings(PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
+    def test_create_identity_file(self):
+        storage = self.storage
+
+        # re-declare file storage, so the settings override takes effect
+        storage.identity_file.storage = PrivateStorage()
+
+        # assert that there is no public and private key
+        self.assertIsNone(storage.public_key)
+        self.assertFalse(storage.identity_file)
+
+        # create the key pair
+        storage.create_identity_file()
+
+        # assert that there now is a public and private key
+        self.assertTrue(len(storage.public_key) > 700)
+        self.assertTrue(storage.identity_file)
+        path = os.path.join(settings.PRIVATE_REPO_ROOT, storage.identity_file.name)
+        self.assertTrue(os.path.isfile(path))
+
+    @override_settings(PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
+    def test_create_identity_file_does_not_run_twice(self):
+        storage = self.storage
+
+        # re-declare file storage, so the settings override takes effect
+        storage.identity_file.storage = PrivateStorage()
+
+        # create the key pair
+        storage.create_identity_file()
+
+        # assert that there now is a public and private key
+        public_key = storage.public_key
+        identity_file = storage.identity_file.name
+
+        # create a key pair again
+        storage.create_identity_file()
+
+        # assert that nothing has changed
+        self.assertEqual(public_key, storage.public_key)
+        self.assertEqual(identity_file, storage.identity_file.name)
+
     @patch('clint.textui.progress.Bar')
     @patch('git.remote.Remote.push')
     def test_publish(self, push, bar):
         # create an empty fake repo
-        os.chdir(TEST_DIR)
+        os.makedirs(TEST_MEDIA_DIR)
+        os.chdir(TEST_MEDIA_DIR)
         os.mkdir(REPO_DIR)
 
         # publish to git remote storage
         self.storage.publish()
 
         # assert that git mirror directory exist and that the repo was pushed
-        self.assertTrue(os.path.isdir(os.path.join(TEST_DIR, 'git-mirror')))
+        self.assertTrue(os.path.isdir(os.path.join(TEST_MEDIA_DIR, 'git-mirror')))
         self.assertTrue(push.called)
         bar.called = None  # we don't care a about the progress bar, but have to use it
 
@@ -74,7 +120,7 @@ class StorageManagerTestCase(TestCase):
         self.assertTrue('git_url/repo' in config['mirrors'])
 
 
-@override_settings(DEFAULT_REPO_STORAGE=[(os.path.join(TEST_DIR, 'repos'), '/repos/')])
+@override_settings(DEFAULT_REPO_STORAGE=[(os.path.join(TEST_MEDIA_DIR, 'repos'), '/repos/')])
 class DefaultStorageTestCase(TestCase):
 
     def setUp(self):
@@ -105,5 +151,5 @@ class DefaultStorageTestCase(TestCase):
         storage = StorageManager.get_storage(self.repo)[0]
         storage.publish()
         local = self.repo.get_repo_path()
-        remote = os.path.join(TEST_DIR, 'repos', get_repo_root_path(self.repo))
+        remote = os.path.join(TEST_MEDIA_DIR, 'repos', get_repo_root_path(self.repo))
         update_serverwebroot.assert_called_once_with(remote, local)

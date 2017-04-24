@@ -46,7 +46,7 @@ def get_screenshot_file_path(screenshot, filename):
 
 
 def get_identity_file_path(storage, filename):
-    return os.path.join(storage.repo.get_private_path(), filename)
+    return os.path.join(get_repo_root_path(storage.repo), filename)
 
 
 class RepoStorage(FileSystemStorage):
@@ -75,7 +75,7 @@ class RepoStorage(FileSystemStorage):
 
 class PrivateStorage(FileSystemStorage):
 
-    def __init__(self, file_permissions_mode=None, directory_permissions_mode=None):
+    def __init__(self, file_permissions_mode=0o600, directory_permissions_mode=0o700):
         super(PrivateStorage, self).__init__(settings.PRIVATE_REPO_ROOT, None,
                                              file_permissions_mode,
                                              directory_permissions_mode)

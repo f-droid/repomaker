@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-21 21:16+0000\n"
+"POT-Creation-Date: 2017-04-24 22:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,37 +18,37 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: maker/models/storage.py:49
+#: maker/models/storage.py:53
 msgid "US Standard"
 msgstr ""
 
-#: maker/models/storage.py:63
+#: maker/models/storage.py:67
 msgid "Amazon S3 Storage"
 msgstr ""
 
-#: maker/models/storage.py:84
+#: maker/models/storage.py:88
 msgid ""
 "Enter a valid user name consisting of letters, numbers, underscores or "
 "hyphens."
 msgstr ""
 
-#: maker/models/storage.py:108
+#: maker/models/storage.py:112
 msgid "Enter a valid hostname."
 msgstr ""
 
-#: maker/models/storage.py:126
+#: maker/models/storage.py:130
 msgid "Enter a valid path."
 msgstr ""
 
-#: maker/models/storage.py:172
+#: maker/models/storage.py:202
 msgid "SSH Storage"
 msgstr ""
 
-#: maker/models/storage.py:196
+#: maker/models/storage.py:226
 msgid "Git Storage"
 msgstr ""
 
-#: maker/models/storage.py:256
+#: maker/models/storage.py:286
 msgid "Default Storage"
 msgstr ""
 
@@ -296,6 +296,49 @@ msgstr ""
 msgid "Are you sure you want to remove the remote storage at \"%(object)s\"?"
 msgstr ""
 
+#: maker/templates/maker/storage/detail.html:4
+msgid "Remote Storage Updated"
+msgstr ""
+
+#: maker/templates/maker/storage/detail.html:18
+msgid ""
+"Please make sure to authorize this public SSH key for your remote storage if "
+"you have not done so already."
+msgstr ""
+
+#: maker/templates/maker/storage/detail.html:25
+msgid "Your local default SSH key will be used to connect to the storage."
+msgstr ""
+
+#: maker/templates/maker/storage/detail.html:28
+msgid ""
+"If this storage is experiencing problems, please check that the key works "
+"properly."
+msgstr ""
+
+#: maker/templates/maker/storage/detail_git.html:6
+msgid ""
+"Please make sure to add this public SSH key to your Git account for the "
+"upload to work. There are instructions for <a href=\"https://docs.gitlab.com/"
+"ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys"
+"\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-"
+"ssh-key-to-your-github-account/\">GitHub</a>."
+msgstr ""
+
+#: maker/templates/maker/storage/detail_git.html:15
+msgid ""
+"Also, please make sure that the master branch of your repository is <b>not "
+"protected</b> from force pushing."
+msgstr ""
+
+#: maker/templates/maker/storage/detail_ssh.html:6
+msgid ""
+"Please make sure to add this public SSH key to your SSH server's <tt> <a "
+"href=\"https://en.wikibooks.org/wiki/OpenSSH/"
+"Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/"
+"authorized_keys</a> </tt> file,\tif you have not done so already."
+msgstr ""
+
 #: maker/templates/maker/storage/form.html:7
 #: maker/templates/maker/storage/form.html:22
 #: maker/templates/maker/storage/form.html:35
@@ -321,34 +364,34 @@ msgstr ""
 msgid "Select APK file for upload"
 msgstr ""
 
-#: maker/views/gitstorage.py:14
+#: maker/views/gitstorage.py:15
 msgid "Git Repository SSH Address"
 msgstr ""
 
-#: maker/views/gitstorage.py:15
+#: maker/views/gitstorage.py:16
 msgid "Raw Git URL"
 msgstr ""
 
-#: maker/views/gitstorage.py:16
+#: maker/views/gitstorage.py:17
 msgid ""
 "This is the location where the uploaded files can be accessed from in raw "
 "form. Leave empty for GitHub or GitLab.com repositories."
 msgstr ""
 
-#: maker/views/gitstorage.py:38
+#: maker/views/gitstorage.py:36
 msgid "This URL must start with 'git@'."
 msgstr ""
 
-#: maker/views/gitstorage.py:46
+#: maker/views/gitstorage.py:44
 msgid "This URL must end with '.git'."
 msgstr ""
 
-#: maker/views/gitstorage.py:53
+#: maker/views/gitstorage.py:51
 msgid ""
 "This URL is invalid. Please copy the exact SSH URL of your git repository."
 msgstr ""
 
-#: maker/views/gitstorage.py:82
+#: maker/views/gitstorage.py:80
 msgid "Please add a valid URLfor the raw content of this git repository."
 msgstr ""
 
@@ -371,15 +414,15 @@ msgstr ""
 msgid "Could not validate repository: %s"
 msgstr ""
 
-#: maker/views/repository.py:41
+#: maker/views/repository.py:40
 msgid "Main URL"
 msgstr ""
 
-#: maker/views/repository.py:42
+#: maker/views/repository.py:41
 msgid "Upload Repository Icon"
 msgstr ""
 
-#: maker/views/repository.py:45
+#: maker/views/repository.py:44
 msgid ""
 "This is the primary location where your repository will be made available."
 msgstr ""
@@ -412,18 +455,18 @@ msgstr ""
 msgid "Leave this at 'en-US' if in doubt."
 msgstr ""
 
-#: maker/views/sshstorage.py:13
+#: maker/views/sshstorage.py:16
 msgid "Use local default SSH Key"
 msgstr ""
 
-#: maker/views/sshstorage.py:21
+#: maker/views/sshstorage.py:34
 msgid "User Name"
 msgstr ""
 
-#: maker/views/sshstorage.py:22
+#: maker/views/sshstorage.py:35
 msgid "URL"
 msgstr ""
 
-#: maker/views/sshstorage.py:25
+#: maker/views/sshstorage.py:38
 msgid "This is the location where the uploaded files can be accessed from."
 msgstr ""
