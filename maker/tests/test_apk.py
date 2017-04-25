@@ -10,6 +10,7 @@ from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.test import TestCase, override_settings
 from django.utils import timezone
+from fdroidserver.update import get_all_icon_dirs
 
 from maker.models import Apk, ApkPointer, RemoteApkPointer, App, RemoteApp, RemoteRepository, \
     Repository
@@ -268,3 +269,32 @@ class ApkPointerTestCase(TestCase):
         app = App.objects.get(pk=app.pk)
         self.assertEqual('org.bitbucket.tickytacky.mirrormirror', app.name)
         self.assertTrue(app.icon)
+
+    def test_icons_get_deleted_from_repo(self):
+        # create the repository environment
+        self._create_repo()
+
+        # initialize the ApkPointer with its stored APK file
+        self.apk_pointer.initialize()
+
+        # Get icon name
+        icon_name = \
+            self.apk_pointer.apk.package_id + "." + str(self.apk_pointer.apk.version_code) + ".png"
+
+        # Get path of repository
+        path = self.apk_pointer.repo.get_repo_path()
+
+        # List with icon directories
+        icon_directories = get_all_icon_dirs(path)
+        for icon_directory in icon_directories:
+            icon = os.path.join(icon_directory, icon_name)
+            # Check that icons exist
+            self.assertTrue(os.path.isfile(icon))
+
+        # Delete app icons
+        self.apk_pointer.delete()
+
+        for icon_directory in icon_directories:
+            icon = os.path.join(icon_directory, icon_name)
+            # Check that icons do not exist
+            self.assertFalse(os.path.isfile(icon))
