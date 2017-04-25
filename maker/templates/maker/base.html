@@ -26,6 +26,11 @@
 		{% endif %}
 	</div>
 </header>
+{% if site_notice %}
+<div style="padding: 1em; background-color: yellow; text-align: center;">
+	{% autoescape off %}{{ site_notice }}{% endautoescape %}
+</div>
+{% endif %}
 <main>
 	<div id="content">
 		{% block rm-content %}{% endblock rm-content %}

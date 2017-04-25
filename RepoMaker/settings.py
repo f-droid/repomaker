@@ -36,6 +36,8 @@ MEDIA_URL = "/media/"
 # Location for private data such as the repo signing key
 PRIVATE_REPO_ROOT = os.path.join(BASE_DIR, 'private_repo')
 
+# Uncomment the next line to show this notice on every page
+# SITE_NOTICE = '''Maintenance ongoing. Please check back later.'''
 
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
@@ -130,6 +132,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'maker.context_processors.site_notice',
             ],
         },
     },
