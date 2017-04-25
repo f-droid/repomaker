@@ -12,6 +12,7 @@ from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.utils import timezone
 from fdroidserver import common, update
+from fdroidserver.update import get_all_icon_dirs
 
 from maker import tasks
 from maker.storage import get_apk_file_path, RepoStorage
@@ -236,6 +237,20 @@ class ApkPointer(AbstractApkPointer):
         self.file.name = target
         self.save()
 
+    def delete_app_icons_from_repo(self):
+        # Build icon name
+        icon_name = self.apk.package_id + "." + str(self.apk.version_code) + ".png"
+
+        # Get path of repository
+        path = self.repo.get_repo_path()
+
+        # List with icon directories
+        icon_directories = get_all_icon_dirs(path)
+        for icon_directory in icon_directories:
+            icon = os.path.join(icon_directory, icon_name)
+            if os.path.isfile(icon):
+                os.remove(icon)
+
     class Meta(AbstractApkPointer.Meta):
         unique_together = (("apk", "app"),)
 
@@ -260,13 +275,14 @@ def apk_post_delete_handler(**kwargs):
 
 @receiver(post_delete, sender=ApkPointer)
 def apk_pointer_post_delete_handler(**kwargs):
-    apk = kwargs['instance']
-    logging.info("Deleting APK Pointer: %s", apk.file.name)
-    apk.file.delete(save=False)
-    apk.apk.delete_if_no_pointers()
+    apk_pointer = kwargs['instance']
+    logging.info("Deleting APK Pointer: %s", apk_pointer.file.name)
+    apk_pointer.file.delete(save=False)
+    apk_pointer.delete_app_icons_from_repo()
+    apk_pointer.apk.delete_if_no_pointers()
 
 
 @receiver(post_delete, sender=RemoteApkPointer)
 def remote_apk_pointer_post_delete_handler(**kwargs):
-    remote_apk = kwargs['instance']
-    remote_apk.apk.delete_if_no_pointers()
+    remote_apk_pointer = kwargs['instance']
+    remote_apk_pointer.apk.delete_if_no_pointers()

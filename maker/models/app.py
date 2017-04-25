@@ -50,10 +50,6 @@ class App(AbstractApp):
     def get_absolute_url(self):
         return reverse('app', kwargs={'repo_id': self.repo.pk, 'app_id': self.pk})
 
-    def delete_app_icons_from_repo(self):
-        # TODO actually delete the app icons in self.repo.get_repo_dir()/icons* from disk
-        pass
-
     @staticmethod
     def from_remote_app(repo, app):
         """
@@ -220,7 +216,6 @@ class RemoteApp(AbstractApp):
 def app_post_delete_handler(**kwargs):
     app = kwargs['instance']
     app.delete_old_icon()
-    app.delete_app_icons_from_repo()
 
 
 @receiver(post_delete, sender=RemoteApp)
