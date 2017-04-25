@@ -23,10 +23,6 @@ a.rm-no-underline {
 	text-decoration: none;
 }
 
-.mdc-toolbar {
-    padding: 1em;  // this became necessary with an update, bug?
-}
-
 .mdc-toolbar__title a, a.material-icons, .mdc-list-item a {
 	text-decoration: none;
 	color: unset;

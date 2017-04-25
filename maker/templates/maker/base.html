@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load sass_tags %}
+{% load i18n %}
 <html>
 <head>
 	<meta charset="utf-8">
@@ -9,18 +10,25 @@
 	{% block head %}{% endblock %}
 </head>
 
-<body class="mdc-typography ">
+<body class="mdc-typography">
 <header class="mdc-toolbar">
-	<section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-		<a class="material-icons">menu</a>
-		<span class="mdc-toolbar__title">{% block toolbar-title %}<a href="/">Repo Maker</a>{% endblock %}</span>
-	</section>
-	<section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
-	</section>
+	<div class="mdc-toolbar__row">
+		<section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+			<a class="material-icons">menu</a>
+			<span class="mdc-toolbar__title">{% block toolbar-title %}<a href="/">Repo Maker</a>{% endblock %}</span>
+		</section>
+		{% if user.is_authenticated and user.username != 'user' %}
+		{% load account %}
+		<section class="mdc-toolbar__section mdc-toolbar__section--shrink-to-fit mdc-toolbar__section--align-end">
+			{% user_display user %}
+			[ <a href="{% url 'account_logout' %}">{% trans 'logout' %}</a> ]
+		</section>
+		{% endif %}
+	</div>
 </header>
 <main>
 	<div id="content">
-		{% block content %}{% endblock %}
+		{% block rm-content %}{% endblock rm-content %}
 	</div>
 </main>
 </body>

@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 import requests
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.test import TestCase, override_settings
@@ -27,9 +28,8 @@ class ApkTestCase(TestCase):
         self.apk.file.save('test.apk', BytesIO(b'content'), save=True)
 
         # Create Repository
-        repository = Repository(name="Test", description="Test", url="https://f-droid.org",
-                                user_id=1)
-        repository.save()
+        Repository.objects.create(name="Test", description="Test", url="https://f-droid.org",
+                                  user=User.objects.create(username='user2'))
 
         # Create RemoteRepository
         remote_repository = RemoteRepository.objects.create(
@@ -166,7 +166,7 @@ class ApkPointerTestCase(TestCase):
 
     def setUp(self):
         # Create Repository
-        repo = Repository.objects.create(user_id=1)
+        repo = Repository.objects.create(user=User.objects.create(username='user2'))
 
         # Create ApkPointer
         self.apk_pointer = ApkPointer(repo=repo)

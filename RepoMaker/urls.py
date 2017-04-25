@@ -27,3 +27,8 @@ urlpatterns = [
     url(r'^%s(?P<path>.*)$' % settings.MEDIA_URL[1:], media_serve,
         {'document_root': settings.MEDIA_ROOT}),
 ]
+
+if not settings.SINGLE_USER_MODE:
+    urlpatterns += [
+        url(r'^accounts/', include('allauth.urls')),
+    ]

@@ -3,6 +3,7 @@ import shutil
 from unittest.mock import patch
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 
 from maker.models import Repository, S3Storage, GitStorage, SshStorage
@@ -16,7 +17,7 @@ from.test_repository import TEST_MEDIA_DIR, TEST_PRIVATE_DIR
 class GitStorageTestCase(TestCase):
 
     def setUp(self):
-        self.repo = Repository.objects.create(user_id=1)
+        self.repo = Repository.objects.create(user=User.objects.create(username='user2'))
         self.storage = GitStorage.objects.create(repo=self.repo,
                                                  host="example.org",
                                                  path="user/repo",
@@ -91,7 +92,7 @@ class StorageManagerTestCase(TestCase):
 
     def setUp(self):
         # create repo and three remote storage locations
-        self.repo = Repository.objects.create(user_id=1)
+        self.repo = Repository.objects.create(user=User.objects.create(username='user2'))
         S3Storage.objects.create(repo=self.repo, bucket='s3_bucket')
         SshStorage.objects.create(repo=self.repo, url='ssh_url')
         GitStorage.objects.create(repo=self.repo, url='git_url')
@@ -124,7 +125,7 @@ class StorageManagerTestCase(TestCase):
 class DefaultStorageTestCase(TestCase):
 
     def setUp(self):
-        self.repo = Repository.objects.create(user_id=1)
+        self.repo = Repository.objects.create(user=User.objects.create(username='user2'))
 
     @override_settings(DEFAULT_REPO_STORAGE=None)
     def test_undefined_default_storage(self):

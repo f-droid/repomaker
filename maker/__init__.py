@@ -1,2 +1,2 @@
-# The name of the default user to be used in single-user mode only
+# The name of the default user. Please DO NOT CHANGE
 DEFAULT_USER_NAME = 'user'

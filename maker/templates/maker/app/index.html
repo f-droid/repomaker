@@ -5,7 +5,7 @@
 {% block title %}{{ app.name }}{% endblock %}
 {% block toolbar-title %}<a href="{% url 'repo' app.repo.id %}">{{ app.repo.name }}</a>{% endblock %}
 
-{% block content %}
+{% block rm-content %}
 
 <div class="mdc-layout-grid">
 
@@ -136,4 +136,4 @@
 
 </div>
 
-{% endblock content %}
+{% endblock rm-content %}

@@ -5,11 +5,13 @@ from io import BytesIO
 
 import qrcode
 import requests
+from allauth.account.signals import user_signed_up
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from django.db import models
+from django.dispatch import receiver
 from django.urls import reverse
 from django.utils import timezone
 from fdroidserver import common, index, server, update
@@ -374,6 +376,14 @@ class Repository(AbstractRepository):
 
     class Meta(AbstractRepository.Meta):
         verbose_name_plural = "Repositories"
+
+
+@receiver(user_signed_up)
+def after_user_signed_up(**kwargs):
+    # add new user to all pre-installed repositories
+    user = kwargs['user']
+    for remote_repo in RemoteRepository.objects.filter(pre_installed=True).all():
+        remote_repo.users.add(user)
 
 
 class Options:

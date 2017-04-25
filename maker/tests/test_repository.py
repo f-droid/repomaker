@@ -9,6 +9,7 @@ import qrcode
 import requests
 from background_task.tasks import Task
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 from fdroidserver.update import METADATA_VERSION
 
@@ -25,11 +26,12 @@ class RepositoryTestCase(TestCase):
 
     def setUp(self):
         # create repository
+        self.user = User.objects.create(username='user2')
         self.repo = Repository.objects.create(
             name="Test Name",
             description="Test Description",
             url="https://example.org",
-            user_id=1
+            user=self.user,
         )
 
     def tearDown(self):
@@ -52,7 +54,7 @@ class RepositoryTestCase(TestCase):
         self.assertFalse(repo.is_updating)
 
         # assert that the owner of the repository was not modified
-        self.assertEqual(1, repo.user_id)
+        self.assertEqual(self.user.id, repo.user_id)
 
         # assert all dates were set correctly
         self.assertTrue(datetime_is_recent(repo.last_updated_date))

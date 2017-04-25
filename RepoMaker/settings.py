@@ -19,21 +19,34 @@ SINGLE_USER_MODE = True
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# SECURITY WARNING: change this secret key and keep it secret!
 SECRET_KEY = '913d6#u8@-*#3l)spwzurd#fd77bey-6mfs5fc$a=yhnh!n4p9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 logging.getLogger().setLevel(logging.DEBUG)
 
+# Add your host here
 ALLOWED_HOSTS = ['127.0.0.1']
 
-# Location for publicly accessible media such as repo icons
+# Location for media accessible via the web-server such as repo icons, screenshots, etc.
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = "/media/"
 
 # Location for private data such as the repo signing key
 PRIVATE_REPO_ROOT = os.path.join(BASE_DIR, 'private_repo')
+
+
+# Database
+# https://docs.djangoproject.com/en/dev/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
 
 # Uncomment and edit this, if you want to offer your users storage for their repositories
 # You need to configure your web-server to serve from those locations
@@ -59,7 +72,39 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django.contrib.sites',
+    'allauth.account',
 ]
+
+
+if not SINGLE_USER_MODE:
+    SITE_ID = 1
+    LOGIN_REDIRECT_URL = "/"
+    # http://django-allauth.readthedocs.io/en/latest/installation.html
+    INSTALLED_APPS += [
+        'allauth',
+        'allauth.socialaccount',
+        # 'allauth.socialaccount.providers.amazon',
+        # 'allauth.socialaccount.providers.baidu',
+        # 'allauth.socialaccount.providers.bitbucket_oauth2',
+        # 'allauth.socialaccount.providers.dropbox_oauth2',
+        # 'allauth.socialaccount.providers.facebook',
+        # 'allauth.socialaccount.providers.github',
+        # 'allauth.socialaccount.providers.gitlab',
+        # 'allauth.socialaccount.providers.google',
+        # 'allauth.socialaccount.providers.linkedin_oauth2',
+        'allauth.socialaccount.providers.openid',
+        # 'allauth.socialaccount.providers.reddit',
+        # 'allauth.socialaccount.providers.slack',
+        # 'allauth.socialaccount.providers.stackexchange',
+        # 'allauth.socialaccount.providers.twitter',
+        # 'allauth.socialaccount.providers.weibo',
+    ]
+    AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.ModelBackend',
+        'allauth.account.auth_backends.AuthenticationBackend',
+    )
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -91,18 +136,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'RepoMaker.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/dev/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
@@ -138,8 +171,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
