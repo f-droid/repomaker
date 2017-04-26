@@ -10,7 +10,7 @@
 <h1 style="vertical-align: middle;"><img src="{{ repo.icon.url }}"/> {{ repo.name }}</h1>
 <p>{{ repo.description }}</p>
 
-{% if repo.last_publication_date %}
+{% if repo.qrcode and repo.last_publication_date %}
 <div class="mdc-card mdc-ripple-surface" style="float: right;">
 	<a href="{{ repo.get_fingerprint_url }}">
 		<img src="{{ repo.qrcode.url }}"/>
@@ -19,11 +19,13 @@
 {% endif %}
 
 <ul class="mdc-list mdc-list--dense">
+	{% if repo.url %}
     <li class="mdc-list-item">
 	    <i class="mdc-list-item__start-detail material-icons">insert_link</i>
 		<!-- TODO: Figure out the best way to translate this -->
 	    URL: <a href="{{ repo.get_fingerprint_url }}">{{ repo.url }}</a>
     </li>
+	{% endif %}
     <li class="mdc-list-item">
 	    <i class="mdc-list-item__start-detail material-icons">fingerprint</i>
 		{% blocktrans with fingerprint=repo.fingerprint %}Fingerprint: {{ fingerprint }}{% endblocktrans %}

@@ -78,9 +78,9 @@ INSTALLED_APPS = [
     'allauth.account',
 ]
 
+SITE_ID = 1
 
 if not SINGLE_USER_MODE:
-    SITE_ID = 1
     LOGIN_REDIRECT_URL = "/"
     # http://django-allauth.readthedocs.io/en/latest/installation.html
     INSTALLED_APPS += [

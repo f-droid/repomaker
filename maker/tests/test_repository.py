@@ -35,7 +35,8 @@ class RepositoryTestCase(TestCase):
         )
 
     def tearDown(self):
-        shutil.rmtree(TEST_DIR)
+        if os.path.isdir(TEST_DIR):
+            shutil.rmtree(TEST_DIR)
 
     def test_repository_creation(self):
         repo = self.repo
@@ -80,6 +81,44 @@ class RepositoryTestCase(TestCase):
         key_abs_path = os.path.join(settings.PRIVATE_REPO_ROOT, key_rel_path)
         self.assertTrue(os.path.isfile(key_abs_path))
         self.assertTrue(os.path.getsize(key_abs_path) > 3500)
+
+    def test_get_fingerprint_url(self):
+        repo = self.repo
+        repo.fingerprint = 'test'
+        self.assertEqual(repo.url + '?fingerprint=test', repo.get_fingerprint_url())
+
+    def test_get_fingerprint_url_without_url(self):
+        self.repo.url = None
+        self.assertIsNone(self.repo.get_fingerprint_url())
+
+    def test_get_mobile_url(self):
+        repo = self.repo
+        repo.fingerprint = 'test'
+        self.assertTrue(repo.get_mobile_url().startswith('fdroidrepo'))
+
+    def test_get_mobile_url_without_url(self):
+        self.repo.url = None
+        self.assertIsNone(self.repo.get_mobile_url())
+
+    def test_set_url(self):
+        repo = self.repo
+        old_url = repo.url
+        self.assertFalse(repo.qrcode)
+        repo.set_url('test/url')
+        self.assertNotEqual(old_url, repo.url)
+        self.assertTrue(repo.qrcode)
+
+    def test_set_url_to_none(self):
+        repo = self.repo
+        # assert that a QR code exists before setting the URL
+        repo._generate_qrcode()  # pylint: disable=protected-access
+        self.assertTrue(repo.qrcode)
+
+        repo.set_url(None)  # unset the URL
+
+        # assert that URL and the QR code got unset
+        self.assertIsNone(repo.url)
+        self.assertFalse(repo.qrcode)
 
     def test_empty_repository_update(self):
         repo = self.repo

@@ -105,6 +105,13 @@ class StorageManagerTestCase(TestCase):
         # assert that all three storage locations are returned by the StorageManager
         self.assertTrue(len(StorageManager.get_storage(self.repo)) == 3)
 
+    @override_settings(DEFAULT_REPO_STORAGE=[(os.path.join(TEST_MEDIA_DIR, 'repos'), '/repos/')])
+    def test_get_default_storage(self):
+        self.assertTrue(len(StorageManager.get_default_storage(self.repo)) == 1)
+
+    def test_get_default_storage_without_any_defined(self):
+        self.assertTrue(len(StorageManager.get_default_storage(self.repo)) == 0)
+
     def test_add_to_config(self):
         # get config from repo and assert that it doesn't contain storage mirrors
         config = self.repo.get_config()
@@ -137,6 +144,20 @@ class DefaultStorageTestCase(TestCase):
     def test_default_flag(self):
         self.assertTrue(StorageManager.get_storage(self.repo)[0].is_default)
 
+    @override_settings(DEFAULT_REPO_STORAGE=[('repos', 'test/')])
+    def test_get_repo_url(self):
+        storage = StorageManager.get_storage(self.repo)[0]
+        self.assertEqual('test/' + get_repo_path(self.repo), storage.get_repo_url())
+
+    @override_settings(DEFAULT_REPO_STORAGE=[('repos', 'test')])
+    def test_get_repo_url_without_trailing_slash(self):
+        storage = StorageManager.get_storage(self.repo)[0]
+        self.assertEqual('test/' + get_repo_path(self.repo), storage.get_repo_url())
+
+    def test_get_repo_url_without_schema(self):
+        storage = StorageManager.get_storage(self.repo)[0]
+        self.assertTrue(storage.get_repo_url().startswith('https://example.com' + storage.url))
+
     def test_add_to_config(self):
         # add storage mirrors to config
         config = self.repo.get_config()
@@ -144,7 +165,7 @@ class DefaultStorageTestCase(TestCase):
 
         # assert that we now have storage mirror in the config
         self.assertTrue(len(config['mirrors']) == 1)
-        url = '/repos/' + get_repo_path(self.repo)
+        url = 'https://example.com/repos/' + get_repo_path(self.repo)
         self.assertEqual(url, config['mirrors'][0])
 
     @patch('fdroidserver.server.update_serverwebroot')

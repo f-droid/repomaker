@@ -2,12 +2,12 @@ from django.forms import PasswordInput
 from django.utils.translation import ugettext_lazy as _
 
 from maker.models import S3Storage
-from . import BaseModelForm
-from .storage import StorageCreateView, StorageUpdateView, StorageDeleteView
+from .storage import StorageForm, StorageCreateView, StorageUpdateView, StorageDeleteView
 
 
-class S3StorageForm(BaseModelForm):
-    class Meta:
+class S3StorageForm(StorageForm):
+
+    class Meta(StorageForm.Meta):
         model = S3Storage
         fields = ['region', 'bucket', 'accesskeyid', 'secretkey']
         labels = {

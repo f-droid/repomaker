@@ -35,13 +35,9 @@ class RepositoryListView(LoginOrSingleUserRequiredMixin, ListView):
 class RepositoryForm(BaseModelForm):
     class Meta:
         model = Repository
-        fields = ['name', 'description', 'url', 'icon']
+        fields = ['name', 'description', 'icon']
         labels = {
-            'url': _('Main URL'),
             'icon': _('Upload Repository Icon'),
-        }
-        help_texts = {
-            'url': _('This is the primary location where your repository will be made available.'),
         }
 
 
@@ -52,8 +48,15 @@ class RepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        result = super(RepositoryCreateView, self).form_valid(form)
+        result = super(RepositoryCreateView, self).form_valid(form)  # saves new repo
+
+        # set main repo URL to that of first default storage, if any exists
+        storage = StorageManager.get_default_storage(form.instance)
+        if len(storage) > 0:
+            form.instance.url = storage[0].get_repo_url()
+
         # TODO show loading screen
+
         form.instance.create()  # generate repo, QR Code, etc. on disk
         return result
 

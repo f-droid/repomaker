@@ -25,7 +25,7 @@ keydname = "CN=localhost.localdomain, OU=F-Droid"
 class AbstractRepository(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-    url = models.URLField(max_length=2048)
+    url = models.URLField(max_length=2048, blank=True, null=True)
     icon = models.ImageField(upload_to=get_repo_file_path, default=settings.REPO_DEFAULT_ICON)
     public_key = models.TextField(blank=True)
     fingerprint = models.CharField(max_length=512, blank=True)
@@ -35,7 +35,6 @@ class AbstractRepository(models.Model):
 
     class Meta:
         abstract = True
-        unique_together = (("url", "fingerprint"),)
 
     def __str__(self):
         return self.name
@@ -47,7 +46,14 @@ class AbstractRepository(models.Model):
         return os.path.join(self.get_path(), REPO_DIR)
 
     def get_fingerprint_url(self):
+        if not self.url:
+            return None
         return self.url + "?fingerprint=" + self.fingerprint
+
+    def get_mobile_url(self):
+        if not self.get_fingerprint_url():
+            return None
+        return self.get_fingerprint_url().replace('http', 'fdroidrepo', 1)
 
     def delete_old_icon(self):
         icon_path = os.path.dirname(self.icon.path)
@@ -200,7 +206,6 @@ class RemoteRepository(AbstractRepository):
 
     class Meta(AbstractRepository.Meta):
         verbose_name_plural = "Remote Repositories"
-        unique_together = (("url", "fingerprint"),)
 
 
 class Repository(AbstractRepository):
@@ -265,14 +270,19 @@ class Repository(AbstractRepository):
         self.fingerprint = fingerprint.replace(" ", "")
 
         # Generate and save QR Code
-        self.generate_qrcode()
+        self._generate_qrcode()
 
         # Generate repository website
-        self.generate_page()
+        self._generate_page()
 
         self.save()
 
-    def generate_qrcode(self):
+    def _generate_qrcode(self):
+        # delete QR code if we don't have a repo URL at the moment
+        if not self.get_fingerprint_url():
+            self.qrcode.delete(save=False)
+            return
+
         qr = qrcode.QRCode(
             version=None,
             error_correction=qrcode.constants.ERROR_CORRECT_M,
@@ -293,12 +303,20 @@ class Repository(AbstractRepository):
         finally:
             f.close()
 
-    def generate_page(self):
+    def _generate_page(self):
+        if not self.get_fingerprint_url():
+            return
         with open(os.path.join(self.get_repo_path(), 'index.html'), 'w') as file:
             file.write('<a href="%s"/>' % self.get_fingerprint_url())
             file.write('<img src="qrcode.png"/> ')
             file.write(self.get_fingerprint_url())
             file.write('</a>')
+
+    def set_url(self, url):
+        self.url = url
+        self._generate_qrcode()
+        self._generate_page()
+        self.save()
 
     def update_async(self):
         """
@@ -321,6 +339,10 @@ class Repository(AbstractRepository):
         self.chdir()
         config = self.get_config()
         StorageManager.add_to_config(self, config)
+
+        # ensure that this repo's main URL is set prior to updating
+        if not self.url and len(config['mirrors']) > 0:
+            self.set_url(config['mirrors'][0])
 
         # Gather information about all the apk files in the repo directory, using
         # cached data if possible.
@@ -363,16 +385,17 @@ class Repository(AbstractRepository):
         as it is intended to be called automatically after each update.
         """
         from maker.models.storage import StorageManager
-        self.chdir()  # expected by server.update_awsbucket()
         remote_storage = StorageManager.get_storage(self)
+        if len(remote_storage) == 0:
+            return  # bail out if there is no remote storage to publish to
 
         # Publish to remote storage
+        self.chdir()  # expected by server.update_awsbucket()
         for storage in remote_storage:
             storage.publish()
 
-        # Update the publication date if we published something
-        if len(remote_storage) > 0:
-            self.last_publication_date = timezone.now()
+        # Update the publication date
+        self.last_publication_date = timezone.now()
 
     class Meta(AbstractRepository.Meta):
         verbose_name_plural = "Repositories"

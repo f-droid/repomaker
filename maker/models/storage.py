@@ -7,6 +7,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from django.conf import settings
+from django.contrib.sites.models import Site
 from django.core.files.base import ContentFile
 from django.core.validators import RegexValidator, ValidationError, slug_re, force_text
 from django.db import models
@@ -247,14 +248,28 @@ class StorageManager:
         Returns all remote storage that belongs to the given repository :param: repo.
         """
         storage = []
+        storage.extend(StorageManager.get_default_storage(repo))
         for storage_type in StorageManager.storage_models:
             objects = storage_type.objects.filter(repo=repo).all()
             if objects:
                 storage.extend(list(chain(objects)))
 
+        return storage
+
+    @staticmethod
+    def get_default_storage(repo):
+        """
+        Returns a list of all configured default storage locations
+        for the given repository :param: repo.
+        """
+        storage = []
         if hasattr(settings, 'DEFAULT_REPO_STORAGE') and settings.DEFAULT_REPO_STORAGE:
             for s in settings.DEFAULT_REPO_STORAGE:
-                storage.append(DefaultStorage(repo, s[0], s[1]))
+                path = s[0]
+                url = s[1]
+                if not url.endswith('/'):
+                    url += '/'
+                storage.append(DefaultStorage(repo, path, url))
 
         return storage
 
@@ -289,7 +304,11 @@ class DefaultStorage:
         return self.url
 
     def get_repo_url(self):
-        return self.get_url() + get_repo_root_path(self.repo) + "/" + REPO_DIR
+        url = self.get_url()
+        if url.startswith('/'):
+            current_site = Site.objects.get_current()
+            url = 'https://' + current_site.domain + url
+        return url + get_repo_root_path(self.repo) + "/" + REPO_DIR
 
     def publish(self):
         logging.info("Publishing '%s' to %s", self.repo, self)

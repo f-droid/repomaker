@@ -3,14 +3,13 @@ from django.forms import BooleanField
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
-from django.views.generic.edit import FormMixin
 
 from maker.models import SshStorage
-from . import BaseModelForm
-from .storage import StorageCreateView, StorageUpdateView, StorageDeleteView
+from .storage import StorageForm, MainStorageMixin, StorageCreateView, StorageUpdateView, \
+    StorageDeleteView
 
 
-class SshStorageForm(BaseModelForm):
+class SshStorageForm(StorageForm):
     if settings.SINGLE_USER_MODE:
         ignore_identity_file = BooleanField(required=False, initial=True,
                                             label=_('Use local default SSH Key'))
@@ -25,7 +24,7 @@ class SshStorageForm(BaseModelForm):
             return not bool(self.instance.identity_file)  # True if no identity file exists
         return super().get_initial_for_field(field, field_name)
 
-    class Meta:
+    class Meta(StorageForm.Meta):
         model = SshStorage
         fields = ['username', 'host', 'path', 'url']
         if settings.SINGLE_USER_MODE:
@@ -39,10 +38,7 @@ class SshStorageForm(BaseModelForm):
         }
 
 
-class SshKeyMixin(FormMixin):
-
-    def __init__(self):
-        pass
+class SshKeyMixin(MainStorageMixin):
 
     def form_valid(self, form):
         if 'ignore_identity_file' in form.cleaned_data \
