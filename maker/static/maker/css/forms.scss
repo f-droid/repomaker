@@ -12,6 +12,12 @@
 		@extend .mdc-textfield__input;
 	}
 
+	.mdc-textfield {
+		select, input {
+			vertical-align: top;
+		}
+	}
+
 	input[type="submit"] {
 		@extend .mdc-button, .mdc-button--raised, .mdc-button--primary;
 	}

@@ -1,7 +1,8 @@
 from django.conf.urls import url
 
 from maker.models import S3Storage, SshStorage, GitStorage
-from maker.views.app import AppCreateView, AppDetailView, AppUpdateView, AppDeleteView
+from maker.views.app import AppCreateView, AppDetailView, AppUpdateView, AppDeleteView, \
+    AppTranslationUpdateView
 from maker.views.gitstorage import GitStorageCreate, GitStorageUpdate, GitStorageDetail, \
     GitStorageDelete
 from maker.views.remoterepository import RemoteRepositoryCreateView, RemoteAppCreateView
@@ -34,6 +35,8 @@ urlpatterns = [
         name='edit_app'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/delete/$', AppDeleteView.as_view(),
         name='delete_app'),
+    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/translate/$',
+        AppTranslationUpdateView.as_view(), name='app_translate'),
 
     # App Screenshots
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/screenshot/add/$',

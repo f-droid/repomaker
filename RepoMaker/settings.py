@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'maker.apps.MakerConfig',
     'sass_processor',
     'background_task',
+    'hvad',  # model i18n
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

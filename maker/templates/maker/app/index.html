@@ -42,6 +42,16 @@
 				{% blocktrans with description=app.description %}Description: {{ description }}{% endblocktrans %}
 			</li>
 			{% endif %}
+			<li class="mdc-list-item">
+				<i class="mdc-list-item__start-detail material-icons">translate</i>
+				{% trans 'Translations:' %}
+				{% for lang in app.get_available_languages %}
+				{{ lang|language_name }}{% if not forloop.last %}, {% endif %}
+				{% empty %}
+				<i>{% trans 'None' %}</i>
+				{% endfor %}
+				<a href="{% url 'app_translate' app.repo.id app.id %}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">edit</a>
+			</li>
 			{% if apks %}
 			<li class="mdc-list-item">
 				<i class="mdc-list-item__start-detail material-icons">gesture</i>

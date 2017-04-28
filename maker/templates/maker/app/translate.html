@@ -1,0 +1,25 @@
+{% extends "../base.html" %}
+{% load i18n %}
+{% load sass_tags %}
+
+{% block title %}{% trans 'Translate App' %}{% endblock %}
+{% block toolbar-title %}{{ app.repo.name }} - <a href="{% url 'app' app.repo.id app.id %}">{{ app.name }}</a>{% endblock %}
+
+{% block head %}
+<link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
+{% endblock head %}
+
+
+{% block rm-content %}
+
+<h1><img src="{{ app.icon.url }}"/>{% blocktrans %}Translate {{ app }}{% endblocktrans %}</h1>
+
+<div class="rm-form">
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="{% trans 'Save Translation' %}"/>
+    </form>
+</div>
+
+{% endblock rm-content %}

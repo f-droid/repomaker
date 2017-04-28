@@ -12,14 +12,16 @@ from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 from fdroidserver import metadata
+from hvad.models import TranslatableModel, TranslatedFields
 
 from maker.storage import get_repo_file_path_for_app
 from .category import Category
 from .repository import Repository, RemoteRepository
 
 
-class AbstractApp(models.Model):
+class AbstractApp(TranslatableModel):
     package_id = models.CharField(max_length=255, blank=True)
     name = models.CharField(max_length=255, blank=True)
     summary = models.CharField(max_length=255, blank=True)
@@ -29,6 +31,10 @@ class AbstractApp(models.Model):
                              default=settings.APP_DEFAULT_ICON)
     category = models.ManyToManyField(Category, blank=True, limit_choices_to={'user': None})
     added_date = models.DateTimeField(default=timezone.now)
+    translations = TranslatedFields(
+        l_summary=models.CharField(max_length=255, blank=True, verbose_name=_("Summary")),
+        l_description=models.TextField(blank=True, verbose_name=_("Description")),
+    )
 
     def __str__(self):
         return self.name
@@ -46,6 +52,7 @@ class AbstractApp(models.Model):
 class App(AbstractApp):
     repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
     last_updated_date = models.DateTimeField(auto_now=True)
+    translations = TranslatedFields()  # required for i18n
 
     def get_absolute_url(self):
         return reverse('app', kwargs={'repo_id': self.repo.pk, 'app_id': self.pk})
@@ -91,6 +98,7 @@ class RemoteApp(AbstractApp):
     repo = models.ForeignKey(RemoteRepository, on_delete=models.CASCADE)
     icon_etag = models.CharField(max_length=128, blank=True)
     last_updated_date = models.DateTimeField(blank=True)
+    translations = TranslatedFields()  # required for i18n
 
     def update_from_json(self, app):
         """

@@ -3,6 +3,7 @@ django-background-tasks>=1.1.9
 django-compressor
 django-sass-processor
 django-allauth
+django-hvad>=1.8.0
 qrcode
 apache-libcloud>=2.0.0rc2
 cryptography>=1.4.0

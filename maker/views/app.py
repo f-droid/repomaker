@@ -5,6 +5,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from hvad.forms import translationformset_factory
 
 from maker.models import RemoteRepository, App, RemoteApp, ApkPointer
 from maker.models.category import Category
@@ -112,3 +113,15 @@ class AppDeleteView(RepositoryAuthorizationMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('repo', kwargs={'repo_id': self.kwargs['repo_id']})
+
+
+class AppTranslationUpdateView(RepositoryAuthorizationMixin, UpdateView):
+    model = App
+    form_class = translationformset_factory(App, fields=['l_summary', 'l_description'], extra=1)
+    pk_url_kwarg = 'app_id'
+    context_object_name = 'app'
+    template_name = "maker/app/translate.html"
+
+    def get_success_url(self):
+        self.get_repo().update_async()  # schedule repository update
+        return reverse('app', kwargs=self.kwargs)
