@@ -132,6 +132,7 @@ class RemoteApp(AbstractApp):
                 self.added_date = date_added
         self.save()
         if 'localized' in app:
+            self._update_translations(app['localized'])
             self._update_screenshots(app['localized'])
         return True
 
@@ -153,10 +154,36 @@ class RemoteApp(AbstractApp):
         for category in categories:
             try:
                 cat = Category.objects.get(name=category)
+                # TODO not only add, but also remove old categories again
                 self.category.add(cat)
             except ObjectDoesNotExist:
                 # Drop the unknown category, don't create new categories automatically here
                 pass
+
+    def _update_translations(self, localized):
+        # TODO also support 'name, 'whatsNew' and 'video'
+        supported_fields = ['Summary', 'Description']
+        available_languages = self.get_available_languages()
+        for language_code, translation in localized.items():
+            if set(supported_fields).isdisjoint(translation.keys()):
+                continue  # no supported fields in translation
+            # TODO not only add, but also remove old translations again
+            if language_code in available_languages:
+                # we need to retrieve the existing translation
+                app = RemoteApp.objects.language(language_code).get(pk=self.pk)
+                app.apply_translation(translation)
+            else:
+                # create a new translation
+                self.translate(language_code)
+                self.apply_translation(translation)
+
+    # pylint: disable=attribute-defined-outside-init
+    def apply_translation(self, translation):
+        if 'Summary' in translation:
+            self.l_summary = translation['Summary']
+        if 'Description' in translation:
+            self.l_description = translation['Description']
+        self.save()
 
     def _update_screenshots(self, localized):
         from maker.models import RemoteScreenshot
