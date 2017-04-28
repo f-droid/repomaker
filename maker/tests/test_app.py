@@ -1,8 +1,50 @@
 from datetime import datetime, timezone
 
+from django.contrib.auth.models import User
 from django.test import TestCase
 
-from maker.models import RemoteRepository, RemoteApp
+from maker.models import Repository, RemoteRepository, App, RemoteApp
+
+
+class AppTestCase(TestCase):
+
+    def setUp(self):
+        # local objects
+        self.user = User.objects.create(username='user2')
+        self.repo = Repository.objects.create(user=self.user)
+        self.app = App.objects.create(repo=self.repo)
+
+        # remote objects
+        date = datetime.fromtimestamp(0, timezone.utc)
+        self.remote_repo = RemoteRepository.objects.create(last_change_date=date)
+        self.remote_app = RemoteApp.objects.create(repo=self.remote_repo, last_updated_date=date)
+
+    def test_copy_translations_from_remote_app(self):
+        app = self.app
+        remote_app = self.remote_app
+
+        # add two translations to RemoteApp
+        remote_app.translate('en')
+        remote_app.l_summary = 'dog'
+        remote_app.l_description = 'cat'
+        remote_app.save()
+        remote_app.translate('de')
+        remote_app.l_summary = 'hund'
+        remote_app.l_description = 'katze'
+        remote_app.save()
+
+        # copy the translations to the App
+        app.copy_translations_from_remote_app(remote_app)
+
+        # assert that English translation was copied
+        app = RemoteApp.objects.language('en').get(pk=self.app.pk)
+        self.assertEqual('dog', app.l_summary)
+        self.assertEqual('cat', app.l_description)
+
+        # assert that German translation was copied
+        app = RemoteApp.objects.language('de').get(pk=self.app.pk)
+        self.assertEqual('hund', app.l_summary)
+        self.assertEqual('katze', app.l_description)
 
 
 class RemoteAppTestCase(TestCase):

@@ -93,6 +93,22 @@ class App(AbstractApp):
             localized[s.language_code][s.type].append(os.path.basename(s.file.name))
         return localized
 
+    # pylint: disable=attribute-defined-outside-init
+    def copy_translations_from_remote_app(self, remote_app):
+        """
+        Copies metadata translations from given RemoteApp.
+
+        Attention: This requires that no translations exist so far.
+        """
+        for language_code in remote_app.get_available_languages():
+            # get the translation for current language_code
+            remote_app = RemoteApp.objects.language(language_code).get(pk=remote_app.pk)
+            # copy the translation to this App instance
+            self.translate(language_code)
+            self.l_summary = remote_app.l_summary
+            self.l_description = remote_app.l_description
+            self.save()
+
 
 class RemoteApp(AbstractApp):
     repo = models.ForeignKey(RemoteRepository, on_delete=models.CASCADE)
@@ -223,6 +239,7 @@ class RemoteApp(AbstractApp):
 
         # add app
         app = App.from_remote_app(repo, self)
+        app.copy_translations_from_remote_app(self)
         app.save()
         app.category = self.category.all()
         app.save()
