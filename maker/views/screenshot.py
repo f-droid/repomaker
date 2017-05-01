@@ -1,4 +1,5 @@
-from django.forms import ModelForm
+from django.conf import settings
+from django.forms import ModelForm, Select
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import CreateView, DeleteView
@@ -10,14 +11,13 @@ from maker.views.repository import RepositoryAuthorizationMixin
 class ScreenshotForm(ModelForm):
     class Meta:
         model = Screenshot
-        fields = ['language_tag', 'type', 'file']
+        fields = ['language_code', 'type', 'file']
         labels = {
-            # TODO would be nice to have a language dropdown here
-            'language_tag': _('Language Code'),
+            'language_code': _('Language'),
             'file': _('Select Screenshot for upload'),
         }
-        help_texts = {
-            'language_tag': _('Leave this at \'en-US\' if in doubt.'),
+        widgets = {
+            'language_code': Select(choices=settings.LANGUAGES)
         }
 
 

@@ -26,11 +26,11 @@ TYPE_CHOICES = (
 
 
 class AbstractScreenshot(models.Model):
-    language_tag = models.CharField(max_length=32, default='en-US')
+    language_code = models.CharField(max_length=32, default='en')
     type = models.CharField(max_length=32, choices=TYPE_CHOICES, default=PHONE)
 
     def __str__(self):
-        return self.app.__str__() + " - " + self.language_tag + " " + self.type
+        return self.app.__str__() + " - " + self.language_code + " " + self.type
 
     def get_url(self):
         raise NotImplementedError()
@@ -49,7 +49,7 @@ class Screenshot(AbstractScreenshot):
         return super(Screenshot, self).__str__() + " " + self.file.name
 
     def get_relative_path(self):
-        return os.path.join(self.app.package_id, self.language_tag, self.type)
+        return os.path.join(self.app.package_id, self.language_code, self.type)
 
     def get_url(self):
         return self.file.url
@@ -74,9 +74,9 @@ class RemoteScreenshot(AbstractScreenshot):
             return
         for file in files:
             url = base_url + '/' + file
-            if not RemoteScreenshot.objects.filter(language_tag=locale, type=s_type, app=app,
+            if not RemoteScreenshot.objects.filter(language_code=locale, type=s_type, app=app,
                                                    url=url).exists():
-                screenshot = RemoteScreenshot(language_tag=locale, type=s_type, app=app, url=url)
+                screenshot = RemoteScreenshot(language_code=locale, type=s_type, app=app, url=url)
                 screenshot.save()
 
     def download_async(self, app):
@@ -90,7 +90,7 @@ class RemoteScreenshot(AbstractScreenshot):
         Does a blocking download of this RemoteScreenshot
         and creates a local Screenshot if successful.
         """
-        screenshot = Screenshot(language_tag=self.language_tag, type=self.type, app_id=app_id)
+        screenshot = Screenshot(language_code=self.language_code, type=self.type, app_id=app_id)
         r = requests.get(self.url)
         if r.status_code == requests.codes.ok:
             screenshot.file.save(os.path.basename(self.url), BytesIO(r.content), save=True)

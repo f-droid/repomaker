@@ -79,11 +79,11 @@ class App(AbstractApp):
         localized = dict()
         screenshots = Screenshot.objects.filter(app=self).all()
         for s in screenshots:
-            if s.language_tag not in localized:
-                localized[s.language_tag] = dict()
-            if s.type not in localized[s.language_tag]:
-                localized[s.language_tag][s.type] = []
-            localized[s.language_tag][s.type].append(os.path.basename(s.file.name))
+            if s.language_code not in localized:
+                localized[s.language_code] = dict()
+            if s.type not in localized[s.language_code]:
+                localized[s.language_code][s.type] = []
+            localized[s.language_code][s.type].append(os.path.basename(s.file.name))
         return localized
 
 
