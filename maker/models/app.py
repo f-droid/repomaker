@@ -79,7 +79,18 @@ class App(AbstractApp):
         meta.added = timezone.make_naive(self.added_date)
         meta.Categories = [category.name for category in self.category.all()]
         meta['localized'] = self._get_screenshot_dict()
+        self._add_translations_to_localized(meta['localized'])
         return meta
+
+    def _add_translations_to_localized(self, localized):
+        for language_code in self.get_available_languages():
+            if language_code not in localized:
+                localized[language_code] = dict()
+            app = App.objects.language(language_code).get(pk=self.pk)
+            if app.l_summary:
+                localized[language_code]['Summary'] = app.l_summary
+            if app.l_description:
+                localized[language_code]['Description'] = app.l_description
 
     def _get_screenshot_dict(self):
         from . import Screenshot

@@ -46,6 +46,25 @@ class AppTestCase(TestCase):
         self.assertEqual('hund', app.l_summary)
         self.assertEqual('katze', app.l_description)
 
+    def test_get_translations_dict(self):
+        # load two translations from other test
+        self.test_copy_translations_from_remote_app()
+        self.assertEqual({'en', 'de'}, set(self.app.get_available_languages()))
+
+        # get localized dict
+        localized = {'en': {'otherKey': 'test'}}
+        self.app._add_translations_to_localized(localized)  # pylint: disable=protected-access
+
+        # assert that dict was created properly
+        self.assertEqual({'en', 'de'}, set(localized.keys()))
+        self.assertEqual('dog', localized['en']['Summary'])
+        self.assertEqual('cat', localized['en']['Description'])
+        self.assertEqual('hund', localized['de']['Summary'])
+        self.assertEqual('katze', localized['de']['Description'])
+
+        # assert that existing content is not deleted
+        self.assertEqual('test', localized['en']['otherKey'])
+
 
 class RemoteAppTestCase(TestCase):
 
