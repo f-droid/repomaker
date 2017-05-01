@@ -1,24 +1,22 @@
-import datetime
 import json
 import os
 import shutil
-from datetime import timezone
+from datetime import datetime, timezone
 from unittest.mock import patch
 
-import qrcode
 import requests
 from background_task.tasks import Task
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.files import File
 from django.test import TestCase, override_settings
 from fdroidserver.update import METADATA_VERSION
 
-from maker.models import Repository, RemoteRepository, S3Storage, SshStorage
+from maker.models import App, RemoteApp, Apk, ApkPointer, RemoteApkPointer, Repository, \
+    RemoteRepository, S3Storage, SshStorage
 from maker.storage import get_repo_file_path, get_remote_repo_path
-from . import TEST_DIR, datetime_is_recent
-
-TEST_MEDIA_DIR = os.path.join(TEST_DIR, 'media')
-TEST_PRIVATE_DIR = os.path.join(TEST_DIR, 'private_repo')
+from . import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, datetime_is_recent, \
+    fake_repo_create
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
@@ -122,12 +120,7 @@ class RepositoryTestCase(TestCase):
 
     def test_empty_repository_update(self):
         repo = self.repo
-        repo.create()
-
-        # make sure the default icon exists in the test location
-        icon_path = os.path.join(settings.MEDIA_ROOT, settings.REPO_DEFAULT_ICON)
-        icon = qrcode.QRCode()
-        icon.make_image().save(icon_path)
+        fake_repo_create(repo)
 
         # update the repository
         repo.update()
@@ -150,7 +143,7 @@ class RepositoryTestCase(TestCase):
             self.assertEqual(repo.description, index['repo']['description'])
 
             # TODO do we expect/want a specific timestamp?
-            timestamp = datetime.datetime.utcfromtimestamp(index['repo']['timestamp'] / 1000)
+            timestamp = datetime.utcfromtimestamp(index['repo']['timestamp'] / 1000)
             self.assertTrue(datetime_is_recent(timestamp))
             self.assertEqual(repo.url, index['repo']['address'])
             self.assertEqual(repo.icon, index['repo']['icon'])
@@ -184,6 +177,78 @@ class RepositoryTestCase(TestCase):
 
         # assert that the repo has still not been published
         self.assertIsNone(self.repo.last_publication_date)
+
+    @patch('requests.get')
+    def test_full_cyclic_integration(self, get):
+        """
+        This test creates a local repository with one app
+        and then imports it again as a remote repository.
+        """
+        # create repo
+        repo = self.repo
+        fake_repo_create(repo)
+
+        # add an app with APK
+        apk_hash = '64021f6d632eb5ba55bdeb5c4a78ed612bd3facc25d9a8a5d1c9d5d7a6bcc047'
+        app = App.objects.create(repo=repo, package_id='org.bitbucket.tickytacky.mirrormirror',
+                                 name='TestApp', summary='TestSummary', description='TestDesc',
+                                 website='TestSite')
+        apk = Apk.objects.create(package_id='org.bitbucket.tickytacky.mirrormirror', version_code=2,
+                                 hash=apk_hash)
+        file_path = os.path.join(TEST_FILES_DIR, 'test_1.apk')
+        with open(file_path, 'rb') as f:
+            apk.file.save('test_1.apk', File(f), save=True)
+        apk_pointer = ApkPointer.objects.create(repo=repo, app=app, apk=apk)
+        apk_pointer.link_file_from_apk()
+
+        # update repo
+        repo.update()
+
+        # prepare the index to be added as a new remote repository
+        index_path = os.path.join(repo.get_repo_path(), 'index-v1.jar')
+        self.assertTrue(os.path.isfile(index_path))
+        with open(index_path, "rb") as file:
+            index = file.read()
+        get.return_value.content = index
+
+        # add a new remote repository
+        date = datetime.fromtimestamp(0, timezone.utc)
+        fingerprint = '2E428F3BFCECAE8C0CE9B9E756F6F888044099F3DD0514464DDC90BBF3199EF8'
+        remote_repo = RemoteRepository.objects.create(url='test_url', fingerprint=fingerprint,
+                                                      last_change_date=date)
+
+        # fetch and update the remote repository
+        remote_repo.update_index()
+        self.assertTrue(len(remote_repo.public_key) > 500)
+
+        # assert repo and app icon were also downloaded
+        self.assertEqual(3, get.call_count)
+        get.assert_called_with(  # last get call
+            'test_url' + '/icons-640/org.bitbucket.tickytacky.mirrormirror.2.png', headers={})
+
+        # assert that a new remote app has been created properly
+        remote_apps = RemoteApp.objects.all()
+        self.assertEqual(1, len(remote_apps))
+        remote_app = remote_apps[0]
+        self.assertEqual(app.name, remote_app.name)
+        self.assertEqual(app.package_id, remote_app.package_id)
+        self.assertEqual(app.summary, remote_app.summary)
+        self.assertEqual('<p>'+app.description+'</p>', remote_app.description)
+        self.assertEqual(app.website, remote_app.website)
+        self.assertTrue(remote_app.icon)
+
+        # assert that the existing apk got re-used (based on package_id and hash)
+        apks = Apk.objects.all()
+        self.assertEqual(1, len(apks))
+        self.assertEqual(apk, apks[0])
+
+        # assert that there is one RemoteApkPointer now pointing to the same APK
+        remote_apk_pointers = RemoteApkPointer.objects.all()
+        self.assertEqual(1, len(remote_apk_pointers))
+        remote_apk_pointer = remote_apk_pointers[0]
+        self.assertEqual(remote_app, remote_apk_pointer.app)
+        self.assertEqual(remote_app, remote_apk_pointer.app)
+        self.assertEqual(apk, remote_apk_pointer.apk)
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
@@ -233,7 +298,7 @@ class RemoteRepositoryTestCase(TestCase):
         download_repo_index.return_value = {
             'repo': {'name': 'Test Name', 'timestamp': 0}
         }
-        self.repo.last_change_date = datetime.datetime.now(tz=timezone.utc)
+        self.repo.last_change_date = datetime.now(tz=timezone.utc)
         self.repo.update_index(update_apps=True)
         download_repo_index.assert_called_once_with(self.repo.get_fingerprint_url())
         self.assertNotEqual('Test Name', self.repo.name)
@@ -252,7 +317,7 @@ class RemoteRepositoryTestCase(TestCase):
                 'name': 'Test Name',
                 'description': 'Test Description',
                 'icon': 'test-icon.png',
-                'timestamp': datetime.datetime.utcnow().timestamp() * 1000,
+                'timestamp': datetime.utcnow().timestamp() * 1000,
             },
             'apps': [],
             'packages': [],

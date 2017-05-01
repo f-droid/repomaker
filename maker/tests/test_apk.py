@@ -16,7 +16,7 @@ from fdroidserver.update import get_all_icon_dirs
 from maker.models import Apk, ApkPointer, RemoteApkPointer, App, RemoteApp, RemoteRepository, \
     Repository
 from maker.storage import get_apk_file_path
-from . import TEST_DIR, TEST_FILES_DIR, datetime_is_recent
+from . import TEST_DIR, TEST_FILES_DIR, datetime_is_recent, fake_repo_create
 
 
 @override_settings(MEDIA_ROOT=TEST_DIR)
@@ -176,16 +176,6 @@ class ApkPointerTestCase(TestCase):
         with open(file_path, 'rb') as f:
             self.apk_pointer.file.save(self.apk_file_name, File(f), save=True)
 
-    @patch('fdroidserver.common.genkeystore')
-    def _create_repo(self, genkeystore=None):
-        """
-        Create the actual repository, so we have the required proper environment.
-        It does not create a signing key to save time.
-        """
-        genkeystore.return_value = ('pubkey', 'fingerprint')
-        self.apk_pointer.repo.create()
-        self.assertTrue(genkeystore.called)
-
     def tearDown(self):
         shutil.rmtree(TEST_DIR)
 
@@ -200,7 +190,7 @@ class ApkPointerTestCase(TestCase):
 
     def test_initialize(self):
         # create the repository environment
-        self._create_repo()
+        fake_repo_create(self.apk_pointer.repo)
 
         # initialize the ApkPointer with its stored APK file
         self.apk_pointer.initialize()
@@ -236,7 +226,7 @@ class ApkPointerTestCase(TestCase):
 
     def test_initialize_reuses_existing_apk(self):
         # create the repository environment
-        self._create_repo()
+        fake_repo_create(self.apk_pointer.repo)
 
         # create existing Apk object with same package_id and hash
         apk = Apk(package_id='org.bitbucket.tickytacky.mirrormirror',
@@ -252,7 +242,7 @@ class ApkPointerTestCase(TestCase):
 
     def test_initialize_reuses_existing_app(self):
         # create the repository environment
-        self._create_repo()
+        fake_repo_create(self.apk_pointer.repo)
 
         # create existing App object with same repo and package_id
         app = App.objects.create(repo=self.apk_pointer.repo,
@@ -272,7 +262,7 @@ class ApkPointerTestCase(TestCase):
 
     def test_icons_get_deleted_from_repo(self):
         # create the repository environment
-        self._create_repo()
+        fake_repo_create(self.apk_pointer.repo)
 
         # initialize the ApkPointer with its stored APK file
         self.apk_pointer.initialize()

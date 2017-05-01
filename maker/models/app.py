@@ -73,6 +73,7 @@ class App(AbstractApp):
     def to_metadata_app(self):
         meta = metadata.App()
         meta.id = self.package_id
+        meta.Name = self.name
         meta.WebSite = self.website
         meta.Summary = self.summary
         meta.Description = self.description

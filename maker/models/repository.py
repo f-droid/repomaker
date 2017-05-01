@@ -124,7 +124,7 @@ class RemoteRepository(AbstractRepository):
             # apps will be updated asynchronously soon, so this allows the update to pass
             self.last_change_date = datetime.datetime.fromtimestamp(0, timezone.utc)
         if not self.public_key:
-            self.public_key = repo_index['repo']['pubkey']
+            self.public_key = repo_index['repo']['pubkey']  # added by index.download_repo_index()
 
         # download and save repository icon
         icon_url = self.url + '/' + repo_index['repo']['icon']
