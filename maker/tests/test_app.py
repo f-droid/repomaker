@@ -57,10 +57,10 @@ class AppTestCase(TestCase):
 
         # assert that dict was created properly
         self.assertEqual({'en', 'de'}, set(localized.keys()))
-        self.assertEqual('dog', localized['en']['Summary'])
-        self.assertEqual('cat', localized['en']['Description'])
-        self.assertEqual('hund', localized['de']['Summary'])
-        self.assertEqual('katze', localized['de']['Description'])
+        self.assertEqual('dog', localized['en']['summary'])
+        self.assertEqual('cat', localized['en']['description'])
+        self.assertEqual('hund', localized['de']['summary'])
+        self.assertEqual('katze', localized['de']['description'])
 
         # assert that existing content is not deleted
         self.assertEqual('test', localized['en']['otherKey'])
@@ -76,13 +76,13 @@ class RemoteAppTestCase(TestCase):
 
     def test_update_translations_new(self):
         # update remote app translation with a new one
-        localized = {'en': {'Summary': 'foo', 'Description': 'bar', 'video': 'bla'}}
+        localized = {'en': {'summary': 'foo', 'description': 'bar', 'video': 'bla'}}
         self.app._update_translations(localized)  # pylint: disable=protected-access
 
         # assert that translation has been saved
         app = RemoteApp.objects.language('en').get(pk=self.app.pk)
-        self.assertEqual(localized['en']['Summary'], app.l_summary)
-        self.assertEqual(localized['en']['Description'], app.l_description)
+        self.assertEqual(localized['en']['summary'], app.l_summary)
+        self.assertEqual(localized['en']['description'], app.l_description)
 
     def test_update_translations_existing(self):
         # add a new translation
@@ -90,21 +90,21 @@ class RemoteAppTestCase(TestCase):
         self.assertTrue(RemoteApp.objects.language('en').exists())
 
         # update existing translation
-        localized = {'en': {'Summary': 'newfoo', 'Description': 'newbar', 'video': 'bla'}}
+        localized = {'en': {'summary': 'newfoo', 'description': 'newbar', 'video': 'bla'}}
         self.app._update_translations(localized)  # pylint: disable=protected-access
 
         # assert that translation has been updated
         app = RemoteApp.objects.language('en').get(pk=self.app.pk)
-        self.assertEqual(localized['en']['Summary'], app.l_summary)
-        self.assertEqual(localized['en']['Description'], app.l_description)
+        self.assertEqual(localized['en']['summary'], app.l_summary)
+        self.assertEqual(localized['en']['description'], app.l_description)
 
     def test_apply_translation(self):
         # apply new translation
-        translation = {'Summary': 'test1', 'Description': 'test2'}
+        translation = {'summary': 'test1', 'description': 'test2'}
         self.app.translate('en')
         self.app.apply_translation(translation)
 
         # assert that translation has been saved
         app = RemoteApp.objects.language('en').get(pk=self.app.pk)
-        self.assertEqual(translation['Summary'], app.l_summary)
-        self.assertEqual(translation['Description'], app.l_description)
+        self.assertEqual(translation['summary'], app.l_summary)
+        self.assertEqual(translation['description'], app.l_description)

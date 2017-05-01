@@ -88,9 +88,9 @@ class App(AbstractApp):
                 localized[language_code] = dict()
             app = App.objects.language(language_code).get(pk=self.pk)
             if app.l_summary:
-                localized[language_code]['Summary'] = app.l_summary
+                localized[language_code]['summary'] = app.l_summary
             if app.l_description:
-                localized[language_code]['Description'] = app.l_description
+                localized[language_code]['description'] = app.l_description
 
     def _get_screenshot_dict(self):
         from . import Screenshot
@@ -189,7 +189,7 @@ class RemoteApp(AbstractApp):
 
     def _update_translations(self, localized):
         # TODO also support 'name, 'whatsNew' and 'video'
-        supported_fields = ['Summary', 'Description']
+        supported_fields = ['summary', 'description']
         available_languages = self.get_available_languages()
         for language_code, translation in localized.items():
             if set(supported_fields).isdisjoint(translation.keys()):
@@ -206,10 +206,10 @@ class RemoteApp(AbstractApp):
 
     # pylint: disable=attribute-defined-outside-init
     def apply_translation(self, translation):
-        if 'Summary' in translation:
-            self.l_summary = translation['Summary']
-        if 'Description' in translation:
-            self.l_description = translation['Description']
+        if 'summary' in translation:
+            self.l_summary = translation['summary']
+        if 'description' in translation:
+            self.l_description = translation['description']
         self.save()
 
     def _update_screenshots(self, localized):
