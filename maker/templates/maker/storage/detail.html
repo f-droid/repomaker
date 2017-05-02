@@ -1,15 +1,13 @@
 {% extends "../base.html" %}
 {% load i18n %}
 
-{% trans "Remote Storage Updated" as title %}
-
-{% block title %}{{ title }}{% endblock %}
+{% block title %}{% trans "Remote Storage Updated" %}{% endblock %}
 
 {% block toolbar-title %}<a href="{% url 'repo' object.repo.id %}">{{ object.repo.name }}</a>{% endblock %}
 
 {% block rm-content %}
 
-<h1>{{ title }}</h1>
+<h1>{% trans "Remote Storage Updated" %}</h1>
 
 {% if object.public_key %}
 

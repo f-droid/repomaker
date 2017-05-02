@@ -17,7 +17,9 @@
 	<form action="" enctype="multipart/form-data" method="post">
 		{% csrf_token %}
 		{% include '../form.html' %}
-		<input type="submit" value="{% trans 'Upload Screenshot' %}"/>
+		<div class="mdl-cell mdl-cell--6-col">
+			<input type="submit" value="{% trans 'Upload Screenshot' %}"/>
+		</div>
 	</form>
 </div>
 

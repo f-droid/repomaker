@@ -1,57 +1,33 @@
-// TODO migrate those to material-design-lite
 // TODO use form renderer: https://docs.djangoproject.com/en/1.11/ref/forms/renderers/
-@import "@material/textfield/mdc-textfield";
-@import "@material/list/mdc-list";
-@import "@material/select/mdc-select";
-@import "@material/checkbox/mdc-checkbox";
-@import "@material/button/mdc-button";
+@import "material-design-lite/src/button/button";
+@import "material-design-lite/src/grid/grid";
+@import "material-design-lite/src/list/list";
+@import "material-design-lite/src/ripple/ripple";
+
+// TODO: Figure out what's missing in order for forms to work
+@import "material-design-lite/material";
 
 .rm-form {
 
-	input, textarea {
-		@extend .mdc-textfield__input;
-	}
-
-	.mdc-textfield {
-		select, input {
-			vertical-align: top;
-		}
-	}
-
 	input[type="submit"] {
-		@extend .mdc-button, .mdc-button--raised, .mdc-button--primary;
-	}
-
-	input[type="checkbox"] {
-		@extend .mdc-checkbox;
+		@extend .mdl-button, .mdl-button--raised, .mdl-button--primary;
 	}
 
 	input[type="file"] {
 		display: none;
 	}
 
-	input:required {
-		@extend .mdc-textfield__input:required;
-	}
-
 	select {
-		@extend .mdc-multi-select, .mdc-list;
+	    // TODO: There is no "mdc-multi-select"
+	    @extend .mdl-list;
 
 		option {
-			@extend .mdc-list-item;
+			@extend .mdl-list__item;
 		}
 	}
 
-	label {
-		@extend .mdc-textfield__label;
-
-		// until properly styled
-		position: initial;
-		vertical-align: top;
-	}
-
 	label.rm-file-upload {
-		@extend .mdc-button, .mdc-button--accent;
+		@extend .mdl-button, .mdl-button--accent;
 	}
 
 }

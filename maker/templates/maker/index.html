@@ -8,18 +8,23 @@
 
 {% if repositories %}
 
-<div class="mdc-layout-grid">
+<div class="mdl-grid">
 	{% for repo in repositories %}
-	<a href="{% url 'repo' repo.id %}" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4 rm-no-underline">
-		<div class="rm-repo-card mdc-card mdc-ripple-surface">
-			<section class="mdc-card__primary">
-				<img src="{{ repo.icon.url }}"/>
-				<h1 class="mdc-card__title mdc-card__title">{{ repo.name }}</h1>
-				<h2 class="mdc-card__subtitle">
-					{% blocktrans with date=repo.last_publication_date|naturaltime|default:"Never" %}Last published: {{ date }}.{% endblocktrans %}
-				</h2>
-			</section>
-			<section class="mdc-card__supporting-text">{{ repo.description }}</section>
+	<a
+			class="mdl-card mdl-shadow--2dp mdl-color--white mdl-js-ripple-effect rm-no-underline"
+			style="margin: 10px;"
+			href="{% url 'repo' repo.id %}"
+			title="{{ repo.name }}">
+		<div
+				class="mdl-card__title mdl-card--expand"
+				style="background: url({{ repo.icon.url }}) top 12% right 12% no-repeat #fff;">
+			<h5 class="mdl-card__title-text">
+				{{ repo.name }}
+			</h5>
+		</div>
+
+		<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+			{{ repo.description|truncatewords:25 }}
 		</div>
 	</a>
 	{% endfor %}
@@ -28,10 +33,10 @@
 <p>{% trans "No repositories are available." %}</p>
 {% endif %}
 
-<div class="mdc-layout-grid">
-	<a href="{% url 'add_repo' %}" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 rm-no-underline" style="text-align: right;">
-		<button class="mdc-fab material-icons">
-			<span class="mdc-fab__icon">add</span>
+<div class="mdl-grid">
+	<a href="{% url 'add_repo' %}" class="mdl-cell mdl-cell--12-col rm-no-underline" style="text-align: right;">
+		<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+			<i class="material-icons">add</i>
 		</button>
 	</a>
 </div>

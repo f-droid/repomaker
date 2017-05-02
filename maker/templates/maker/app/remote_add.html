@@ -13,24 +13,27 @@
 
 <h1>{% blocktrans with app=app.name repo=repo.name %}Add {{ app }} to {{ repo }}{% endblocktrans %}</h1>
 
-<div class="mdc-card"
-	 style="height:400px;padding:10px;display:inline-table;margin-right:10px;margin-bottom:10px;">
-	<section class="mdc-card__media"
-			 style="background-image: url('{{ app.icon.url }}'); background-size: contain;  background-repeat: no-repeat;  height: 230px;"></section>
-	<section class="mdc-card__primary">
-		<h1 class="mdc-card__title mdc-card__title--large">{{ app.name }} {{ app.get_latest_apk.version_name }}</h1>
-		<h2 class="mdc-card__subtitle">{{ app.summary }}</h2>
-	</section>
-	<section class="mdc-card__supporting-text">{{ app.description }}</section>
-</div>
+<div class="mdl-grid">
 
-<p></p>
+	<div class="mdl-cell mdl-cell--12-col">
 
-<div class="mdc-card" style="display: block; white-space: nowrap; overflow: auto; margin-right: 10px; margin-bottom: 10px;">
-{% for screenshot in app.remotescreenshot_set.all %}
-<img src="{{ screenshot.url }}" style="display: inline-block; margin: 10px 0px 10px 10px;"/>
-{% endfor %}
-</div>
+		<h2 style="vertical-align: middle;">
+			<img src="{{ app.icon.url }}" alt="Repo Icon" class="rm-icon"/> {{ app.name }}
+		</h2>
+
+		{% if app.summary %}
+		<p>{{ app.summary }}</p>
+		{% endif %}
+
+		<p>{{ app.description }}</p>
+	</div>
+
+	<div class="mdl-cell mdl-cell--12-col"
+		 style="display: block; white-space: nowrap; overflow: auto; margin-right: 10px; margin-bottom: 10px; padding: 10px">
+		{% for screenshot in app.remotescreenshot_set.all %}
+		<img src="{{ screenshot.get_url }}" style="display: inline-block; margin: 10px 0px 10px 10px; max-height:500px"/>
+		{% endfor %}
+	</div>
 
 <p></p>
 

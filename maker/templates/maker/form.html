@@ -1,21 +1,37 @@
 {% for field in form %}
-<div class="mdc-textfield {% if field.name == 'description' %}mdc-textfield--multiline{% endif %}{% if field.errors %} mdc-textfield--invalid{% endif %}" style="display: block; margin-top: 1em;">
+<div
+		class="
+			mdl-cell
+			mdl-cell--6-col
+			{% if field.field.widget.input_type == 'checkbox' %}
+			rm-form-checkbox
+			mdl-checkbox
+			mdl-js-checkbox
+			mdl-js-ripple-effect
+			{% else %}
+			mdl-textfield
+			mdl-js-textfield
+			mdl-textfield--floating-label
+			{% endif %}
+			{% if field.errors %}
+				is-invalid
+			{% endif %}">
 	{% if field.field.widget.input_type == 'file' %}
 	<label for="{{ field.id_for_label }}" class="rm-file-upload"><i class="material-icons">file_upload</i> {{ field.label }}</label>
+	{% elif field.field.widget.input_type == 'checkbox' %}
+	<label for="{{ field.id_for_label }}" class="mdl-checkbox__label">{{ field.label }}</label>
 	{% else %}
-	{{ field.label_tag }}
+	<label for="{{ field.id_for_label }}" class="mdl-textfield__label">{{ field.label }}</label>
 	{% endif %}
 	{{ field }}
-</div>
-
-{% if field.help_text or field.errors %}
-<p class="mdc-textfield-helptext mdc-textfield-helptext--persistent{% if field.errors %} mdc-textfield-helptext--validation-msg{% endif %}" role="alert">
-	{% if field.errors %}
-	{{ field.errors }}
-	{% else %}
-	{{ field.help_text }}
+	{% if field.help_text or field.errors %}
+	<span>
+		{% if field.errors %}
+		{{ field.errors }}
+		{% else %}
+		{{ field.help_text }}
+		{% endif %}
+	</span>
 	{% endif %}
-</p>
-{% endif %}
-
+</div>
 {% endfor %}

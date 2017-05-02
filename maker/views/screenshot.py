@@ -1,14 +1,15 @@
 from django.conf import settings
-from django.forms import ModelForm, Select
+from django.forms import Select
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import CreateView, DeleteView
 
 from maker.models import Screenshot
 from maker.views.repository import RepositoryAuthorizationMixin
+from . import BaseModelForm
 
 
-class ScreenshotForm(ModelForm):
+class ScreenshotForm(BaseModelForm):
     class Meta:
         model = Screenshot
         fields = ['language_code', 'type', 'file']

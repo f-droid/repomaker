@@ -12,13 +12,17 @@
 
 {% block rm-content %}
 
-<h1><img src="{{ app.icon.url }}"/>{% blocktrans %}Translate {{ app }}{% endblocktrans %}</h1>
+<h2 style="vertical-align: middle;">
+    <img src="{{ app.icon.url }}" alt="App Icon" class="rm-icon"/> {% blocktrans %}Translate {{ app }}{% endblocktrans %}
+</h2>
 
 <div class="rm-form">
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="{% trans 'Save Translation' %}"/>
+        <div class="mdl-cell mdl-cell--6-col">
+            <input type="submit" value="{% trans 'Save Translation' %}"/>
+        </div>
     </form>
 </div>
 

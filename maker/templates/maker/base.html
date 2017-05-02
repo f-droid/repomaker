@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 {% load sass_tags %}
 {% load i18n %}
 <html>
@@ -10,31 +11,47 @@
 	{% block head %}{% endblock %}
 </head>
 
-<body class="mdc-typography">
-<header class="mdc-toolbar">
-	<div class="mdc-toolbar__row">
-		<section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-			<a class="material-icons">menu</a>
-			<span class="mdc-toolbar__title">{% block toolbar-title %}<a href="/">Repo Maker</a>{% endblock %}</span>
-		</section>
-		{% if user.is_authenticated and user.username != 'user' %}
-		{% load account %}
-		<section class="mdc-toolbar__section mdc-toolbar__section--shrink-to-fit mdc-toolbar__section--align-end">
-			{% user_display user %}
-			[ <a href="{% url 'account_logout' %}">{% trans 'logout' %}</a> ]
-		</section>
+<body>
+<!-- Always shows a header, even in smaller screens. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-desktop-drawer-button">
+	<header class="mdl-layout__header">
+		<div class="mdl-layout-icon"></div>
+		<div class="mdl-layout__header-row">
+			<!-- Title -->
+			<span class="mdl-layout-title">
+				{% block toolbar-title %}<a href="/">Repo Maker</a>{% endblock %}
+			</span>
+			<!-- Add spacer, to align navigation to the right -->
+			<div class="mdl-layout-spacer"></div>
+			<!-- Navigation. We hide it in small screens. -->
+			<nav class="mdl-navigation mdl-layout--large-screen-only">
+				{% if user.is_authenticated and user.username != 'user' %}
+					{% load account %}
+					{% user_display user %}
+					[ <a class="mdl-navigation__link" href="{% url 'account_logout' %}">{% trans 'logout' %}</a> ]
+				{% endif %}
+			</nav>
+		</div>
+	</header>
+	<div class="mdl-layout__drawer">
+		<span class="mdl-layout-title">Repomaker</span>
+		<nav class="mdl-navigation">
+			{% if user.is_authenticated and user.username != 'user' %}
+				{% load account %}
+				{% user_display user %}
+				[ <a class="mdl-navigation__link" href="{% url 'account_logout' %}">{% trans 'logout' %}</a> ]
+			{% endif %}
+		</nav>
+	</div>
+	<main class="mdl-layout__content">
+		{% if site_notice %}
+		<div style="padding: 1em; background-color: yellow; text-align: center;">
+			{% autoescape off %}{{ site_notice }}{% endautoescape %}
+		</div>
 		{% endif %}
-	</div>
-</header>
-{% if site_notice %}
-<div style="padding: 1em; background-color: yellow; text-align: center;">
-	{% autoescape off %}{{ site_notice }}{% endautoescape %}
+		<div class="rm-content">{% block rm-content %}{% endblock %}</div>
+	</main>
 </div>
-{% endif %}
-<main>
-	<div id="content">
-		{% block rm-content %}{% endblock rm-content %}
-	</div>
-</main>
+<script src="{% static 'node_modules/material-design-lite/material.min.js' %}"></script>
 </body>
 </html>

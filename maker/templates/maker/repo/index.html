@@ -7,55 +7,91 @@
 
 {% block rm-content %}
 
-<h1 style="vertical-align: middle;"><img src="{{ repo.icon.url }}"/> {{ repo.name }}</h1>
+<h2 style="vertical-align: middle;">
+	<img src="{{ repo.icon.url }}" alt="Repo Icon" class="rm-icon"/> {{ repo.name }}
+</h2>
 <p>{{ repo.description }}</p>
 
 {% if repo.qrcode and repo.last_publication_date %}
-<div class="mdc-card mdc-ripple-surface" style="float: right;">
+<div class="mdl-card mdl-js-ripple-effect" style="float: right;">
 	<a href="{{ repo.get_fingerprint_url }}">
 		<img src="{{ repo.qrcode.url }}"/>
 	</a>
 </div>
 {% endif %}
 
-<ul class="mdc-list mdc-list--dense">
+<ul class="mdl-list">
 	{% if repo.url %}
-    <li class="mdc-list-item">
-	    <i class="mdc-list-item__start-detail material-icons">insert_link</i>
-		<!-- TODO: Figure out the best way to translate this -->
-	    URL: <a href="{{ repo.get_fingerprint_url }}">{{ repo.url }}</a>
-    </li>
-	{% endif %}
-    <li class="mdc-list-item">
-	    <i class="mdc-list-item__start-detail material-icons">fingerprint</i>
-		{% blocktrans with fingerprint=repo.fingerprint %}Fingerprint: {{ fingerprint }}{% endblocktrans %}
-    </li>
-    <li class="mdc-list-item">
-	    <i class="mdc-list-item__start-detail material-icons">watch_later</i>
-		{% blocktrans with date_1=repo.created_date|naturaltime date_2=repo.created_date|date:"SHORT_DATE_FORMAT" %} Created: {{ date_1 }} ({{ date_2 }}){% endblocktrans %}
-    </li>
-    <li class="mdc-list-item">
-	    <i class="mdc-list-item__start-detail material-icons">update</i>
-		{% blocktrans with date_1=repo.last_updated_date|naturaltime date_2=repo.last_updated_date|date:"SHORT_DATE_FORMAT" %} Last Updated: {{ date_1 }} ({{ date_2 }}){% endblocktrans %}
+	<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">insert_link</i>
+			<span>{% trans 'URL' %}</span>
+			<span class="mdl-list__item-sub-title">
+				<a href="{{ repo.get_fingerprint_url }}">{{ repo.url }}</a>
+			</span>
+		</span>
 	</li>
-	<li class="mdc-list-item">
-		<i class="mdc-list-item__start-detail material-icons">schedule</i>
-		{% blocktrans with date_1=repo.last_publication_date|naturaltime date_2=repo.last_publication_date|date:"SHORT_DATE_FORMAT"|default:"Never" %} Last Publication: {{ date_1 }} ({{ date_2 }}){% endblocktrans %}
+	{% endif %}
+	<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">fingerprint</i>
+			<span>{% trans 'Fingerprint' %}</span>
+			<span class="mdl-list__item-sub-title">
+				{{ repo.fingerprint }}
+			</span>
+		</span>
+	</li>
+	<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">watch_later</i>
+			<span>{% trans 'Created' %}</span>
+			<span class="mdl-list__item-sub-title">
+				{{ repo.created_date|naturaltime }} ({{ repo.created_date|date:"SHORT_DATE_FORMAT" }})
+			</span>
+		</span>
+	</li>
+	<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">update</i>
+			<span>{% trans 'Last Updated' %}</span>
+			<span class="mdl-list__item-sub-title">
+				{{ repo.last_updated_date|naturaltime }} ({{ repo.last_updated_date|date:"SHORT_DATE_FORMAT" }})
+			</span>
+		</span>
+	</li>
+	<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">schedule</i>
+			<span>{% trans 'Last Publication' %}</span>
+			<span class="mdl-list__item-sub-title">
+				{{ repo.last_publication_date|naturaltime }} ({{ repo.last_publication_date|date:"SHORT_DATE_FORMAT" }})
+			</span>
+		</span>
 	</li>
 </ul>
 
-<h2 style="float: clear;">Storage</h2>
+<h3 style="float: clear;">Storage</h3>
 {% if storage %}
-<ul class="mdc-list">
+<ul class="mdl-list">
 	{% for storage in storage %}
-	<li class="mdc-list-item">
-		<i class="mdc-list-item__start-detail material-icons">cloud</i>
-		{{ storage }}
-		<a href="{{ storage.get_repo_url }}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">link</a>
-		{% if not storage.is_default %}
-		<a href="{{ storage.get_edit_url }}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">edit</a>
-		<a href="{{ storage.get_delete_url }}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">delete</a>
-		{% endif %}
+	<li class="mdl-list__item">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon ">cloud</i>
+			<span>{{ storage }}</span>
+		</span>
+		<span class="mdl-list__item-secondary-content">
+			<a class="mdl-list__item-secondary-action" href="{{ storage.get_repo_url }}">
+				<i class="material-icons">link</i>
+			</a>
+			{% if not storage.is_default %}
+				<a class="mdl-list__item-secondary-action" href="{{ storage.get_edit_url }}">
+					<i class="material-icons">edit</i>
+				</a>
+				<a class="mdl-list__item-secondary-action" href="{{ storage.get_delete_url }}">
+					<i class="material-icons">delete</i>
+				</a>
+			{% endif %}
+		</span>
 	</li>
 	{% endfor %}
 </ul>
@@ -65,42 +101,48 @@
 
 <p>
 	<a href="{% url 'storage_ssh_add' repo.id %}" class="rm-no-underline" style="margin-right:1em;">
-		<button class="mdc-button mdc-button--raised">{% trans 'Add SSH Storage' %}</button>
+		<button class="mdl-button mdl-js-button mdl-button--raised">{% trans 'Add SSH Storage' %}</button>
 	</a>
 	<a href="{% url 'storage_git_add' repo.id %}" class="rm-no-underline" style="margin-right:1em;">
-		<button class="mdc-button mdc-button--raised">{% trans 'Add Git Storage' %}</button>
+		<button class="mdl-button mdl-js-button mdl-button--raised">{% trans 'Add Git Storage' %}</button>
 	</a>
 	<a href="{% url 'storage_s3_add' repo.id %}" class="rm-no-underline">
-		<button class="mdc-button mdc-button--raised">{% trans 'Add Amazon S3 Storage' %}</button>
+		<button class="mdl-button mdl-js-button mdl-button--raised">{% trans 'Add Amazon S3 Storage' %}</button>
 	</a>
 </p>
 
 <h2>{% trans 'Apps' %}</h2>
 
-<ul class="mdc-list mdc-list--two-line">
+<ul class="mdl-list">
 	{% for app in apps %}
-	<li class="mdc-list-item">
-		<a href="{% url 'app' repo.id app.id %}" class="mdc-ripple-surface">
-			<img src="{{ app.icon.url }}" style="float: left; margin-right: 1em;"/>
-			<span class="mdc-list-item__text" style="margin-right: 1em;">
-                <span class="mdc-list-item__text__primary">{{ app.name }}</span>
-                <span class="mdc-list-item__text__secondary">{{ app.summary }}</span>
+	<li class="mdl-list__item mdl-list__item--two-line">
+		<a class="mdl-list__item-primary-content" href="{% url 'app' repo.id app.id %}">
+			<img src="{{ app.icon.url }}" class="mdl-list__item-icon"/>
+			<span>{{ app.name }}</span>
+			<span class="mdl-list__item-sub-title">
+				{{ app.summary }}
 			</span>
-			<a href="{% url 'edit_app' repo.id app.id %}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">edit</a>
-			<a href="{% url 'delete_app' repo.id app.id %}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">delete</a>
 		</a>
+		<span class="mdl-list__item-secondary-content">
+			<a class="mdl-list__item-secondary-action" href="{% url 'edit_app' repo.id app.id %}">
+				<i class="material-icons">edit</i>
+			</a>
+			<a class="mdl-list__item-secondary-action" href="{% url 'delete_app' repo.id app.id %}">
+				<i class="material-icons">delete</i>
+			</a>
+		</span>
 	</li>
 	{% empty %}
-	<li class="mdc-list-item">{% trans 'No apps in this repository.' %}</li>
+	<li class="mdl-list__item">{% trans 'No apps in this repository.' %}</li>
 	{% endfor %}
 </ul>
 
-<p></p>
-
-<a href="{% url 'add_app' repo.id %}" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 rm-no-underline">
-	<button class="mdc-fab material-icons">
-		<span class="mdc-fab__icon">add</span>
-	</button>
-</a>
+<div class="mdl-grid">
+	<a href="{% url 'add_app' repo.id %}" class="mdl-cell mdl-cell--12-col rm-no-underline">
+		<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+			<i class="material-icons">add</i>
+		</button>
+	</a>
+</div>
 
 {% endblock rm-content %}

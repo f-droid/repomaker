@@ -13,11 +13,13 @@
 
 <h2>{% trans 'Add New Repository' %}</h2>
 
-<div class="rm-form">
+<div class="rm-form mdl-grid">
 	<form action="" enctype="multipart/form-data" method="post">
 		{% csrf_token %}
 		{% include '../form.html' %}
-		<input type="submit" value="{% trans 'Add' %}"/>
+		<div class="mdl-cell mdl-cell--6-col">
+			<input  class="rm-file-upload" type="submit" value="{% trans 'Add' %}"/>
+		</div>
 	</form>
 </div>
 

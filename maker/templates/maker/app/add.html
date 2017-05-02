@@ -17,53 +17,72 @@
 	<form action="" enctype="multipart/form-data" method="post">
 		{% csrf_token %}
 		{% include '../form.html' %}
-		<input type="submit" value="{% trans 'Upload APK' %}"/>
+		<div class="mdl-cell mdl-cell--6-col">
+			<input type="submit" value="{% trans 'Upload APK' %}"/>
+		</div>
 	</form>
 </div>
 
 <p></p>
 
-<div class="mdc-layout-grid">
-	<div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-2"
+<div class="mdl-grid">
+	<div class="mdl-card mdl-cell mdl-cell--2-col"
 		 style="padding:1em; justify-content: flex-start;">
-		{% trans 'Remote Repositories' %}
-		<p>
-			<a href="{% url 'add_app' repo_id %}">{% trans 'All' %}</a>
-		</p>
-		{% for repo in repos %}
-		<p>
-			<a href="{% url 'add_app_from_remote' repo_id repo.id %}">
-				<img src="{{ repo.icon.url }}" style="height: 32px;"/> {{ repo }}
+		<div class="mdl-card__title">
+			<h2 class="mdl-card__title-text">{% trans 'Remote Repositories' %}</h2>
+		</div>
+		<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+			<ul class="mdl-list">
+				<li class="mdl-list__item">
+					<a class="mdl-list__item-primary-content" href="{% url 'add_app' repo_id %}">
+						{% trans 'All' %}
+					</a>
+				</li>
+				{% for repo in repos %}
+				<li class="mdl-list__item">
+					<a class="mdl-list__item-primary-content" href="{% url 'add_app' repo_id %}">
+						<img src="{{ repo.icon.url }}" style="height: 32px;"/> {{ repo }}
+					</a>
+				</li>
+				{% empty %}
+				<p>{% trans "Sorry, but there are no remote repositories at the moment. Don't despair, you can add one below." %}</p>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="mdl-card__actions mdl-card--border">
+			<a
+					href="{% url 'add_remote_repo' %}"
+					class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect rm-no-underline">
+				{% trans 'Add' %}
 			</a>
-		</p>
-		{% empty %}
-		<p>{% trans "Sorry, but there are no remote repositories at the moment. Don't despair, you can add one below." %}</p>
-		{% endfor %}
-		<p></p>
-		<section class="mdc-card__actions">
-			<a href="{% url 'add_remote_repo' %}">
-				<button class="mdc-button mdc-button--raised mdc-button--compact mdc-card__action">{% trans 'Add' %}</button>
-			</a>
-		</section>
+		</div>
 	</div>
 
-	<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-10">
-		{% for app in apps %}
-		<a href="{% url 'add_remote_app' repo_id app.repo.id app.id %}" class="rm-no-underline">
-			<div class="mdc-card mdc-ripple-surface"
-				 style="width: 250px;height:400px;padding:10px;display:inline-table;margin-right:10px;margin-bottom:10px;">
-				<section class="mdc-card__media"
-						 style="background-image: url('{{ app.icon.url }}'); background-size: cover;  background-repeat: no-repeat;  height: 230px;"></section>
-				<section class="mdc-card__primary">
-					<h1 class="mdc-card__title mdc-card__title--large">{{ app.name }}</h1>
-					<h2 class="mdc-card__subtitle">{{ app.summary }}</h2>
-				</section>
-			</div>
-		</a>
-		{% empty %}
-		<p>{% trans 'There are no apps from remote repositories.' %}</p>
-		<p>{% trans 'If you just added a remote repository, wait for the apps to download and try again later.' %}</p>
-		{% endfor %}
+	<div class="mdl-cell mdl-cell--10-col">
+		<div class="mdl-grid">
+			{% for app in apps %}
+			<a
+					class="mdl-card mdl-shadow--2dp mdl-color--white rm-no-underline"
+					style="margin: 10px;"
+					href="{% url 'add_remote_app' repo_id app.repo.id app.id %}"
+					title="{{ app.name }}">
+				<div
+						class="mdl-card__title mdl-card--expand"
+						style="background: url({{ app.icon.url }}) top 12% right 12% no-repeat #fff;">
+					<h5 class="mdl-card__title-text">
+						{{ app.name }}
+					</h5>
+				</div>
+
+				<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+					{{ app.summary }}
+				</div>
+			</a>
+			{% empty %}
+			<p>{% trans 'There are no apps from remote repositories.' %}</p>
+			<p>{% trans 'If you just added a remote repository, wait for the apps to download and try again later.' %}</p>
+			{% endfor %}
+		</div>
 	</div>
 </div>
 

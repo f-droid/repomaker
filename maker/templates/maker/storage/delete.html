@@ -18,7 +18,9 @@
 	<form action="" method="post">
 		{% csrf_token %}
 		<p>{% blocktrans %}Are you sure you want to remove the remote storage at "{{ object }}"?{% endblocktrans %}</p>
-		<input type="submit" value="{% trans 'Confirm' %}"/>
+		<div class="mdl-cell mdl-cell--6-col">
+			<input  class="rm-file-upload" type="submit" value="{% trans 'Confirm' %}"/>
+		</div>
 	</form>
 </div>
 

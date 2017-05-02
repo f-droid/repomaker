@@ -4,45 +4,37 @@ $material-design-icons-font-path: unquote(get-setting(NODE_MODULES_URL) + 'mater
 $roboto-font-path: unquote(get-setting(NODE_MODULES_URL) + "roboto-fontface/fonts");
 @import "roboto-fontface/css/roboto/sass/roboto-fontface";
 
-// TODO maybe only import directly the things we really need?
-@import "material-design-lite/src/material-design-lite";
+@import "material-design-lite/src/animation/animation";
+@import "material-design-lite/src/button/button";
+@import "material-design-lite/src/card/card";
+@import "material-design-lite/src/checkbox/checkbox";
+@import "material-design-lite/src/grid/grid";
+@import "material-design-lite/src/icon-toggle/icon-toggle";
+@import "material-design-lite/src/layout/layout";
+@import "material-design-lite/src/list/list";
+@import "material-design-lite/src/mixins";
+@import "material-design-lite/src/resets/resets";
+@import "material-design-lite/src/ripple/ripple";
+@import "material-design-lite/src/shadow/shadow";
+@import "material-design-lite/src/textfield/textfield";
+@import "material-design-lite/src/typography/typography";
+@import "material-design-lite/src/variables";
 
-// TODO remove material-components-web when fully migrated to material-design-lite
-@import "material-components-web/material-components-web";
-
-
-body {
-	margin: 0;
-}
-
-main {
+.rm-content {
 	margin: 16px;
 }
 
 a.rm-no-underline {
 	text-decoration: none;
+	color: unset;
 }
 
-.mdc-toolbar__title a, a.material-icons, .mdc-list-item a {
+.mdl-layout-title a, a.material-icons, .mdl-list__item a {
 	text-decoration: none;
 	color: unset;
 }
 
-.mdc-toolbar .material-icons {
-    text-decoration: none;
-    cursor: pointer;
-    padding-right: 8px;
-}
-
-.mdc-list-item img {
-	height: 48px;
-}
-
-.rm-repo-card img {
-	float: left;
-	margin-right: 1em;
-}
-
-i.material-icons {
-	vertical-align: middle;
+.rm-icon {
+	width: 96px;
+	height: 96px;
 }

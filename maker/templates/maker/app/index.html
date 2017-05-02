@@ -7,84 +7,127 @@
 
 {% block rm-content %}
 
-<div class="mdc-layout-grid">
+<div class="mdl-grid">
 
-	<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+	<div class="mdl-cell mdl-cell--12-col">
 
-		<h1><img src="{{ app.icon.url }}"/> {{ app.name }}</h1>
+		<h2 style="vertical-align: middle;">
+			<img src="{{ app.icon.url }}" alt="Repo Icon" class="rm-icon"/> {{ app.name }}
+		</h2>
 
 		{% if app.summary %}
-		<h3>{{ app.summary }}</h3>
+		<p>{{ app.summary }}</p>
 		{% endif %}
 
-		<ul class="mdc-list mdc-list--dense">
-			<li class="mdc-list-item">
-				<i class="mdc-list-item__start-detail material-icons">info_outline</i>
-				{% blocktrans with package_id=app.package_id %}Package ID: {{ package_id }}{% endblocktrans %}
+		<ul class="mdl-list">
+			<li class="mdl-list__item mdl-list__item--two-line">
+				<span class="mdl-list__item-primary-content">
+					<i class="material-icons mdl-list__item-icon">info_outline</i>
+					<span>{% trans 'Package ID' %}</span>
+					<span class="mdl-list__item-sub-title">
+						{{ app.package_id }}
+					</span>
+				</span>
 			</li>
-			<li class="mdc-list-item">
-				<i class="mdc-list-item__start-detail material-icons">style</i>
-					{% if app.category.exists %}
-					{% blocktrans with category=app.category.all|join:", "%}Categories: {{ category }}{% endblocktrans %}
-					{% else %}
-					{% blocktrans with category=app.category.all|join:", "%}Categories: {{ category }}{% endblocktrans %}
-					{% endif %}
+			<li class="mdl-list__item mdl-list__item--two-line">
+				<span class="mdl-list__item-primary-content">
+					<i class="material-icons mdl-list__item-icon">style</i>
+					<span>{% trans 'Categories' %}</span>
+					<span class="mdl-list__item-sub-title">
+						{% if app.category.exists %}
+						{{ app.category.all|join:", " }}
+						{% else %}
+						None
+						{% endif %}
+					</span>
+				</span>
 			</li>
 			{% if app.website %}
-			<li class="mdc-list-item">
-				<i class="mdc-list-item__start-detail material-icons">insert_link</i>
-				{% blocktrans with website=app.website|urlize %}Website: {{ website }}{% endblocktrans %}
+			<li class="mdl-list__item mdl-list__item--two-line">
+				<span class="mdl-list__item-primary-content">
+					<i class="material-icons mdl-list__item-icon">insert_link</i>
+					<span>{% trans 'Website' %}</span>
+					<span class="mdl-list__item-sub-title">
+						{{ app.website|urlize }}
+					</span>
+				</span>
 			</li>
 			{% endif %}
 			{% if app.description %}
-			<li class="mdc-list-item" style="overflow: auto;">
-				<i class="mdc-list-item__start-detail material-icons">description</i>
-				{% blocktrans with description=app.description %}Description: {{ description }}{% endblocktrans %}
+			<li class="mdl-list__item mdl-list__item--three-line">
+				<span class="mdl-list__item-primary-content">
+					<i class="material-icons mdl-list__item-icon">description</i>
+					<span>{% trans 'Description' %}</span>
+					<span class="mdl-list__item-text-body">
+						{{ app.description }}
+					</span>
+				</span>
 			</li>
 			{% endif %}
-			<li class="mdc-list-item">
-				<i class="mdc-list-item__start-detail material-icons">translate</i>
-				{% trans 'Translations:' %}
-				{% for lang in app.get_available_languages %}
-				{{ lang|language_name }}{% if not forloop.last %}, {% endif %}
-				{% empty %}
-				<i>{% trans 'None' %}</i>
-				{% endfor %}
-				<a href="{% url 'app_translate' app.repo.id app.id %}" class="material-icons mdc-ripple-surface" style="padding: 0.5em;">edit</a>
+			<li class="mdl-list__item mdl-list__item--two-line">
+				<span class="mdl-list__item-primary-content">
+					<i class="material-icons mdl-list__item-icon">translate</i>
+					<span>{% trans 'Translations' %}</span>
+					<span class="mdl-list__item-sub-title">
+						{% for lang in app.get_available_languages %}
+							{{ lang|language_name }}{% if not forloop.last %}, {% endif %}
+							{% empty %}
+							<i>{% trans 'None' %}</i>
+						{% endfor %}
+					</span>
+				</span>
+				<span class="mdl-list__item-secondary-content">
+					<a class="mdl-list__item-secondary-action" href="{% url 'app_translate' app.repo.id app.id %}">
+						<i class="material-icons">edit</i>
+					</a>
+				</span>
 			</li>
 			{% if apks %}
-			<li class="mdc-list-item">
-				<i class="mdc-list-item__start-detail material-icons">gesture</i>
-				{% blocktrans with signature=apks.0.apk.signature %}Signature: {{ signature }}{% endblocktrans %}
+			<li class="mdl-list__item mdl-list__item--two-line">
+				<span class="mdl-list__item-primary-content">
+					<i class="material-icons mdl-list__item-icon">gesture</i>
+					<span>{% trans 'Signature' %}</span>
+					<span class="mdl-list__item-sub-title">
+						{{ apks.0.apk.signature }}
+					</span>
+				</span>
 			</li>
 			{% endif %}
-			<li class="mdc-list-item">
-				<i class="mdc-list-item__start-detail material-icons">watch_later</i>
-				{% blocktrans with date=app.added_date|date:"SHORT_DATE_FORMAT" %}Added: {{ date }}{% endblocktrans %}
+			<li class="mdl-list__item mdl-list__item--two-line">
+				<span class="mdl-list__item-primary-content">
+					<i class="material-icons mdl-list__item-icon">watch_later</i>
+					<span>{% trans 'Added' %}</span>
+					<span class="mdl-list__item-sub-title">
+						{{ app.added_date|date:"SHORT_DATE_FORMAT" }}
+					</span>
+				</span>
 			</li>
-			<li class="mdc-list-item">
-				<i class="mdc-list-item__start-detail material-icons">update</i>
-				{% blocktrans with date_1=app.last_updated_date|naturaltime date_2=app.last_updated_date|date:"SHORT_DATE_FORMAT" %}Last Updated: {{ date_1 }} ({{ date_2 }}){% endblocktrans %}
+			<li class="mdl-list__item mdl-list__item--two-line">
+				<span class="mdl-list__item-primary-content">
+					<i class="material-icons mdl-list__item-icon">update</i>
+					<span>{% trans 'Last Updated' %}</span>
+					<span class="mdl-list__item-sub-title">
+						{{ app.last_updated_date|naturaltime }} ({{ app.last_updated_date|date:"SHORT_DATE_FORMAT" }})
+					</span>
+				</span>
 			</li>
 		</ul>
 
 		<p>
-			<a href="{% url 'edit_app' app.repo.id app.id %}" class="rm-no-underline">
-				<button class="mdc-button mdc-button--primary mdc-button--raised">
+			<a href="{% url 'edit_app' app.repo.id app.id %}" class="rm-no-underline" style="margin-right:1em;">
+				<button class="mdl-button mdl-js-button mdl-button--raised">
 					<i class="material-icons">edit</i>
 					{% trans 'Edit App Details' %}
 				</button>
 			</a>
-
-			<a href="{% url 'screenshot_add' app.repo.id app.id %}" class="rm-no-underline">
-				<button class="mdc-button mdc-button--primary mdc-button--raised">
+			<a href="{% url 'screenshot_add' app.repo.id app.id %}" class="rm-no-underline" style="margin-right:1em;">
+				<button class="mdl-button mdl-js-button mdl-button--raised">
 					<i class="material-icons">add</i>
 					{% trans 'Add Screenshot' %}
 				</button>
 			</a>
-
 			<a href="{% url 'delete_app' app.repo.id app.id %}" class="rm-no-underline">
-				<button class="mdc-button mdc-button--raised">
+				<button class="mdl-button mdl-js-button mdl-button--raised">
 					<i class="material-icons">delete</i>
 					{% trans 'Delete App' %}
 				</button>
@@ -93,24 +136,46 @@
 
 	</div>
 
-	<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+	<div class="mdl-cell mdl-cell--6-col">
 
 		<h2>{% trans 'Versions' %}</h2>
 
 		{% if apks %}
-		<ul class="mdc-list">
+		<ul class="mdl-list">
 			{% for pointer in apks %}
-			<li><h4>{{ pointer.apk.version_name }} <span style="font-weight: normal; font-size: 75%;">({{ pointer.apk.version_code }})</span></h4>
+			<li>
+				<h4>
+					{{ pointer.apk.version_name }} <span style="font-weight: normal; font-size: 75%;">({{ pointer.apk.version_code }})</span>
+				</h4>
 				{% if pointer.file %}
-				<ul class="mdc-list mdc-list--dense">
-					<li class="mdc-list-item">
-						{% blocktrans with size=pointer.apk.size|filesizeformat %}Size: {{ size }}{% endblocktrans %}
+				<ul class="mdl-list">
+					<li class="mdl-list__item mdl-list__item--two-line">
+						<span class="mdl-list__item-primary-content">
+							<span>{% trans 'Size' %}</span>
+							<span class="mdl-list__item-sub-title">
+								{{ pointer.apk.size|filesizeformat }}
+							</span>
+						</span>
 					</li>
-					<li class="mdc-list-item">
-						{% blocktrans with file=pointer.file.name %}File: {{ file }}{% endblocktrans %}
+					<li class="mdl-list__item mdl-list__item--two-line">
+						<span class="mdl-list__item-primary-content">
+							<span>{% trans 'File' %}</span>
+							<span class="mdl-list__item-sub-title">
+								{{ pointer.file.name }}
+							</span>
+						</span>
 					</li>
-					<li class="mdc-list-item">
-						{% blocktrans with hash_type=pointer.apk.hash_type hash=pointer.apk.hash %}Hash ({{ hash_type }}): {{ hash }}{% endblocktrans %}
+					<li class="mdl-list__item mdl-list__item--two-line">
+						<span class="mdl-list__item-primary-content">
+							<span>
+								{% blocktrans with type=pointer.apk.hash_type trimmed %}
+								Hash ({{ type }})
+								{% endblocktrans %}
+							</span>
+							<span class="mdl-list__item-sub-title">
+								{{ pointer.apk.hash }}
+							</span>
+						</span>
 					</li>
 				</ul>
 				{% else %}
@@ -122,23 +187,23 @@
 		{% endif %}
 
 		<div style="text-align: right; margin: 2em;">
-			<a href="{% url 'add_app' app.repo.id %}" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 rm-no-underline">
-				<button class="mdc-fab material-icons">
-					<span class="mdc-fab__icon">add</span>
+			<a href="{% url 'add_app' app.repo.id %}" class="mdl-cell mdl-cell--12-col rm-no-underline">
+				<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+					<i class="material-icons">add</i>
 				</button>
 			</a>
 		</div>
 
 	</div>
 
-	<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
+	<div class="mdl-cell mdl-cell--12-col"
 		 style="display: block; white-space: nowrap; overflow: auto; margin-right: 10px; margin-bottom: 10px; padding: 10px">
 		{% for screenshot in app.screenshot_set.all %}
 		<img src="{{ screenshot.get_url }}" style="display: inline-block; margin: 10px 0px 10px 10px; max-height:500px"/>
 		<a href="{% url 'screenshot_delete' app.repo.id app.id screenshot.id %}" class="rm-no-underline"
 		   style="position: relative; left: -25px;">
-			<button class="mdc-fab mdc-fab--mini material-icons">
-				<span class="mdc-fab__icon">delete</span>
+			<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+				<i class="material-icons">delete</i>
 			</button>
 		</a>
 		{% endfor %}

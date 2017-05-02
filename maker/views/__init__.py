@@ -95,8 +95,16 @@ def remote_repo_media_access(user_id, path):
 
 class BaseModelForm(ModelForm):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('label_suffix', ':')  # TODO remove ':'
         super(BaseModelForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            if self.fields[field].widget.__class__.__name__ == 'CheckboxInput':
+                self.fields[field].widget.attrs.update({
+                    'class': 'mdl-checkbox__input'
+                })
+            else:
+                self.fields[field].widget.attrs.update({
+                    'class': 'mdl-textfield__input'
+                })
 
 
 class LoginOrSingleUserRequiredMixin(LoginRequiredMixin):
