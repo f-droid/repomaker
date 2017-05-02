@@ -297,10 +297,10 @@ class RemoteRepositoryTestCase(TestCase):
         """
         download_repo_index.return_value = {
             'repo': {'name': 'Test Name', 'timestamp': 0}
-        }
+        }, 'etag'
         self.repo.last_change_date = datetime.now(tz=timezone.utc)
         self.repo.update_index(update_apps=True)
-        download_repo_index.assert_called_once_with(self.repo.get_fingerprint_url())
+        download_repo_index.assert_called_once_with(self.repo.get_fingerprint_url(), etag=None)
         self.assertNotEqual('Test Name', self.repo.name)
         self.assertFalse(_update_apps.called)
 
@@ -321,7 +321,7 @@ class RemoteRepositoryTestCase(TestCase):
             },
             'apps': [],
             'packages': [],
-        }
+        }, 'etag'
         # fake return value of GET request for repository icon
         get.return_value.status_code = requests.codes.ok
         get.return_value.content = b'foo'
@@ -329,7 +329,7 @@ class RemoteRepositoryTestCase(TestCase):
         # update index and ensure it would have been downloaded
         repo = self.repo
         repo.update_index(update_apps=True)
-        download_repo_index.assert_called_once_with(repo.get_fingerprint_url())
+        download_repo_index.assert_called_once_with(repo.get_fingerprint_url(), etag=None)
 
         # assert that the repository metadata was updated with the information from the index
         self.assertEqual('Test Name', repo.name)

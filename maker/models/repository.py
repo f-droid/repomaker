@@ -75,6 +75,7 @@ class AbstractRepository(models.Model):
 class RemoteRepository(AbstractRepository):
     users = models.ManyToManyField(User)
     pre_installed = models.BooleanField(default=False)
+    index_etag = models.CharField(max_length=128, blank=True, null=True)
     last_change_date = models.DateTimeField()
     # TODO save mirrors from index
 
@@ -98,9 +99,12 @@ class RemoteRepository(AbstractRepository):
         :raises: VerificationException() if the index can not be validated anymore
         """
         self.get_config()
-        # TODO add eTag support here and use it
-        repo_index = index.download_repo_index(self.get_fingerprint_url())
-        self._update(repo_index, update_apps)
+        repo_index, etag = index.download_repo_index(self.get_fingerprint_url(),
+                                                     etag=self.index_etag)
+        if repo_index is None:
+            return  # the index did not change since last time
+        self.index_etag = etag
+        self._update(repo_index, update_apps)  # also saves at the end
 
     def _update(self, repo_index, update_apps):
         """

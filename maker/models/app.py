@@ -166,6 +166,7 @@ class RemoteApp(AbstractApp):
 
     def _update_icon(self, icon_name):
         url = self.repo.url + '/icons-640/' + icon_name
+        # TODO migrate this to use fdroidserver.net.http_get()
         headers = {}
         if self.icon_etag is not None and self.icon_etag != '':
             headers['If-None-Match'] = self.icon_etag
