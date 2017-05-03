@@ -1,9 +1,15 @@
+import io
+import os
+import shutil
 from datetime import datetime, timezone
+from unittest.mock import patch
 
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
+from maker.storage import get_repo_file_path_for_app
 from maker.models import Repository, RemoteRepository, App, RemoteApp
+from . import TEST_DIR, TEST_MEDIA_DIR
 
 
 class AppTestCase(TestCase):
@@ -66,13 +72,41 @@ class AppTestCase(TestCase):
         self.assertEqual('test', localized['en']['otherKey'])
 
 
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class RemoteAppTestCase(TestCase):
 
     def setUp(self):
         date = datetime.fromtimestamp(0, timezone.utc)
-        self.repo = RemoteRepository.objects.create(name="Test", last_change_date=date)
+        self.repo = RemoteRepository.objects.create(name='Test', url='http://repo_url',
+                                                    last_change_date=date)
         self.app = RemoteApp.objects.create(repo=self.repo, package_id="org.example",
                                             last_updated_date=date)
+
+    def tearDown(self):
+        if os.path.isdir(TEST_DIR):
+            shutil.rmtree(TEST_DIR)
+
+    @patch('fdroidserver.net.http_get')
+    def test_update_icon(self, http_get):
+        # set initial etag and icon for app
+        self.app.icon_etag = 'etag'
+        self.app.icon.save('test.png', io.BytesIO(b'foo'))
+        old_icon_path = self.app.icon.path
+        self.assertTrue(os.path.isfile(old_icon_path))
+
+        # update icon
+        http_get.return_value = b'icon-data', 'new_etag'
+        self.app._update_icon('icon.png')  # pylint: disable=protected-access
+        http_get.assert_called_once_with(self.repo.url + '/icons-640/icon.png', 'etag')
+
+        # assert that old icon got deleted and new one was saved
+        self.assertFalse(os.path.isfile(old_icon_path))
+        new_icon_name = get_repo_file_path_for_app(self.app, 'icon.png')
+        self.assertEqual(new_icon_name, self.app.icon.name)
+        self.assertTrue(os.path.isfile(self.app.icon.path))
+
+        # assert that new etag was saved
+        self.assertEqual('new_etag', self.app.icon_etag)
 
     def test_update_translations_new(self):
         # update remote app translation with a new one

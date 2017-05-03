@@ -133,7 +133,7 @@ class Migration(migrations.Migration):
                 ('website', models.URLField(blank=True, max_length=2048)),
                 ('icon', models.ImageField(default='default-app-icon.png', upload_to=maker.storage.get_repo_file_path_for_app)),
                 ('added_date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('icon_etag', models.CharField(blank=True, max_length=128)),
+                ('icon_etag', models.CharField(blank=True, max_length=128, null=True)),
                 ('last_updated_date', models.DateTimeField(blank=True)),
                 ('category', models.ManyToManyField(blank=True, to='maker.Category')),
             ],

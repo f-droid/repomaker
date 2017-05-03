@@ -3,7 +3,6 @@ import logging
 import os
 from io import BytesIO
 
-import requests
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.core.files.base import ContentFile
@@ -13,7 +12,7 @@ from django.dispatch import receiver
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from fdroidserver import metadata
+from fdroidserver import metadata, net
 from hvad.models import TranslatableModel, TranslatedFields
 
 from maker.storage import get_repo_file_path_for_app
@@ -124,7 +123,7 @@ class App(AbstractApp):
 
 class RemoteApp(AbstractApp):
     repo = models.ForeignKey(RemoteRepository, on_delete=models.CASCADE)
-    icon_etag = models.CharField(max_length=128, blank=True)
+    icon_etag = models.CharField(max_length=128, blank=True, null=True)
     last_updated_date = models.DateTimeField(blank=True)
     translations = TranslatedFields()  # required for i18n
 
@@ -166,15 +165,13 @@ class RemoteApp(AbstractApp):
 
     def _update_icon(self, icon_name):
         url = self.repo.url + '/icons-640/' + icon_name
-        # TODO migrate this to use fdroidserver.net.http_get()
-        headers = {}
-        if self.icon_etag is not None and self.icon_etag != '':
-            headers['If-None-Match'] = self.icon_etag
-        r = requests.get(url, headers=headers)
-        if r.status_code == requests.codes.ok:
-            self.delete_old_icon()
-            self.icon.save(icon_name, BytesIO(r.content), save=False)
-            self.icon_etag = r.headers['ETag']
+        icon, etag = net.http_get(url, self.icon_etag)
+        if icon is None:
+            return  # icon did not change
+
+        self.delete_old_icon()
+        self.icon_etag = etag
+        self.icon.save(icon_name, BytesIO(icon), save=False)
 
     def _update_categories(self, categories):
         if not self.pk:

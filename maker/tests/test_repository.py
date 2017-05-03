@@ -224,7 +224,9 @@ class RepositoryTestCase(TestCase):
         # assert repo and app icon were also downloaded
         self.assertEqual(3, get.call_count)
         get.assert_called_with(  # last get call
-            'test_url' + '/icons-640/org.bitbucket.tickytacky.mirrormirror.2.png', headers={})
+            'test_url' + '/icons-640/org.bitbucket.tickytacky.mirrormirror.2.png',
+            headers={'User-Agent': 'F-Droid'}
+        )
 
         # assert that a new remote app has been created properly
         remote_apps = RemoteApp.objects.all()
