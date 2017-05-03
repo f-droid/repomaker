@@ -4,6 +4,7 @@ django-compressor
 django-sass-processor
 django-allauth
 django-hvad>=1.8.0
+django-tinymce
 qrcode
 bleach
 apache-libcloud>=2.0.0rc2

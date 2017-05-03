@@ -9,6 +9,7 @@
   "dependencies": {
     "material-design-icons-iconfont": ">=3.0.3",
     "material-design-lite": "^1.3.0",
-    "roboto-fontface": "*"
+    "roboto-fontface": "*",
+    "tinymce": ">=3.0.1"
   }
 }

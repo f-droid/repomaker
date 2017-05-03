@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^$', RepositoryListView.as_view(), name="index"),
     url(r'^repo/', include('maker.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^tinymce/', include('tinymce.urls')),
     url(r'^%s(?P<path>.*)$' % settings.MEDIA_URL[1:], media_serve,
         {'document_root': settings.MEDIA_ROOT}),
 ]

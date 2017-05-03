@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'sass_processor',
     'background_task',
     'hvad',  # model i18n
+    'tinymce',
     'django.forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -204,3 +205,13 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
 ]
 
 NODE_MODULES_URL = STATIC_URL + 'node_modules/'
+
+TINYMCE_JS_URL = os.path.join(NODE_MODULES_URL, "tinymce/tinymce.js")
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': 'modern',
+    'menubar': False,
+    'toolbar': 'undo redo | bold italic | link',
+    'plugins': 'autolink link lists',
+    'browser_spellcheck': True,
+    'statusbar': False,
+}
