@@ -338,8 +338,22 @@ class RemoteRepositoryTestCase(TestCase):
         self.assertEqual('Test Description', repo.description)
 
         # assert that new repository icon was downloaded and changed
-        get.assert_called_once_with(repo.url + '/' + 'test-icon.png')
+        get.assert_called_once_with(repo.url + '/' + 'test-icon.png',
+                                    headers={'User-Agent': 'F-Droid'})
         self.assertEqual(os.path.join(get_remote_repo_path(repo), 'test-icon.png'), repo.icon.name)
 
         # assert that an attempt was made to update the apps
         self.assertTrue(_update_apps.called)
+
+    @patch('fdroidserver.net.http_get')
+    def test_update_icon_without_pk(self, http_get):
+        # create unsaved repo without primary key
+        repo = RemoteRepository(url='http://test', last_change_date=datetime.now(tz=timezone.utc))
+
+        # update icon
+        http_get.return_value = b'icon-data', 'new_etag'
+        repo._update_icon('test.png')  # pylint: disable=protected-access
+
+        # assert that there is no `None` in the path, but the repo number (primary key)
+        self.assertFalse('None' in repo.icon.name)
+        self.assertTrue(str(repo.pk) in repo.icon.name)

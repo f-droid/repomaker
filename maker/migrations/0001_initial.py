@@ -177,6 +177,7 @@ class Migration(migrations.Migration):
                 ('last_updated_date', models.DateTimeField(auto_now=True)),
                 ('pre_installed', models.BooleanField(default=False)),
                 ('index_etag', models.CharField(blank=True, max_length=128, null=True)),
+                ('icon_etag', models.CharField(blank=True, max_length=128, null=True)),
                 ('last_change_date', models.DateTimeField()),
                 ('users', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
             ],

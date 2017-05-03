@@ -4,7 +4,6 @@ import os
 from io import BytesIO
 
 import qrcode
-import requests
 from allauth.account.signals import user_signed_up
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -14,7 +13,7 @@ from django.db import models
 from django.dispatch import receiver
 from django.urls import reverse
 from django.utils import timezone
-from fdroidserver import common, index, server, update
+from fdroidserver import common, index, server, update, net
 
 from maker import tasks
 from maker.storage import REPO_DIR, get_repo_file_path, get_remote_repo_path, get_repo_root_path
@@ -269,6 +268,7 @@ class RemoteRepository(AbstractRepository):
     users = models.ManyToManyField(User)
     pre_installed = models.BooleanField(default=False)
     index_etag = models.CharField(max_length=128, blank=True, null=True)
+    icon_etag = models.CharField(max_length=128, blank=True, null=True)
     last_change_date = models.DateTimeField()
     # TODO save mirrors from index
 
@@ -324,22 +324,26 @@ class RemoteRepository(AbstractRepository):
             self.public_key = repo_index['repo']['pubkey']  # added by index.download_repo_index()
 
         # download and save repository icon
-        icon_url = self.url + '/' + repo_index['repo']['icon']
         try:
-            # TODO use eTag like in RemoteApp._update_icon()
-            r = requests.get(icon_url)
-            if r.status_code != requests.codes.ok:
-                r.raise_for_status()
-            self.save()  # to ensure the primary key exists, to be used for the file path
-            self.delete_old_icon()
-            self.icon.save(repo_index['repo']['icon'], BytesIO(r.content), save=False)
+            self._update_icon(repo_index['repo']['icon'])
         except Exception as e:
-            logging.warning("Could not download repository icon from %s. %s", icon_url, e)
+            logging.warning("Could not download repository icon. %s", e)
 
         self.save()
 
         if update_apps:
             self._update_apps(repo_index['apps'], repo_index['packages'])
+
+    def _update_icon(self, icon_name):
+        url = self.url + '/' + icon_name
+        icon, etag = net.http_get(url, self.icon_etag)
+        if icon is None:
+            return  # icon did not change
+        if not self.pk:
+            self.save()  # to ensure the primary key exists, to be used for the file path
+        self.delete_old_icon()
+        self.icon_etag = etag
+        self.icon.save(icon_name, BytesIO(icon), save=False)
 
     def _update_apps(self, apps, packages):
         from maker.models.app import RemoteApp
