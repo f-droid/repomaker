@@ -317,7 +317,7 @@ class RemoteRepositoryTestCase(TestCase):
         download_repo_index.return_value = {
             'repo': {
                 'name': 'Test Name',
-                'description': 'Test Description',
+                'description': 'Test <script>Description',
                 'icon': 'test-icon.png',
                 'timestamp': datetime.utcnow().timestamp() * 1000,
             },

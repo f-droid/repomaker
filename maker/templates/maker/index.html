@@ -24,7 +24,7 @@
 		</div>
 
 		<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-			{{ repo.description|truncatewords:25 }}
+			{{ repo.description|safe|truncatewords:25 }}
 		</div>
 	</a>
 	{% endfor %}

@@ -25,7 +25,7 @@
 		<p>{{ app.summary }}</p>
 		{% endif %}
 
-		<p>{{ app.description }}</p>
+		<p>{{ app.description|safe }}</p>
 	</div>
 
 	<div class="mdl-cell mdl-cell--12-col"
@@ -34,6 +34,7 @@
 		<img src="{{ screenshot.get_url }}" style="display: inline-block; margin: 10px 0px 10px 10px; max-height:500px"/>
 		{% endfor %}
 	</div>
+</div>
 
 <p></p>
 

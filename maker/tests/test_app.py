@@ -7,9 +7,9 @@ from unittest.mock import patch
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 
-from maker.storage import get_repo_file_path_for_app
 from maker.models import Repository, RemoteRepository, App, RemoteApp
-from . import TEST_DIR, TEST_MEDIA_DIR
+from maker.storage import get_repo_file_path_for_app
+from . import TEST_DIR, TEST_MEDIA_DIR, datetime_is_recent
 
 
 class AppTestCase(TestCase):
@@ -52,6 +52,18 @@ class AppTestCase(TestCase):
         self.assertEqual('hund', app.l_summary)
         self.assertEqual('katze', app.l_description)
 
+    def test_copy_translations_sanitation(self):
+        # add a malicious translation to RemoteApp
+        self.remote_app.translate('en')
+        self.remote_app.l_description = '<p>test<script>'
+        self.remote_app.save()
+
+        # copy the translations to the App
+        self.app.copy_translations_from_remote_app(self.remote_app)
+
+        # assert that malicious content was removed
+        self.assertEqual('<p>test</p>', self.app.l_description)
+
     def test_get_translations_dict(self):
         # load two translations from other test
         self.test_copy_translations_from_remote_app()
@@ -76,7 +88,7 @@ class AppTestCase(TestCase):
 class RemoteAppTestCase(TestCase):
 
     def setUp(self):
-        date = datetime.fromtimestamp(0, timezone.utc)
+        date = datetime.fromtimestamp(1337, timezone.utc)
         self.repo = RemoteRepository.objects.create(name='Test', url='http://repo_url',
                                                     last_change_date=date)
         self.app = RemoteApp.objects.create(repo=self.repo, package_id="org.example",
@@ -85,6 +97,24 @@ class RemoteAppTestCase(TestCase):
     def tearDown(self):
         if os.path.isdir(TEST_DIR):
             shutil.rmtree(TEST_DIR)
+
+    def test_update_from_json_only_when_update(self):
+        json = {'name': 'app', 'lastUpdated': 10000}
+        self.assertFalse(self.app.update_from_json(json))  # app did not change
+
+    def test_update_from_json(self):
+        json = {'name': 'app', 'summary': 'foo', 'description': 'bar<script>', 'webSite': 'site',
+                'added': 9999999900000, 'lastUpdated': 9999999900000}
+        self.assertTrue(self.app.update_from_json(json))  # app changed
+
+        # assert app was updated properly
+        self.assertEqual(json['name'], self.app.name)
+        self.assertEqual(json['summary'], self.app.summary)
+        self.assertEqual('bar', self.app.description)  # <script> tag was removed
+        self.assertEqual(json['webSite'], self.app.website)
+        self.assertTrue(datetime_is_recent(self.app.added_date))
+        last_update = datetime.fromtimestamp(json['lastUpdated'] / 1000, timezone.utc)
+        self.assertEqual(last_update, self.app.last_updated_date)
 
     @patch('fdroidserver.net.http_get')
     def test_update_icon(self, http_get):
@@ -142,3 +172,13 @@ class RemoteAppTestCase(TestCase):
         app = RemoteApp.objects.language('en').get(pk=self.app.pk)
         self.assertEqual(translation['summary'], app.l_summary)
         self.assertEqual(translation['description'], app.l_description)
+
+    def test_apply_translation_sanitation(self):
+        # apply new translation
+        translation = {'summary': 'foo', 'description': 'test2<script>'}
+        self.app.translate('en')
+        self.app.apply_translation(translation)
+
+        # assert that translation has no <script> tag
+        self.assertEqual(translation['summary'], self.app.l_summary)
+        self.assertEqual('test2', self.app.l_description)

@@ -17,6 +17,7 @@ from fdroidserver import common, index, server, update, net
 
 from maker import tasks
 from maker.storage import REPO_DIR, get_repo_file_path, get_remote_repo_path, get_repo_root_path
+from maker.utils import clean
 
 keydname = "CN=localhost.localdomain, OU=F-Droid"
 
@@ -314,7 +315,7 @@ class RemoteRepository(AbstractRepository):
 
         # update repository's metadata
         self.name = repo_index['repo']['name']
-        self.description = repo_index['repo']['description']
+        self.description = clean(repo_index['repo']['description'])
         if update_apps:
             self.last_change_date = repo_change
         else:

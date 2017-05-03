@@ -5,6 +5,7 @@ django-sass-processor
 django-allauth
 django-hvad>=1.8.0
 qrcode
+bleach
 apache-libcloud>=2.0.0rc2
 cryptography>=1.4.0
 #fdroidserver>=0.8.0

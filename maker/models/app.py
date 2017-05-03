@@ -16,6 +16,7 @@ from fdroidserver import metadata, net
 from hvad.models import TranslatableModel, TranslatedFields
 
 from maker.storage import get_repo_file_path_for_app
+from maker.utils import clean
 from .category import Category
 from .repository import Repository, RemoteRepository
 
@@ -24,7 +25,7 @@ class AbstractApp(TranslatableModel):
     package_id = models.CharField(max_length=255, blank=True)
     name = models.CharField(max_length=255, blank=True)
     summary = models.CharField(max_length=255, blank=True)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True)  # always clean and then consider safe
     website = models.URLField(max_length=2048, blank=True)
     icon = models.ImageField(upload_to=get_repo_file_path_for_app,
                              default=settings.APP_DEFAULT_ICON)
@@ -117,7 +118,7 @@ class App(AbstractApp):
             # copy the translation to this App instance
             self.translate(language_code)
             self.l_summary = remote_app.l_summary
-            self.l_description = remote_app.l_description
+            self.l_description = clean(remote_app.l_description)
             self.save()
 
 
@@ -146,7 +147,7 @@ class RemoteApp(AbstractApp):
         if 'summary' in app:
             self.summary = app['summary']
         if 'description' in app:
-            self.description = app['description']
+            self.description = clean(app['description'])
         if 'webSite' in app:
             self.website = app['webSite']
         if 'icon' in app:
@@ -208,7 +209,7 @@ class RemoteApp(AbstractApp):
         if 'summary' in translation:
             self.l_summary = translation['summary']
         if 'description' in translation:
-            self.l_description = translation['description']
+            self.l_description = clean(translation['description'])
         self.save()
 
     def _update_screenshots(self, localized):

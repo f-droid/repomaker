@@ -59,7 +59,7 @@
 					<i class="material-icons mdl-list__item-icon">description</i>
 					<span>{% trans 'Description' %}</span>
 					<span class="mdl-list__item-text-body">
-						{{ app.description }}
+						{{ app.description|safe }}
 					</span>
 				</span>
 			</li>
