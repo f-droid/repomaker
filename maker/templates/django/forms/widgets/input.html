@@ -1,0 +1,11 @@
+<input
+		type="{{ widget.type }}"
+		name="{{ widget.name }}"
+		{% if widget.value != None %}value="{{ widget.value }}"{% endif %}
+		{% include "django/forms/widgets/attrs.html" %}
+		{% if widget.type == 'checkbox' %}
+		class="mdl-checkbox__input"
+		{% else %}
+		class="mdl-textfield__input"
+		{% endif %}
+/>

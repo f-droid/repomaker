@@ -1,7 +1,5 @@
 {% for field in form %}
-<div
-		class="
-			mdl-cell
+<div class="mdl-cell
 			mdl-cell--6-col
 			{% if field.field.widget.input_type == 'checkbox' %}
 			rm-form-checkbox
@@ -14,7 +12,7 @@
 			mdl-textfield--floating-label
 			{% endif %}
 			{% if field.errors %}
-				is-invalid
+			is-invalid
 			{% endif %}">
 	{% if field.field.widget.input_type == 'file' %}
 	<label for="{{ field.id_for_label }}" class="rm-file-upload"><i class="material-icons">file_upload</i> {{ field.label }}</label>
@@ -28,10 +26,9 @@
 	<span>
 		{% if field.errors %}
 		{{ field.errors }}
-		{% else %}
-		{{ field.help_text }}
 		{% endif %}
 	</span>
 	{% endif %}
 </div>
+<span>{{ field.help_text }}</span>
 {% endfor %}

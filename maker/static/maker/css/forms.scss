@@ -1,11 +1,9 @@
-// TODO use form renderer: https://docs.djangoproject.com/en/1.11/ref/forms/renderers/
+$image_path: unquote(get-setting(NODE_MODULES_URL) + 'material-design-lite/src/images');
+
 @import "material-design-lite/src/button/button";
 @import "material-design-lite/src/grid/grid";
 @import "material-design-lite/src/list/list";
-@import "material-design-lite/src/ripple/ripple";
-
-// TODO: Figure out what's missing in order for forms to work
-@import "material-design-lite/material";
+@import "material-design-lite/src/checkbox/checkbox";
 
 .rm-form {
 

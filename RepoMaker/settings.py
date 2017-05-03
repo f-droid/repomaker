@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'sass_processor',
     'background_task',
     'hvad',  # model i18n
+    'django.forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -139,6 +140,7 @@ TEMPLATES = [
         },
     },
 ]
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 WSGI_APPLICATION = 'RepoMaker.wsgi.application'
 
