@@ -107,6 +107,7 @@ if not SINGLE_USER_MODE:
         'django.contrib.auth.backends.ModelBackend',
         'allauth.account.auth_backends.AuthenticationBackend',
     )
+    ACCOUNT_EMAIL_VERIFICATION = "none"
 
 
 MIDDLEWARE = [

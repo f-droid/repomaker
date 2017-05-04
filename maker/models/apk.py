@@ -92,9 +92,6 @@ class Apk(models.Model):
         if not apk_pointers_exist and not remote_apk_pointers_exist:
             self.delete()
 
-    class Meta:
-        unique_together = (("package_id", "hash"),)
-
 
 class AbstractApkPointer(models.Model):
     apk = models.ForeignKey(Apk, on_delete=models.CASCADE, null=True)

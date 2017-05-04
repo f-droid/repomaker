@@ -301,10 +301,6 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='maker.Repository'),
         ),
         migrations.AlterUniqueTogether(
-            name='apk',
-            unique_together=set([('package_id', 'hash')]),
-        ),
-        migrations.AlterUniqueTogether(
             name='remoteapptranslation',
             unique_together=set([('language_code', 'master')]),
         ),
