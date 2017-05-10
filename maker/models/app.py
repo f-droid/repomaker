@@ -39,6 +39,22 @@ class AbstractApp(TranslatableModel):
     def __str__(self):
         return self.name
 
+    def get_available_language_names(self):
+        """
+        Returns a list of language names and uses the language code, if no name is available.
+        """
+        language_names = []
+        for lang in self.get_available_languages():
+            found_name = False
+            for code, name in settings.LANGUAGES:
+                if code == lang:
+                    language_names.append(name)
+                    found_name = True
+                    break
+            if not found_name:
+                language_names.append(lang)
+        return language_names
+
     def delete_old_icon(self):
         icon_path = os.path.dirname(self.icon.path)
         if icon_path != settings.MEDIA_ROOT:

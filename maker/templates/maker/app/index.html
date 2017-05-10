@@ -5,6 +5,8 @@
 {% block title %}{{ app.name }}{% endblock %}
 {% block toolbar-title %}<a href="{% url 'repo' app.repo.id %}">{{ app.repo.name }}</a>{% endblock %}
 
+{% trans 'None' as None %}
+
 {% block rm-content %}
 
 <div class="mdl-grid">
@@ -37,7 +39,7 @@
 						{% if app.category.exists %}
 						{{ app.category.all|join:", " }}
 						{% else %}
-						None
+						{{ None }}
 						{% endif %}
 					</span>
 				</span>
@@ -69,11 +71,7 @@
 					<i class="material-icons mdl-list__item-icon">translate</i>
 					<span>{% trans 'Translations' %}</span>
 					<span class="mdl-list__item-sub-title">
-						{% for lang in app.get_available_languages %}
-							{{ lang|language_name }}{% if not forloop.last %}, {% endif %}
-							{% empty %}
-							<i>{% trans 'None' %}</i>
-						{% endfor %}
+						{{ app.get_available_language_names|join:", "|default:None }}
 					</span>
 				</span>
 				<span class="mdl-list__item-secondary-content">
