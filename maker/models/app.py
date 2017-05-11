@@ -15,7 +15,8 @@ from django.utils.translation import ugettext_lazy as _
 from fdroidserver import metadata, net
 from hvad.models import TranslatableModel, TranslatedFields
 
-from maker.storage import get_repo_file_path_for_app
+from maker import tasks
+from maker.storage import get_repo_file_path_for_app, get_graphic_asset_file_path
 from maker.utils import clean
 from .category import Category
 from .repository import Repository, RemoteRepository
@@ -32,6 +33,7 @@ class AbstractApp(TranslatableModel):
     category = models.ManyToManyField(Category, blank=True, limit_choices_to={'user': None})
     added_date = models.DateTimeField(default=timezone.now)
     translations = TranslatedFields(
+        # for historic reasons summary and description are also included non-localized in the index
         l_summary=models.CharField(max_length=255, blank=True, verbose_name=_("Summary")),
         l_description=models.TextField(blank=True, verbose_name=_("Description")),
     )
@@ -68,7 +70,14 @@ class AbstractApp(TranslatableModel):
 class App(AbstractApp):
     repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
     last_updated_date = models.DateTimeField(auto_now=True)
-    translations = TranslatedFields()  # required for i18n
+    translations = TranslatedFields(
+        feature_graphic=models.ImageField(blank=True, max_length=1024,
+                                          upload_to=get_graphic_asset_file_path),
+        high_res_icon=models.ImageField(blank=True, max_length=1024,
+                                        upload_to=get_graphic_asset_file_path),
+        tv_banner=models.ImageField(blank=True, max_length=1024,
+                                    upload_to=get_graphic_asset_file_path),
+    )
 
     def get_absolute_url(self):
         return reverse('app', kwargs={'repo_id': self.repo.pk, 'app_id': self.pk})
@@ -108,6 +117,13 @@ class App(AbstractApp):
                 localized[language_code]['summary'] = app.l_summary
             if app.l_description:
                 localized[language_code]['description'] = app.l_description
+            if app.feature_graphic:
+                localized[language_code]['featureGraphic'] = os.path.basename(
+                    app.feature_graphic.name)
+            if app.high_res_icon:
+                localized[language_code]['icon'] = os.path.basename(app.high_res_icon.name)
+            if app.tv_banner:
+                localized[language_code]['tvBanner'] = os.path.basename(app.tv_banner.name)
 
     def _get_screenshot_dict(self):
         from . import Screenshot
@@ -137,12 +153,56 @@ class App(AbstractApp):
             self.l_description = clean(remote_app.l_description)
             self.save()
 
+    def download_graphic_assets_from_remote_app(self, remote_app):
+        """
+        Does a blocking download of the RemoteApp's graphic assets and replaces the local ones.
+
+        Attention: This assumes that all translations exist already.
+        """
+        for language_code in remote_app.get_available_languages():
+            # get the translation for current language_code
+            app = App.objects.language(language_code).get(pk=self.pk)
+            remote_app = RemoteApp.objects.language(language_code).get(pk=remote_app.pk)
+            if remote_app.feature_graphic_url:
+                graphic, etag = net.http_get(remote_app.feature_graphic_url,
+                                             remote_app.feature_graphic_etag)
+                if graphic is not None:
+                    app.feature_graphic.delete()
+                    graphic_name = os.path.basename(remote_app.feature_graphic_url)
+                    app.feature_graphic.save(graphic_name, BytesIO(graphic), save=False)
+                    remote_app.feature_graphic_etag = etag
+            if remote_app.high_res_icon_url:
+                graphic, etag = net.http_get(remote_app.high_res_icon_url,
+                                             remote_app.high_res_icon_etag)
+                if graphic is not None:
+                    app.high_res_icon.delete()
+                    graphic_name = os.path.basename(remote_app.high_res_icon_url)
+                    app.high_res_icon.save(graphic_name, BytesIO(graphic), save=False)
+                    remote_app.high_res_icon_etag = etag
+            if remote_app.tv_banner_url:
+                graphic, etag = net.http_get(remote_app.tv_banner_url,
+                                             remote_app.tv_banner_etag)
+                if graphic is not None:
+                    app.tv_banner.delete()
+                    graphic_name = os.path.basename(remote_app.tv_banner_url)
+                    app.tv_banner.save(graphic_name, BytesIO(graphic), save=False)
+                    remote_app.tv_banner_etag = etag
+            app.save()
+            remote_app.save()
+
 
 class RemoteApp(AbstractApp):
     repo = models.ForeignKey(RemoteRepository, on_delete=models.CASCADE)
     icon_etag = models.CharField(max_length=128, blank=True, null=True)
     last_updated_date = models.DateTimeField(blank=True)
-    translations = TranslatedFields()  # required for i18n
+    translations = TranslatedFields(
+        feature_graphic_url=models.URLField(blank=True, max_length=2048),
+        feature_graphic_etag=models.CharField(max_length=128, blank=True, null=True),
+        high_res_icon_url=models.URLField(blank=True, max_length=2048),
+        high_res_icon_etag=models.CharField(max_length=128, blank=True, null=True),
+        tv_banner_url=models.URLField(blank=True, max_length=2048),
+        tv_banner_etag=models.CharField(max_length=128, blank=True, null=True),
+    )
 
     def update_from_json(self, app):
         """
@@ -205,7 +265,7 @@ class RemoteApp(AbstractApp):
 
     def _update_translations(self, localized):
         # TODO also support 'name, 'whatsNew' and 'video'
-        supported_fields = ['summary', 'description']
+        supported_fields = ['summary', 'description', 'featureGraphic', 'icon', 'tvBanner']
         available_languages = self.get_available_languages()
         for language_code, translation in localized.items():
             if set(supported_fields).isdisjoint(translation.keys()):
@@ -214,29 +274,45 @@ class RemoteApp(AbstractApp):
             if language_code in available_languages:
                 # we need to retrieve the existing translation
                 app = RemoteApp.objects.language(language_code).get(pk=self.pk)
-                app.apply_translation(translation)
+                app.apply_translation(language_code, translation)
             else:
                 # create a new translation
                 self.translate(language_code)
-                self.apply_translation(translation)
+                self.apply_translation(language_code, translation)
 
     # pylint: disable=attribute-defined-outside-init
-    def apply_translation(self, translation):
+    def apply_translation(self, language_code, translation):
+        # textual metadata
         if 'summary' in translation:
             self.l_summary = translation['summary']
         if 'description' in translation:
             self.l_description = clean(translation['description'])
+        # graphic assets
+        url = self._get_base_url(language_code)
+        if 'featureGraphic' in translation:
+            self.feature_graphic_url = url + translation['featureGraphic']
+        if 'icon' in translation:
+            self.high_res_icon_url = url + translation['icon']
+        if 'tvBanner' in translation:
+            self.tv_banner_url = url + translation['tvBanner']
         self.save()
 
     def _update_screenshots(self, localized):
         from maker.models import RemoteScreenshot
-        package_url = self.repo.url + '/' + self.package_id
         for locale, types in localized.items():
-            locale_url = package_url + '/' + locale
             for t, files in types.items():
-                type_url = locale_url + '/' + t
+                type_url = self._get_base_url(locale, t)
                 # TODO not only add, but also remove old screenshots again
                 RemoteScreenshot.add(locale, t, self, type_url, files)
+
+    def _get_base_url(self, locale, asset_type=None):
+        """
+        Returns the base URL for the given locale and asset type with a trailing slash
+        """
+        url = self.repo.url + '/' + self.package_id + '/' + locale + '/'
+        if asset_type is None:
+            return url
+        return url + asset_type + '/'
 
     def get_latest_apk_pointer(self):
         """
@@ -283,6 +359,9 @@ class RemoteApp(AbstractApp):
             pointer.save()
             # schedule APK file download if necessary, also updates all local pointers to that APK
             apk.download_async(remote_pointer.url)
+
+        # schedule download of remote graphic assets
+        tasks.download_remote_graphic_assets(app.id, self.id)
 
         # schedule download of remote screenshots if available
         for remote in RemoteScreenshot.objects.filter(app=self).all():

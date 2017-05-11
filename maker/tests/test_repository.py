@@ -1,3 +1,4 @@
+import io
 import json
 import os
 import shutil
@@ -201,6 +202,14 @@ class RepositoryTestCase(TestCase):
         apk_pointer = ApkPointer.objects.create(repo=repo, app=app, apk=apk)
         apk_pointer.link_file_from_apk()
 
+        # add localized graphic assets
+        app.translate('en')
+        app.save()  # needs to be saved for ForeignKey App to be available when saving file
+        app.feature_graphic.save('feature.png', io.BytesIO(b'foo'), save=False)
+        app.high_res_icon.save('icon.png', io.BytesIO(b'foo'), save=False)
+        app.tv_banner.save('tv.png', io.BytesIO(b'foo'), save=False)
+        app.save()
+
         # update repo
         repo.update()
 
@@ -251,6 +260,14 @@ class RepositoryTestCase(TestCase):
         self.assertEqual(remote_app, remote_apk_pointer.app)
         self.assertEqual(remote_app, remote_apk_pointer.app)
         self.assertEqual(apk, remote_apk_pointer.apk)
+
+        # assert that all graphic assets are pointing to right location
+        self.assertTrue('en' in remote_app.get_available_languages())
+        remote_app = RemoteApp.objects.language('en').get(pk=remote_app.pk)
+        url = 'test_url/org.bitbucket.tickytacky.mirrormirror/en/'
+        self.assertEqual(url + 'feature.png', remote_app.feature_graphic_url)
+        self.assertEqual(url + 'icon.png', remote_app.high_res_icon_url)
+        self.assertEqual(url + 'tv.png', remote_app.tv_banner_url)
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)

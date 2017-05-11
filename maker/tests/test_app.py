@@ -18,12 +18,16 @@ class AppTestCase(TestCase):
         # local objects
         self.user = User.objects.create(username='user2')
         self.repo = Repository.objects.create(user=self.user)
-        self.app = App.objects.create(repo=self.repo)
+        self.app = App.objects.create(repo=self.repo, package_id='org.example')
 
         # remote objects
         date = datetime.fromtimestamp(0, timezone.utc)
         self.remote_repo = RemoteRepository.objects.create(last_change_date=date)
         self.remote_app = RemoteApp.objects.create(repo=self.remote_repo, last_updated_date=date)
+
+    def tearDown(self):
+        if os.path.isdir(TEST_DIR):
+            shutil.rmtree(TEST_DIR)
 
     def test_copy_translations_from_remote_app(self):
         app = self.app
@@ -64,14 +68,22 @@ class AppTestCase(TestCase):
         # assert that malicious content was removed
         self.assertEqual('<p>test</p>', self.app.l_description)
 
+    @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
     def test_get_translations_dict(self):
         # load two translations from other test
         self.test_copy_translations_from_remote_app()
         self.assertEqual({'en', 'de'}, set(self.app.get_available_languages()))
 
+        # add also graphic assets
+        app = App.objects.language('de').get(pk=self.app.pk)
+        app.feature_graphic.save('feature.png', io.BytesIO(b'foo'), save=False)
+        app.high_res_icon.save('icon.png', io.BytesIO(b'foo'), save=False)
+        app.tv_banner.save('tv.png', io.BytesIO(b'foo'), save=False)
+        app.save()
+
         # get localized dict
         localized = {'en': {'otherKey': 'test'}}
-        self.app._add_translations_to_localized(localized)  # pylint: disable=protected-access
+        app._add_translations_to_localized(localized)  # pylint: disable=protected-access
 
         # assert that dict was created properly
         self.assertEqual({'en', 'de'}, set(localized.keys()))
@@ -80,8 +92,48 @@ class AppTestCase(TestCase):
         self.assertEqual('hund', localized['de']['summary'])
         self.assertEqual('katze', localized['de']['description'])
 
+        # assert that graphic assets are included in dict
+        self.assertEqual('feature.png', localized['de']['featureGraphic'])
+        self.assertEqual('icon.png', localized['de']['icon'])
+        self.assertEqual('tv.png', localized['de']['tvBanner'])
+
         # assert that existing content is not deleted
         self.assertEqual('test', localized['en']['otherKey'])
+
+    @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
+    @patch('fdroidserver.net.http_get')
+    def test_download_graphic_assets_from_remote_app(self, http_get):
+        app = self.app
+        remote_app = self.remote_app
+
+        # set initial feature graphic for app
+        app.translate('de')
+        app.save()  # needs to be saved for ForeignKey App to be available when saving file
+        app.feature_graphic.save('feature.png', io.BytesIO(b'foo'), save=True)
+        old_feature_graphic_path = app.feature_graphic.path
+        self.assertTrue(os.path.isfile(old_feature_graphic_path))
+
+        # add graphics to remote app
+        remote_app.translate('de')
+        remote_app.feature_graphic_url = 'http://url/feature-graphic.png'
+        remote_app.feature_graphic_etag = 'etag'
+        remote_app.save()
+
+        # download graphic assets
+        http_get.return_value = b'icon-data', 'new_etag'
+        app.download_graphic_assets_from_remote_app(remote_app)
+        http_get.assert_called_once_with(remote_app.feature_graphic_url, 'etag')
+
+        # assert that old feature graphic got deleted and new one was saved
+        app = App.objects.language('de').get(pk=app.pk)
+        self.assertFalse(os.path.isfile(old_feature_graphic_path))
+        self.assertEqual('user_2/repo_1/repo/org.example/de/feature-graphic.png',
+                         app.feature_graphic.name)
+        self.assertTrue(os.path.isfile(app.feature_graphic.path))
+
+        # assert that new etag was saved
+        remote_app = RemoteApp.objects.language('de').get(pk=remote_app.pk)
+        self.assertEqual('new_etag', remote_app.feature_graphic_etag)
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
@@ -164,20 +216,24 @@ class RemoteAppTestCase(TestCase):
 
     def test_apply_translation(self):
         # apply new translation
-        translation = {'summary': 'test1', 'description': 'test2'}
+        translation = {'summary': 'test1', 'description': 'test2', 'featureGraphic': 'feature.png',
+                       'icon': 'icon.png', 'tvBanner': 'tv.png'}
         self.app.translate('en')
-        self.app.apply_translation(translation)
+        self.app.apply_translation('en', translation)
 
         # assert that translation has been saved
         app = RemoteApp.objects.language('en').get(pk=self.app.pk)
         self.assertEqual(translation['summary'], app.l_summary)
         self.assertEqual(translation['description'], app.l_description)
+        self.assertEqual('http://repo_url/org.example/en/feature.png', app.feature_graphic_url)
+        self.assertEqual('http://repo_url/org.example/en/icon.png', app.high_res_icon_url)
+        self.assertEqual('http://repo_url/org.example/en/tv.png', app.tv_banner_url)
 
     def test_apply_translation_sanitation(self):
         # apply new translation
         translation = {'summary': 'foo', 'description': 'test2<script>'}
         self.app.translate('en')
-        self.app.apply_translation(translation)
+        self.app.apply_translation('en', translation)
 
         # assert that translation has no <script> tag
         self.assertEqual(translation['summary'], self.app.l_summary)

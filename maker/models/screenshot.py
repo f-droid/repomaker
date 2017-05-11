@@ -73,7 +73,7 @@ class RemoteScreenshot(AbstractScreenshot):
         if not is_supported_type(s_type):
             return
         for file in files:
-            url = base_url + '/' + file
+            url = base_url + file
             if not RemoteScreenshot.objects.filter(language_code=locale, type=s_type, app=app,
                                                    url=url).exists():
                 screenshot = RemoteScreenshot(language_code=locale, type=s_type, app=app, url=url)

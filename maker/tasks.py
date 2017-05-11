@@ -55,6 +55,13 @@ def download_apk(apk_id, url):
 
 
 @background(schedule=timezone.now())
+def download_remote_graphic_assets(app_id, remote_app_id):
+    app = maker.models.app.App.objects.get(pk=app_id)
+    remote_app = maker.models.app.RemoteApp.objects.get(pk=remote_app_id)
+    app.download_graphic_assets_from_remote_app(remote_app)
+
+
+@background(schedule=timezone.now())
 def download_remote_screenshot(screenshot_id, app_id):
     screenshot = maker.models.screenshot.RemoteScreenshot.objects.get(pk=screenshot_id)
     screenshot.download(app_id)

@@ -40,6 +40,12 @@ def get_apk_file_path(apk, filename):
         return os.path.join('packages', filename)
 
 
+def get_graphic_asset_file_path(app_translation, filename):
+    app = app_translation.master
+    path = os.path.join(get_repo_path(app.repo), app.package_id, app_translation.language_code)
+    return os.path.join(path, filename)
+
+
 def get_screenshot_file_path(screenshot, filename):
     path = os.path.join(get_repo_path(screenshot.app.repo), screenshot.get_relative_path())
     return os.path.join(path, filename)

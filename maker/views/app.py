@@ -119,7 +119,8 @@ class AppDeleteView(RepositoryAuthorizationMixin, DeleteView):
 
 class AppTranslationUpdateView(RepositoryAuthorizationMixin, UpdateView):
     model = App
-    form_class = translationformset_factory(App, fields=['l_summary', 'l_description'],
+    form_class = translationformset_factory(App, fields=['l_summary', 'l_description',
+                                                         'feature_graphic'],
                                             widgets={'l_description': TinyMCE()}, extra=1)
     pk_url_kwarg = 'app_id'
     context_object_name = 'app'
