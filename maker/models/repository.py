@@ -1,4 +1,5 @@
 import datetime
+import json
 import logging
 import os
 from io import BytesIO
@@ -270,8 +271,8 @@ class RemoteRepository(AbstractRepository):
     pre_installed = models.BooleanField(default=False)
     index_etag = models.CharField(max_length=128, blank=True, null=True)
     icon_etag = models.CharField(max_length=128, blank=True, null=True)
+    mirrors = models.TextField(blank=True)
     last_change_date = models.DateTimeField()
-    # TODO save mirrors from index
 
     def get_path(self):
         return os.path.join(settings.MEDIA_ROOT, get_remote_repo_path(self))
@@ -316,6 +317,8 @@ class RemoteRepository(AbstractRepository):
         # update repository's metadata
         self.name = repo_index['repo']['name']
         self.description = clean(repo_index['repo']['description'])
+        if 'mirrors' in repo_index['repo']:
+            self.mirrors = json.dumps(repo_index['repo']['mirrors'])
         if update_apps:
             self.last_change_date = repo_change
         else:

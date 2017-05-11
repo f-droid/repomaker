@@ -48,9 +48,7 @@ class RemoteRepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
         form.instance.fingerprint = fingerprint
 
         # check if this remote repo already exists and if so, re-use it
-        existing_repo_query = RemoteRepository.objects.filter(url=form.instance.url,
-                                                              fingerprint=fingerprint)
-        # TODO also check if we maybe have a mirror of the repo already (maybe only use fingerprint)
+        existing_repo_query = RemoteRepository.objects.filter(fingerprint=fingerprint)
         if existing_repo_query.exists():
             existing_repo = existing_repo_query.get()
             existing_repo.users.add(user)

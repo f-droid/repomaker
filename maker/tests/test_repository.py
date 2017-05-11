@@ -320,6 +320,10 @@ class RemoteRepositoryTestCase(TestCase):
                 'description': 'Test <script>Description',
                 'icon': 'test-icon.png',
                 'timestamp': datetime.utcnow().timestamp() * 1000,
+                'mirrors': [
+                    'mirror1',
+                    'mirror2',
+                ],
             },
             'apps': [],
             'packages': [],
@@ -336,6 +340,7 @@ class RemoteRepositoryTestCase(TestCase):
         # assert that the repository metadata was updated with the information from the index
         self.assertEqual('Test Name', repo.name)
         self.assertEqual('Test Description', repo.description)
+        self.assertEqual('["mirror1", "mirror2"]', repo.mirrors)
 
         # assert that new repository icon was downloaded and changed
         get.assert_called_once_with(repo.url + '/' + 'test-icon.png',
