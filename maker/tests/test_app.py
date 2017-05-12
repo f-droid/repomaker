@@ -29,6 +29,30 @@ class AppTestCase(TestCase):
         if os.path.isdir(TEST_DIR):
             shutil.rmtree(TEST_DIR)
 
+    def test_from_remote_app(self):
+        remote_app = self.remote_app
+
+        # Add content to remote app
+        content = {'name': 'app', 'summary': 'foo', 'description': 'bar', 'website': 'site',
+                   'author_name': 'author'}
+        remote_app.name = content['name']
+        remote_app.summary = content['summary']
+        remote_app.description = content['description']
+        remote_app.website = content['website']
+        remote_app.author_name = content['author_name']
+
+        app = App.from_remote_app(repo=self.repo, app=remote_app)
+        app.save()
+
+        # assert app was updated properly
+        self.assertEqual(content['name'], app.name)
+        self.assertEqual(content['summary'], app.summary)
+        self.assertEqual(content['description'], app.description)
+        self.assertEqual(content['website'], app.website)
+        self.assertEqual(content['author_name'], app.author_name)
+        self.assertTrue(datetime_is_recent(app.added_date))
+        self.assertTrue(datetime_is_recent(app.last_updated_date))
+
     def test_copy_translations_from_remote_app(self):
         app = self.app
         remote_app = self.remote_app
@@ -156,7 +180,7 @@ class RemoteAppTestCase(TestCase):
 
     def test_update_from_json(self):
         json = {'name': 'app', 'summary': 'foo', 'description': 'bar<script>', 'webSite': 'site',
-                'added': 9999999900000, 'lastUpdated': 9999999900000}
+                'added': 9999999900000, 'lastUpdated': 9999999900000, 'authorName': 'author'}
         self.assertTrue(self.app.update_from_json(json))  # app changed
 
         # assert app was updated properly
@@ -167,6 +191,7 @@ class RemoteAppTestCase(TestCase):
         self.assertTrue(datetime_is_recent(self.app.added_date))
         last_update = datetime.fromtimestamp(json['lastUpdated'] / 1000, timezone.utc)
         self.assertEqual(last_update, self.app.last_updated_date)
+        self.assertEqual(json['authorName'], self.app.author_name)
 
     @patch('fdroidserver.net.http_get')
     def test_update_icon(self, http_get):

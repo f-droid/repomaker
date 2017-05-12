@@ -193,7 +193,7 @@ class RepositoryTestCase(TestCase):
         apk_hash = '64021f6d632eb5ba55bdeb5c4a78ed612bd3facc25d9a8a5d1c9d5d7a6bcc047'
         app = App.objects.create(repo=repo, package_id='org.bitbucket.tickytacky.mirrormirror',
                                  name='TestApp', summary='TestSummary', description='TestDesc',
-                                 website='TestSite')
+                                 website='TestSite', author_name='author')
         apk = Apk.objects.create(package_id='org.bitbucket.tickytacky.mirrormirror', version_code=2,
                                  hash=apk_hash)
         file_path = os.path.join(TEST_FILES_DIR, 'test_1.apk')
@@ -246,6 +246,7 @@ class RepositoryTestCase(TestCase):
         self.assertEqual(app.summary, remote_app.summary)
         self.assertEqual('<p>'+app.description+'</p>', remote_app.description)
         self.assertEqual(app.website, remote_app.website)
+        self.assertEqual(app.author_name, remote_app.author_name)
         self.assertTrue(remote_app.icon)
 
         # assert that the existing apk got re-used (based on package_id and hash)

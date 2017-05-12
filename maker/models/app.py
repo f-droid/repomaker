@@ -94,7 +94,8 @@ class App(AbstractApp):
         icon = ContentFile(app.icon.read())
         icon.name = os.path.basename(app.icon.name)
         return App(repo=repo, package_id=app.package_id, name=app.name, summary=app.summary,
-                   description=app.description, website=app.website, icon=icon)
+                   description=clean(app.description), website=app.website, icon=icon,
+                   author_name=app.author_name)
 
     def to_metadata_app(self):
         meta = metadata.App()
