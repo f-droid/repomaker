@@ -58,6 +58,9 @@ class AbstractApp(TranslatableModel):
                 language_names.append(lang)
         return language_names
 
+    def get_icon_basename(self):
+        return os.path.basename(self.icon.path)
+
     def delete_old_icon(self):
         icon_path = os.path.dirname(self.icon.path)
         if icon_path != settings.MEDIA_ROOT:

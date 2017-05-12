@@ -2,6 +2,7 @@ import datetime
 import json
 import logging
 import os
+import shutil
 from io import BytesIO
 
 import qrcode
@@ -12,6 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from django.db import models
 from django.dispatch import receiver
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 from fdroidserver import common, index, server, update, net
@@ -19,6 +21,8 @@ from fdroidserver import common, index, server, update, net
 from maker import tasks
 from maker.storage import REPO_DIR, get_repo_file_path, get_remote_repo_path, get_repo_root_path
 from maker.utils import clean
+
+from shutil import copy
 
 keydname = "CN=localhost.localdomain, OU=F-Droid"
 
@@ -169,13 +173,46 @@ class Repository(AbstractRepository):
             f.close()
 
     def _generate_page(self):
+        logging.debug('Generating page for repository')
         if not self.get_fingerprint_url():
             return
-        with open(os.path.join(self.get_repo_path(), 'index.html'), 'w') as file:
-            file.write('<a href="%s"/>' % self.get_fingerprint_url())
-            file.write('<img src="qrcode.png"/> ')
-            file.write(self.get_fingerprint_url())
-            file.write('</a>')
+        with open(os.path.join(self.get_repo_path(), 'index.html'), 'w') as repo_page:
+            # Copy MDL JavaScript dependency to repo
+            copy(os.path.join(settings.NODE_MODULES_ROOT, 'material-design-lite/material.min.js'),
+                 os.path.join(self.get_repo_path(), 'material.min.js'))
+
+            # Copy Roboto fonts to repo
+            roboto_font_path = os.path.join(self.get_repo_path(), 'roboto-fonts')
+            if os.path.exists(roboto_font_path):
+                shutil.rmtree(roboto_font_path)
+            roboto_font_path = os.path.join(roboto_font_path, 'Roboto')
+            os.makedirs(roboto_font_path)
+
+            # We only need three fonts from Roboto
+            roboto_fonts = ['Roboto-Bold.woff2', 'Roboto-Medium.woff2', 'Roboto-Regular.woff2']
+            for font in roboto_fonts:
+                copy(os.path.join(settings.NODE_MODULES_ROOT, 'roboto-fontface/fonts/Roboto', font),
+                     os.path.join(roboto_font_path, font))
+
+            from maker.models.app import App
+            context = {
+                'repo': self,
+                'apps': App.objects.filter(repo=self)
+            }
+
+            # Compile SASS stylesheet
+            from sass_processor.processor import sass_processor
+            sass_processor('maker/css/repo_page.scss')
+
+            # Render page to string
+            repo_page_string = render_to_string('maker/repo_page/index.html', context)
+
+            # Copy stylesheet to repo
+            copy(os.path.join(settings.STATIC_ROOT, 'maker/css/repo_page.css'),
+                 os.path.join(self.get_repo_path(), 'repo_page.css'))
+
+            # Write repo page to file
+            repo_page.write(repo_page_string)
 
     def set_url(self, url):
         self.url = url
@@ -241,6 +278,9 @@ class Repository(AbstractRepository):
         # Update cache if it changed
         if cachechanged:
             update.write_cache(apkcache)
+
+        # Update page
+        self._generate_page()
 
     def publish(self):
         """

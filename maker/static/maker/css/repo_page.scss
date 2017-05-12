@@ -1,0 +1,108 @@
+$roboto-font-path: "roboto-fonts";
+@import "roboto-fontface/css/roboto/sass/roboto-fontface";
+
+@import "material-design-lite/src/button/button";
+@import "material-design-lite/src/grid/grid";
+@import "material-design-lite/src/mixins";
+@import "material-design-lite/src/resets/resets";
+@import "material-design-lite/src/typography/typography";
+@import "material-design-lite/src/variables";
+
+a {
+    color: #0066CC;
+}
+
+a.repo-no-underline {
+	text-decoration: none;
+}
+
+body {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+button {
+    font-size: 11px;
+    font-weight: medium;
+}
+
+h1 {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+}
+
+p {
+    font-size: 12px;
+}
+
+.mdl-button {
+    border-radius: 25px;
+    font-size: 12px;
+    margin: 10px;
+}
+
+.repo-grid {
+    justify-content: center;
+}
+
+.repo-content {
+    text-align: center;
+}
+
+#repo-buttons-add {
+    button {
+        background: #0066CC;
+    }
+    display: none;
+}
+
+#repo-buttons-install-need {
+    background: none;
+    border: thin solid #58595B;
+    color: #58595B;
+}
+
+.repo-buttons-install-have {
+    button {
+        background: none;
+        border: thin solid #0066CC;
+        color: #0066CC;
+    }
+}
+
+.repo-buttons-install-have--mobile {
+    display: none;
+}
+
+// On devices smaller than desktops the mobile URL is shown
+@media (max-width: $grid-desktop-breakpoint - 1) {
+
+    .repo-buttons-install-have--desktop {
+        display: none;
+    }
+
+    .repo-buttons-install-have--mobile {
+        display: block;
+    }
+}
+
+// On devices smaller than desktops only one app per line is shown, which should be centered.
+@media (max-width: $grid-desktop-breakpoint - 1) {
+    .repo-apps {
+        justify-content: center;
+    }
+}
+
+.repo-app {
+    img {
+        width: 144px;
+        height: 144px;
+    }
+    h1 {
+        text-align: left;
+    }
+    p {
+        font-size: 18px;
+        text-align: left;
+    }
+}

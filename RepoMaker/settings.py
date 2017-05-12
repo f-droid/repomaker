@@ -190,8 +190,10 @@ LOCALE_PATHS = (
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+NODE_MODULES_ROOT = os.path.join(BASE_DIR, 'node_modules')
+
 STATICFILES_DIRS = [
-    ('node_modules', os.path.join(BASE_DIR, 'node_modules')),
+    ('node_modules', NODE_MODULES_ROOT),
 ]
 
 STATICFILES_FINDERS = [
@@ -201,7 +203,7 @@ STATICFILES_FINDERS = [
 ]
 
 SASS_PROCESSOR_INCLUDE_DIRS = [
-    os.path.join(BASE_DIR, 'node_modules'),
+    NODE_MODULES_ROOT,
 ]
 
 NODE_MODULES_URL = STATIC_URL + 'node_modules/'

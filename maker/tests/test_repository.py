@@ -16,8 +16,8 @@ from fdroidserver.update import METADATA_VERSION
 from maker.models import App, RemoteApp, Apk, ApkPointer, RemoteApkPointer, Repository, \
     RemoteRepository, S3Storage, SshStorage
 from maker.storage import get_repo_file_path, get_remote_repo_path
-from . import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, datetime_is_recent, \
-    fake_repo_create
+from . import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_STATIC_ROOT,\
+    datetime_is_recent, fake_repo_create
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
@@ -118,6 +118,56 @@ class RepositoryTestCase(TestCase):
         # assert that URL and the QR code got unset
         self.assertIsNone(repo.url)
         self.assertFalse(repo.qrcode)
+
+    @override_settings(STATIC_ROOT=TEST_STATIC_ROOT)
+    def test_generate_page(self):
+        repo = self.repo
+
+        # Creating repository directory is necessary because neither create nor update was called
+        if not os.path.isdir(repo.get_repo_path()):
+            os.makedirs(repo.get_repo_path())
+
+        # Add two apps
+        App.objects.create(repo=repo, package_id='first', name='TestApp', summary='TestSummary',
+                           description='TestDesc')
+        App.objects.create(repo=repo, package_id='second', name='AnotherTestApp',
+                           summary='AnotherTestSummary', description='AnotherTestDesc')
+
+        repo._generate_page()  # pylint: disable=protected-access
+
+        # assert that the repo homepage has been created and contains the app
+        page_abs_path = os.path.join(settings.MEDIA_ROOT, get_repo_file_path(repo, 'index.html'))
+        self.assertTrue(os.path.isfile(page_abs_path))
+        self.assertTrue(os.path.getsize(page_abs_path) > 200)
+        with open(page_abs_path, 'r') as repo_page:
+            repo_page_string = repo_page.read()
+            self.assertTrue('TestApp' in repo_page_string)
+            self.assertTrue('TestSummary' in repo_page_string)
+            self.assertTrue('TestDesc' in repo_page_string)
+            self.assertTrue('AnotherTestApp' in repo_page_string)
+            self.assertTrue('AnotherTestSummary' in repo_page_string)
+            self.assertTrue('AnotherTestDesc' in repo_page_string)
+
+        # assert that the repo homepage's stylesheet has been created
+        style_abs_path = \
+            os.path.join(settings.MEDIA_ROOT, get_repo_file_path(repo, 'repo_page.css'))
+        self.assertTrue(os.path.isfile(style_abs_path))
+        self.assertTrue(os.path.getsize(style_abs_path) > 200)
+
+        # assert that the MDL JavaScript library has been copied
+        mdl_js_abs_path = \
+            os.path.join(settings.MEDIA_ROOT, get_repo_file_path(repo, 'material.min.js'))
+        self.assertTrue(os.path.isfile(mdl_js_abs_path))
+        self.assertTrue(os.path.getsize(mdl_js_abs_path) > 200)
+
+        # assert that the Roboto fonts has been copied
+        roboto_fonts_abs_dir_path = \
+            os.path.join(settings.MEDIA_ROOT, get_repo_file_path(repo, 'roboto-fonts'))
+        self.assertTrue(os.path.isdir(roboto_fonts_abs_dir_path))
+        roboto_fonts_abs_path = \
+            os.path.join(roboto_fonts_abs_dir_path, 'Roboto/Roboto-Black.ttf')
+        self.assertTrue(os.path.isfile(roboto_fonts_abs_path))
+        self.assertTrue(os.path.getsize(roboto_fonts_abs_path) > 200)
 
     def test_empty_repository_update(self):
         repo = self.repo

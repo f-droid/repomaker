@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% load sass_tags %}
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>{{ repo.name }}, currently serving {{ apps.count }} app{{ apps.count|pluralize }}</title>
+		<link href="repo_page.css" rel="stylesheet" type="text/css" media="all">
+	</head>
+
+	<body>
+	<section class="mdl-grid repo-grid">
+		<div class="mdl-cell mdl-cell--6-col repo-content">
+			<h3>{{ repo.name }}, currently serving {{ apps.count }} app{{ apps.count|pluralize }}</h3>
+			<p>
+				To get these apps on your phone,
+				add this repository to F-Droid.
+				<a href="https://f-droid.org">I don't have F-Droid</a>.
+			</p>
+			<div id="repo-buttons-add">
+				<button
+						class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+						onclick="showInstallButtons()">
+					Add to F-Droid
+				</button>
+			</div>
+			<div id="repo-buttons-install">
+				<a href="https://f-droid.org" class="repo-no-underline">
+					<button
+							id="repo-buttons-install-need"
+							class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+						I need F-Droid
+					</button>
+				</a>
+				<a
+						href="{{ repo.get_fingerprint_url }}"
+						class="repo-buttons-install-have repo-buttons-install-have--desktop repo-no-underline">
+					<button
+
+							class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+							onclick="addRepo()">
+						I have F-Droid installed
+					</button>
+				</a>
+				<a
+						href="{{ repo.get_mobile_url }}"
+						class="repo-buttons-install-have repo-buttons-install-have--mobile repo-no-underline">
+					<button
+
+							class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+							onclick="addRepo()">
+						I have F-Droid installed
+					</button>
+				</a>
+			</div>
+			<div class="mdl-grid repo-apps">
+				{% for app in apps %}
+				<div class="mdl-cell mdl-cell--6-col repo-app">
+					<img class="repo-app-icon" src="{{ app.get_icon_basename }}" alt="App Icon"/>
+					<h1>{{ app.name }}: {{ app.summary }}</h1>
+					<p>{{ app.description|safe|truncatewords:25 }}</p>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	<script src="material.min.js"></script>
+	<script>
+		var add = document.getElementById('repo-buttons-add');
+		var install = document.getElementById('repo-buttons-install');
+		add.style.display = 'block';
+		install.style.display = 'none';
+		function showInstallButtons() {
+			add.style.display = 'none';
+			install.style.display = 'block';
+		}
+		function addRepo() {
+			add.style.display = 'block';
+			install.style.display = 'none';
+		}
+	</script>
+	</body>
+</html>
