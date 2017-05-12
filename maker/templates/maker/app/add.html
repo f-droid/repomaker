@@ -13,6 +13,7 @@
 
 <h1>{% trans 'Add new App' %}</h1>
 
+{% if form %}
 <div class="rm-form">
 	<form action="" enctype="multipart/form-data" method="post">
 		{% csrf_token %}
@@ -24,8 +25,24 @@
 </div>
 
 <p></p>
+{% endif %}
 
 <div class="mdl-grid">
+
+	<div class="rm-form mdl-cell mdl-cell--12-col">
+		<form action="{% url 'app_search' repo_id %}" method="get">
+			{% csrf_token %}
+			<div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<label for="query" class="mdl-textfield__label">{% trans 'Search for apps' %}</label>
+				<input type="text" name="query" class="mdl-textfield__input"
+				{% if request.GET.query %}value="{{ request.GET.query }}"{% endif %}/>
+			</div>
+			<div style="float:right;">
+				<input type="submit" value="{% trans 'Search' %}"/>
+			</div>
+		</form>
+	</div>
+
 	<div class="mdl-card mdl-cell mdl-cell--2-col"
 		 style="padding:1em; justify-content: flex-start;">
 		<div class="mdl-card__title">

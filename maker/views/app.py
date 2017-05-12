@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from hvad.forms import translationformset_factory
 from tinymce.widgets import TinyMCE
@@ -55,6 +55,29 @@ class AppCreateView(RepositoryAuthorizationMixin, CreateView):
         # edit new app
         return reverse_lazy('edit_app', kwargs={'repo_id': self.object.repo.pk,
                                                 'app_id': self.object.app.pk})
+
+
+class RemoteAppSearchView(RepositoryAuthorizationMixin, ListView):
+    model = RemoteApp
+    context_object_name = 'apps'
+    template_name = "maker/app/add.html"
+
+    def get_queryset(self):
+        if 'query' not in self.request.GET:
+            return RemoteApp.objects.none()
+        query = self.request.GET['query']
+        return RemoteApp.objects.filter(
+            Q(repo__users__id=self.request.user.id) & (
+                Q(name__icontains=query) |
+                Q(summary__icontains=query)
+            )
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super(RemoteAppSearchView, self).get_context_data(**kwargs)
+        context['repo_id'] = self.kwargs['repo_id']
+        context['repos'] = RemoteRepository.objects.filter(users__id=self.request.user.id)
+        return context
 
 
 class AppDetailView(RepositoryAuthorizationMixin, DetailView):
