@@ -8,29 +8,32 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>Repo Maker - {% block title %}{% endblock %}</title>
 	<link href="{% sass_src 'maker/css/style.scss' %}" rel="stylesheet" type="text/css" media="all">
-	{% block head %}{% endblock %}
+	{% block head %}{% endblock head %}
 </head>
 
 <body>
 <!-- Always shows a header, even in smaller screens. -->
-<div class="mdl-layout mdl-layout--fixed-header mdl-layout--no-desktop-drawer-button">
-	<header class="mdl-layout__header">
-		<div class="mdl-layout-icon"></div>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-desktop-drawer-button">
+	<header class="rm-header mdl-layout__header mdl-layout__header--waterfall">
 		<div class="mdl-layout__header-row">
+			{% block toolbar %}
 			<!-- Title -->
-			<span class="mdl-layout-title">
-				{% block toolbar-title %}<a href="/">Repo Maker</a>{% endblock %}
+			<span class="rm-title mdl-layout-title">
+				{% block toolbar-title %}<a href="/">Repo Maker</a>{% endblock toolbar-title %}
 			</span>
 			<!-- Add spacer, to align navigation to the right -->
 			<div class="mdl-layout-spacer"></div>
-			<!-- Navigation. We hide it in small screens. -->
-			<nav class="mdl-navigation mdl-layout--large-screen-only">
+
+			{% block toolbar-items %}{% endblock toolbar-items %}
+			<nav class="rm-navigation mdl-navigation">
+				{% block navigation %}{% endblock navigation %}
 				{% if user.is_authenticated and user.username != 'user' %}
 					{% load account %}
 					{% user_display user %}
 					[ <a class="mdl-navigation__link" href="{% url 'account_logout' %}">{% trans 'logout' %}</a> ]
 				{% endif %}
 			</nav>
+			{% endblock toolbar %}
 		</div>
 	</header>
 	<div class="mdl-layout__drawer">

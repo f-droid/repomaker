@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Max, Q
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -95,7 +95,21 @@ class AppDetailView(RepositoryAuthorizationMixin, DetailView):
         if app.name is None or app.name == '':
             raise RuntimeError("App has not been created properly.")
         context['apks'] = ApkPointer.objects.filter(app=app).order_by('-apk__version_code')
+        latest_version_code = ApkPointer.objects.filter(app=app). \
+            aggregate(latest_version_code=Max('apk__version_code'))['latest_version_code']
+        context['latest_version_name'] = \
+            ApkPointer.objects.get(app=app, apk__version_code=latest_version_code).apk.version_name
+        context['url_previous_app'] = self.get_previous_app_url()
+        context['url_next_app'] = self.get_next_app_url()
         return context
+
+    def get_previous_app_url(self):
+        # TODO: Return URL to previous app
+        return '#'
+
+    def get_next_app_url(self):
+        # TODO: Return URL to next app
+        return '#'
 
 
 class AppForm(BaseModelForm):
@@ -109,7 +123,7 @@ class AppForm(BaseModelForm):
 
     class Meta:
         model = App
-        fields = ['summary', 'description', 'website', 'category']
+        fields = ['summary', 'description', 'author_name', 'website', 'category']
         widgets = {'description': TinyMCE()}
 
 

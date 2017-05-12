@@ -1,0 +1,13 @@
+/*
+ * Rem function with fallback from Z63:
+ * http://zerosixthree.se/8-sass-mixins-you-must-have-in-your-toolbox/
+ */
+@function calculateRem($size) {
+    $remSize: $size / 14px;
+    @return $remSize * 1rem;
+}
+
+@mixin font-size($size) {
+    font-size: $size;
+    font-size: calculateRem($size);
+}

@@ -27,6 +27,7 @@ class AbstractApp(TranslatableModel):
     name = models.CharField(max_length=255, blank=True)
     summary = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)  # always clean and then consider safe
+    author_name = models.CharField(max_length=255, blank=True)
     website = models.URLField(max_length=2048, blank=True)
     icon = models.ImageField(upload_to=get_repo_file_path_for_app,
                              default=settings.APP_DEFAULT_ICON)
@@ -102,6 +103,7 @@ class App(AbstractApp):
         meta.WebSite = self.website
         meta.Summary = self.summary
         meta.Description = self.description
+        meta.AuthorName = self.author_name
         meta.added = timezone.make_naive(self.added_date)
         meta.Categories = [category.name for category in self.category.all()]
         meta['localized'] = self._get_screenshot_dict()
@@ -224,6 +226,8 @@ class RemoteApp(AbstractApp):
             self.summary = app['summary']
         if 'description' in app:
             self.description = clean(app['description'])
+        if 'authorName' in app:
+            self.author_name = app['authorName']
         if 'webSite' in app:
             self.website = app['webSite']
         if 'icon' in app:

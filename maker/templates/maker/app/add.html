@@ -57,7 +57,7 @@
 				</li>
 				{% for repo in repos %}
 				<li class="mdl-list__item">
-					<a class="mdl-list__item-primary-content" href="{% url 'add_app' repo_id %}">
+					<a class="mdl-list__item-primary-content" href="{% url 'add_app_from_remote' repo_id repo.id %}">
 						<img src="{{ repo.icon.url }}" style="height: 32px;"/> {{ repo }}
 					</a>
 				</li>

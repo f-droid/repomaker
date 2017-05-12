@@ -1,13 +1,23 @@
+/*
+ * Material Design Icons
+ */
 $material-design-icons-font-path: unquote(get-setting(NODE_MODULES_URL) + 'material-design-icons-iconfont/dist/fonts/');
 @import "material-design-icons-iconfont/dist/material-design-icons.scss";
 
+/*
+ * Roboto Font
+ */
 $roboto-font-path: unquote(get-setting(NODE_MODULES_URL) + "roboto-fontface/fonts");
 @import "roboto-fontface/css/roboto/sass/roboto-fontface";
 
+/*
+ * Material Design Lite
+ */
 @import "material-design-lite/src/animation/animation";
 @import "material-design-lite/src/button/button";
 @import "material-design-lite/src/card/card";
 @import "material-design-lite/src/checkbox/checkbox";
+@import "material-design-lite/src/chip/chip";
 @import "material-design-lite/src/grid/grid";
 @import "material-design-lite/src/icon-toggle/icon-toggle";
 @import "material-design-lite/src/layout/layout";
@@ -20,8 +30,59 @@ $roboto-font-path: unquote(get-setting(NODE_MODULES_URL) + "roboto-fontface/font
 @import "material-design-lite/src/typography/typography";
 @import "material-design-lite/src/variables";
 
+@import "mixins";
+
+/*
+ * General Repomaker Styles
+ */
+body {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.rm-header {
+    font-color: black;
+    overflow: visible;
+    background-color: white;
+}
+
+.rm-header .material-icons {
+    color: #767777 !important;
+}
+
+.rm-header .mdl-layout__drawer-button {
+    background: transparent;
+    color: #767777;
+}
+
+.rm-header .mdl-navigation__link, .rm-title, .rm-toolbar-item {
+    color: #757575;
+    font-weight: 700;
+}
+
+.rm-toolbar-item {
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.rm-toolbar-button {
+    background: none;
+    border: thin solid #4a4a4a;
+    border-radius: 25px;
+    @include font-size(11px);
+    margin: 10px;
+    padding: 0 60px;
+}
+
 .rm-content {
 	margin: 16px;
+}
+
+.rm-grid--center {
+    justify-content: center;
+}
+
+.rm-grid--full-width {
+    width: 100%;
 }
 
 a.rm-no-underline {
@@ -35,6 +96,8 @@ a.rm-no-underline {
 }
 
 .rm-icon {
-	width: 96px;
-	height: 96px;
+	width: 80px;
+	height: 80px;
 }
+
+@import "app/styles.scss";
