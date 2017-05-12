@@ -11,7 +11,7 @@ TEST_FILES_DIR = os.path.join(settings.BASE_DIR, 'tests')
 TEST_DIR = os.path.join(settings.BASE_DIR, 'test_dir')
 TEST_MEDIA_DIR = os.path.join(TEST_DIR, 'media')
 TEST_PRIVATE_DIR = os.path.join(TEST_DIR, 'private_repo')
-TEST_STATIC_ROOT = os.path.join(TEST_DIR, 'static')
+TEST_STATIC_DIR = os.path.join(TEST_DIR, 'static')
 
 
 def datetime_is_recent(dt, seconds=10 * 60):

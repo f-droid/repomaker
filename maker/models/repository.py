@@ -200,12 +200,9 @@ class Repository(AbstractRepository):
                 'apps': App.objects.filter(repo=self)
             }
 
-            # Compile SASS stylesheet
-            from sass_processor.processor import sass_processor
-            sass_processor('maker/css/repo_page.scss')
-
             # Render page to string
             repo_page_string = render_to_string('maker/repo_page/index.html', context)
+            repo_page_string = repo_page_string.replace('/static/maker/css/', '')
 
             # Copy stylesheet to repo
             copy(os.path.join(settings.STATIC_ROOT, 'maker/css/repo_page.css'),

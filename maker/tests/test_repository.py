@@ -6,6 +6,8 @@ from datetime import datetime, timezone
 from unittest.mock import patch
 
 import requests
+import sass_processor.processor
+import sass_processor.storage
 from background_task.tasks import Task
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -16,7 +18,7 @@ from fdroidserver.update import METADATA_VERSION
 from maker.models import App, RemoteApp, Apk, ApkPointer, RemoteApkPointer, Repository, \
     RemoteRepository, S3Storage, SshStorage
 from maker.storage import get_repo_file_path, get_remote_repo_path
-from . import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_STATIC_ROOT,\
+from . import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_STATIC_DIR, \
     datetime_is_recent, fake_repo_create
 
 
@@ -37,7 +39,8 @@ class RepositoryTestCase(TestCase):
         if os.path.isdir(TEST_DIR):
             shutil.rmtree(TEST_DIR)
 
-    def test_repository_creation(self):
+    @patch('maker.models.repository.Repository._generate_page')
+    def test_repository_creation(self, _generate_page):
         repo = self.repo
         repo.create()
 
@@ -69,9 +72,7 @@ class RepositoryTestCase(TestCase):
         self.assertTrue(os.path.getsize(qr_abs_path) > 250)
 
         # assert that the repo homepage has been created
-        page_abs_path = os.path.join(settings.MEDIA_ROOT, get_repo_file_path(repo, 'index.html'))
-        self.assertTrue(os.path.isfile(page_abs_path))
-        self.assertTrue(os.path.getsize(page_abs_path) > 200)
+        _generate_page.called_once_with()
 
         # assert that the keys and fingerprint have been created properly
         self.assertTrue(len(repo.public_key) >= 2574)
@@ -99,13 +100,17 @@ class RepositoryTestCase(TestCase):
         self.repo.url = None
         self.assertIsNone(self.repo.get_mobile_url())
 
-    def test_set_url(self):
+    @patch('maker.models.repository.Repository._generate_page')
+    def test_set_url(self, _generate_page):
         repo = self.repo
         old_url = repo.url
         self.assertFalse(repo.qrcode)
         repo.set_url('test/url')
         self.assertNotEqual(old_url, repo.url)
         self.assertTrue(repo.qrcode)
+
+        # assert that repository homepage was re-created
+        _generate_page.called_once_with()
 
     def test_set_url_to_none(self):
         repo = self.repo
@@ -119,57 +124,8 @@ class RepositoryTestCase(TestCase):
         self.assertIsNone(repo.url)
         self.assertFalse(repo.qrcode)
 
-    @override_settings(STATIC_ROOT=TEST_STATIC_ROOT)
-    def test_generate_page(self):
-        repo = self.repo
-
-        # Creating repository directory is necessary because neither create nor update was called
-        if not os.path.isdir(repo.get_repo_path()):
-            os.makedirs(repo.get_repo_path())
-
-        # Add two apps
-        App.objects.create(repo=repo, package_id='first', name='TestApp', summary='TestSummary',
-                           description='TestDesc')
-        App.objects.create(repo=repo, package_id='second', name='AnotherTestApp',
-                           summary='AnotherTestSummary', description='AnotherTestDesc')
-
-        repo._generate_page()  # pylint: disable=protected-access
-
-        # assert that the repo homepage has been created and contains the app
-        page_abs_path = os.path.join(settings.MEDIA_ROOT, get_repo_file_path(repo, 'index.html'))
-        self.assertTrue(os.path.isfile(page_abs_path))
-        self.assertTrue(os.path.getsize(page_abs_path) > 200)
-        with open(page_abs_path, 'r') as repo_page:
-            repo_page_string = repo_page.read()
-            self.assertTrue('TestApp' in repo_page_string)
-            self.assertTrue('TestSummary' in repo_page_string)
-            self.assertTrue('TestDesc' in repo_page_string)
-            self.assertTrue('AnotherTestApp' in repo_page_string)
-            self.assertTrue('AnotherTestSummary' in repo_page_string)
-            self.assertTrue('AnotherTestDesc' in repo_page_string)
-
-        # assert that the repo homepage's stylesheet has been created
-        style_abs_path = \
-            os.path.join(settings.MEDIA_ROOT, get_repo_file_path(repo, 'repo_page.css'))
-        self.assertTrue(os.path.isfile(style_abs_path))
-        self.assertTrue(os.path.getsize(style_abs_path) > 200)
-
-        # assert that the MDL JavaScript library has been copied
-        mdl_js_abs_path = \
-            os.path.join(settings.MEDIA_ROOT, get_repo_file_path(repo, 'material.min.js'))
-        self.assertTrue(os.path.isfile(mdl_js_abs_path))
-        self.assertTrue(os.path.getsize(mdl_js_abs_path) > 200)
-
-        # assert that the Roboto fonts has been copied
-        roboto_fonts_abs_dir_path = \
-            os.path.join(settings.MEDIA_ROOT, get_repo_file_path(repo, 'roboto-fonts'))
-        self.assertTrue(os.path.isdir(roboto_fonts_abs_dir_path))
-        roboto_fonts_abs_path = \
-            os.path.join(roboto_fonts_abs_dir_path, 'Roboto/Roboto-Black.ttf')
-        self.assertTrue(os.path.isfile(roboto_fonts_abs_path))
-        self.assertTrue(os.path.getsize(roboto_fonts_abs_path) > 200)
-
-    def test_empty_repository_update(self):
+    @patch('maker.models.repository.Repository._generate_page')
+    def test_empty_repository_update(self, _generate_page):
         repo = self.repo
         fake_repo_create(repo)
 
@@ -198,6 +154,9 @@ class RepositoryTestCase(TestCase):
             self.assertTrue(datetime_is_recent(timestamp))
             self.assertEqual(repo.url, index['repo']['address'])
             self.assertEqual(repo.icon, index['repo']['icon'])
+
+        # assert that repository homepage was re-created
+        _generate_page.called_once_with()
 
     @patch('maker.models.storage.S3Storage.publish')
     @patch('maker.models.storage.SshStorage.publish')
@@ -230,7 +189,8 @@ class RepositoryTestCase(TestCase):
         self.assertIsNone(self.repo.last_publication_date)
 
     @patch('requests.get')
-    def test_full_cyclic_integration(self, get):
+    @patch('maker.models.repository.Repository._generate_page')
+    def test_full_cyclic_integration(self, _generate_page, get):
         """
         This test creates a local repository with one app
         and then imports it again as a remote repository.
@@ -262,6 +222,9 @@ class RepositoryTestCase(TestCase):
 
         # update repo
         repo.update()
+
+        # assert that repository homepage has been created
+        _generate_page.called_once_with()
 
         # prepare the index to be added as a new remote repository
         index_path = os.path.join(repo.get_repo_path(), 'index-v1.jar')
@@ -430,3 +393,76 @@ class RemoteRepositoryTestCase(TestCase):
         # assert that there is no `None` in the path, but the repo number (primary key)
         self.assertFalse('None' in repo.icon.name)
         self.assertTrue(str(repo.pk) in repo.icon.name)
+
+
+@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, STATIC_ROOT=TEST_STATIC_DIR)
+class RepositoryPageTestCase(TestCase):
+    """
+    This is its own testcase,
+    because overriding variables such as STATIC_ROOT can cause sass to crash.
+    """
+
+    def setUp(self):
+        # create repository
+        self.user = User.objects.create(username='user2')
+        self.repo = Repository.objects.create(
+            name="Test Name",
+            description="Test Description",
+            url="https://example.org",
+            user=self.user,
+        )
+
+    def tearDown(self):
+        if os.path.isdir(TEST_DIR):
+            shutil.rmtree(TEST_DIR)
+
+    def test_generate_page(self):
+        repo = self.repo
+
+        # a hack to enable the SASS processor for these tests
+        sass_processor.processor.SassProcessor.processor_enabled = True
+        sass_processor.processor.SassProcessor.storage = sass_processor.storage.SassFileStorage()
+
+        # creating repository directory is necessary because neither create nor update was called
+        os.makedirs(repo.get_repo_path())
+
+        # add two apps
+        App.objects.create(repo=repo, package_id='first', name='TestApp', summary='TestSummary',
+                           description='TestDesc')
+        App.objects.create(repo=repo, package_id='second', name='AnotherTestApp',
+                           summary='AnotherTestSummary', description='AnotherTestDesc')
+
+        repo._generate_page()  # pylint: disable=protected-access
+
+        # make sure that SASS processor gets disabled again as soon as it is no longer needed
+        sass_processor.processor.SassProcessor.processor_enabled = False
+
+        # assert that the repo homepage has been created and contains the app
+        page_abs_path = os.path.join(settings.MEDIA_ROOT, get_repo_file_path(repo, 'index.html'))
+        self.assertTrue(os.path.isfile(page_abs_path))
+        self.assertTrue(os.path.getsize(page_abs_path) > 200)
+        with open(page_abs_path, 'r') as repo_page:
+            repo_page_string = repo_page.read()
+            self.assertTrue('TestApp' in repo_page_string)
+            self.assertTrue('TestSummary' in repo_page_string)
+            self.assertTrue('TestDesc' in repo_page_string)
+            self.assertTrue('AnotherTestApp' in repo_page_string)
+            self.assertTrue('AnotherTestSummary' in repo_page_string)
+            self.assertTrue('AnotherTestDesc' in repo_page_string)
+
+        # assert that the repo homepage's stylesheet has been created
+        style_abs_path = os.path.join(repo.get_repo_path(), 'repo_page.css')
+        self.assertTrue(os.path.isfile(style_abs_path))
+        self.assertTrue(os.path.getsize(style_abs_path) > 200)
+
+        # assert that the MDL JavaScript library has been copied
+        mdl_js_abs_path = os.path.join(repo.get_repo_path(), 'material.min.js')
+        self.assertTrue(os.path.isfile(mdl_js_abs_path))
+        self.assertTrue(os.path.getsize(mdl_js_abs_path) > 200)
+
+        # assert that the Roboto fonts has been copied
+        font_path = os.path.join(repo.get_repo_path(), 'roboto-fonts', 'Roboto')
+        self.assertTrue(os.path.isdir(font_path))
+        self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Bold.woff2')))
+        self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Medium.woff2')))
+        self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Regular.woff2')))

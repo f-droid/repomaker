@@ -5,7 +5,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<title>{{ repo.name }}, currently serving {{ apps.count }} app{{ apps.count|pluralize }}</title>
-		<link href="repo_page.css" rel="stylesheet" type="text/css" media="all">
+		<link href="{% sass_src 'maker/css/repo_page.scss' %}" rel="stylesheet" type="text/css" media="all">
 	</head>
 
 	<body>
