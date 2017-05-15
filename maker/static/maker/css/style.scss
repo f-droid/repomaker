@@ -43,10 +43,7 @@ body {
     font-color: black;
     overflow: visible;
     background-color: white;
-}
-
-.rm-header .material-icons {
-    color: #767777 !important;
+    color: #767777;
 }
 
 .rm-header .mdl-layout__drawer-button {
@@ -54,14 +51,14 @@ body {
     color: #767777;
 }
 
-.rm-header .mdl-navigation__link, .rm-title, .rm-toolbar-item {
-    color: #757575;
+.rm-header .mdl-navigation__link, .rm-title a, .rm-toolbar-item {
     font-weight: 700;
 }
 
 .rm-toolbar-item {
     display: inline-flex;
     vertical-align: middle;
+    text-decoration: none;
 }
 
 .rm-toolbar-button {

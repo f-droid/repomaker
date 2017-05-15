@@ -5,10 +5,21 @@ $image_path: unquote(get-setting(NODE_MODULES_URL) + 'material-design-lite/src/i
 @import "material-design-lite/src/list/list";
 @import "material-design-lite/src/checkbox/checkbox";
 
+@import "mixins";
+
 .rm-form {
 
 	input[type="submit"] {
-		@extend .mdl-button, .mdl-button--raised, .mdl-button--primary;
+		@extend .mdl-button;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		background: none;
+		color: #5583b6;
+		border: thin solid #5583b6;
+		border-radius: 25px;
+		@include font-size(11px);
+		padding: 0 60px;
 	}
 
 	input[type="file"] {

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-12 18:57+0000\n"
+"POT-Creation-Date: 2017-05-15 18:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: maker/models/app.py:37
+#: maker/models/app.py:38
 msgid "Summary"
 msgstr ""
 
-#: maker/models/app.py:38 maker/templates/maker/app/index.html:62
+#: maker/models/app.py:39
 msgid "Description"
 msgstr ""
 
@@ -112,7 +112,6 @@ msgid ""
 msgstr ""
 
 #: maker/templates/maker/app/add.html:73
-#: maker/templates/maker/repo/add.html:21
 msgid "Add"
 msgstr "Hinzufügen"
 
@@ -127,7 +126,6 @@ msgid ""
 msgstr ""
 
 #: maker/templates/maker/app/delete.html:5
-#: maker/templates/maker/app/index.html:130
 #: maker/templates/maker/app/screenshot_delete.html:5
 msgid "Delete App"
 msgstr "App löschen"
@@ -157,70 +155,61 @@ msgstr "%(app.name)s bearbeiten"
 msgid "Save Changes"
 msgstr "Änderungen speichern"
 
-#: maker/templates/maker/app/index.html:8
+#: maker/templates/maker/app/index.html:13
+#, python-format
+msgid "Language (%(count)s)"
+msgstr ""
+
+#: maker/templates/maker/app/index.html:18
 msgid "None"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:28
-msgid "Package ID"
-msgstr ""
-
-#: maker/templates/maker/app/index.html:37
-msgid "Categories"
-msgstr ""
-
-#: maker/templates/maker/app/index.html:51
-msgid "Website"
-msgstr ""
-
-#: maker/templates/maker/app/index.html:72
+#: maker/templates/maker/app/index.html:24
 #, fuzzy
-#| msgid "Delete App"
-msgid "Translations"
-msgstr "App löschen"
+#| msgid "Edit App"
+msgid "Edit"
+msgstr "App bearbeiten"
 
-#: maker/templates/maker/app/index.html:87
-msgid "Signature"
+#: maker/templates/maker/app/index.html:41
+#, python-format
+msgid "Developed by %(author)s"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:97
-msgid "Added"
-msgstr ""
+#: maker/templates/maker/app/index.html:53
+#, fuzzy, python-format
+#| msgid "Edit %(app.name)s"
+msgid "Updated %(time)s ago"
+msgstr "%(app.name)s bearbeiten"
 
-#: maker/templates/maker/app/index.html:106
-#: maker/templates/maker/repo/index.html:56
-msgid "Last Updated"
-msgstr ""
-
-#: maker/templates/maker/app/index.html:118
-msgid "Edit App Details"
-msgstr ""
-
-#: maker/templates/maker/app/index.html:124
-#: maker/templates/maker/app/screenshot_add.html:5
-#: maker/templates/maker/app/screenshot_add.html:14
-msgid "Add Screenshot"
-msgstr "Screenshot hinzufügen"
-
-#: maker/templates/maker/app/index.html:139
-msgid "Versions"
+#: maker/templates/maker/app/index.html:94
+#, fuzzy
+#| msgid "Versions"
+msgid "version history"
 msgstr "Versionen"
 
-#: maker/templates/maker/app/index.html:152
-msgid "Size"
-msgstr ""
+#: maker/templates/maker/app/index.html:101
+#, fuzzy, python-format
+#| msgid "Description: %(description)s"
+msgid "Version %(version)s"
+msgstr "Beschreibung: %(description)s"
 
-#: maker/templates/maker/app/index.html:160
-msgid "File"
-msgstr ""
+#: maker/templates/maker/app/index.html:107
+#, fuzzy, python-format
+#| msgid "Added: %(date)s"
+msgid "Released %(date)s"
+msgstr "Hinzugefügt: %(date)s"
 
-#: maker/templates/maker/app/index.html:169
-#, python-format
-msgid "Hash (%(type)s)"
-msgstr ""
-
-#: maker/templates/maker/app/index.html:180
+#: maker/templates/maker/app/index.html:113
 msgid "APK is still downloading..."
+msgstr ""
+
+#: maker/templates/maker/app/index.html:127
+msgid "Previous"
+msgstr ""
+
+#: maker/templates/maker/app/index.html:133
+#: maker/templates/maker/repo/add.html:29
+msgid "Next"
 msgstr ""
 
 #: maker/templates/maker/app/remote_add.html:14
@@ -232,6 +221,11 @@ msgstr ""
 #, python-format
 msgid "Add App to %(repo)s"
 msgstr ""
+
+#: maker/templates/maker/app/screenshot_add.html:5
+#: maker/templates/maker/app/screenshot_add.html:14
+msgid "Add Screenshot"
+msgstr "Screenshot hinzufügen"
 
 #: maker/templates/maker/app/screenshot_add.html:21
 #, fuzzy
@@ -260,7 +254,7 @@ msgstr ""
 msgid "Save Translation"
 msgstr ""
 
-#: maker/templates/maker/base.html:31 maker/templates/maker/base.html:42
+#: maker/templates/maker/base.html:33 maker/templates/maker/base.html:45
 msgid "logout"
 msgstr ""
 
@@ -273,11 +267,8 @@ msgid "No repositories are available."
 msgstr ""
 
 #: maker/templates/maker/repo/add.html:5
-msgid "Add Repository"
-msgstr ""
-
-#: maker/templates/maker/repo/add.html:14
-msgid "Add New Repository"
+#: maker/templates/maker/repo/add.html:23
+msgid "Create a Repository"
 msgstr ""
 
 #: maker/templates/maker/repo/index.html:28 maker/views/sshstorage.py:34
@@ -290,6 +281,10 @@ msgstr ""
 
 #: maker/templates/maker/repo/index.html:47
 msgid "Created"
+msgstr ""
+
+#: maker/templates/maker/repo/index.html:56
+msgid "Last Updated"
 msgstr ""
 
 #: maker/templates/maker/repo/index.html:65
@@ -461,8 +456,8 @@ msgstr ""
 msgid "Could not validate repository: %s"
 msgstr ""
 
-#: maker/views/repository.py:40
-msgid "Upload Repository Icon"
+#: maker/views/repository.py:46
+msgid "Describe the repository"
 msgstr ""
 
 #: maker/views/s3storage.py:14
@@ -509,20 +504,19 @@ msgstr ""
 msgid "Make this storage the primary storage of the repository."
 msgstr ""
 
+#, fuzzy
+#~| msgid "Delete App"
+#~ msgid "Translations"
+#~ msgstr "App löschen"
+
 #~ msgid "Categories: %(category)s"
 #~ msgstr "Kategorien: %(category)s"
 
 #~ msgid "Website: %(website)s"
 #~ msgstr "Webseite: %(website)s"
 
-#~ msgid "Description: %(description)s"
-#~ msgstr "Beschreibung: %(description)s"
-
 #~ msgid "Signature: %(signature)s"
 #~ msgstr "Signatur: %(signature)s"
-
-#~ msgid "Added: %(date)s"
-#~ msgstr "Hinzugefügt: %(date)s"
 
 #~ msgid "Last Updated: %(date_1)s (%(date_2)s)"
 #~ msgstr "Zuletzt aktualisiert: %(date_1)s (%(date_2)s)"

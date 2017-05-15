@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.forms import Textarea
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView
@@ -35,9 +36,15 @@ class RepositoryListView(LoginOrSingleUserRequiredMixin, ListView):
 class RepositoryForm(BaseModelForm):
     class Meta:
         model = Repository
-        fields = ['name', 'description', 'icon']
+        fields = ['name', 'description']
         labels = {
-            'icon': _('Upload Repository Icon'),
+            'description': '',
+        }
+        widgets = {
+            'description': Textarea(attrs={
+                'rows': 2,
+                'placeholder': _('Describe the repository')
+            }),
         }
 
 
