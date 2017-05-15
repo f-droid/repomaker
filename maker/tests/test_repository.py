@@ -13,10 +13,12 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files import File
 from django.test import TestCase, override_settings
+from django.urls import reverse
 from fdroidserver.update import METADATA_VERSION
 
 from maker.models import App, RemoteApp, Apk, ApkPointer, RemoteApkPointer, Repository, \
     RemoteRepository, S3Storage, SshStorage
+from maker.models.repository import AbstractRepository
 from maker.storage import get_repo_file_path, get_remote_repo_path
 from . import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_STATIC_DIR, \
     datetime_is_recent, fake_repo_create
@@ -100,6 +102,32 @@ class RepositoryTestCase(TestCase):
         self.repo.url = None
         self.assertIsNone(self.repo.get_mobile_url())
 
+    def test_delete_old_icon(self):
+        # add a custom repo icon and assert that it got created properly
+        self.repo.icon.save('icon.png', io.BytesIO(b'foo'), save=True)
+        self.assertTrue(self.repo.icon)
+        icon_path = self.repo.icon.path
+        self.assertTrue(os.path.isfile(icon_path))
+
+        self.repo.delete_old_icon()  # delete the old icon safely
+
+        # assert that repo icon got deleted
+        self.assertFalse(self.repo.icon)
+        self.assertFalse(os.path.isfile(icon_path))
+
+    def test_delete_old_icon_only_if_not_default(self):
+        # assert that default icon was used
+        self.assertEqual(settings.REPO_DEFAULT_ICON, self.repo.icon.name)
+
+        self.repo.delete_old_icon()  # delete the old icon
+
+        # assert that default icon wasn't deleted
+        self.assertEqual(settings.REPO_DEFAULT_ICON, self.repo.icon.name)
+
+    def test_get_absolute_url(self):
+        self.assertEqual(reverse('repo', kwargs={'repo_id': self.repo.pk}),
+                         self.repo.get_absolute_url())
+
     @patch('maker.models.repository.Repository._generate_page')
     def test_set_url(self, _generate_page):
         repo = self.repo
@@ -123,6 +151,50 @@ class RepositoryTestCase(TestCase):
         # assert that URL and the QR code got unset
         self.assertIsNone(repo.url)
         self.assertFalse(repo.qrcode)
+
+    def test_generate_qrcode(self):
+        self.assertFalse(self.repo.qrcode)  # no QR code exists
+        self.repo._generate_qrcode()  # pylint: disable=protected-access
+        self.assertTrue(self.repo.qrcode)  # QR code exists now
+        self.assertTrue(os.path.isfile(self.repo.qrcode.path))
+        self.assertTrue(os.path.getsize(self.repo.qrcode.path) > 100)
+
+    def test_generate_qrcode_deletes_old_file(self):
+        # add existing QR code
+        self.repo.qrcode.save('qrcode.png', io.BytesIO(b'foo'), save=True)
+        self.assertTrue(os.path.isfile(self.repo.qrcode.path))
+        self.assertFalse(os.path.getsize(self.repo.qrcode.path) > 100)
+
+        self.repo._generate_qrcode()  # pylint: disable=protected-access
+
+        self.assertTrue(self.repo.qrcode)
+        self.assertTrue(os.path.isfile(self.repo.qrcode.path))
+        self.assertTrue(os.path.getsize(self.repo.qrcode.path) > 100)
+        self.assertEqual('qrcode.png', os.path.basename(self.repo.qrcode.name))
+
+    def test_generate_qrcode_without_url(self):
+        self.assertFalse(self.repo.qrcode)  # no QR code exists
+        self.repo.url = None  # remove repo URL
+        self.repo._generate_qrcode()  # pylint: disable=protected-access
+        self.assertFalse(self.repo.qrcode)  # no QR code exists
+
+    @patch('maker.tasks.update_repo')
+    def test_update_async(self, update_remote_repo):
+        """
+        Makes sure that the asynchronous update starts a background task.
+        """
+        self.repo.update_async()
+        update_remote_repo.assert_called_once_with(self.repo.id)
+        self.assertTrue(self.repo.update_scheduled)
+
+    @patch('maker.tasks.update_repo')
+    def test_update_async_not_when_scheduled(self, update_remote_repo):
+        """
+        Makes sure that the asynchronous update does not start a second background task.
+        """
+        self.repo.update_scheduled = True
+        self.repo.update_async()
+        self.assertFalse(update_remote_repo.called)
 
     @patch('maker.models.repository.Repository._generate_page')
     def test_empty_repository_update(self, _generate_page):
@@ -294,6 +366,11 @@ class RemoteRepositoryTestCase(TestCase):
         if os.path.isdir(TEST_DIR):
             shutil.rmtree(TEST_DIR)
 
+    def test_get_path(self):
+        self.assertEqual(os.path.join(settings.MEDIA_ROOT, 'remote_repo_1'), self.repo.get_path())
+        with self.assertRaises(NotImplementedError):
+            AbstractRepository().get_repo_path()
+
     def test_initial_update(self):
         """
         Makes sure that pre-installed remote repositories will be updated on first start.
@@ -335,6 +412,17 @@ class RemoteRepositoryTestCase(TestCase):
         self.repo.update_index(update_apps=True)
         download_repo_index.assert_called_once_with(self.repo.get_fingerprint_url(), etag=None)
         self.assertNotEqual('Test Name', self.repo.name)
+        self.assertFalse(_update_apps.called)
+
+    @patch('maker.models.repository.RemoteRepository._update_apps')
+    @patch('fdroidserver.index.download_repo_index')
+    def test_update_index_only_when_not_none(self, download_repo_index, _update_apps):
+        """
+        Test that a remote repository is only updated when the index changed since last time.
+        """
+        download_repo_index.return_value = None, 'etag'
+        self.repo.update_index(update_apps=True)
+        download_repo_index.assert_called_once_with(self.repo.get_fingerprint_url(), etag=None)
         self.assertFalse(_update_apps.called)
 
     @patch('requests.get')
