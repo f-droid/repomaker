@@ -1,10 +1,10 @@
-import datetime
 import os
 import shutil
 from io import BytesIO
 from unittest.mock import patch
 
 import requests
+from datetime import datetime
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -36,17 +36,20 @@ class ApkTestCase(TestCase):
             name='Test',
             description='Test',
             url='https://f-droid.org',
-            last_change_date=datetime.datetime.fromtimestamp(0, timezone.utc)
+            last_change_date=datetime.fromtimestamp(0, timezone.utc)
         )
 
         # Create RemoteApp
         RemoteApp.objects.create(
             repo=remote_repository,
-            last_updated_date=datetime.datetime.fromtimestamp(0, timezone.utc)
+            last_updated_date=datetime.fromtimestamp(0, timezone.utc)
         )
 
     def tearDown(self):
         shutil.rmtree(TEST_DIR)
+
+    def test_str(self):
+        self.assertEqual('org.example 0 test.apk', str(self.apk))
 
     @patch('maker.tasks.download_apk')
     def test_download_async(self, download_apk):
@@ -100,6 +103,26 @@ class ApkTestCase(TestCase):
         path = os.path.join(settings.MEDIA_ROOT, apk_pointer.file.name)
         self.assertTrue(os.path.isfile(path))
 
+    @patch('requests.get')
+    def test_failed_download(self, get):
+        # remove file and assert that it is gone
+        self.apk.file.delete()
+        self.assertFalse(self.apk.file)
+
+        # fake return value of GET request
+        get.return_value = requests.Response()
+        get.return_value.status_code = 404
+
+        # try to download file and assert an excetion was raised
+        with self.assertRaises(requests.exceptions.HTTPError):
+            self.apk.download('url/download.apk')
+
+    @patch('requests.get')
+    def test_download_only_when_file_missing(self, get):
+        # try to download file and assert there was no GET request (because it already exists)
+        self.apk.download('url/download.apk')
+        self.assertFalse(get.called)
+
     def test_from_json(self):
         package_info = {
             'packageName': 'org.example',
@@ -119,7 +142,7 @@ class ApkTestCase(TestCase):
         self.assertEqual(package_info['hash'], apk.hash)
         self.assertEqual(package_info['hashType'], apk.hash_type)
         self.assertEqual(package_info['sig'], apk.signature)
-        added = datetime.datetime.fromtimestamp(package_info['added'] / 1000, timezone.utc)
+        added = datetime.fromtimestamp(package_info['added'] / 1000, timezone.utc)
         self.assertEqual(added, apk.added_date)
         self.assertFalse(apk.file)
         self.assertFalse(apk.is_downloading)
@@ -166,10 +189,10 @@ class ApkPointerTestCase(TestCase):
 
     def setUp(self):
         # Create Repository
-        repo = Repository.objects.create(user=User.objects.create(username='user2'))
+        self.repo = Repository.objects.create(user=User.objects.create(username='user2'))
 
         # Create ApkPointer
-        self.apk_pointer = ApkPointer(repo=repo)
+        self.apk_pointer = ApkPointer(repo=self.repo)
 
         # Attach a real APK file to the pointer
         file_path = os.path.join(TEST_FILES_DIR, self.apk_file_name)
@@ -179,10 +202,23 @@ class ApkPointerTestCase(TestCase):
     def tearDown(self):
         shutil.rmtree(TEST_DIR)
 
+    def test_str(self):
+        self.apk_pointer.app = App.objects.create(repo=self.repo, name='TestApp')
+        self.apk_pointer.apk = Apk.objects.create()
+        self.assertEqual('TestApp - 0 - user_2/repo_1/repo/test_1.apk', str(self.apk_pointer))
+
     def test_initialize_rejects_invalid_apk(self):
         # overwrite APK file with rubbish
         self.apk_pointer.file.delete()
         self.apk_pointer.file.save(self.apk_file_name, BytesIO(b'foo'), save=True)
+
+        # initialize the pointer and expect a ValidationError
+        with self.assertRaises(ValidationError):
+            self.apk_pointer.initialize()
+
+    @patch('fdroidserver.update.scan_apk')
+    def test_initialize_rejects_invalid_apk_scan(self, scan_apk):
+        scan_apk.return_value = True, None, None  # scan tells us to skip this APK
 
         # initialize the pointer and expect a ValidationError
         with self.assertRaises(ValidationError):
@@ -275,8 +311,7 @@ class ApkPointerTestCase(TestCase):
         path = self.apk_pointer.repo.get_repo_path()
 
         # List with icon directories
-        icon_directories = get_all_icon_dirs(path)
-        for icon_directory in icon_directories:
+        for icon_directory in get_all_icon_dirs(path):
             icon = os.path.join(icon_directory, icon_name)
             # Check that icons exist
             self.assertTrue(os.path.isfile(icon))
@@ -284,7 +319,47 @@ class ApkPointerTestCase(TestCase):
         # Delete app icons
         self.apk_pointer.delete()
 
-        for icon_directory in icon_directories:
+        for icon_directory in get_all_icon_dirs(path):
             icon = os.path.join(icon_directory, icon_name)
             # Check that icons do not exist
             self.assertFalse(os.path.isfile(icon))
+
+    def test_link_file_from_apk(self):
+        # delete pointer file and add one for apk
+        self.apk_pointer.file.delete()
+        self.apk_pointer.apk = Apk.objects.create()
+        self.apk_pointer.apk.file.save('test.apk', BytesIO(b'foo'), save=True)
+
+        # link pointer file from apk
+        self.assertFalse(self.apk_pointer.file)
+        self.apk_pointer.link_file_from_apk()
+        self.assertTrue(self.apk_pointer.file)
+        self.assertTrue(os.path.isfile(self.apk_pointer.file.path))
+
+    def test_link_file_from_apk_only_when_no_file(self):
+        file_path = self.apk_pointer.file.path
+        self.assertTrue(os.path.isfile(file_path))
+
+        self.apk_pointer.link_file_from_apk()  # linking should bail out, because file exists
+
+        self.assertEqual(file_path, self.apk_pointer.file.path)
+
+
+class RemoteApkPointerTestCase(TestCase):
+
+    def setUp(self):
+        self.repo = RemoteRepository.objects.get(pk=1)
+        self.apk = Apk.objects.create(package_id='org.example', version_code=1337)
+        date = datetime.fromtimestamp(0, timezone.utc)
+        self.app = RemoteApp.objects.create(repo=self.repo, package_id='org.example',
+                                            name='TestApp', last_updated_date=date)
+        self.remote_apk_pointer = RemoteApkPointer.objects.create(apk=self.apk, app=self.app,
+                                                                  url='test_url/test.apk')
+
+    def test_str(self):
+        self.assertEqual('TestApp - 1337 - test.apk', str(self.remote_apk_pointer))
+
+    def test_pointer_check_when_deleted(self):
+        self.assertTrue(Apk.objects.all().exists())
+        self.remote_apk_pointer.delete()
+        self.assertFalse(Apk.objects.all().exists())  # Apk got deleted, because no more pointers
