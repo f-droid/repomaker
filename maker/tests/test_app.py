@@ -4,6 +4,7 @@ import shutil
 from datetime import datetime, timezone
 from unittest.mock import patch
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 
@@ -20,6 +21,11 @@ class AppTestCase(TestCase):
         self.repo = Repository.objects.create(user=self.user)
         self.app = App.objects.create(repo=self.repo, package_id='org.example')
 
+        # copy app default icon to test location
+        os.makedirs(TEST_MEDIA_DIR)
+        shutil.copyfile(os.path.join(settings.MEDIA_ROOT, settings.APP_DEFAULT_ICON),
+                        os.path.join(TEST_MEDIA_DIR, settings.APP_DEFAULT_ICON))
+
         # remote objects
         date = datetime.fromtimestamp(0, timezone.utc)
         self.remote_repo = RemoteRepository.objects.create(last_change_date=date)
@@ -29,6 +35,7 @@ class AppTestCase(TestCase):
         if os.path.isdir(TEST_DIR):
             shutil.rmtree(TEST_DIR)
 
+    @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
     def test_from_remote_app(self):
         remote_app = self.remote_app
 
