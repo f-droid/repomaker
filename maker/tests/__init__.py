@@ -29,9 +29,8 @@ def fake_repo_create(repo):
     if not os.path.isdir(repo.get_private_path()):
         os.makedirs(repo.get_private_path())
     copyfile(src, dest)
-    # TODO also set the keystore passwords here when implemented
-    # repo.keystorepass = 'uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes='
-    # repo.keypass = 'uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes='
+    repo.key_store_pass = 'uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes='
+    repo.key_pass = 'uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes='
 
     # make sure the default icon exists in the test location
     icon_path = os.path.join(TEST_MEDIA_DIR, settings.REPO_DEFAULT_ICON)

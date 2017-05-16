@@ -77,8 +77,10 @@ class RepositoryTestCase(TestCase):
         _generate_page.called_once_with()
 
         # assert that the keys and fingerprint have been created properly
-        self.assertTrue(len(repo.public_key) >= 2574)
+        self.assertTrue(len(repo.public_key) >= 2500)
         self.assertTrue(len(repo.fingerprint) >= 64)
+        self.assertTrue(len(repo.key_store_pass) >= 32)
+        self.assertTrue(len(repo.key_pass) >= 32)
         key_rel_path = os.path.join(repo.get_private_path(), 'keystore.jks')
         key_abs_path = os.path.join(settings.PRIVATE_REPO_ROOT, key_rel_path)
         self.assertTrue(os.path.isfile(key_abs_path))

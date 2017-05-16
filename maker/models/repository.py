@@ -24,8 +24,6 @@ from maker.utils import clean
 
 from shutil import copy
 
-keydname = "CN=localhost.localdomain, OU=F-Droid"
-
 
 class AbstractRepository(models.Model):
     name = models.CharField(max_length=255)
@@ -80,6 +78,8 @@ class AbstractRepository(models.Model):
 class Repository(AbstractRepository):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     qrcode = models.ImageField(upload_to=get_repo_file_path, blank=True)
+    key_store_pass = models.CharField(max_length=64)
+    key_pass = models.CharField(max_length=64)
     created_date = models.DateTimeField(default=timezone.now)
     last_publication_date = models.DateTimeField(null=True, blank=True)
 
@@ -99,12 +99,11 @@ class Repository(AbstractRepository):
             'repo_name': self.name,
             'repo_icon': os.path.join(settings.MEDIA_ROOT, self.icon.name),
             'repo_description': self.description,
-            'repo_keyalias': "Key Alias",
-            'keydname': keydname,
+            'repo_keyalias': 'Key Alias',
+            'keydname': 'CN=repomaker.f-droid.org, OU=F-Droid',
             'keystore': os.path.join(self.get_private_path(), 'keystore.jks'),
-            # TODO generate random passwords with common.genpassword() and store them in DB
-            'keystorepass': "uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes=",
-            'keypass': "uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes=",
+            'keystorepass': self.key_store_pass,
+            'keypass': self.key_pass,
             'nonstandardwebroot': True,  # TODO remove this when storage URLs are standardized
         })
         if self.public_key is not None:
@@ -125,6 +124,9 @@ class Repository(AbstractRepository):
         Creates the repository on disk including the keystore.
         This also sets the public key and fingerprint for :param repo.
         """
+        self.key_store_pass = common.genpassword()
+        self.key_pass = common.genpassword()
+
         self.chdir()
         config = self.get_config()
 
