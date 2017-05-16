@@ -10,9 +10,11 @@
 		</a>
 		<div>
 			<span class="rm-toolbar-item">
+				<a href="{% url 'app_translate' app.repo.id app.id %}" class="rm-no-underline">
 				{% blocktrans with count=app.get_available_languages.count trimmed %}
 				Language ({{ count }})
 				{% endblocktrans %}
+				</a>
 				<i class="material-icons">expand_more</i>
 				<!-- TODO: Make Language dropdown working
 				{% trans 'None' as None %}
