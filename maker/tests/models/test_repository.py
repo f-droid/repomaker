@@ -20,7 +20,7 @@ from maker.models import App, RemoteApp, Apk, ApkPointer, RemoteApkPointer, Repo
     RemoteRepository, S3Storage, SshStorage
 from maker.models.repository import AbstractRepository
 from maker.storage import get_repo_file_path, get_remote_repo_path
-from . import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_STATIC_DIR, \
+from .. import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_STATIC_DIR, \
     datetime_is_recent, fake_repo_create
 
 

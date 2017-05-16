@@ -10,7 +10,7 @@ from django.test import TestCase, override_settings
 
 from maker.models import Repository, RemoteRepository, App, RemoteApp
 from maker.storage import get_repo_file_path_for_app
-from . import TEST_DIR, TEST_MEDIA_DIR, datetime_is_recent
+from .. import TEST_DIR, TEST_MEDIA_DIR, datetime_is_recent
 
 
 class AppTestCase(TestCase):

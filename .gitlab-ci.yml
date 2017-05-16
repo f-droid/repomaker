@@ -13,3 +13,4 @@ before_script:
 test:
   script:
     - ./run-tests.sh
+    - ./tests/assert-test-confinement.sh

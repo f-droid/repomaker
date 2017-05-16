@@ -10,8 +10,7 @@ from django.test import TestCase, override_settings
 from maker.models import Repository, RemoteRepository, App, RemoteApp, Screenshot, RemoteScreenshot
 from maker.models.screenshot import AbstractScreenshot, PHONE, SEVEN_INCH, TEN_INCH, TV, WEAR
 from maker.storage import get_screenshot_file_path
-from . import TEST_DIR
-from.test_repository import TEST_MEDIA_DIR
+from .. import TEST_DIR, TEST_MEDIA_DIR
 
 
 class AbstractScreenshotTestCase(TestCase):

@@ -20,6 +20,9 @@ def datetime_is_recent(dt, seconds=10 * 60):
 
 
 def fake_repo_create(repo):
+    if settings.PRIVATE_REPO_ROOT != TEST_PRIVATE_DIR:
+        raise RuntimeError('Do not write into non-test directories')
+
     # copy existing keystore
     src = os.path.join(TEST_FILES_DIR, 'keystore.jks')
     dest = os.path.join(repo.get_private_path(), 'keystore.jks')

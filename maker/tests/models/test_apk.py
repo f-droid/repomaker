@@ -1,10 +1,10 @@
 import os
 import shutil
+from datetime import datetime
 from io import BytesIO
 from unittest.mock import patch
 
 import requests
-from datetime import datetime
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -16,7 +16,7 @@ from fdroidserver.update import get_all_icon_dirs
 from maker.models import Apk, ApkPointer, RemoteApkPointer, App, RemoteApp, RemoteRepository, \
     Repository
 from maker.storage import get_apk_file_path
-from . import TEST_DIR, TEST_FILES_DIR, datetime_is_recent, fake_repo_create
+from .. import TEST_DIR, TEST_FILES_DIR, TEST_PRIVATE_DIR, datetime_is_recent, fake_repo_create
 
 
 @override_settings(MEDIA_ROOT=TEST_DIR)
@@ -183,7 +183,7 @@ class ApkTestCase(TestCase):
         self.assertTrue(Apk.objects.filter(package_id="org.example").exists())
 
 
-@override_settings(MEDIA_ROOT=TEST_DIR)
+@override_settings(MEDIA_ROOT=TEST_DIR, PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
 class ApkPointerTestCase(TestCase):
     apk_file_name = 'test_1.apk'
 

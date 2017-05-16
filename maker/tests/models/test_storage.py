@@ -9,8 +9,7 @@ from django.test import TestCase, override_settings
 from maker.models import Repository, S3Storage, GitStorage, SshStorage
 from maker.models.storage import StorageManager
 from maker.storage import REPO_DIR, get_repo_path, get_repo_root_path, PrivateStorage
-from . import TEST_DIR
-from.test_repository import TEST_MEDIA_DIR, TEST_PRIVATE_DIR
+from .. import TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
