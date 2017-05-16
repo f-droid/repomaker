@@ -388,7 +388,7 @@ class RemoteRepositoryTestCase(TestCase):
         Makes sure that the asynchronous update starts a background task.
         """
         self.repo.update_async()
-        update_remote_repo.assert_called_once_with(self.repo.id)
+        update_remote_repo.assert_called_once_with(self.repo.id, repeat=Task.DAILY)
         self.assertTrue(self.repo.update_scheduled)
 
     @patch('maker.tasks.update_remote_repo')

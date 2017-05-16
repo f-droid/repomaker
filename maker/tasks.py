@@ -21,8 +21,6 @@ def update_repo(repo_id):
         repo.save()
 
 
-# TODO update remote repositories periodically
-# http://django-background-tasks.readthedocs.io/en/latest/#repeating-tasks
 @background(schedule=timezone.now())
 def update_remote_repo(remote_repo_id):
     remote_repo = maker.models.repository.RemoteRepository.objects.get(pk=remote_repo_id)

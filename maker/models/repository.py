@@ -2,11 +2,12 @@ import datetime
 import json
 import logging
 import os
-import shutil
 from io import BytesIO
+from shutil import copy, rmtree
 
 import qrcode
 from allauth.account.signals import user_signed_up
+from background_task.tasks import Task
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
@@ -21,8 +22,6 @@ from fdroidserver import common, index, server, update, net
 from maker import tasks
 from maker.storage import REPO_DIR, get_repo_file_path, get_remote_repo_path, get_repo_root_path
 from maker.utils import clean
-
-from shutil import copy
 
 
 class AbstractRepository(models.Model):
@@ -186,7 +185,7 @@ class Repository(AbstractRepository):
             # Copy Roboto fonts to repo
             roboto_font_path = os.path.join(self.get_repo_path(), 'roboto-fonts')
             if os.path.exists(roboto_font_path):
-                shutil.rmtree(roboto_font_path)
+                rmtree(roboto_font_path)
             roboto_font_path = os.path.join(roboto_font_path, 'Roboto')
             os.makedirs(roboto_font_path)
 
@@ -324,7 +323,8 @@ class RemoteRepository(AbstractRepository):
             return  # no need to update a repo twice with same data
         self.update_scheduled = True
         self.save()
-        tasks.update_remote_repo(self.id)
+        # pylint: disable=unexpected-keyword-arg
+        tasks.update_remote_repo(self.id, repeat=Task.DAILY)
 
     def update_index(self, update_apps=True):
         """

@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import datetime
 
+from background_task.tasks import Task
 from django.db import migrations
 from django.utils import timezone
 
@@ -24,7 +25,7 @@ def forwards_func(apps, schema_editor):
     User = apps.get_model("auth", "User")
     repo.users = User.objects.all()
     repo.save()
-    tasks.update_remote_repo(repo.pk)
+    tasks.update_remote_repo(repo.pk, repeat=Task.DAILY)
 
 
 def reverse_func(apps, schema_editor):
