@@ -123,18 +123,22 @@
 	</div>
 </div>
 <div class="rm-app-navigation mdl-grid">
-	<a
-			class="rm-app-navigation-previous mdl-cell mdl-cell--6-col"
-			href="{{ url_previous_app }}">
+	<div class="mdl-cell mdl-cell--6-col">
+	{% if app.get_previous_by_added_date %}
+	<a href="{{ app.get_previous_by_added_date.get_absolute_url }}" class="rm-app-navigation-previous">
 		<i class="material-icons">arrow_back</i>
 		<h3 class="rm-app-navigation-previous-text">{% trans 'Previous' %}</h3>
 	</a>
-	<a
-			class="rm-app-navigation-next mdl-cell mdl-cell--6-col"
-			href="{{ url_next_app }}">
+	{% endif %}
+	</div>
+	<div class="mdl-cell mdl-cell--6-col">
+	{% if app.get_next_by_added_date %}
+	<a href="{{ app.get_next_by_added_date.get_absolute_url }}" class="rm-app-navigation-next">
 		<i class="material-icons">arrow_forward</i>
 		<h3 class="rm-app-navigation-next-text">{% trans 'Next' %}</h3>
 	</a>
+	{% endif %}
+	</div>
 </div>
 {% endif %}
 {% endblock rm-content %}

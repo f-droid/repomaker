@@ -99,17 +99,7 @@ class AppDetailView(RepositoryAuthorizationMixin, DetailView):
             aggregate(latest_version_code=Max('apk__version_code'))['latest_version_code']
         context['latest_version_name'] = \
             ApkPointer.objects.get(app=app, apk__version_code=latest_version_code).apk.version_name
-        context['url_previous_app'] = self.get_previous_app_url()
-        context['url_next_app'] = self.get_next_app_url()
         return context
-
-    def get_previous_app_url(self):
-        # TODO: Return URL to previous app
-        return '#'
-
-    def get_next_app_url(self):
-        # TODO: Return URL to next app
-        return '#'
 
 
 class AppForm(BaseModelForm):

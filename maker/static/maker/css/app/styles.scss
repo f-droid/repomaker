@@ -120,17 +120,19 @@
 /*
  * Navigation between apps
  */
-$rm-app-navigation-height: 96px;
-$rm-app-navigation-padding: 32px;
+$rm-app-navigation-padding: 16px;
 
 .rm-app-navigation-previous {
     align-items: center;
     background: #f6f6f6;
     color: #4a4a4a;
     display: flex;
-    height: $rm-app-navigation-height;
     padding: $rm-app-navigation-padding;
     text-decoration: none;
+}
+
+a.rm-app-navigation-previous:hover {
+    background: #e6e6e6;
 }
 
 .rm-app-navigation-next {
@@ -140,4 +142,5 @@ $rm-app-navigation-padding: 32px;
 
 .rm-app-navigation-previous-text, .rm-app-navigation-next-text {
     @include font-size(19px);
+    margin: 10px;
 }

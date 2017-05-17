@@ -68,6 +68,7 @@ class AbstractApp(TranslatableModel):
 
     class Meta:
         abstract = True
+        ordering = ['added_date']
         unique_together = (("package_id", "repo"),)
 
 
