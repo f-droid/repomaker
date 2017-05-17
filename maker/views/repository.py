@@ -38,12 +38,11 @@ class RepositoryForm(BaseModelForm):
         model = Repository
         fields = ['name', 'description']
         labels = {
-            'description': '',
+            'description': _('Describe the repo'),
         }
         widgets = {
             'description': Textarea(attrs={
                 'rows': 2,
-                'placeholder': _('Describe the repository')
             }),
         }
 

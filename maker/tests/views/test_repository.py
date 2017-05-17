@@ -30,7 +30,7 @@ class RepositoryTestCase(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'maker/repo/add.html')
         self.assertTrue(isinstance(response.context['view'], RepositoryCreateView))
-        self.assertContains(response, 'Create a Repository', 2)
+        self.assertContains(response, 'New Repo', 2)
 
         # fake keystore creation to speed up test
         genkeystore.return_value = 'TestPubKey', 'TestFingerprint'

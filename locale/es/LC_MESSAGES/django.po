@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-15 18:47+0000\n"
+"POT-Creation-Date: 2017-05-17 09:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,53 +154,52 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:13
+#: maker/templates/maker/app/index.html:14
 #, python-format
 msgid "Language (%(count)s)"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:18
+#: maker/templates/maker/app/index.html:20
 msgid "None"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:24
+#: maker/templates/maker/app/index.html:26
 msgid "Edit"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:41
+#: maker/templates/maker/app/index.html:43
 #, python-format
 msgid "Developed by %(author)s"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:53
+#: maker/templates/maker/app/index.html:55
 #, python-format
 msgid "Updated %(time)s ago"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:94
+#: maker/templates/maker/app/index.html:96
 msgid "version history"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:101
+#: maker/templates/maker/app/index.html:103
 #, python-format
 msgid "Version %(version)s"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:107
+#: maker/templates/maker/app/index.html:109
 #, python-format
 msgid "Released %(date)s"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:113
+#: maker/templates/maker/app/index.html:115
 msgid "APK is still downloading..."
 msgstr ""
 
-#: maker/templates/maker/app/index.html:127
+#: maker/templates/maker/app/index.html:129
 msgid "Previous"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:133
-#: maker/templates/maker/repo/add.html:29
+#: maker/templates/maker/app/index.html:135
 msgid "Next"
 msgstr ""
 
@@ -256,7 +255,11 @@ msgstr ""
 
 #: maker/templates/maker/repo/add.html:5
 #: maker/templates/maker/repo/add.html:23
-msgid "Create a Repository"
+msgid "New Repo"
+msgstr ""
+
+#: maker/templates/maker/repo/add.html:29
+msgid "Create"
 msgstr ""
 
 #: maker/templates/maker/repo/index.html:28 maker/views/sshstorage.py:34
@@ -441,8 +444,8 @@ msgstr ""
 msgid "Could not validate repository: %s"
 msgstr ""
 
-#: maker/views/repository.py:46
-msgid "Describe the repository"
+#: maker/views/repository.py:41
+msgid "Describe the repo"
 msgstr ""
 
 #: maker/views/s3storage.py:14
