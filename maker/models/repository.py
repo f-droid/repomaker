@@ -174,7 +174,6 @@ class Repository(AbstractRepository):
             f.close()
 
     def _generate_page(self):
-        logging.debug('Generating page for repository')
         if not self.get_fingerprint_url():
             return
         with open(os.path.join(self.get_repo_path(), 'index.html'), 'w') as repo_page:
@@ -336,8 +335,10 @@ class RemoteRepository(AbstractRepository):
         repo_index, etag = index.download_repo_index(self.get_fingerprint_url(),
                                                      etag=self.index_etag)
         if repo_index is None:
+            logging.info("Remote repo ETag for '%s' did not change, not updating.", str(self))
             return  # the index did not change since last time
-        self.index_etag = etag
+        if update_apps:  # TODO improve this once the workflow has been designed
+            self.index_etag = etag  # don't set etag when only adding the repo, so it fetches again
         self._update(repo_index, update_apps)  # also saves at the end
 
     def _update(self, repo_index, update_apps):
@@ -351,6 +352,7 @@ class RemoteRepository(AbstractRepository):
         repo_change = datetime.datetime.fromtimestamp(repo_index['repo']['timestamp'] / 1000,
                                                       timezone.utc)
         if self.last_change_date and self.last_change_date >= repo_change:
+            logging.info("Remote repo date for %s did not change, not updating.", str(self))
             return
 
         # update repository's metadata
