@@ -1,0 +1,39 @@
+/*
+ * Repomaker Repository Styles
+ */
+.rm-repo-tabs__tab-bar {
+    background: #39414a;
+    justify-content: left;
+
+    .mdl-tabs__tab.is-active {
+        color: white !important;
+    }
+}
+
+.rm-repo-tabs__tab {
+    color: #abafb3;
+    @include font-size(13px);
+    padding: 0 50px;
+    outline: 0;
+}
+
+.rm-repo-tabs__tab:first-child {
+    margin-left: 100px;
+}
+
+// On devices smaller than desktops tabs are handled differently
+@media (max-width: $grid-desktop-breakpoint - 1) {
+    .rm-repo-tabs__tab-bar {
+        justify-content: center;
+    }
+    .rm-repo-tabs__tab {
+        padding: 0 24px;
+    }
+    .rm-repo-tabs__tab:first-child {
+        margin-left: 0;
+    }
+}
+
+.rm-repo-tabs__panels {
+    margin: 16px;
+}

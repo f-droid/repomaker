@@ -1,0 +1,7 @@
+{% if repo.qrcode and repo.last_publication_date %}
+<div class="mdl-card mdl-js-ripple-effect">
+	<a href="{{ repo.get_fingerprint_url }}">
+		<img src="{{ repo.qrcode.url }}"/>
+	</a>
+</div>
+{% endif %}

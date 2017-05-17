@@ -8,13 +8,15 @@
 <link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
 {% endblock head %}
 
+{% block rm-header-classes %}rm-header--light{% endblock rm-header-classes %}
+
 {% block toolbar-title %}{% endblock toolbar-title %}
 
-{% block toolbar-items %}
+{% block toolbar-items-right %}
 <a href="/" class="rm-toolbar-item">
 	<i class="material-icons mdl-list__item-icon">close</i>
 </a>
-{% endblock toolbar-items %}
+{% endblock toolbar-items-right %}
 
 {% block rm-content %}
 

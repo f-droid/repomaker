@@ -1,0 +1,32 @@
+{% load i18n %}
+
+<ul class="mdl-list">
+	{% for app in apps %}
+	<li class="mdl-list__item mdl-list__item--two-line">
+		<a class="mdl-list__item-primary-content" href="{% url 'app' repo.id app.id %}">
+			<img src="{{ app.icon.url }}" class="mdl-list__item-icon"/>
+			<span>{{ app.name }}</span>
+			<span class="mdl-list__item-sub-title">
+				{{ app.summary }}
+			</span>
+		</a>
+		<span class="mdl-list__item-secondary-content">
+			<a class="mdl-list__item-secondary-action" href="{% url 'edit_app' repo.id app.id %}">
+				<i class="material-icons">edit</i>
+			</a>
+			<a class="mdl-list__item-secondary-action" href="{% url 'delete_app' repo.id app.id %}">
+				<i class="material-icons">delete</i>
+			</a>
+		</span>
+	</li>
+	{% empty %}
+	<li class="mdl-list__item">{% trans 'No apps in this repository.' %}</li>
+	{% endfor %}
+</ul>
+<div class="mdl-grid">
+	<a href="{% url 'add_app' repo.id %}" class="mdl-cell mdl-cell--12-col rm-no-underline">
+		<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+			<i class="material-icons">add</i>
+		</button>
+	</a>
+</div>

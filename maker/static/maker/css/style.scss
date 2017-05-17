@@ -26,6 +26,7 @@ $roboto-font-path: unquote(get-setting(NODE_MODULES_URL) + "roboto-fontface/font
 @import "material-design-lite/src/resets/resets";
 @import "material-design-lite/src/ripple/ripple";
 @import "material-design-lite/src/shadow/shadow";
+@import "material-design-lite/src/tabs/tabs";
 @import "material-design-lite/src/textfield/textfield";
 @import "material-design-lite/src/typography/typography";
 @import "material-design-lite/src/variables";
@@ -39,26 +40,52 @@ body {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
-.rm-header {
-    font-color: black;
+.rm-header, .rm-header a {
     overflow: visible;
-    background-color: white;
-    color: #767777;
+    background-color: #39414a;
+    color: white;
+}
+
+.rm-header--light, .rm-header--light a {
+    background-color: white !important;
+    color: #767777 !important;
 }
 
 .rm-header .mdl-layout__drawer-button {
     background: transparent;
-    color: #767777;
+}
+
+.rm-header--light .mdl-layout__drawer-button {
+    color: #767777 !important;
 }
 
 .rm-header .mdl-navigation__link, .rm-title a, .rm-toolbar-item {
     font-weight: 700;
 }
 
+.rm-title {
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.rm-toolbar-action-left {
+    color: white;
+    text-decoration: none;
+    align-items: flex-start;
+    display: flex;
+    flex-grow: 2;
+    flex-flow: column;
+}
+
+.rm-header--light .rm-toolbar-action-left {
+    color: #767777 !important;
+}
+
 .rm-toolbar-item {
     display: inline-flex;
     vertical-align: middle;
     text-decoration: none;
+    margin: 20px;
 }
 
 .rm-toolbar-button {
@@ -68,6 +95,10 @@ body {
     @include font-size(11px);
     margin: 10px;
     padding: 0 60px;
+}
+
+.rm-toolbar-account {
+    padding: 0 !important;
 }
 
 .rm-content {
@@ -98,3 +129,4 @@ a.rm-no-underline {
 }
 
 @import "app/styles.scss";
+@import "repo/styles.scss";

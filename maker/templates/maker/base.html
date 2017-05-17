@@ -14,9 +14,12 @@
 <body>
 <!-- Always shows a header, even in smaller screens. -->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-desktop-drawer-button">
-	<header class="rm-header mdl-layout__header mdl-layout__header--waterfall">
+	<header class="rm-header {% block rm-header-classes %}{% endblock rm-header-classes %} mdl-layout__header mdl-layout__header--waterfall">
 		<div class="mdl-layout__header-row">
 			{% block toolbar %}
+
+			{% block toolbar-items-left %}{% endblock toolbar-items-left %}
+
 			<!-- Title -->
 			<span class="rm-title mdl-layout-title">
 				{% block toolbar-title %}<a href="/">Repo Maker</a>{% endblock toolbar-title %}
@@ -24,13 +27,19 @@
 			<!-- Add spacer, to align navigation to the right -->
 			<div class="mdl-layout-spacer"></div>
 
-			{% block toolbar-items %}{% endblock toolbar-items %}
+			{% block toolbar-items-right %}{% endblock toolbar-items-right %}
+
 			<nav class="rm-navigation mdl-navigation">
 				{% block navigation %}{% endblock navigation %}
 				{% if user.is_authenticated and user.username != 'user' %}
 					{% load account %}
-					{% user_display user %}
-					[ <a class="mdl-navigation__link" href="{% url 'account_logout' %}">{% trans 'logout' %}</a> ]
+					{% blocktrans with user=user.username trimmed %}
+					Hello, {{ user }}
+					{% endblocktrans %}
+					<!-- TODO: Implement dropdown: https://gitlab.com/fdroid/repomaker/issues/44#note_29804618 -->
+					<a class="rm-toolbar-account mdl-navigation__link" href="{% url 'account_logout' %}">
+						<i class="material-icons">arrow_drop_down</i>
+					</a>
 				{% endif %}
 			</nav>
 			{% endblock toolbar %}
@@ -38,13 +47,6 @@
 	</header>
 	<div class="mdl-layout__drawer">
 		<span class="mdl-layout-title">Repomaker</span>
-		<nav class="mdl-navigation">
-			{% if user.is_authenticated and user.username != 'user' %}
-				{% load account %}
-				{% user_display user %}
-				[ <a class="mdl-navigation__link" href="{% url 'account_logout' %}">{% trans 'logout' %}</a> ]
-			{% endif %}
-		</nav>
 	</div>
 	<main class="mdl-layout__content">
 		{% if site_notice %}
@@ -52,6 +54,7 @@
 			{% autoescape off %}{{ site_notice }}{% endautoescape %}
 		</div>
 		{% endif %}
+		{% block rm-content--without-margin %}{% endblock rm-content--without-margin %}
 		<div class="rm-content">{% block rm-content %}{% endblock %}</div>
 	</main>
 </div>

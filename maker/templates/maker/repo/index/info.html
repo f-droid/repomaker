@@ -1,0 +1,98 @@
+{% load i18n %}
+{% load humanize %}
+
+<h2 style="vertical-align: middle;">
+	<img src="{{ repo.icon.url }}" alt="Repo Icon" class="rm-icon"/> {{ repo.name }}
+</h2>
+<p>{{ repo.description }}</p>
+
+<ul class="mdl-list">
+	{% if repo.url %}
+	<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">insert_link</i>
+			<span>{% trans 'URL' %}</span>
+			<span class="mdl-list__item-sub-title">
+				<a href="{{ repo.get_fingerprint_url }}">{{ repo.url }}</a>
+			</span>
+		</span>
+	</li>
+	{% endif %}
+	<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">fingerprint</i>
+			<span>{% trans 'Fingerprint' %}</span>
+			<span class="mdl-list__item-sub-title">
+				{{ repo.fingerprint }}
+			</span>
+		</span>
+	</li>
+	<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">watch_later</i>
+			<span>{% trans 'Created' %}</span>
+			<span class="mdl-list__item-sub-title">
+				{{ repo.created_date|naturaltime }} ({{ repo.created_date|date:"SHORT_DATE_FORMAT" }})
+			</span>
+		</span>
+	</li>
+	<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">update</i>
+			<span>{% trans 'Last Updated' %}</span>
+			<span class="mdl-list__item-sub-title">
+				{{ repo.last_updated_date|naturaltime }} ({{ repo.last_updated_date|date:"SHORT_DATE_FORMAT" }})
+			</span>
+		</span>
+	</li>
+	<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">schedule</i>
+			<span>{% trans 'Last Publication' %}</span>
+			<span class="mdl-list__item-sub-title">
+				{{ repo.last_publication_date|naturaltime }} ({{ repo.last_publication_date|date:"SHORT_DATE_FORMAT" }})
+			</span>
+		</span>
+	</li>
+</ul>
+
+<h3>Storage</h3>
+{% if storage %}
+<ul class="mdl-list">
+	{% for storage in storage %}
+	<li class="mdl-list__item">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon ">cloud</i>
+			<span>{{ storage }}</span>
+		</span>
+		<span class="mdl-list__item-secondary-content">
+			<a class="mdl-list__item-secondary-action" href="{{ storage.get_repo_url }}">
+				<i class="material-icons">link</i>
+			</a>
+			{% if not storage.is_default %}
+				<a class="mdl-list__item-secondary-action" href="{{ storage.get_edit_url }}">
+					<i class="material-icons">edit</i>
+				</a>
+				<a class="mdl-list__item-secondary-action" href="{{ storage.get_delete_url }}">
+					<i class="material-icons">delete</i>
+				</a>
+			{% endif %}
+		</span>
+	</li>
+	{% endfor %}
+</ul>
+{% else %}
+<p><b>{% trans 'Attention:' %}</b> {% trans 'This repository has no remote storage. Add one to get your repository published.' %}</p>
+{% endif %}
+
+<p>
+	<a href="{% url 'storage_ssh_add' repo.id %}" class="rm-no-underline" style="margin-right:1em;">
+		<button class="mdl-button mdl-js-button mdl-button--raised">{% trans 'Add SSH Storage' %}</button>
+	</a>
+	<a href="{% url 'storage_git_add' repo.id %}" class="rm-no-underline" style="margin-right:1em;">
+		<button class="mdl-button mdl-js-button mdl-button--raised">{% trans 'Add Git Storage' %}</button>
+	</a>
+	<a href="{% url 'storage_s3_add' repo.id %}" class="rm-no-underline">
+		<button class="mdl-button mdl-js-button mdl-button--raised">{% trans 'Add Amazon S3 Storage' %}</button>
+	</a>
+</p>

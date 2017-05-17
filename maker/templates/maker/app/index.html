@@ -2,11 +2,12 @@
 {% load i18n %}
 {% load humanize %}
 {% block title %}{{ app.name }}{% endblock title %}
+{% block rm-header-classes %}rm-header--light{% endblock rm-header-classes %}
 {% block toolbar %}
 <div class="rm-grid--full-width rm-grid--center mdl-grid">
 	<div class="rm-app-toolbar mdl-cell mdl-cell--8-col">
-		<a href="{% url 'repo' app.repo.id %}" class="rm-app-toolbar-back">
-			<i class="material-icons mdl-list__item-icon">arrow_back</i>
+		<a href="{% url 'repo' app.repo.id %}" class="rm-toolbar-action-left">
+			<i class="material-icons">arrow_back</i>
 		</a>
 		<div>
 			<span class="rm-toolbar-item">
