@@ -309,6 +309,7 @@ class RemoteRepository(AbstractRepository):
     index_etag = models.CharField(max_length=128, blank=True, null=True)
     icon_etag = models.CharField(max_length=128, blank=True, null=True)
     mirrors = models.TextField(blank=True)
+    disabled = models.BooleanField(default=False)
     last_change_date = models.DateTimeField()
 
     def get_path(self):

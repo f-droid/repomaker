@@ -190,6 +190,7 @@ class Migration(migrations.Migration):
                 ('index_etag', models.CharField(blank=True, max_length=128, null=True)),
                 ('icon_etag', models.CharField(blank=True, max_length=128, null=True)),
                 ('mirrors', models.TextField(blank=True)),
+                ('disabled', models.BooleanField(default=False)),
                 ('last_change_date', models.DateTimeField()),
                 ('users', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
             ],

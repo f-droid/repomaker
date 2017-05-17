@@ -1,4 +1,8 @@
+import json
+
 from background_task import background
+from background_task.signals import task_failed
+from django.dispatch import receiver
 from django.utils import timezone
 
 import maker.models
@@ -63,3 +67,19 @@ def download_remote_graphic_assets(app_id, remote_app_id):
 def download_remote_screenshot(screenshot_id, app_id):
     screenshot = maker.models.screenshot.RemoteScreenshot.objects.get(pk=screenshot_id)
     screenshot.download(app_id)
+
+
+@receiver(task_failed)
+def task_failed_receiver(**kwargs):
+    task = kwargs['completed_task']
+
+    if task.task_name == 'maker.tasks.update_remote_repo':
+        # extract task parameters
+        task_params = json.loads(task.task_params)
+        params = task_params[0]
+        remote_repo_id = params[0]
+
+        # fetch and disable remote repository
+        remote_repo = maker.models.repository.RemoteRepository.objects.get(pk=remote_repo_id)
+        remote_repo.disabled = True
+        remote_repo.save()

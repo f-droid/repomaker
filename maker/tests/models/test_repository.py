@@ -5,6 +5,7 @@ import shutil
 from datetime import datetime, timezone
 from unittest.mock import patch
 
+import background_task
 import requests
 import sass_processor.processor
 import sass_processor.storage
@@ -483,6 +484,29 @@ class RemoteRepositoryTestCase(TestCase):
         # assert that there is no `None` in the path, but the repo number (primary key)
         self.assertFalse('None' in repo.icon.name)
         self.assertTrue(str(repo.pk) in repo.icon.name)
+
+    @patch('fdroidserver.index.download_repo_index')
+    def test_fail(self, download_repo_index):
+        # assert that pre-installed remote repository is initially enabled
+        self.assertFalse(self.repo.disabled)
+
+        # get initial update task from pre-installed remote repository
+        all_tasks = Task.objects.all()
+        self.assertEqual(1, all_tasks.count())
+        task = all_tasks[0]
+
+        # set initial update task to be one short of the maximum number of attempts
+        task.attempts = settings.MAX_ATTEMPTS - 1
+        task.save()
+
+        # run the task and provide it with malformed data, so it fails
+        download_repo_index.return_value = 'malformed', None
+        background_task.tasks.tasks.run_next_task()
+        self.assertEqual(1, download_repo_index.call_count)
+
+        # ensure that remote repository got disabled
+        self.repo = RemoteRepository.objects.get(pk=1)
+        self.assertTrue(self.repo.disabled)
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, STATIC_ROOT=TEST_STATIC_DIR)

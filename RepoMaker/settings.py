@@ -167,6 +167,11 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
 
+# Background Tasks
+# http://django-background-tasks.readthedocs.io/en/latest/
+
+MAX_ATTEMPTS = 23  # the number of attempts for marking a task as permanently failed
+
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 
