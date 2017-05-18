@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-18 12:44+0000\n"
+"POT-Creation-Date: 2017-05-19 15:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,6 +24,14 @@ msgstr ""
 
 #: maker/models/app.py:39
 msgid "Description"
+msgstr ""
+
+#: maker/models/app.py:356
+msgid "This app does already exist in your repository."
+msgstr ""
+
+#: maker/models/app.py:361
+msgid "This app does not have any working versions available."
 msgstr ""
 
 #: maker/models/storage.py:54
@@ -169,39 +177,47 @@ msgstr "App bearbeiten"
 msgid "Developed by %(author)s"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:56
+#: maker/templates/maker/app/index.html:58
 #, fuzzy, python-format
 #| msgid "Edit %(app.name)s"
 msgid "Updated %(time)s ago"
 msgstr "%(app.name)s bearbeiten"
 
-#: maker/templates/maker/app/index.html:97
+#: maker/templates/maker/app/index.html:98
 #, fuzzy
 #| msgid "Versions"
 msgid "version history"
 msgstr "Versionen"
 
-#: maker/templates/maker/app/index.html:104
+#: maker/templates/maker/app/index.html:106
 #, fuzzy, python-format
 #| msgid "Description: %(description)s"
 msgid "Version %(version)s"
 msgstr "Beschreibung: %(description)s"
 
-#: maker/templates/maker/app/index.html:110
+#: maker/templates/maker/app/index.html:112
 #, fuzzy, python-format
 #| msgid "Added: %(date)s"
 msgid "Released %(date)s"
 msgstr "Hinzugefügt: %(date)s"
 
-#: maker/templates/maker/app/index.html:116
+#: maker/templates/maker/app/index.html:119
 msgid "APK is still downloading..."
 msgstr ""
 
-#: maker/templates/maker/app/index.html:130
+#: maker/templates/maker/app/index.html:127
+msgid "This app has no APK files."
+msgstr ""
+
+#: maker/templates/maker/app/index.html:128
+msgid "If you added this app from a remote repo, try deleting it and adding it again."
+msgstr ""
+
+#: maker/templates/maker/app/index.html:137
 msgid "Previous"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:136
+#: maker/templates/maker/app/index.html:145
 msgid "Next"
 msgstr ""
 
