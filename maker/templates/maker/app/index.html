@@ -48,9 +48,11 @@
 				{% endif %}
 			</div>
 			<div class="rm-app-secondary-content">
+				{% if latest_apk %}
 				<div class="rm-app-version">
-					Version: {{ latest_version_name }}
+					Version: {{ latest_apk.version_name }}
 				</div>
+				{% endif %}
 				<div class="rm-app-last-time-updated">
 					{# time is e.g. '6 days' and will be translated automatically #}
 					{% blocktrans with time=app.last_updated_date|timesince trimmed %}
@@ -90,12 +92,12 @@
 		{{ app.description|safe }}
 	</div>
 </div>
-{% if apks %}
 <div class="rm-grid--center mdl-grid">
 	<div class="rm-app-versions mdl-cell mdl-cell--6-col">
 		<h4 class="rm-app-versions-title">
 			{% trans 'version history' %}
 		</h4>
+		{% if apks %}
 		<ul class="rm-app-versions-list mdl-list">
 			{% for pointer in apks %}
 			<li class="rm-app-versions-item mdl-list__item mdl-list__item--two-line">
@@ -113,6 +115,7 @@
 					</span>
 					{% else %}
 					<span class="mdl-list__item-sub-title">
+						<!-- TODO: Use progress bar instead and reload when download done -->
 						{% trans 'APK is still downloading...' %}
 					</span>
 					{% endif %}
@@ -120,6 +123,10 @@
 			</li>
 			{% endfor %}
 		</ul>
+		{% else %}
+		<p>{% trans 'This app has no APK files.' %}</p>
+		<p>{% trans 'If you added this app from a remote repo, try deleting it and adding it again.' %}</p>
+		{% endif %}
 	</div>
 </div>
 <div class="rm-app-navigation mdl-grid">
@@ -140,5 +147,4 @@
 	{% endif %}
 	</div>
 </div>
-{% endif %}
 {% endblock rm-content %}

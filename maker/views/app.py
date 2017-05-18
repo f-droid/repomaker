@@ -1,4 +1,4 @@
-from django.db.models import Max, Q
+from django.db.models import Q
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -95,10 +95,8 @@ class AppDetailView(RepositoryAuthorizationMixin, DetailView):
         if app.name is None or app.name == '':
             raise RuntimeError("App has not been created properly.")
         context['apks'] = ApkPointer.objects.filter(app=app).order_by('-apk__version_code')
-        latest_version_code = ApkPointer.objects.filter(app=app). \
-            aggregate(latest_version_code=Max('apk__version_code'))['latest_version_code']
-        context['latest_version_name'] = \
-            ApkPointer.objects.get(app=app, apk__version_code=latest_version_code).apk.version_name
+        if context['apks']:
+            context['latest_apk'] = context['apks'][0].apk
         return context
 
 
