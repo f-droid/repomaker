@@ -69,7 +69,7 @@ class GitUrlValidationMixin(SshKeyMixin):
         form.instance.path = path
 
         # try to generate the F-Droid repo URL from the git repo URL
-        url = fdroidserver.index.get_raw_mirror(form.cleaned_data['ssh_url'])
+        url = fdroidserver.index.get_mirror_service_url(form.cleaned_data['ssh_url'])
         if url is not None:
             form.instance.url = url
         # URL generation failed, so the user needs to provide a valid URL

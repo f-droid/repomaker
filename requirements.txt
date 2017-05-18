@@ -12,4 +12,4 @@ apache-libcloud>=2.0.0rc2
 cryptography>=1.4.0
 #fdroidserver>=0.8.0
 #git+https://gitlab.com/grote/fdroidserver.git@c137231d8bd47017bf17833c8f97693645be3dee#egg=fdroidserver
-git+https://gitlab.com/fdroid/fdroidserver.git@9607cdb6219df3b9c0bf5768ca236515c287add4#egg=fdroidserver
+git+https://gitlab.com/fdroid/fdroidserver.git@ee57285817ae3072fb4d708126de041ac328806e#egg=fdroidserver
