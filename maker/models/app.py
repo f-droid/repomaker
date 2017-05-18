@@ -325,16 +325,22 @@ class RemoteApp(AbstractApp):
 
     def get_latest_apk_pointer(self):
         """
-        Returns this app's latest RemoteApkPointer object.
+        Returns this app's latest RemoteApkPointer object or None if none exists.
         """
         from .apk import RemoteApkPointer
-        return RemoteApkPointer.objects.filter(app=self).order_by('-apk__version_code').all()[0]
+        qs = RemoteApkPointer.objects.filter(app=self).order_by('-apk__version_code').all()
+        if qs.count() < 1:
+            return None
+        return qs[0]
 
     def get_latest_apk(self):
         """
-        Returns this app's latest Apk object.
+        Returns this app's latest Apk object or None if none exists.
         """
-        return self.get_latest_apk_pointer().apk
+        apk_pointer = self.get_latest_apk_pointer()
+        if apk_pointer is None:
+            return None
+        return apk_pointer.apk
 
     def add_to_repo(self, repo):
         """
@@ -347,7 +353,13 @@ class RemoteApp(AbstractApp):
         from .screenshot import RemoteScreenshot
         apps = App.objects.filter(repo=repo, package_id=self.package_id)
         if apps.exists():
-            raise ValidationError("This app does already exist in your repository.")
+            raise ValidationError(_("This app does already exist in your repository."))
+
+        # add only latest APK
+        remote_pointer = self.get_latest_apk_pointer()
+        if remote_pointer is None:
+            raise ValidationError(_("This app does not have any working versions available."))
+        apk = remote_pointer.apk
 
         # add app
         app = App.from_remote_app(repo, self)
@@ -355,10 +367,6 @@ class RemoteApp(AbstractApp):
         app.save()
         app.category = self.category.all()
         app.save()
-
-        # add only latest APK
-        remote_pointer = self.get_latest_apk_pointer()
-        apk = remote_pointer.apk
 
         # create a local pointer to the APK
         pointer = ApkPointer(apk=apk, repo=repo, app=app)

@@ -4,11 +4,13 @@ import shutil
 from datetime import datetime, timezone
 from unittest.mock import patch
 
+import django.core.exceptions
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 
-from maker.models import Repository, RemoteRepository, App, RemoteApp
+from maker.models import Repository, RemoteRepository, App, RemoteApp, Apk, ApkPointer, \
+    RemoteApkPointer, RemoteScreenshot
 from maker.storage import get_repo_file_path_for_app
 from .. import TEST_DIR, TEST_MEDIA_DIR, datetime_is_recent
 
@@ -270,3 +272,51 @@ class RemoteAppTestCase(TestCase):
         # assert that translation has no <script> tag
         self.assertEqual(translation['summary'], self.app.l_summary)
         self.assertEqual('test2', self.app.l_description)
+
+    @patch('maker.tasks.download_remote_screenshot')
+    @patch('maker.tasks.download_remote_graphic_assets')
+    @patch('maker.models.apk.Apk.download_async')
+    def test_add_to_repo(self, download_async, download_remote_graphic_assets,
+                         download_remote_screenshot):
+        # create pre-requisites
+        repo = Repository.objects.create(name='test', user=User.objects.create(username='user2'))
+        apk = Apk.objects.create(package_id='org.example')
+        remote_apk_pointer = RemoteApkPointer.objects.create(apk=apk, app=self.app, url='test_url')
+        remote_screenshot = RemoteScreenshot.objects.create(app=self.app)
+
+        # create fake app icon
+        os.makedirs(settings.MEDIA_ROOT)
+        with open(os.path.join(settings.MEDIA_ROOT, settings.APP_DEFAULT_ICON), 'wb') as f:
+            f.write(b'foo')
+
+        # add remote app to local repo
+        app = self.app.add_to_repo(repo)
+
+        # assert that a local App has been created (details should be checked in other tests)
+        apps = App.objects.all()
+        self.assertEqual(1, apps.count())
+        self.assertEqual(app, apps[0])
+
+        # assert that local ApkPointer got created properly
+        apk_pointers = ApkPointer.objects.all()
+        self.assertEqual(1, apk_pointers.count())
+        apk_pointer = apk_pointers[0]
+        self.assertEqual(apk, apk_pointer.apk)
+
+        # assert that all asynchronous tasks have been scheduled
+        download_async.assert_called_once_with(remote_apk_pointer.url)
+        download_remote_graphic_assets.assert_called_once_with(app.id, self.app.id)
+        download_remote_screenshot.assert_called_once_with(remote_screenshot.pk, self.app.pk)
+
+    def test_add_to_repo_without_apks(self):
+        # create pre-requisites
+        repo = Repository.objects.create(name='test', user=User.objects.create(username='user2'))
+
+        # create fake app icon
+        os.makedirs(settings.MEDIA_ROOT)
+        with open(os.path.join(settings.MEDIA_ROOT, settings.APP_DEFAULT_ICON), 'wb') as f:
+            f.write(b'foo')
+
+        # try to add remote app without any APKs to local repo
+        with self.assertRaises(django.core.exceptions.ValidationError):
+            self.app.add_to_repo(repo)

@@ -96,6 +96,7 @@ class RemoteAppCreateView(RepositoryAuthorizationMixin, CreateView):
             return Http404()
 
         remote_app = self.get_queryset().get()
+        # TODO catch ValidationError and display proper error message on a page
         self.object = remote_app.add_to_repo(self.get_repo())
 
         return HttpResponseRedirect(self.get_success_url())
