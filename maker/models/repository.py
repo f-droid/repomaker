@@ -471,3 +471,4 @@ class Options:
     nosign = False
     no_checksum = False
     identity_file = None
+    delete_unknown = False

@@ -28,11 +28,12 @@ class ApkTestCase(TestCase):
         self.apk.file.save('test.apk', BytesIO(b'content'), save=True)
 
         # Create Repository
-        Repository.objects.create(name="Test", description="Test", url="https://f-droid.org",
-                                  user=User.objects.create(username='user2'))
+        self.repo = Repository.objects.create(name="Test", description="Test",
+                                              url="https://f-droid.org",
+                                              user=User.objects.create(username='user2'))
 
         # Create RemoteRepository
-        remote_repository = RemoteRepository.objects.create(
+        self.remote_repository = RemoteRepository.objects.create(
             name='Test',
             description='Test',
             url='https://f-droid.org',
@@ -40,8 +41,8 @@ class ApkTestCase(TestCase):
         )
 
         # Create RemoteApp
-        RemoteApp.objects.create(
-            repo=remote_repository,
+        self.remote_app = RemoteApp.objects.create(
+            repo=self.remote_repository,
             last_updated_date=datetime.fromtimestamp(0, timezone.utc)
         )
 
@@ -83,9 +84,10 @@ class ApkTestCase(TestCase):
         apk_pointer = ApkPointer.objects.create(apk=self.apk, repo=Repository.objects.get(id=1))
         self.assertFalse(apk_pointer.file)
 
-        # fake return value of GET request for repository icon
+        # fake return value of GET request for APK
         get.return_value.status_code = requests.codes.ok
-        get.return_value.content = b'foo'
+        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+            get.return_value.content = f.read()
 
         # download file and assert there was a GET request for the URL
         self.apk.download('url/download.apk')
@@ -104,7 +106,7 @@ class ApkTestCase(TestCase):
         self.assertTrue(os.path.isfile(path))
 
     @patch('requests.get')
-    def test_failed_download(self, get):
+    def test_download_404(self, get):
         # remove file and assert that it is gone
         self.apk.file.delete()
         self.assertFalse(self.apk.file)
@@ -113,9 +115,58 @@ class ApkTestCase(TestCase):
         get.return_value = requests.Response()
         get.return_value.status_code = 404
 
-        # try to download file and assert an excetion was raised
+        # try to download file and assert an exception was raised
         with self.assertRaises(requests.exceptions.HTTPError):
             self.apk.download('url/download.apk')
+
+    @patch('requests.get')
+    def test_download_invalid_apk(self, get):
+        # remove file and assert that it is gone
+        self.apk.file.delete()
+        self.assertFalse(self.apk.file)
+
+        # create an ApkPointer pointing to the Apk
+        ApkPointer.objects.create(repo=self.repo, apk=self.apk)
+        RemoteApkPointer.objects.create(app=self.remote_app, apk=self.apk)
+        self.assertEqual(1, ApkPointer.objects.all().count())
+        self.assertEqual(1, RemoteApkPointer.objects.all().count())
+
+        # fake return value of GET request
+        get.return_value.status_code = requests.codes.ok
+        get.return_value.content = b'foo'
+
+        # try to download the invalid file
+        self.apk.download('url/download.apk')
+
+        # assert that Apk and ApkPointer got deleted
+        self.assertEqual(0, Apk.objects.all().count())
+        self.assertEqual(0, ApkPointer.objects.all().count())
+        self.assertEqual(0, RemoteApkPointer.objects.all().count())
+
+    @patch('requests.get')
+    def test_download_apk_with_invalid_signature(self, get):
+        # remove file and assert that it is gone
+        self.apk.file.delete()
+        self.assertFalse(self.apk.file)
+
+        # create an ApkPointer pointing to the Apk
+        ApkPointer.objects.create(repo=self.repo, apk=self.apk)
+        RemoteApkPointer.objects.create(app=self.remote_app, apk=self.apk)
+        self.assertEqual(1, ApkPointer.objects.all().count())
+        self.assertEqual(1, RemoteApkPointer.objects.all().count())
+
+        # fake return value of GET request for APK
+        get.return_value.status_code = requests.codes.ok
+        with open(os.path.join(TEST_FILES_DIR, 'test_invalid_signature.apk'), 'rb') as f:
+            get.return_value.content = f.read()
+
+        # try to download the invalid file
+        self.apk.download('url/download.apk')
+
+        # assert that Apk and ApkPointer got deleted
+        self.assertEqual(0, Apk.objects.all().count())
+        self.assertEqual(0, ApkPointer.objects.all().count())
+        self.assertEqual(0, RemoteApkPointer.objects.all().count())
 
     @patch('requests.get')
     def test_download_only_when_file_missing(self, get):

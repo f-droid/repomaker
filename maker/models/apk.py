@@ -5,6 +5,7 @@ import zipfile
 from io import BytesIO
 
 import requests
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.core.files import File
 from django.db import models
@@ -15,6 +16,7 @@ from fdroidserver import common, update
 from fdroidserver.update import get_all_icon_dirs
 
 from maker import tasks
+from maker.models.repository import AbstractRepository
 from maker.storage import get_apk_file_path, RepoStorage
 from .app import Repository, RemoteApp, App
 
@@ -52,11 +54,30 @@ class Apk(models.Model):
             return
 
         # download and store file
-        file_name = get_apk_file_path(self, url.rsplit('/', 1)[-1])
+        file_rel_path = get_apk_file_path(self, url.rsplit('/', 1)[-1])
         r = requests.get(url)
         if r.status_code != requests.codes.ok:
+            # TODO delete self and ApkPointer when this fails permanently
             r.raise_for_status()
-        self.file.save(file_name, BytesIO(r.content), save=True)
+        self.file.save(file_rel_path, BytesIO(r.content), save=True)
+
+        # check if the APK file is valid and delete it if not
+        file_abs_path = os.path.join(settings.MEDIA_ROOT, file_rel_path)
+        AbstractRepository().get_config()
+        apk_info = {'icons_src': {}, 'uses-permission': []}
+        try:
+            update.scan_apk_aapt(apk_info, file_abs_path)
+            if 'packageName' not in apk_info:
+                raise common.BuildException('APK has no packageName.')
+            signature = update.getsig(os.path.join(os.getcwd(), file_abs_path))
+            if signature is None:
+                raise common.BuildException('Invalid.')
+        except common.BuildException as e:
+            logging.warning('Deleting invalid APK file: %s', e)
+            ApkPointer.objects.filter(apk=self).all().delete()
+            RemoteApkPointer.objects.filter(apk=self).all().delete()
+            self.delete()
+            return
 
         # update apk pointers
         pointers = ApkPointer.objects.filter(apk=self).all()
@@ -282,4 +303,5 @@ def apk_pointer_post_delete_handler(**kwargs):
 @receiver(post_delete, sender=RemoteApkPointer)
 def remote_apk_pointer_post_delete_handler(**kwargs):
     remote_apk_pointer = kwargs['instance']
+    logging.info("Deleting Remote APK Pointer: %s", remote_apk_pointer)
     remote_apk_pointer.apk.delete_if_no_pointers()
