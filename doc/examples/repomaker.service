@@ -1,0 +1,16 @@
+[Unit]
+Description=Repomaker Background Tasks
+After=network.target
+Wants=mysqld.service
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/var/local/repomaker
+Environment=PYTHONPATH="/usr/local/lib/python3.5/dist-packages/"
+ExecStart=/usr/bin/python3 manage.py process_tasks
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
