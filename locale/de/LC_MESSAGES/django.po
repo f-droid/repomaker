@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-19 15:35+0000\n"
+"POT-Creation-Date: 2017-05-19 19:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,6 +154,7 @@ msgid "Edit %(app)s"
 msgstr "%(app.name)s bearbeiten"
 
 #: maker/templates/maker/app/edit.html:25
+#: maker/templates/maker/repo/edit.html:30
 msgid "Save Changes"
 msgstr "Änderungen speichern"
 
@@ -167,6 +168,7 @@ msgid "None"
 msgstr ""
 
 #: maker/templates/maker/app/index.html:27
+#: maker/templates/maker/repo/index/apps.html:23
 #, fuzzy
 #| msgid "Edit App"
 msgid "Edit"
@@ -275,13 +277,21 @@ msgstr ""
 msgid "No repositories are available."
 msgstr ""
 
-#: maker/templates/maker/repo/add.html:5 maker/templates/maker/repo/add.html:25
+#: maker/templates/maker/repo/add.html:5
+#: maker/templates/maker/repo/add.html:25
 msgid "New Repo"
 msgstr ""
 
 #: maker/templates/maker/repo/add.html:31
 msgid "Create"
 msgstr ""
+
+#: maker/templates/maker/repo/edit.html:5
+#: maker/templates/maker/repo/edit.html:24
+#, fuzzy
+#| msgid "Edit App"
+msgid "Edit Repo"
+msgstr "App bearbeiten"
 
 #: maker/templates/maker/repo/index.html:26
 msgid "Apps"
@@ -295,8 +305,41 @@ msgstr ""
 msgid "Share"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:23
-msgid "No apps in this repository."
+#: maker/templates/maker/repo/index/apps.html:15
+msgid "Search for apps in your repository"
+msgstr ""
+
+#: maker/templates/maker/repo/index/apps.html:31
+#: maker/templates/maker/repo/index/apps.html:69
+msgid "Add files"
+msgstr ""
+
+#: maker/templates/maker/repo/index/apps.html:34
+#: maker/templates/maker/repo/index/apps.html:72
+msgid "Drag and drop .apk, .pdf, .epub, videos, photos or music files"
+msgstr ""
+
+#: maker/templates/maker/repo/index/apps.html:37
+#: maker/templates/maker/repo/index/apps.html:75
+msgid "or"
+msgstr ""
+
+#: maker/templates/maker/repo/index/apps.html:39
+#: maker/templates/maker/repo/index/apps.html:77
+msgid "browse to upload"
+msgstr ""
+
+#: maker/templates/maker/repo/index/apps.html:45
+#: maker/templates/maker/repo/index/apps.html:86
+msgid "add from repos"
+msgstr ""
+
+#: maker/templates/maker/repo/index/apps.html:82
+msgid "Discover"
+msgstr ""
+
+#: maker/templates/maker/repo/index/apps.html:83
+msgid "Find things to add from other repos"
 msgstr ""
 
 #: maker/templates/maker/repo/index/info.html:14 maker/views/sshstorage.py:34

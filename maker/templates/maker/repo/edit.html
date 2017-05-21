@@ -1,0 +1,35 @@
+{% extends "maker/base.html" %}
+{% load i18n %}
+{% load sass_tags %}
+
+{% block title %}{% trans 'Edit Repo' %}{% endblock %}
+
+{% block head %}
+<link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
+{% endblock head %}
+
+{% block rm-header-classes %}rm-header--light{% endblock rm-header-classes %}
+
+{% block toolbar-title %}{% endblock toolbar-title %}
+
+{% block toolbar-items-right %}
+<a href="{% url 'repo' repo.id %}" class="rm-toolbar-item">
+	<i class="material-icons mdl-list__item-icon">close</i>
+</a>
+{% endblock toolbar-items-right %}
+
+{% block rm-content %}
+<div class="rm-grid--center mdl-grid">
+	<div class="rm-grid--center mdl-cell mdl-cell--4-col">
+		<h4 style="text-align: center">{% trans 'Edit Repo' %}</h4>
+
+		<div class="rm-form mdl-grid ">
+			<form action="" enctype="multipart/form-data" method="post">
+				{% csrf_token %}
+				{% include '../form.html' %}
+				<input type="submit" value="{% trans 'Save Changes' %}"/>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock rm-content %}

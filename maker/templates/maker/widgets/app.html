@@ -1,0 +1,12 @@
+<a
+		class="rm-app-card mdl-cell mdl-cell--6-col mdl-card mdl-shadow--2dp mdl-color--white rm-no-underline"
+		href="{% url 'app' repo.id app.id %}">
+	<div class="rm-app-card-left">
+		<img src="{{ app.icon.url }}" class="rm-icon--large" />
+	</div>
+	<div class="rm-app-card-right">
+		<div class="rm-app-card-title">{{ app.name }}</div>
+		<div class="rm-app-card-summary">{{ app.summary }}</div>
+		<div class="rm-app-card-description">{{ app.description|truncatechars:168 }}</div>
+	</div>
+</a>

@@ -3,7 +3,7 @@ from django.forms import Textarea
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
 from maker.models import Repository, App
 from maker.models.storage import StorageManager
@@ -85,3 +85,16 @@ class RepositoryDetailView(RepositoryAuthorizationMixin, DetailView):
         context['storage'] = StorageManager.get_storage(repo)
         context['apps'] = App.objects.filter(repo=repo)
         return context
+
+
+class RepositoryUpdateView(RepositoryAuthorizationMixin, UpdateView):
+    model = Repository
+    form_class = RepositoryForm
+    pk_url_kwarg = 'repo_id'
+    context_object_name = 'repo'
+    template_name = 'maker/repo/edit.html'
+
+    def form_valid(self, form):
+        result = super(RepositoryUpdateView, self).form_valid(form)
+        form.instance.update_async()  # schedule repository update
+        return result
