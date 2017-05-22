@@ -287,7 +287,7 @@ class Repository(AbstractRepository):
         as it is intended to be called automatically after each update.
         """
         from maker.models.storage import StorageManager
-        remote_storage = StorageManager.get_storage(self)
+        remote_storage = StorageManager.get_storage(self, onlyEnabled=True)
         if len(remote_storage) == 0:
             return  # bail out if there is no remote storage to publish to
 

@@ -1,6 +1,7 @@
 from django.forms import BooleanField
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin
 
 from maker.models.storage import StorageManager
@@ -56,7 +57,20 @@ class StorageCreateView(RepositoryAuthorizationMixin, MainStorageMixin, CreateVi
 
     def get_success_url(self):
         self.get_repo().update_async()
-        return get_success_url(self)
+        return super(StorageCreateView, self).get_success_url()
+
+
+class StorageDetailView(RepositoryAuthorizationMixin, DetailView):
+    context_object_name = 'storage'
+
+    def post(self, request, *args, **kwargs):
+        # enable/disable storage
+        storage = self.get_object()
+        storage.disabled = request.POST['disabled'] == 'true'
+        storage.save()
+        if not storage.disabled:
+            self.get_repo().update_async()
+        return super(StorageDetailView, self).get(request, args, kwargs)
 
 
 class StorageUpdateView(RepositoryAuthorizationMixin, MainStorageMixin, UpdateView):
@@ -76,7 +90,7 @@ class StorageUpdateView(RepositoryAuthorizationMixin, MainStorageMixin, UpdateVi
 
     def get_success_url(self):
         self.get_repo().update_async()
-        return get_success_url(self)
+        return super(StorageUpdateView, self).get_success_url()
 
 
 class StorageDeleteView(RepositoryAuthorizationMixin, DeleteView):
@@ -97,8 +111,4 @@ class StorageDeleteView(RepositoryAuthorizationMixin, DeleteView):
         return super().delete(request, *args, **kwargs)
 
     def get_success_url(self):
-        return get_success_url(self)
-
-
-def get_success_url(view):
-    return reverse_lazy('repo', kwargs={'repo_id': view.kwargs['repo_id']})
+        return reverse_lazy('repo', kwargs={'repo_id': self.kwargs['repo_id']})

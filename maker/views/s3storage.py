@@ -2,7 +2,8 @@ from django.forms import PasswordInput
 from django.utils.translation import ugettext_lazy as _
 
 from maker.models import S3Storage
-from .storage import StorageForm, StorageCreateView, StorageUpdateView, StorageDeleteView
+from .storage import StorageForm, StorageCreateView, StorageDetailView, StorageUpdateView, \
+    StorageDeleteView
 
 
 class S3StorageForm(StorageForm):
@@ -31,6 +32,11 @@ class S3StorageCreate(StorageCreateView):
 class S3StorageUpdate(StorageUpdateView):
     model = S3Storage
     form_class = S3StorageForm
+
+
+class S3StorageDetail(StorageDetailView):
+    model = S3Storage
+    template_name = 'maker/storage/detail_s3.html'
 
 
 class S3StorageDelete(StorageDeleteView):

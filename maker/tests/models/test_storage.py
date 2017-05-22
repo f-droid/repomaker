@@ -93,7 +93,7 @@ class StorageManagerTestCase(TestCase):
         # create repo and three remote storage locations
         self.repo = Repository.objects.create(user=User.objects.create(username='user2'))
         S3Storage.objects.create(repo=self.repo, bucket='s3_bucket')
-        SshStorage.objects.create(repo=self.repo, url='ssh_url')
+        SshStorage.objects.create(repo=self.repo, url='ssh_url', disabled=False)
         GitStorage.objects.create(repo=self.repo, url='git_url')
 
     def test_storage_models_exist(self):
@@ -103,6 +103,10 @@ class StorageManagerTestCase(TestCase):
     def test_get_storage(self):
         # assert that all three storage locations are returned by the StorageManager
         self.assertTrue(len(StorageManager.get_storage(self.repo)) == 3)
+
+    def test_get_storage_only_enabled(self):
+        # assert that only two storage locations are returned by the StorageManager
+        self.assertTrue(len(StorageManager.get_storage(self.repo, onlyEnabled=True)) == 2)
 
     @override_settings(DEFAULT_REPO_STORAGE=[(os.path.join(TEST_MEDIA_DIR, 'repos'), '/repos/')])
     def test_get_default_storage(self):

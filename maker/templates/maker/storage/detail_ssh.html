@@ -1,7 +1,7 @@
-{% extends "maker/storage/detail.html" %}
+{% extends "maker/storage/detail_ssh_key.html" %}
 {% load i18n %}
 
-{% block help_text %}
+{% block ssh_help_text %}
 <p>
 	{% blocktrans trimmed %}
 	Please make sure to add this public SSH key to your SSH server's
@@ -10,4 +10,37 @@
 	</tt> file,	if you have not done so already.
 	{% endblocktrans %}
 </p>
-{% endblock help_text %}
+<p>
+	{% trans "Security Warning: This gives repomaker write access to that storage. Please limit this user's access as much as possible." %}
+</p>
+{% endblock ssh_help_text %}
+
+{% block storage_details %}
+<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">face</i>
+			<span>{% trans 'Username' %}</span>
+			<span class="mdl-list__item-sub-title">
+				{{ storage.username }}
+			</span>
+		</span>
+</li>
+<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">cloud_circle</i>
+			<span>{% trans 'Host' %}</span>
+			<span class="mdl-list__item-sub-title">
+				{{ storage.host }}
+			</span>
+		</span>
+</li>
+<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">folder</i>
+			<span>{% trans 'Path' %}</span>
+			<span class="mdl-list__item-sub-title">
+				{{ storage.path }}
+			</span>
+		</span>
+</li>
+{% endblock storage_details %}

@@ -1,7 +1,7 @@
-{% extends "maker/storage/detail.html" %}
+{% extends "maker/storage/detail_ssh_key.html" %}
 {% load i18n %}
 
-{% block help_text %}
+{% block ssh_help_text %}
 <p>
 	{% blocktrans trimmed %}
 	Please make sure to add this public SSH key to your Git account for the upload to work.
@@ -16,4 +16,16 @@
 	Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing.
 	{% endblocktrans %}
 </p>
-{% endblock help_text %}
+{% endblock ssh_help_text %}
+
+{% block storage_details %}
+<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">public</i>
+			<span>{% trans 'Git Repository SSH Address' %}</span>
+			<span class="mdl-list__item-sub-title">
+				{{ storage.get_remote_url }}
+			</span>
+		</span>
+</li>
+{% endblock storage_details %}

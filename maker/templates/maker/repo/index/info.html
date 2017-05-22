@@ -61,10 +61,16 @@
 <ul class="mdl-list">
 	{% for storage in storage %}
 	<li class="mdl-list__item">
+		<a href="{{ storage.get_absolute_url }}">
 		<span class="mdl-list__item-primary-content">
+			{% if storage.disabled %}
+			<i class="material-icons mdl-list__item-icon ">cloud_off</i>
+			{% else %}
 			<i class="material-icons mdl-list__item-icon ">cloud</i>
+			{% endif %}
 			<span>{{ storage }}</span>
 		</span>
+		</a>
 		<span class="mdl-list__item-secondary-content">
 			<a class="mdl-list__item-secondary-action" href="{{ storage.get_repo_url }}">
 				<i class="material-icons">link</i>

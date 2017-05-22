@@ -63,6 +63,7 @@ class Migration(migrations.Migration):
                 ('last_updated_date', models.DateTimeField(auto_now=True)),
             ],
             options={
+                'ordering': ['added_date'],
                 'abstract': False,
             },
             managers=[
@@ -110,6 +111,7 @@ class Migration(migrations.Migration):
                 ('identity_file', models.FileField(blank=True, storage=maker.storage.PrivateStorage(), upload_to=maker.storage.get_identity_file_path)),
                 ('public_key', models.TextField(blank=True, null=True)),
                 ('url', models.URLField(max_length=2048)),
+                ('disabled', models.BooleanField(default=True)),
             ],
             options={
                 'abstract': False,
@@ -143,6 +145,7 @@ class Migration(migrations.Migration):
                 ('category', models.ManyToManyField(blank=True, to='maker.Category')),
             ],
             options={
+                'ordering': ['added_date'],
                 'abstract': False,
             },
             managers=[
@@ -241,6 +244,7 @@ class Migration(migrations.Migration):
             name='S3Storage',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('disabled', models.BooleanField(default=False)),
                 ('region', models.CharField(choices=[('s3', 'US Standard')], default='s3', max_length=32)),
                 ('bucket', models.CharField(max_length=128)),
                 ('accesskeyid', models.CharField(max_length=128)),
@@ -273,6 +277,7 @@ class Migration(migrations.Migration):
                 ('identity_file', models.FileField(blank=True, storage=maker.storage.PrivateStorage(), upload_to=maker.storage.get_identity_file_path)),
                 ('public_key', models.TextField(blank=True, null=True)),
                 ('url', models.URLField(max_length=2048)),
+                ('disabled', models.BooleanField(default=True)),
                 ('username', models.CharField(max_length=64, validators=[maker.models.storage.UsernameValidator()])),
                 ('repo', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='maker.Repository')),
             ],

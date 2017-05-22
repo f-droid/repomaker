@@ -7,7 +7,7 @@ from maker.views.gitstorage import GitStorageCreate, GitStorageUpdate, GitStorag
     GitStorageDelete
 from maker.views.remoterepository import RemoteRepositoryCreateView, RemoteAppCreateView
 from maker.views.repository import RepositoryListView, RepositoryCreateView, RepositoryDetailView
-from maker.views.s3storage import S3StorageCreate, S3StorageUpdate, S3StorageDelete
+from maker.views.s3storage import S3StorageCreate, S3StorageDetail, S3StorageUpdate, S3StorageDelete
 from maker.views.screenshot import ScreenshotCreateView, ScreenshotDeleteView
 from maker.views.sshstorage import SshStorageCreate, SshStorageUpdate, SshStorageDetail, \
     SshStorageDelete
@@ -49,31 +49,33 @@ urlpatterns = [
     url(r'^(?P<repo_id>[0-9]+)/update/$$', views.update, name='update'),
     url(r'^(?P<repo_id>[0-9]+)/publish/$$', views.publish, name='publish'),
 
+    # S3 Storage
+    url(r'^(?P<repo_id>[0-9]+)/storage/s3/add/$',
+        S3StorageCreate.as_view(), name=S3Storage.add_url_name),
+    url(r'^(?P<repo_id>[0-9]+)/storage/s3/(?P<pk>[0-9]+)/$',
+        S3StorageDetail.as_view(), name=S3Storage.detail_url_name),
+    url(r'^(?P<repo_id>[0-9]+)/storage/s3/(?P<pk>[0-9]+)/edit/$',
+        S3StorageUpdate.as_view(), name=S3Storage.edit_url_name),
+    url(r'^(?P<repo_id>[0-9]+)/storage/s3/(?P<pk>[0-9]+)/delete/$',
+        S3StorageDelete.as_view(), name=S3Storage.delete_url_name),
+
     # SSH Storage
     url(r'^(?P<repo_id>[0-9]+)/storage/ssh/add/$',
-        SshStorageCreate.as_view(), name='storage_ssh_add'),
+        SshStorageCreate.as_view(), name=SshStorage.add_url_name),
     url(r'^(?P<repo_id>[0-9]+)/storage/ssh/(?P<pk>[0-9]+)/$',
+        SshStorageDetail.as_view(), name=SshStorage.detail_url_name),
+    url(r'^(?P<repo_id>[0-9]+)/storage/ssh/(?P<pk>[0-9]+)/edit/$',
         SshStorageUpdate.as_view(), name=SshStorage.edit_url_name),
-    url(r'^(?P<repo_id>[0-9]+)/storage/ssh/(?P<pk>[0-9]+)/detail$',
-        SshStorageDetail.as_view(), name='storage_ssh_detail'),
     url(r'^(?P<repo_id>[0-9]+)/storage/ssh/(?P<pk>[0-9]+)/delete/$',
         SshStorageDelete.as_view(), name=SshStorage.delete_url_name),
 
     # Git Storage
     url(r'^(?P<repo_id>[0-9]+)/storage/git/add/$',
-        GitStorageCreate.as_view(), name='storage_git_add'),
+        GitStorageCreate.as_view(), name=GitStorage.add_url_name),
     url(r'^(?P<repo_id>[0-9]+)/storage/git/(?P<pk>[0-9]+)/$',
+        GitStorageDetail.as_view(), name=GitStorage.detail_url_name),
+    url(r'^(?P<repo_id>[0-9]+)/storage/git/(?P<pk>[0-9]+)/edit/$',
         GitStorageUpdate.as_view(), name=GitStorage.edit_url_name),
-    url(r'^(?P<repo_id>[0-9]+)/storage/git/(?P<pk>[0-9]+)/detail$',
-        GitStorageDetail.as_view(), name='storage_git_detail'),
     url(r'^(?P<repo_id>[0-9]+)/storage/git/(?P<pk>[0-9]+)/delete/$',
         GitStorageDelete.as_view(), name=GitStorage.delete_url_name),
-
-    # S3 Storage
-    url(r'^(?P<repo_id>[0-9]+)/storage/s3/add/$',
-        S3StorageCreate.as_view(), name='storage_s3_add'),
-    url(r'^(?P<repo_id>[0-9]+)/storage/s3/(?P<pk>[0-9]+)/$',
-        S3StorageUpdate.as_view(), name=S3Storage.edit_url_name),
-    url(r'^(?P<repo_id>[0-9]+)/storage/s3/(?P<pk>[0-9]+)/delete/$',
-        S3StorageDelete.as_view(), name=S3Storage.delete_url_name),
 ]

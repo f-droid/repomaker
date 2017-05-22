@@ -31,7 +31,7 @@
 	<form action="" method="post">
 		{% csrf_token %}
 		{% include '../form.html' %}
-		<div class="mdl-cell mdl-cell--6-col">
+		<div class="mdl-cell mdl-cell--12-col">
 			{% if object %}
 			<input type="submit" value="{% blocktrans %}Update {{ storage_name }}{% endblocktrans %}"/>
 			{% else %}

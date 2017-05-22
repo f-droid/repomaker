@@ -1,12 +1,10 @@
 from django.conf import settings
 from django.forms import BooleanField
-from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import DetailView
 
 from maker.models import SshStorage
-from .storage import StorageForm, MainStorageMixin, StorageCreateView, StorageUpdateView, \
-    StorageDeleteView
+from .storage import StorageForm, MainStorageMixin, StorageCreateView, StorageDetailView, \
+    StorageUpdateView, StorageDeleteView
 
 
 class SshStorageForm(StorageForm):
@@ -54,26 +52,13 @@ class SshStorageCreate(SshKeyMixin, StorageCreateView):
     model = SshStorage
     form_class = SshStorageForm
 
-    # TODO make adding a two step process,
-    #      so the user can add the SSH key before an upload is attempted
-
-    def get_success_url(self):
-        self.get_repo().update_async()
-        return reverse_lazy('storage_ssh_detail',
-                            kwargs={'repo_id': self.kwargs['repo_id'], 'pk': self.object.pk})
-
 
 class SshStorageUpdate(SshKeyMixin, StorageUpdateView):
     model = SshStorage
     form_class = SshStorageForm
 
-    def get_success_url(self):
-        self.get_repo().update_async()
-        return reverse_lazy('storage_ssh_detail',
-                            kwargs={'repo_id': self.kwargs['repo_id'], 'pk': self.kwargs['pk']})
 
-
-class SshStorageDetail(DetailView):
+class SshStorageDetail(StorageDetailView):
     model = SshStorage
     template_name = 'maker/storage/detail_ssh.html'
 

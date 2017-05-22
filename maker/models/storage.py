@@ -25,22 +25,29 @@ UL = '\u00a1-\uffff'  # unicode letters range (must be a unicode string, not a r
 
 class AbstractStorage(models.Model):
     repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
+    disabled = models.BooleanField(default=False)
 
     @staticmethod
     def get_name():
         raise NotImplementedError()
 
-    def get_url(self):
-        raise NotImplementedError()
+    def get_add_url(self):
+        return reverse_lazy(self.add_url_name, kwargs={'repo_id': self.repo.pk, 'pk': self.pk})
 
-    def get_repo_url(self):
-        raise NotImplementedError()
+    def get_absolute_url(self):
+        return reverse_lazy(self.detail_url_name, kwargs={'repo_id': self.repo.pk, 'pk': self.pk})
 
     def get_edit_url(self):
         return reverse_lazy(self.edit_url_name, kwargs={'repo_id': self.repo.pk, 'pk': self.pk})
 
     def get_delete_url(self):
         return reverse_lazy(self.delete_url_name, kwargs={'repo_id': self.repo.pk, 'pk': self.pk})
+
+    def get_url(self):
+        raise NotImplementedError()
+
+    def get_repo_url(self):
+        raise NotImplementedError()
 
     def publish(self):
         raise NotImplementedError()
@@ -57,6 +64,8 @@ class S3Storage(AbstractStorage):
     bucket = models.CharField(max_length=128)
     accesskeyid = models.CharField(max_length=128)
     secretkey = models.CharField(max_length=255)
+    add_url_name = 'storage_s3_add'
+    detail_url_name = 'storage_s3'
     edit_url_name = 'storage_s3_update'
     delete_url_name = 'storage_s3_delete'
 
@@ -138,6 +147,7 @@ class AbstractSshStorage(AbstractStorage):
                                      blank=True)
     public_key = models.TextField(blank=True, null=True)
     url = models.URLField(max_length=2048)
+    disabled = models.BooleanField(default=True)  # overrides default value from parent class
 
     def __str__(self):
         return self.get_remote_url()
@@ -192,6 +202,8 @@ class AbstractSshStorage(AbstractStorage):
 
 class SshStorage(AbstractSshStorage):
     username = models.CharField(max_length=64, validators=[UsernameValidator()])
+    add_url_name = 'storage_ssh_add'
+    detail_url_name = 'storage_ssh'
     edit_url_name = 'storage_ssh_update'
     delete_url_name = 'storage_ssh_delete'
 
@@ -216,6 +228,8 @@ class SshStorage(AbstractSshStorage):
 
 
 class GitStorage(AbstractSshStorage):
+    add_url_name = 'storage_git_add'
+    detail_url_name = 'storage_git'
     edit_url_name = 'storage_git_update'
     delete_url_name = 'storage_git_delete'
 
@@ -243,14 +257,17 @@ class StorageManager:
     storage_models = [S3Storage, SshStorage, GitStorage]
 
     @staticmethod
-    def get_storage(repo):
+    def get_storage(repo, onlyEnabled=False):
         """
         Returns all remote storage that belongs to the given repository :param: repo.
         """
         storage = []
         storage.extend(StorageManager.get_default_storage(repo))
         for storage_type in StorageManager.storage_models:
-            objects = storage_type.objects.filter(repo=repo).all()
+            if onlyEnabled:
+                objects = storage_type.objects.filter(repo=repo, disabled=False).all()
+            else:
+                objects = storage_type.objects.filter(repo=repo).all()
             if objects:
                 storage.extend(list(chain(objects)))
 

@@ -2,13 +2,11 @@ import fdroidserver.index
 from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
 from django.forms import CharField, URLField
-from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import DetailView
 
 from maker.models.storage import GitStorage, HostnameValidator, PathValidator
 from .sshstorage import SshStorageForm, SshKeyMixin
-from .storage import StorageCreateView, StorageUpdateView, StorageDeleteView
+from .storage import StorageCreateView, StorageUpdateView, StorageDeleteView, StorageDetailView
 
 
 class GitStorageForm(SshStorageForm):
@@ -89,26 +87,13 @@ class GitStorageCreate(GitUrlValidationMixin, StorageCreateView):
     form_class = GitStorageForm
     template_name = 'maker/storage/form_git.html'
 
-    # TODO make adding a two step process,
-    #      so the user can add the SSH key before an upload is attempted
-
-    def get_success_url(self):
-        self.get_repo().update_async()
-        return reverse_lazy('storage_git_detail',
-                            kwargs={'repo_id': self.kwargs['repo_id'], 'pk': self.object.pk})
-
 
 class GitStorageUpdate(GitUrlValidationMixin, StorageUpdateView):
     model = GitStorage
     form_class = GitStorageForm
 
-    def get_success_url(self):
-        self.get_repo().update_async()
-        return reverse_lazy('storage_git_detail',
-                            kwargs={'repo_id': self.kwargs['repo_id'], 'pk': self.kwargs['pk']})
 
-
-class GitStorageDetail(DetailView):
+class GitStorageDetail(StorageDetailView):
     model = GitStorage
     template_name = 'maker/storage/detail_git.html'
 

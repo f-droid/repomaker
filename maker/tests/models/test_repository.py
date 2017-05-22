@@ -18,7 +18,7 @@ from django.urls import reverse
 from fdroidserver.update import METADATA_VERSION
 
 from maker.models import App, RemoteApp, Apk, ApkPointer, RemoteApkPointer, Repository, \
-    RemoteRepository, S3Storage, SshStorage
+    RemoteRepository, S3Storage, SshStorage, GitStorage
 from maker.models.repository import AbstractRepository
 from maker.storage import get_repo_file_path, get_remote_repo_path
 from .. import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_STATIC_DIR, \
@@ -233,12 +233,14 @@ class RepositoryTestCase(TestCase):
         # assert that repository homepage was re-created
         _generate_page.called_once_with()
 
-    @patch('maker.models.storage.S3Storage.publish')
+    @patch('maker.models.storage.GitStorage.publish')
     @patch('maker.models.storage.SshStorage.publish')
-    def test_publish(self, s3_publish, ssh_publish):
+    @patch('maker.models.storage.S3Storage.publish')
+    def test_publish(self, s3_publish, ssh_publish, git_publish):
         # create storage objects
         S3Storage.objects.create(repo=self.repo)
-        SshStorage.objects.create(repo=self.repo)
+        SshStorage.objects.create(repo=self.repo, disabled=False)
+        GitStorage.objects.create(repo=self.repo, disabled=True)
 
         # assert that the repo has never been published
         self.assertIsNone(self.repo.last_publication_date)
@@ -249,9 +251,10 @@ class RepositoryTestCase(TestCase):
         # assert that the repo has a proper publication date now
         self.assertTrue(datetime_is_recent(self.repo.last_publication_date, 5))
 
-        # assert that the storage's publish method's have been called
+        # assert that the storage's publish method's have been called (if enabled)
         s3_publish.assert_called_once_with()
         ssh_publish.assert_called_once_with()
+        self.assertFalse(git_publish.called)
 
     def test_published_date_not_updated_without_proper_publishing(self):
         # assert that the repo has never been published

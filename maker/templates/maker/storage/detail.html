@@ -1,30 +1,64 @@
 {% extends "maker/base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Remote Storage Updated" %}{% endblock %}
+{% block title %}{{ storage.get_name }}{% endblock %}
 
-{% block toolbar-title %}<a href="{% url 'repo' object.repo.id %}">{{ object.repo.name }}</a>{% endblock %}
+{% block toolbar-title %}
+<a href="{% url 'repo' storage.repo.id %}">{{ storage.repo.name }}</a> - {{ storage.get_name }}
+{% endblock toolbar-title%}
 
 {% block rm-content %}
 
-<h1>{% trans "Remote Storage Updated" %}</h1>
-
-{% if object.public_key %}
+<h3>{{ storage.get_name }}</h3>
 
 {% block help_text %}
-<p>
-	{% trans "Please make sure to authorize this public SSH key for your remote storage if you have not done so already." %}
-</p>
 {% endblock help_text %}
 
-<pre style="overflow: auto; padding: 1em; background-color: #fafafa; border: 1px solid #e5e5e5;">{{ object.public_key }}</pre>
-{% else %}
+<form action="" method="post">
+	{% csrf_token %}
+	{% if storage.disabled %}
+	<input type="hidden" name="disabled" value="false">
+	<a href="{{ storage.get_edit_url }}" class="rm-no-underline" style="margin-right:1em;">
+		<button class="mdl-button mdl-js-button mdl-button--raised" style="background: #33CC33;">
+			{% trans 'Enable Storage' %}
+		</button>
+	</a>
+	{% else %}
+	<input type="hidden" name="disabled" value="true">
+	<a href="{{ storage.get_edit_url }}" class="rm-no-underline" style="margin-right:1em;">
+		<button class="mdl-button mdl-js-button mdl-button--raised" style="background: #FF3333;">
+			{% trans 'Disable Storage' %}
+		</button>
+	</a>
+	{% endif %}
+</form>
+
+<ul class="mdl-list">
+	<li class="mdl-list__item mdl-list__item--two-line">
+		<span class="mdl-list__item-primary-content">
+			<i class="material-icons mdl-list__item-icon">insert_link</i>
+			<span>{% trans 'Repo Address' %}</span>
+			<span class="mdl-list__item-sub-title">
+				<a href="{{ storage.get_repo_url }}">{{ storage.get_repo_url }}</a>
+			</span>
+		</span>
+	</li>
+	{% block storage_details %}{% endblock storage_details %}
+</ul>
+
+<!-- TODO say whether primary storage or not and allow to make it primary if not -->
+
 <p>
-	{% trans "Your local default SSH key will be used to connect to the storage." %}
+	<a href="{{ storage.get_edit_url }}" class="rm-no-underline" style="margin-right:1em;">
+		<button class="mdl-button mdl-js-button mdl-button--raised">
+			{% trans 'Edit Storage' %}
+		</button>
+	</a>
+	<a href="{{ storage.get_delete_url }}" class="rm-no-underline" style="margin-right:1em;">
+		<button class="mdl-button mdl-js-button mdl-button--raised">
+			{% trans 'Delete Storage' %}
+		</button>
+	</a>
 </p>
-<p>
-	{% trans "If this storage is experiencing problems, please check that the key works properly." %}
-</p>
-{% endif %}
 
 {% endblock rm-content %}
