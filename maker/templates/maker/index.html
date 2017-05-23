@@ -12,19 +12,32 @@
 
 {% block toolbar-title %}{% trans 'My Repos' %}{% endblock toolbar-title %}
 
+{% block navigation %}
+<a href="{% url 'add_repo' %}" class="rm-no-underline">
+	<i class="material-icons">add</i>
+</a>
+{% endblock navigation %}
+
 {% block rm-content %}
 <div class="mdl-grid mdl-cell--10-col">
 
 	{% for repo in repositories %}
 	<a href="{% url 'repo' repo.id %}" title="{{ repo.name }}" class="rm-repo-card rm-no-underline">
 		<div class="mdl-card__title">
-			<h5 class="mdl-card__title-text">{{ repo.name }}</h5>
+			<h1 class="mdl-card__title-text rm-app-number">{{ repo.app_set.all.count }}</h1>
 		</div>
-		<div class="mdl-card__supporting-text">
+		<div class="mdl-card__title">
+			<h2 class="mdl-card__title-text rm-repo-title">{{ repo.name }} </h2>
+		</div>
+		<div class="mdl-card__supporting-text rm-repo-date">
 			{% if repo.last_publication_date %}
-			Published {{ repo.last_publication_date|naturaltime }}
+			{% blocktrans with repo.last_publication_date|naturaltime as time_ago %}
+			Published {{ time_ago }}
+			{% endblocktrans %}
 			{% else %}
-			Created {{ repo.created_date|naturaltime }}
+			{% blocktrans with repo.created_date|naturaltime as time_ago %}
+			Created {{ time_ago }}
+			{% endblocktrans %}
 			{% endif %}
 		</div>
 		<div class="mdl-card__supporting-text">
@@ -33,15 +46,14 @@
 	</a>
 	{% empty %}
 	<p>{% trans "There are no repositories are available." %}</p>
-	{% endfor %}
-
 	<div class="mdl-cell mdl-cell--12-col rm-repo-apps-add">
 		<a href="{% url 'add_repo' %}" class="rm-no-underline">
 			<button class="rm-button--blue mdl-button mdl-js-button">
-				Create Repo
+				{% trans 'Create Repo' %}
 			</button>
 		</a>
 	</div>
+	{% endfor %}
 
 </div>
 {% endblock rm-content %}

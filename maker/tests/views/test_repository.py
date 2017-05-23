@@ -42,6 +42,9 @@ class RepositoryTestCase(TestCase):
             shutil.rmtree(TEST_DIR)
 
     def test_empty_state(self):
+        # remove all repositories before we can test an empty state
+        Repository.objects.all().delete()
+
         response = self.client.get(reverse('index'))
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'maker/index.html')
@@ -95,6 +98,19 @@ class RepositoryTestCase(TestCase):
         self.assertTrue(isinstance(response.context['view'], RepositoryCreateView))
         self.assertTrue(isinstance(response.context['form'], RepositoryForm))
         self.assertFormError(response, 'form', 'description', 'This field is required.')
+
+    def test_list(self):
+        response = self.client.get(reverse('index'))
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed(response, 'maker/index.html')
+
+        # assert that context is as expected
+        self.assertEqual(1, len(response.context['repositories']))
+        self.assertEqual(self.repo, response.context['repositories'][0])
+
+        # assert that page content is as expected
+        self.assertContains(response, self.repo.name, 2)  # once in link title
+        self.assertContains(response, self.repo.description, 1)
 
     @override_settings(SINGLE_USER_MODE=False)
     @modify_settings(INSTALLED_APPS={'append': ['allauth', 'allauth.socialaccount']})
