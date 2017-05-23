@@ -1,0 +1,59 @@
+{% load i18n %}
+{% load account socialaccount %}
+
+<form class="rm-form rm-login-form" method="POST" action="{% url 'account_login' %}">
+	{% csrf_token %}
+	{% if redirect_field_value %}
+	<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+	{% endif %}
+	<div class="mdl-grid">
+	<div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label {% if form.login.errors %}is-invalid{% endif %}">
+		<label for="{{ form.login.id_for_label }}" class="mdl-textfield__label">{{ form.login.label }}</label>
+		{{ form.login }}
+		{% if form.login.errors %}
+		<span>{{ form.login.errors }}</span>
+		{% endif %}
+	</div>
+
+	<div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label {% if form.password.errors %}is-invalid{% endif %}">
+		<label for="{{ form.password.id_for_label }}" class="mdl-textfield__label">{{ form.password.label }}</label>
+		{{ form.password }}
+		{% if form.password.errors %}
+		<span>{{ form.password.errors }}</span>
+		{% endif %}
+	</div>
+
+	<div class="mdl-cell mdl-cell--6-col">
+		<div class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect {% if form.remember.errors %}is-invalid{% endif %}">
+			<label for="{{ form.remember.id_for_label }}" class="mdl-checkbox__label">{{ form.remember.label }}</label>
+			{{ form.remember }}
+		</div>
+	</div>
+
+	<div class="mdl-cell mdl-cell--6-col">
+		<a href="{% url 'account_reset_password' %}">{% trans "Forgot Password" %}</a>
+	</div>
+
+	<div class="mdl-cell mdl-cell--12-col">
+		<input type="submit" class="full" value="{% trans 'Login' %}">
+	</div>
+	</div>
+</form>
+
+<p></p>
+<p></p>
+
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+<p><strong>{% trans "Or login with" %}</strong></p>
+
+<div class="socialaccount_ballot">
+
+	<ul class="socialaccount_providers">
+		{% include "socialaccount/snippets/provider_list.html" with process="login" %}
+	</ul>
+
+</div>
+{% include "socialaccount/snippets/login_extra.html" %}
+{% endif %}

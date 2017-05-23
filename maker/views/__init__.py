@@ -1,5 +1,6 @@
 import pathlib
 
+from allauth.account.forms import LoginForm
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -91,6 +92,17 @@ def remote_repo_media_access(user_id, path):
     if repo.pre_installed or repo.users.filter(pk=user_id).exists:
         return True  # repo is pre-installed or user added it
     return False  # user is not allowed to access this repo's files
+
+
+class RmLoginForm(LoginForm):
+
+    def __init__(self, *args, **kwargs):
+        super(RmLoginForm, self).__init__(*args, **kwargs)
+        # remove placeholders from form widgets
+        if 'placeholder' in self.fields['login'].widget.attrs:
+            del self.fields['login'].widget.attrs['placeholder']
+        if 'placeholder' in self.fields['password'].widget.attrs:
+            del self.fields['password'].widget.attrs['placeholder']
 
 
 class BaseModelForm(ModelForm):

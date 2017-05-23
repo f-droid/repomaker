@@ -1,0 +1,87 @@
+@import "mixins";
+
+.rm-login-tab {
+    width: 50%;
+}
+
+.rm-login-form {
+    .mdl-grid {
+        padding: 0px;
+    }
+    .mdl-cell {
+        margin: 0px;
+    }
+    .mdl-cell--12-col {
+        width: 100%;
+    }
+    .mdl-cell--6-col {
+        width: 50%;
+    }
+    .mdl-checkbox__label {
+        @include font-size(12px);
+    }
+    input[type="submit"] {
+        width: 80%;
+        margin-top: 10px !important;
+    }
+    a {
+        text-decoration: none;
+        color: rgb(63,81,181);
+        text-transform: uppercase;
+        @include font-size(12px);
+        float: right;
+    }
+}
+
+ul.socialaccount_providers {
+    padding: 0;
+}
+
+.socialaccount_providers {
+    a {
+        text-decoration: none;
+        color: unset;
+    }
+    li {
+        display: inline-block;
+        margin-right: 15px;
+        margin-bottom: 10px;
+    }
+    a.socialaccount_provider {
+        text-align: center;
+        display: block;
+    }
+    $socialaccount_provider_url: unquote(get-setting(STATIC_URL) + 'maker/images/socialaccount_providers/');
+    a.github:before {
+        content:url($socialaccount_provider_url + 'github.png');
+        display: grid;
+    }
+    a.gitlab:before {
+        content:url($socialaccount_provider_url + 'gitlab.png');
+        display: grid;
+    }
+    a.openid:before {
+        content:url($socialaccount_provider_url + 'openid.png');
+        display: grid;
+    }
+    a.yahoo:before {
+        content:url($socialaccount_provider_url + 'yahoo.png');
+        display: grid;
+    }
+    a.hyves:before {
+        content:url($socialaccount_provider_url + 'hyves.png');
+        display: grid;
+    }
+    a.google:before {
+        content:url($socialaccount_provider_url + 'google.png');
+        display: grid;
+    }
+    a.twitter:before {
+        content:url($socialaccount_provider_url + 'twitter.png');
+        display: grid;
+    }
+    a.facebook:before {
+        content:url($socialaccount_provider_url + 'facebook.png');
+        display: grid;
+    }
+}

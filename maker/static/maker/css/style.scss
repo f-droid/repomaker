@@ -63,6 +63,14 @@ body {
     font-weight: 700;
 }
 
+.rm-logo {
+    font-weight: 500;
+    text-transform: uppercase;
+    @include font-size(17px);
+    width: 100%;
+    text-align: center;
+}
+
 .rm-title {
     display: inline-flex;
     vertical-align: middle;

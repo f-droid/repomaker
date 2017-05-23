@@ -2,7 +2,6 @@
 <div class="mdl-cell
 			mdl-cell--12-col
 			{% if field.field.widget.input_type == 'checkbox' %}
-			rm-form-checkbox
 			mdl-checkbox
 			mdl-js-checkbox
 			mdl-js-ripple-effect
@@ -22,12 +21,8 @@
 	<label for="{{ field.id_for_label }}" class="mdl-textfield__label">{{ field.label }}</label>
 	{% endif %}
 	{{ field }}
-	{% if field.help_text or field.errors %}
-	<span>
-		{% if field.errors %}
-		{{ field.errors }}
-		{% endif %}
-	</span>
+	{% if field.errors %}
+	<span>{{ field.errors }}</span>
 	{% endif %}
 </div>
 <span>{{ field.help_text }}</span>

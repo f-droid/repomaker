@@ -39,6 +39,7 @@ class LoginMultiUserTest(TestCase):
         response = self.client.get('/accounts/login/?next=/')
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'account/login.html')
+        self.assertTemplateUsed(response, 'account/login_form.html')
 
     def test_login(self):
         # create a new user to log in with
