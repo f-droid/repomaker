@@ -155,6 +155,27 @@ a.rm-no-underline {
 }
 
 /*
+ * Repo card
+ */
+
+.rm-repo-card {
+    @extend .mdl-cell, .mdl-cell--4-col, .mdl-card, .mdl-shadow--2dp;
+    transition: background-color 0.2s ease;
+
+    .mdl-card__title-text {
+        font-weight: 500;
+    }
+
+    .mdl-card__supporting-text {
+        padding-top: 0px;
+    }
+}
+
+.rm-repo-card:hover {
+     @extend .rm-app-card:hover;
+ }
+
+/*
  * App card
  */
 

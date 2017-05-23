@@ -2,43 +2,46 @@
 {% load i18n %}
 {% load humanize %}
 
-{% block title %}{% trans 'Repository List' %}{% endblock %}
+{% block title %}{% trans 'My Repos' %}{% endblock %}
+
+{% block toolbar-items-left %}
+<a href="/" class="rm-toolbar-item">
+	<i class="material-icons">home</i>
+</a>
+{% endblock toolbar-items-left %}
+
+{% block toolbar-title %}{% trans 'My Repos' %}{% endblock toolbar-title %}
 
 {% block rm-content %}
+<div class="mdl-grid mdl-cell--10-col">
 
-{% if repositories %}
-
-<div class="mdl-grid">
 	{% for repo in repositories %}
-	<a
-			class="mdl-card mdl-shadow--2dp mdl-color--white mdl-js-ripple-effect rm-no-underline"
-			style="margin: 10px;"
-			href="{% url 'repo' repo.id %}"
-			title="{{ repo.name }}">
-		<div
-				class="mdl-card__title mdl-card--expand"
-				style="background: url({{ repo.icon.url }}) top 12% right 12% no-repeat #fff;">
-			<h5 class="mdl-card__title-text">
-				{{ repo.name }}
-			</h5>
+	<a href="{% url 'repo' repo.id %}" title="{{ repo.name }}" class="rm-repo-card rm-no-underline">
+		<div class="mdl-card__title">
+			<h5 class="mdl-card__title-text">{{ repo.name }}</h5>
 		</div>
-
-		<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+		<div class="mdl-card__supporting-text">
+			{% if repo.last_publication_date %}
+			Published {{ repo.last_publication_date|naturaltime }}
+			{% else %}
+			Created {{ repo.created_date|naturaltime }}
+			{% endif %}
+		</div>
+		<div class="mdl-card__supporting-text">
 			{{ repo.description|safe|truncatewords:25 }}
 		</div>
 	</a>
+	{% empty %}
+	<p>{% trans "There are no repositories are available." %}</p>
 	{% endfor %}
-</div>
-{% else %}
-<p>{% trans "No repositories are available." %}</p>
-{% endif %}
 
-<div class="mdl-grid">
-	<a href="{% url 'add_repo' %}" class="mdl-cell mdl-cell--12-col rm-no-underline" style="text-align: right;">
-		<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
-			<i class="material-icons">add</i>
-		</button>
-	</a>
-</div>
+	<div class="mdl-cell mdl-cell--12-col rm-repo-apps-add">
+		<a href="{% url 'add_repo' %}" class="rm-no-underline">
+			<button class="rm-button--blue mdl-button mdl-js-button">
+				Create Repo
+			</button>
+		</a>
+	</div>
 
+</div>
 {% endblock rm-content %}
