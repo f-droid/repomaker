@@ -1,83 +1,110 @@
 <!DOCTYPE html>
 {% load sass_tags %}
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<title>{{ repo.name }}, currently serving {{ apps.count }} app{{ apps.count|pluralize }}</title>
-		<link href="{% sass_src 'maker/css/repo_page.scss' %}" rel="stylesheet" type="text/css" media="all">
-	</head>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>{{ repo.name }}</title>
+	<link href="{% sass_src 'maker/css/repo_page.scss' %}" rel="stylesheet" type="text/css" media="all">
+</head>
 
-	<body>
-	<section class="mdl-grid repo-grid">
-		<div class="mdl-cell mdl-cell--6-col repo-content">
-			<h3>{{ repo.name }}, currently serving {{ apps.count }} app{{ apps.count|pluralize }}</h3>
-			<p>
-				To get these apps on your phone,
-				add this repository to F-Droid.
-				<a href="https://f-droid.org">I don't have F-Droid</a>.
-			</p>
-			<div id="repo-buttons-add">
-				<button
-						class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
-						onclick="showInstallButtons()">
-					Add to F-Droid
-				</button>
-			</div>
-			<div id="repo-buttons-install">
-				<a href="https://f-droid.org" class="repo-no-underline">
-					<button
-							id="repo-buttons-install-need"
-							class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-						I need F-Droid
-					</button>
-				</a>
-				<a
-						href="{{ repo.get_fingerprint_url }}"
-						class="repo-buttons-install-have repo-buttons-install-have--desktop repo-no-underline">
-					<button
+<body>
 
-							class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-							onclick="addRepo()">
-						I have F-Droid installed
-					</button>
-				</a>
-				<a
-						href="{{ repo.get_mobile_url }}"
-						class="repo-buttons-install-have repo-buttons-install-have--mobile repo-no-underline">
-					<button
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-desktop-drawer-button">
 
-							class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-							onclick="addRepo()">
-						I have F-Droid installed
+	<header class="repo-header mdl-layout__header mdl-layout__header--waterfall">
+		<div class="mdl-layout__header-row">
+
+			<div class="mdl-layout-title">
+				<span class="mdl-layout--large-screen-only">
+					To install these apps on your Android phone, add them to F-Droid.
+					<a href="#f-droid">Learn more</a>
+				</span>
+
+				<div id="repo-buttons-add">
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+							onclick="showInstallButtons()">
+						Add to F-Droid
 					</button>
-				</a>
-			</div>
-			<div class="mdl-grid repo-apps">
-				{% for app in apps %}
-				<div class="mdl-cell mdl-cell--6-col repo-app">
-					<img class="repo-app-icon" src="{{ app.get_icon_basename }}" alt="App Icon"/>
-					<h1>{{ app.name }}: {{ app.summary }}</h1>
-					<p>{{ app.description|safe|truncatewords:25 }}</p>
 				</div>
-				{% endfor %}
+				<div id="repo-buttons-install">
+					<a href="https://f-droid.org" target="_blank" class="rm-no-underline">
+						<button id="repo-buttons-install-need"
+								class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+							I need F-Droid
+						</button>
+					</a>
+					<a href="{{ repo.get_fingerprint_url }}"
+					   class="repo-buttons-install-have repo-buttons-install-have--desktop">
+						<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+								onclick="addRepo()">
+							I have F-Droid installed
+						</button>
+					</a>
+					<a href="{{ repo.get_mobile_url }}" class="repo-buttons-install-have repo-buttons-install-have--mobile">
+						<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+								onclick="addRepo()">
+							I have F-Droid
+						</button>
+					</a>
+				</div>
 			</div>
+
+			<nav class="mdl-navigation">
+				<img src="twitter.png"/>
+				<img src="facebook.png"/>
+			</nav>
 		</div>
-	</section>
-	<script src="material.min.js"></script>
-	<script>
-		var add = document.getElementById('repo-buttons-add');
-		var install = document.getElementById('repo-buttons-install');
-		add.style.display = 'block';
+	</header>
+
+	<main class="mdl-layout__content">
+		<section class="mdl-grid mdl-cell--10-col">
+			<div class="mdl-cell mdl-cell--12-col repo-content">
+				<h3>{{ repo.name }}</h3>
+				<p>{{ repo.description }}</p>
+			</div>
+			{% for app in apps %}
+			{% include "maker/widgets/app.html" with repo_page=True %}
+			{% endfor %}
+		</section>
+		<footer class="mdl-mega-footer" id="f-droid">
+			<div class="mdl-mega-footer__top-section mdl-grid">
+
+				<div class="mdl-cell mdl-cell--4-col">
+				<img src="f-droid.png"/>
+				</div>
+				<div class="mdl-cell mdl-cell--6-col">
+				<p>Use F-Droid to install apps and ensure access to app updates.</p>
+
+				<p>
+					F-Droid is an independent, community-sourced app store.
+					We value your privacy and work to ensure that app updates are secure.
+					Download F-Droid at <a href="https://f-droid.org">f-droid.org</a>.
+				</p>
+				</div>
+			</div>
+			<div class="mdl-mega-footer__bottom-section">
+				<span class="repo-made-with">Made with ❤ using repomaker.</span>
+				Create your own collections to share at
+				<a href="https://gitlab.com/fdroid/repomaker">f-droid.org/repomaker</a>.
+			</div>
+		</footer>
+	</main>
+</div>
+<script src="material.min.js"></script>
+<script type="text/javascript">
+	var add = document.getElementById('repo-buttons-add');
+	var install = document.getElementById('repo-buttons-install');
+	add.style.display = 'inline-block';
+	install.style.display = 'none';
+	function showInstallButtons() {
+		add.style.display = 'none';
+		install.style.display = 'inline-block';
+	}
+	function addRepo() {
+		add.style.display = 'inline-block';
 		install.style.display = 'none';
-		function showInstallButtons() {
-			add.style.display = 'none';
-			install.style.display = 'block';
-		}
-		function addRepo() {
-			add.style.display = 'block';
-			install.style.display = 'none';
-		}
-	</script>
-	</body>
+	}
+</script>
+</body>
 </html>

@@ -1,0 +1,64 @@
+/*
+ * App card
+ */
+
+@import "../mixins";
+
+.rm-app-card {
+    border-radius: 8px;
+    margin: 8px auto 8px auto;
+    flex-direction: row;
+    transition: background-color 0.2s ease;
+}
+
+a.rm-app-card:hover {
+    background: #f2f2f2;
+}
+
+.rm-app-card-left {
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    min-width: 80px;
+    background-size: 80px 80px;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+}
+
+.rm-app-card-right {
+    padding-bottom: 25px;
+    padding-right: 25px;
+    padding-top: 25px;
+    padding-left: 5px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: auto;
+}
+
+.rm-app-card-title {
+    font-weight: 500;
+    @include font-size(17px);
+    padding-bottom: 3px;
+}
+
+.rm-app-card-summary {
+    color: #575757;
+    @include font-size(14px);
+    overflow: hidden;
+    padding-bottom: 6px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rm-app-card-description {
+    @include font-size(14px);
+    flex-grow: 1;
+}
+
+.rm-app-card-updated {
+    color: #575757;
+    @include font-size(14px);
+    text-align: right;
+    padding-top: 6px;
+}

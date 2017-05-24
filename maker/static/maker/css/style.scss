@@ -192,54 +192,8 @@ a.rm-no-underline {
      @extend .rm-app-card:hover;
  }
 
-/*
- * App card
- */
-
-.rm-app-card {
-    border-radius: 8px;
-    flex-direction: row;
-    transition: background-color 0.2s ease;
-}
-
-.rm-app-card:hover {
-    background: #f2f2f2;
-}
-
-.rm-app-card-left {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    padding-top: 25px;
-    width: 40%;
-}
-
-.rm-app-card-right {
-    padding-bottom: 25px;
-    padding-right: 25px;
-    padding-top: 25px;
-    width: 60%;
-}
-
-.rm-app-card-title {
-    font-weight: 500;
-    @include font-size(17px);
-    padding-bottom: 3px;
-}
-
-.rm-app-card-summary {
-    color: #575757;
-    @include font-size(14px);
-    overflow: hidden;
-    padding-bottom: 6px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.rm-app-card-description {
-    @include font-size(14px);
-}
 
 
 @import "app/styles.scss";
+@import "app/widget.scss";
 @import "repo/styles.scss";

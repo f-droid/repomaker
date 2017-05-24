@@ -6,6 +6,12 @@
 </h2>
 <p>{{ repo.description }}</p>
 
+<a href="{% url 'edit_repo' repo.id %}" class="rm-no-underline">
+	<button class="rm-button mdl-button mdl-js-button">
+		{% trans 'Edit' %}
+	</button>
+</a>
+
 <ul class="mdl-list">
 	{% if repo.url %}
 	<li class="mdl-list__item mdl-list__item--two-line">

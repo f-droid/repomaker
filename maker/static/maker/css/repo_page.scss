@@ -2,18 +2,23 @@ $roboto-font-path: "roboto-fonts";
 @import "roboto-fontface/css/roboto/sass/roboto-fontface";
 
 @import "material-design-lite/src/button/button";
+@import "material-design-lite/src/card/card";
 @import "material-design-lite/src/grid/grid";
+@import "material-design-lite/src/layout/layout";
 @import "material-design-lite/src/mixins";
 @import "material-design-lite/src/resets/resets";
+@import "material-design-lite/src/shadow/shadow";
 @import "material-design-lite/src/typography/typography";
-@import "material-design-lite/src/variables";
+
+@import "mixins";
 
 a {
     color: #0066CC;
 }
 
-a.repo-no-underline {
+a.rm-no-underline {
 	text-decoration: none;
+	color: unset;
 }
 
 body {
@@ -21,28 +26,41 @@ body {
 }
 
 button {
-    font-size: 11px;
+    @include font-size(11px);
     font-weight: medium;
 }
 
 h1 {
-    font-size: 18px;
+    @include font-size(18px);
     font-weight: bold;
     text-align: left;
 }
 
 p {
-    font-size: 12px;
+    @include font-size(12px);
 }
 
 .mdl-button {
     border-radius: 25px;
-    font-size: 12px;
+    @include font-size(12px);
     margin: 10px;
 }
 
-.repo-grid {
-    justify-content: center;
+.repo-header {
+    color: #000000;
+    background-color: #F8F8F8;
+
+    .mdl-layout-title {
+        @include font-size(14px);
+        flex-grow: 1;
+        text-align: center;
+    }
+
+    .mdl-navigation img {
+        margin-left: 14px;
+        height: 26px;
+        width: 26px;
+    }
 }
 
 .repo-content {
@@ -82,7 +100,7 @@ p {
     }
 
     .repo-buttons-install-have--mobile {
-        display: block;
+        display: inline-block;
     }
 }
 
@@ -93,16 +111,69 @@ p {
     }
 }
 
-.repo-app {
-    img {
-        width: 144px;
-        height: 144px;
+footer {
+    margin-top: 50px;
+
+    a {
+        @extend a.rm-no-underline;
+        font-weight: bold;
     }
-    h1 {
-        text-align: left;
+
+    .mdl-mega-footer__top-section {
+        background-color: #F8F8F8;
+        padding: 25px;
+
+        .mdl-cell--4-col {
+            align-self: center;
+            padding: 16px;
+            text-align: right;
+        }
+
+        .mdl-cell--6-col {
+            border-left: darkgrey solid 2px;
+            padding-left: 16px;
+            text-align: left;
+
+            p:first-child {
+                @include font-size(14px);
+            }
+        }
+
+        @media (max-width: 839px) and (min-width: 480px) {
+            .mdl-cell--4-col {
+                text-align: center;
+                margin: auto;
+            }
+            .mdl-cell--6-col {
+                border-left: none;
+                margin: auto;
+            }
+        }
+
+        @media (max-width: 479px) {
+            .mdl-cell--4-col {
+                text-align: center;
+                margin: auto;
+            }
+            .mdl-cell--6-col {
+                border-left: none;
+                margin: auto;
+            }
+        }
     }
-    p {
-        font-size: 18px;
-        text-align: left;
+
+    .mdl-mega-footer__bottom-section {
+        color: #FFFFFF;
+        background-color: #39414A;
+        @include font-size(12px);
+        padding: 16px;
+        text-align: center;
+
+        .repo-made-with {
+            text-transform: uppercase;
+        }
     }
+
 }
+
+@import "app/widget.scss";

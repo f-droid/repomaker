@@ -205,8 +205,15 @@ class Repository(AbstractRepository):
             repo_page_string = repo_page_string.replace('/static/maker/css/', '')
 
             # Copy stylesheet to repo
-            copy(os.path.join(settings.STATIC_ROOT, 'maker/css/repo_page.css'),
+            copy(os.path.join(settings.STATIC_ROOT, 'maker', 'css', 'repo_page.css'),
                  os.path.join(self.get_repo_path(), 'repo_page.css'))
+
+            # Copy icons
+            icons = ['f-droid.png', 'twitter.png', 'facebook.png']
+            icon_path = os.path.join(settings.BASE_DIR, 'maker', 'static', 'maker', 'images',
+                                     'repo_page')
+            for icon in icons:
+                copy(os.path.join(icon_path, icon), os.path.join(self.get_repo_path(), icon))
 
             # Write repo page to file
             repo_page.write(repo_page_string)

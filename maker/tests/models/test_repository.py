@@ -583,3 +583,10 @@ class RepositoryPageTestCase(TestCase):
         self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Bold.woff2')))
         self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Medium.woff2')))
         self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Regular.woff2')))
+
+        # assert that the icons has been copied
+        icon_path = repo.get_repo_path()
+        self.assertTrue(os.path.isdir(icon_path))
+        self.assertTrue(os.path.isfile(os.path.join(icon_path, 'f-droid.png')))
+        self.assertTrue(os.path.isfile(os.path.join(icon_path, 'twitter.png')))
+        self.assertTrue(os.path.isfile(os.path.join(icon_path, 'facebook.png')))
