@@ -18,7 +18,7 @@
 			<div class="mdl-layout-title">
 				<span class="mdl-layout--large-screen-only">
 					To install these apps on your Android phone, add them to F-Droid.
-					<a href="#f-droid">Learn more</a>
+					<a href="#f-droid">Get F-Droid</a>
 				</span>
 
 				<div id="repo-buttons-add">
@@ -51,8 +51,16 @@
 			</div>
 
 			<nav class="mdl-navigation">
-				<img src="twitter.png"/>
-				<img src="facebook.png"/>
+				{% with text='Check out this F-Droid repo: '|add:repo.name url=repo.get_fingerprint_url %}
+				<a href="https://twitter.com/intent/tweet?text={{ text|urlencode }}&url={{ url|urlencode }}"
+				   target="_blank">
+					<img src="twitter.png"/>
+				</a>
+				{% endwith %}
+				<a href="https://www.facebook.com/sharer/sharer.php?u={{ repo.get_fingerprint_url|urlencode }}"
+				   target="_blank">
+					<img src="facebook.png"/>
+				</a>
 			</nav>
 		</div>
 	</header>
