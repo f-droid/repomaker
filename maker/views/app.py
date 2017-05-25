@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.forms import ModelForm
+from django.forms import ModelForm, FileField, ClearableFileInput
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
@@ -8,7 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from hvad.forms import translationformset_factory
 from tinymce.widgets import TinyMCE
 
-from maker.models import RemoteRepository, App, RemoteApp, ApkPointer
+from maker.models import RemoteRepository, App, RemoteApp, ApkPointer, Screenshot
 from maker.models.category import Category
 from . import BaseModelForm
 from .repository import RepositoryAuthorizationMixin
@@ -109,6 +109,9 @@ class AppDetailView(RepositoryAuthorizationMixin, DetailView):
 
 
 class AppForm(BaseModelForm):
+    screenshots = FileField(required=False, widget=ClearableFileInput(attrs={'multiple': True}))
+    apks = FileField(required=False, widget=ClearableFileInput(attrs={'multiple': True}))
+
     def __init__(self, *args, **kwargs):
         super(AppForm, self).__init__(*args, **kwargs)
         if self.instance.category:
@@ -118,8 +121,10 @@ class AppForm(BaseModelForm):
 
     class Meta:
         model = App
-        fields = ['summary', 'description', 'author_name', 'website', 'category']
-        widgets = {'description': TinyMCE()}
+        fields = ['summary', 'description', 'author_name', 'website', 'category', 'screenshots',
+                  'apks']
+# TODO #31
+#        widgets = {'description': TinyMCE()}
 
 
 class AppUpdateView(RepositoryAuthorizationMixin, UpdateView):
@@ -131,8 +136,26 @@ class AppUpdateView(RepositoryAuthorizationMixin, UpdateView):
     def get_repo(self):
         return self.get_object().repo
 
+    def get_context_data(self, **kwargs):
+        context = super(AppUpdateView, self).get_context_data(**kwargs)
+        context['apks'] = ApkPointer.objects.filter(app=self.object).order_by('-apk__version_code')
+        return context
+
     def form_valid(self, form):
         result = super(AppUpdateView, self).form_valid(form)
+
+        for screenshot in self.request.FILES.getlist('screenshots'):
+            Screenshot.objects.create(app=self.object, file=screenshot)
+
+        for apk in self.request.FILES.getlist('apks'):
+            pointer = ApkPointer.objects.create(repo=self.object.repo, file=apk)
+            try:
+                # TODO check that the APK belongs to this app and that signature matches
+                pointer.initialize()  # this also attaches the app
+            except Exception as e:
+                pointer.delete()
+                raise e
+
         form.instance.repo.update_async()  # schedule repository update
         return result
 

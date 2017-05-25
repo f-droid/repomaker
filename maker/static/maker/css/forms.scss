@@ -23,7 +23,7 @@ $image_path: unquote(get-setting(NODE_MODULES_URL) + 'material-design-lite/src/i
 	}
 
 	input[type="file"] {
-		display: none;
+		display: none !important;
 	}
 
 	select {

@@ -1,30 +1,104 @@
-{% extends "maker/base.html" %}
+{% extends "maker/app/index.html" %}
 {% load i18n %}
 {% load sass_tags %}
 
-{% block title %}{% trans 'Edit App' %}{% endblock %}
-{% block toolbar-title %}<a href="{% url 'repo' app.repo.id %}">{{ app.repo.name }}</a>{% endblock %}
+{% block title %}{% blocktrans with app=app.name %}Edit {{ app }}{% endblocktrans %}{% endblock %}
 
 {% block head %}
 <link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
 {{ form.media }}
 {% endblock head %}
 
+{% block page-header %}
+{% endblock page-header %}
 
-{% block rm-content %}
+{% block back-url %}{% url 'app' app.repo.id app.id %}{% endblock back-url %}
 
-<h2 style="vertical-align: middle;">
-    <img src="{{ app.icon.url }}" alt="App Icon" class="rm-icon"/> {% blocktrans %}Edit {{ app }}{% endblocktrans %}
-</h2>
+{% block top-buttons %}
+<form action="" enctype="multipart/form-data" method="post">
+{% csrf_token %}
+<a href="{% url 'delete_app' app.repo.id app.id %}" class="rm-no-underline">
+	<button type="button" class="rm-button--red-border mdl-button mdl-js-button">
+		{% trans 'Remove App' %}
+	</button>
+</a>
+<!-- TODO save -->
+<button type="submit" class="rm-button mdl-button mdl-js-button">
+	{% trans 'Done' %}
+</button>
+{% endblock top-buttons %}
 
-<div class="rm-form">
-    <form action="" method="post">
-        {% csrf_token %}
-        {% include '../form.html' %}
-        <div class="mdl-cell mdl-cell--6-col">
-            <input type="submit" value="{% trans 'Save Changes' %}"/>
-        </div>
-    </form>
+{% block author %}
+<div class="rm-app-author">
+	{% trans 'Developed by' %}
+	{{ form.author_name }}
 </div>
+{% endblock author %}
 
-{% endblock rm-content %}
+{% block summary %}
+{{ form.summary }}
+{% endblock summary %}
+
+{% block screenshot-drop %}
+<div class="rm-app-screenshot-drop rm-form">
+	<!-- TODO: Make this a drag and drop area -->
+	<i class="rm-repo-apps-empty-add-icon material-icons">file_upload</i>
+	<div class="rm-repo-apps-empty-add-title">{% trans 'Add files' %}</div>
+	<!-- TODO: Make this translatable properly -->
+	<div class="rm-repo-apps-empty-add-description-first">
+		{% trans 'Drag and drop screenshots' %}
+	</div>
+	<div class="rm-repo-apps-empty-add-description-second">
+		{% trans 'or' %}
+		<label for="id_screenshots" class="rm-repo-apps-empty-add-upload-browse">{% trans 'browse to upload' %}</label>
+		{{ form.screenshots }}
+	</div>
+</div>
+{% endblock screenshot-drop %}
+
+{% block screenshot-delete %}
+<a href="{% url 'screenshot_delete' app.repo.id app.id screenshot.id %}"
+   class="rm-app-screenshot-delete rm-no-underline">
+	<button class="mdl-button mdl-js-button rm-button--red">
+		<i class="material-icons">delete</i>
+	</button>
+</a>
+{% endblock screenshot-delete %}
+
+{% block description %}
+{{ form.description }}
+{% endblock description %}
+
+{% block apk-drop %}
+<div class="rm-app-versions-drop rm-form">
+	<!-- TODO: Make this a drag and drop area -->
+	<i class="rm-repo-apps-empty-add-icon material-icons">file_upload</i>
+	<div class="rm-repo-apps-empty-add-title">{% trans 'Add files' %}</div>
+	<!-- TODO: Make this translatable properly -->
+	<div class="rm-repo-apps-empty-add-description-first">
+		{% trans 'Drag and drop .apk files' %}
+	</div>
+	<div class="rm-repo-apps-empty-add-description-second">
+		{% trans 'or' %}
+		<label for="id_apks" class="rm-repo-apps-empty-add-upload-browse">{% trans 'browse to upload' %}</label>
+		{{ form.apks }}
+	</div>
+</div>
+{% endblock apk-drop %}
+
+{% block apk-delete %}
+<span class="mdl-list__item-secondary-action">
+	<a href=""
+	   class="rm-no-underline">
+	<button class="mdl-button mdl-js-button rm-button--red-border">
+		<i class="material-icons">delete</i>
+	</button>
+</a>
+</span>
+{% endblock apk-delete %}
+
+{% block prev-url %}{{ app.get_previous_by_added_date.get_edit_url }}{% endblock %}
+
+{% block next-url %}{{ app.get_next_by_added_date.get_edit_url }}{% endblock %}
+
+{% block page-footer %}</form>{% endblock page-footer %}

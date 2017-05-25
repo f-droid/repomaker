@@ -176,7 +176,7 @@ class ApkPointer(AbstractApkPointer):
         if apk_set.exists():
             self.apk = apk_set.get()
         else:
-            apk = Apk.objects.create(
+            self.apk = Apk.objects.create(
                 package_id=apk_info['packageName'],
                 version_name=apk_info['versionName'],
                 version_code=apk_info['versionCode'],
@@ -185,8 +185,6 @@ class ApkPointer(AbstractApkPointer):
                 hash=apk_info['hash'],
                 hash_type=apk_info['hashType']
             )
-            apk.save()
-            self.apk = apk
 
         # hardlink/copy file if it does not exist, yet
         if not self.apk.file:
@@ -296,8 +294,9 @@ def apk_pointer_post_delete_handler(**kwargs):
     apk_pointer = kwargs['instance']
     logging.info("Deleting APK Pointer: %s", apk_pointer.file.name)
     apk_pointer.file.delete(save=False)
-    apk_pointer.delete_app_icons_from_repo()
-    apk_pointer.apk.delete_if_no_pointers()
+    if apk_pointer.apk:
+        apk_pointer.delete_app_icons_from_repo()
+        apk_pointer.apk.delete_if_no_pointers()
 
 
 @receiver(post_delete, sender=RemoteApkPointer)

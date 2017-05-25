@@ -1,15 +1,18 @@
 {% extends "maker/base.html" %}
 {% load i18n %}
 {% load humanize %}
+
 {% block title %}{{ app.name }}{% endblock title %}
 {% block rm-header-classes %}rm-header--light{% endblock rm-header-classes %}
+
 {% block toolbar %}
 <div class="rm-grid--full-width rm-grid--center mdl-grid">
 	<div class="rm-app-toolbar mdl-cell mdl-cell--8-col">
-		<a href="{% url 'repo' app.repo.id %}" class="rm-toolbar-action-left">
+		<a href="{% block back-url %}{% url 'repo' app.repo.id %}{% endblock back-url %}" class="rm-toolbar-action-left">
 			<i class="material-icons">arrow_back</i>
 		</a>
 		<div>
+			{% block top-buttons %}
 			<span class="rm-toolbar-item">
 				<a href="{% url 'app_translate' app.repo.id app.id %}" class="rm-no-underline">
 				{% blocktrans with count=app.get_available_languages.count trimmed %}
@@ -27,6 +30,7 @@
 					{% trans 'Edit' %}
 				</button>
 			</a>
+			{% endblock top-buttons %}
 		</div>
 	</div>
 </div>
@@ -39,6 +43,7 @@
 			<img src="{{ app.icon.url }}" alt="Repo Icon" class="rm-icon"/>
 			<div class="rm-app-primary-content">
 				<h2 class="rm-app-title">{{ app.name }}</h2>
+				{% block author %}
 				{% if app.author_name %}
 				<div class="rm-app-author">
 					{% blocktrans with author=app.author_name trimmed %}
@@ -46,6 +51,7 @@
 					{% endblocktrans %}
 				</div>
 				{% endif %}
+				{% endblock author %}
 			</div>
 			<div class="rm-app-secondary-content">
 				{% if latest_apk %}
@@ -62,7 +68,7 @@
 			</div>
 		</div>
 		<div class="rm-app-summary-category">
-			<div class="rm-app-summary">{{ app.summary }}</div>
+			<div class="rm-app-summary">{% block summary %}{{ app.summary }}{% endblock summary %}</div>
 
 			{% if app.category.exists %}
 			{% for category in app.category.all %}
@@ -76,20 +82,20 @@
 </div>
 <div class="rm-grid--center mdl-grid">
 	<div class="rm-app-screenshots mdl-cell mdl-cell--8-col">
+		{% block screenshot-drop %}{% endblock screenshot-drop %}
 		{% for screenshot in app.screenshot_set.all %}
-		<img src="{{ screenshot.get_url }}" class="rm-app-screenshot"/>
-		<a href="{% url 'screenshot_delete' app.repo.id app.id screenshot.id %}"
-		   class="rm-app-screenshot-delete rm-no-underline">
-			<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
-				<i class="material-icons">delete</i>
-			</button>
-		</a>
+		<div class="rm-app-screenshot">
+			{% block screenshot-delete %}{% endblock screenshot-delete %}
+			<img src="{{ screenshot.get_url }}"/>
+		</div>
 		{% endfor %}
 	</div>
 </div>
 <div class="rm-grid--center mdl-grid">
 	<div class="rm-app-description mdl-cell mdl-cell--6-col">
+		{% block description %}
 		{{ app.description|safe }}
+		{% endblock description %}
 	</div>
 </div>
 <div class="rm-grid--center mdl-grid">
@@ -97,6 +103,7 @@
 		<h4 class="rm-app-versions-title">
 			{% trans 'version history' %}
 		</h4>
+		{% block apk-drop %}{% endblock apk-drop %}
 		{% if apks %}
 		<ul class="rm-app-versions-list mdl-list">
 			{% for pointer in apks %}
@@ -120,6 +127,7 @@
 					</span>
 					{% endif %}
 				</span>
+				{% block apk-delete %}{% endblock apk-delete %}
 			</li>
 			{% endfor %}
 		</ul>
@@ -132,7 +140,8 @@
 <div class="rm-app-navigation mdl-grid">
 	<div class="mdl-cell mdl-cell--6-col">
 	{% if app.get_previous_by_added_date %}
-	<a href="{{ app.get_previous_by_added_date.get_absolute_url }}" class="rm-app-navigation-previous">
+	<a href="{% block prev-url %}{{ app.get_previous_by_added_date.get_absolute_url }}{% endblock %}"
+	   class="rm-app-navigation-previous">
 		<i class="material-icons">arrow_back</i>
 		<h3 class="rm-app-navigation-previous-text">{% trans 'Previous' %}</h3>
 	</a>
@@ -140,11 +149,13 @@
 	</div>
 	<div class="mdl-cell mdl-cell--6-col">
 	{% if app.get_next_by_added_date %}
-	<a href="{{ app.get_next_by_added_date.get_absolute_url }}" class="rm-app-navigation-next">
+	<a href="{% block next-url %}{{ app.get_next_by_added_date.get_absolute_url }}{% endblock %}"
+	   class="rm-app-navigation-next">
 		<i class="material-icons">arrow_forward</i>
 		<h3 class="rm-app-navigation-next-text">{% trans 'Next' %}</h3>
 	</a>
 	{% endif %}
 	</div>
 </div>
+{% block page-footer %}{% endblock page-footer %}
 {% endblock rm-content %}

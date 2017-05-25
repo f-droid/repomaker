@@ -96,25 +96,48 @@ body {
     margin: 20px;
 }
 
-.rm-button, .rm-button--blue {
+.rm-button, .rm-button--blue, .rm-button--red, .rm-button--red-border {
     @extend .mdl-button;
-    background: none;
-    border: thin solid #4a4a4a;
-    border-radius: 25px;
-    @include font-size(11px);
-    margin: 10px;
-    padding: 0 40px;
+    font-size: 12px !important;
+    background: none !important;
+    border: thin solid #4a4a4a !important;
+    border-radius: 25px !important;
+}
+
+.rm-button:hover {
+    background: #f2f2f2 !important;
 }
 
 .rm-button--blue {
-    background: #0066cc !important;
+    background-color: #0066cc;
     border: thin solid #0066cc;
     color: white !important;
     transition: background-color 0.2s ease;
 }
 
 .rm-button--blue:hover {
-    background: #0079f2 !important;
+    background-color: #0079f2;
+}
+
+.rm-button--red {
+    @extend .rm-button;
+    color: white !important;
+    background-color: #FF3E16 !important;
+    border: thin solid #FF3E16 !important;
+}
+
+.rm-button--red-border {
+    @extend .rm-button;
+    color: #FF3E16 !important;
+    border: thin solid #FF3E16 !important;
+}
+
+.rm-button--red:hover {
+    background: #EE2E06 !important;
+}
+
+.rm-button--red-border:hover {
+    @extend .rm-button:hover;
 }
 
 .rm-toolbar-account {
@@ -192,8 +215,8 @@ a.rm-no-underline {
 }
 
 .rm-repo-card:hover {
-     @extend .rm-app-card:hover;
- }
+    @extend .rm-app-card:hover;
+}
 
 .error {
     color: rgb(213,0,0);

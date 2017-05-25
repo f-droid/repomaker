@@ -73,8 +73,8 @@
 }
 
 .rm-app-screenshots {
-    display: block;
-    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
     overflow: auto;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -85,12 +85,32 @@
     display: inline-block;
     margin: 10px 0px 10px 10px;
     max-height:500px;
+
+    img {
+        max-height:500px;
+    }
+}
+
+.rm-app-screenshot-drop {
+    @extend .rm-repo-apps-add-locally;
+    border-bottom: 1px dashed #d7d7d7;
+    height: auto !important;
+    padding: 130px 15px !important;
+    margin-top: 10px;
+    min-width: 250px;
+    text-align: center;
 }
 
 .rm-app-screenshot-delete {
-    position: relative;
-    vertical-align: top;
-    left: -25px;
+    display: inline-flex;
+    vertical-align: bottom;
+    margin-left: 25px;
+    margin-bottom: 25px;
+    margin-right: -95px;
+
+    button {
+        color: white !important;
+    }
 }
 
 .rm-app-description {
@@ -100,6 +120,16 @@
 
 .rm-app-versions {
     border-top: thin solid #f1f1f1;
+}
+
+.rm-app-versions-drop {
+    @extend .rm-repo-apps-add-locally;
+    border-bottom: 1px dashed #d7d7d7;
+    height: auto !important;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    min-width: 250px;
+    text-align: center;
 }
 
 .rm-app-versions-title {
