@@ -1,7 +1,13 @@
 @import "mixins";
 
+.mdl-tabs__tab-bar {
+    margin-bottom: 25px;
+}
+
 .rm-login-tab {
     width: 50%;
+    @include font-size(15px);
+    text-transform: unset;
 }
 
 .rm-login-form {
@@ -33,6 +39,11 @@
     }
 }
 
+p.or-login-with {
+    @include font-size(15px);
+    font-family: "Roboto-Medium";
+}
+
 ul.socialaccount_providers {
     padding: 0;
 }
@@ -50,6 +61,7 @@ ul.socialaccount_providers {
     a.socialaccount_provider {
         text-align: center;
         display: block;
+        @include font-size(12px);
     }
     $socialaccount_provider_url: unquote(get-setting(STATIC_URL) + 'maker/images/socialaccount_providers/');
     a.github:before {

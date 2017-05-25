@@ -1,6 +1,6 @@
 import pathlib
 
-from allauth.account.forms import LoginForm
+from allauth.account.forms import LoginForm, SignupForm
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -99,10 +99,21 @@ class RmLoginForm(LoginForm):
     def __init__(self, *args, **kwargs):
         super(RmLoginForm, self).__init__(*args, **kwargs)
         # remove placeholders from form widgets
-        if 'placeholder' in self.fields['login'].widget.attrs:
-            del self.fields['login'].widget.attrs['placeholder']
-        if 'placeholder' in self.fields['password'].widget.attrs:
-            del self.fields['password'].widget.attrs['placeholder']
+        fields = ['login', 'password']
+        for field in fields:
+            if 'placeholder' in self.fields[field].widget.attrs:
+                del self.fields[field].widget.attrs['placeholder']
+
+
+class RmSignupForm(SignupForm):
+
+    def __init__(self, *args, **kwargs):
+        super(RmSignupForm, self).__init__(*args, **kwargs)
+        # remove placeholders from form widgets
+        fields = ['username', 'email', 'password1', 'password2']
+        for field in fields:
+            if 'placeholder' in self.fields[field].widget.attrs:
+                del self.fields[field].widget.attrs['placeholder']
 
 
 class BaseModelForm(ModelForm):

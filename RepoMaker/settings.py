@@ -109,7 +109,10 @@ if not SINGLE_USER_MODE:
         'django.contrib.auth.backends.ModelBackend',
         'allauth.account.auth_backends.AuthenticationBackend',
     )
-    ACCOUNT_FORMS = {'login': 'maker.views.RmLoginForm'}
+    ACCOUNT_FORMS = {
+        'login': 'maker.views.RmLoginForm',
+        'signup': 'maker.views.RmSignupForm',
+    }
     ACCOUNT_EMAIL_VERIFICATION = "none"
 
 

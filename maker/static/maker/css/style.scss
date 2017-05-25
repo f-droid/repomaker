@@ -194,7 +194,9 @@ a.rm-no-underline {
      @extend .rm-app-card:hover;
  }
 
-
+.error {
+    color: rgb(213,0,0);
+}
 
 @import "app/styles.scss";
 @import "app/widget.scss";

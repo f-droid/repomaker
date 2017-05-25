@@ -21,9 +21,9 @@
 	<label for="{{ field.id_for_label }}" class="mdl-textfield__label">{{ field.label }}</label>
 	{% endif %}
 	{{ field }}
-	{% if field.errors %}
-	<span>{{ field.errors }}</span>
-	{% endif %}
 </div>
-<span>{{ field.help_text }}</span>
+<span class="help-text">{{ field.help_text }}</span>
+{% if field.errors %}
+<span class="error">{{ field.errors }}</span>
+{% endif %}
 {% endfor %}
