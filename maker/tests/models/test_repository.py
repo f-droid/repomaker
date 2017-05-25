@@ -181,6 +181,40 @@ class RepositoryTestCase(TestCase):
         self.repo._generate_qrcode()  # pylint: disable=protected-access
         self.assertFalse(self.repo.qrcode)  # no QR code exists
 
+    @override_settings(STATIC_ROOT=TEST_STATIC_DIR)
+    def test_copy_page_assets(self):
+        # create fake stylesheet for copying
+        stylesheet_path = os.path.join(settings.STATIC_ROOT, 'maker', 'css')
+        os.makedirs(stylesheet_path)
+        with open(os.path.join(stylesheet_path, 'repo_page.css'), 'w') as f:
+            f.write('foo')
+
+        # copy page assets to repo
+        self.repo._copy_page_assets()  # pylint: disable=protected-access
+
+        # assert that the MDL JavaScript library has been copied
+        mdl_js_abs_path = os.path.join(self.repo.get_repo_path(), 'material.min.js')
+        self.assertTrue(os.path.isfile(mdl_js_abs_path))
+        self.assertTrue(os.path.getsize(mdl_js_abs_path) > 200)
+
+        # assert that the repo homepage's stylesheet has been created
+        style_abs_path = os.path.join(self.repo.get_repo_path(), 'repo_page.css')
+        self.assertTrue(os.path.isfile(style_abs_path))
+
+        # assert that the Roboto fonts has been copied
+        font_path = os.path.join(self.repo.get_repo_path(), 'roboto-fonts', 'Roboto')
+        self.assertTrue(os.path.isdir(font_path))
+        self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Bold.woff2')))
+        self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Medium.woff2')))
+        self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Regular.woff2')))
+
+        # assert that the icons has been copied
+        icon_path = self.repo.get_repo_path()
+        self.assertTrue(os.path.isdir(icon_path))
+        self.assertTrue(os.path.isfile(os.path.join(icon_path, 'f-droid.png')))
+        self.assertTrue(os.path.isfile(os.path.join(icon_path, 'twitter.png')))
+        self.assertTrue(os.path.isfile(os.path.join(icon_path, 'facebook.png')))
+
     @patch('maker.tasks.update_repo')
     def test_update_async(self, update_remote_repo):
         """
@@ -533,7 +567,8 @@ class RepositoryPageTestCase(TestCase):
         if os.path.isdir(TEST_DIR):
             shutil.rmtree(TEST_DIR)
 
-    def test_generate_page(self):
+    @patch('maker.models.repository.Repository._copy_page_assets')
+    def test_generate_page(self, _copy_page_assets):
         repo = self.repo
 
         # a hack to enable the SASS processor for these tests
@@ -550,6 +585,7 @@ class RepositoryPageTestCase(TestCase):
                            summary='AnotherTestSummary', description='AnotherTestDesc')
 
         repo._generate_page()  # pylint: disable=protected-access
+        _copy_page_assets.assert_called_once_with()
 
         # make sure that SASS processor gets disabled again as soon as it is no longer needed
         sass_processor.processor.SassProcessor.processor_enabled = False
@@ -568,25 +604,6 @@ class RepositoryPageTestCase(TestCase):
             self.assertTrue('AnotherTestDesc' in repo_page_string)
 
         # assert that the repo homepage's stylesheet has been created
-        style_abs_path = os.path.join(repo.get_repo_path(), 'repo_page.css')
+        style_abs_path = os.path.join(settings.STATIC_ROOT, 'maker', 'css', 'repo_page.css')
         self.assertTrue(os.path.isfile(style_abs_path))
         self.assertTrue(os.path.getsize(style_abs_path) > 200)
-
-        # assert that the MDL JavaScript library has been copied
-        mdl_js_abs_path = os.path.join(repo.get_repo_path(), 'material.min.js')
-        self.assertTrue(os.path.isfile(mdl_js_abs_path))
-        self.assertTrue(os.path.getsize(mdl_js_abs_path) > 200)
-
-        # assert that the Roboto fonts has been copied
-        font_path = os.path.join(repo.get_repo_path(), 'roboto-fonts', 'Roboto')
-        self.assertTrue(os.path.isdir(font_path))
-        self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Bold.woff2')))
-        self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Medium.woff2')))
-        self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Regular.woff2')))
-
-        # assert that the icons has been copied
-        icon_path = repo.get_repo_path()
-        self.assertTrue(os.path.isdir(icon_path))
-        self.assertTrue(os.path.isfile(os.path.join(icon_path, 'f-droid.png')))
-        self.assertTrue(os.path.isfile(os.path.join(icon_path, 'twitter.png')))
-        self.assertTrue(os.path.isfile(os.path.join(icon_path, 'facebook.png')))

@@ -37,34 +37,13 @@ h1 {
 }
 
 p {
-    @include font-size(12px);
+    @include font-size(14px);
 }
 
 .mdl-button {
     border-radius: 25px;
     @include font-size(12px);
     margin: 10px;
-}
-
-.repo-header {
-    color: #000000;
-    background-color: #F8F8F8;
-
-    .mdl-layout-title {
-        @include font-size(14px);
-        flex-grow: 1;
-        text-align: center;
-    }
-
-    .mdl-navigation img {
-        margin-left: 14px;
-        height: 26px;
-        width: 26px;
-    }
-}
-
-.repo-content {
-    text-align: center;
 }
 
 #repo-buttons-add {
@@ -88,26 +67,61 @@ p {
     }
 }
 
-.repo-buttons-install-have--mobile {
-    display: none;
-}
+.repo-header {
+    color: #000000;
+    background-color: #F8F8F8;
 
-// On devices smaller than desktops the mobile URL is shown
-@media (max-width: $grid-desktop-breakpoint - 1) {
-
-    .repo-buttons-install-have--desktop {
-        display: none;
+    .mdl-layout-title {
+        @include font-size(14px);
+        flex-grow: 1;
+        text-align: center;
     }
 
-    .repo-buttons-install-have--mobile {
-        display: inline-block;
+    .mdl-navigation img {
+        margin-left: 14px;
+        height: 26px;
+        width: 26px;
     }
 }
 
-// On devices smaller than desktops only one app per line is shown, which should be centered.
-@media (max-width: $grid-desktop-breakpoint - 1) {
-    .repo-apps {
-        justify-content: center;
+.qr-header {
+    background-color: unset;
+    color: black;
+
+    .mdl-layout__header-row {
+        align-self: flex-end;
+    }
+}
+
+.repo-content {
+    text-align: center;
+}
+
+.qr-content {
+    h3 {
+        font-family: "Roboto-Black";
+        a {
+            color: #0066CC;
+        }
+    }
+
+    .qr-code {
+        text-align: center;
+
+        a {
+            @extend a.rm-no-underline;
+            @include font-size(12px);
+            color: #575757;
+        }
+    }
+}
+
+.fdroid-text {
+    text-align: left;
+
+    p:first-child {
+        @include font-size(17px);
+        font-weight: bold;
     }
 }
 
@@ -123,39 +137,34 @@ footer {
         background-color: #F8F8F8;
         padding: 25px;
 
-        .mdl-cell--4-col {
+        .fdroid-icon {
             align-self: center;
-            padding: 16px;
             text-align: right;
+            padding: 16px;
         }
 
-        .mdl-cell--6-col {
+        .fdroid-text {
             border-left: darkgrey solid 2px;
             padding-left: 16px;
-            text-align: left;
-
-            p:first-child {
-                @include font-size(14px);
-            }
         }
 
         @media (max-width: 839px) and (min-width: 480px) {
-            .mdl-cell--4-col {
+            .fdroid-icon {
                 text-align: center;
                 margin: auto;
             }
-            .mdl-cell--6-col {
+            .fdroid-text {
                 border-left: none;
                 margin: auto;
             }
         }
 
         @media (max-width: 479px) {
-            .mdl-cell--4-col {
+            .fdroid-icon {
                 text-align: center;
                 margin: auto;
             }
-            .mdl-cell--6-col {
+            .fdroid-text {
                 border-left: none;
                 margin: auto;
             }

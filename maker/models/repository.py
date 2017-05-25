@@ -3,7 +3,7 @@ import json
 import logging
 import os
 from io import BytesIO
-from shutil import copy, rmtree
+from shutil import copy
 
 import qrcode
 from allauth.account.signals import user_signed_up
@@ -149,7 +149,7 @@ class Repository(AbstractRepository):
 
     def _generate_qrcode(self):
         # delete QR code if we don't have a repo URL at the moment
-        if not self.get_fingerprint_url():
+        if not self.get_mobile_url():
             self.qrcode.delete(save=False)
             return
 
@@ -159,7 +159,7 @@ class Repository(AbstractRepository):
             box_size=4,
             border=4,
         )
-        qr.add_data(self.get_fingerprint_url())
+        qr.add_data(self.get_mobile_url())
         qr.make(fit=True)
         img = qr.make_image()
 
@@ -176,47 +176,62 @@ class Repository(AbstractRepository):
     def _generate_page(self):
         if not self.get_fingerprint_url():
             return
-        with open(os.path.join(self.get_repo_path(), 'index.html'), 'w') as repo_page:
-            # Copy MDL JavaScript dependency to repo
-            copy(os.path.join(settings.NODE_MODULES_ROOT, 'material-design-lite/material.min.js'),
-                 os.path.join(self.get_repo_path(), 'material.min.js'))
 
-            # Copy Roboto fonts to repo
-            roboto_font_path = os.path.join(self.get_repo_path(), 'roboto-fonts')
-            if os.path.exists(roboto_font_path):
-                rmtree(roboto_font_path)
-            roboto_font_path = os.path.join(roboto_font_path, 'Roboto')
+        # Render page to string
+        repo_page_string = render_to_string('maker/repo_page/index.html', {'repo': self})
+        repo_page_string = repo_page_string.replace('/static/maker/css/', '')
+
+        # Render qr_code page to string
+        qr_page_string = render_to_string('maker/repo_page/qr_code.html', {'repo': self})
+        qr_page_string = qr_page_string.replace('/static/maker/css/', '')
+
+        with open(os.path.join(self.get_repo_path(), 'index.html'), 'w') as f:
+            f.write(repo_page_string)  # Write repo page to file
+
+        with open(os.path.join(self.get_repo_path(), 'qr_code.html'), 'w') as f:
+            f.write(qr_page_string)  # Write repo qr page to file
+
+        # copy page assets
+        self._copy_page_assets()
+
+    def _copy_page_assets(self):
+        """
+        Copies various assets required for the repo page.
+        """
+        files = [
+            # MDL JavaScript dependency
+            (os.path.join(settings.NODE_MODULES_ROOT, 'material-design-lite', 'material.min.js'),
+             os.path.join(self.get_repo_path(), 'material.min.js')),
+            # Stylesheet
+            (os.path.join(settings.STATIC_ROOT, 'maker', 'css', 'repo_page.css'),
+             os.path.join(self.get_repo_path(), 'repo_page.css')),
+        ]
+
+        # Ensure Roboto fonts path exists
+        roboto_font_path = os.path.join(self.get_repo_path(), 'roboto-fonts', 'Roboto')
+        if not os.path.exists(roboto_font_path):
             os.makedirs(roboto_font_path)
 
-            # We only need three fonts from Roboto
-            roboto_fonts = ['Roboto-Bold.woff2', 'Roboto-Medium.woff2', 'Roboto-Regular.woff2']
-            for font in roboto_fonts:
-                copy(os.path.join(settings.NODE_MODULES_ROOT, 'roboto-fontface/fonts/Roboto', font),
-                     os.path.join(roboto_font_path, font))
+        # Add the three needed fonts from Roboto to files
+        roboto_fonts = ['Roboto-Bold.woff2', 'Roboto-Medium.woff2', 'Roboto-Regular.woff2']
+        for font in roboto_fonts:
+            source = os.path.join(settings.NODE_MODULES_ROOT, 'roboto-fontface', 'fonts', 'Roboto',
+                                  font)
+            target = os.path.join(roboto_font_path, font)
+            files.append((source, target))
 
-            from maker.models.app import App
-            context = {
-                'repo': self,
-                'apps': App.objects.filter(repo=self)
-            }
+        # Add page graphic assets to files
+        icons = ['f-droid.png', 'twitter.png', 'facebook.png']
+        icon_path = os.path.join(settings.BASE_DIR, 'maker', 'static', 'maker', 'images',
+                                 'repo_page')
+        for icon in icons:
+            source = os.path.join(icon_path, icon)
+            target = os.path.join(self.get_repo_path(), icon)
+            files.append((source, target))
 
-            # Render page to string
-            repo_page_string = render_to_string('maker/repo_page/index.html', context)
-            repo_page_string = repo_page_string.replace('/static/maker/css/', '')
-
-            # Copy stylesheet to repo
-            copy(os.path.join(settings.STATIC_ROOT, 'maker', 'css', 'repo_page.css'),
-                 os.path.join(self.get_repo_path(), 'repo_page.css'))
-
-            # Copy icons
-            icons = ['f-droid.png', 'twitter.png', 'facebook.png']
-            icon_path = os.path.join(settings.BASE_DIR, 'maker', 'static', 'maker', 'images',
-                                     'repo_page')
-            for icon in icons:
-                copy(os.path.join(icon_path, icon), os.path.join(self.get_repo_path(), icon))
-
-            # Write repo page to file
-            repo_page.write(repo_page_string)
+        # Copy all files
+        for source, target in files:
+            copy(source, target)
 
     def set_url(self, url):
         self.url = url
