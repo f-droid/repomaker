@@ -33,12 +33,14 @@
 				{% block navigation %}{% endblock navigation %}
 				{% if user.is_authenticated and user.username != 'user' %}
 					{% load account %}
+					<!-- TODO: Open account view instead -->
+					<a class="rm-toolbar-account" href="{% url 'account_email' %}">
 					{% blocktrans with user=user.username trimmed %}
 					Hello, {{ user }}
 					{% endblocktrans %}
-					<!-- TODO: Implement dropdown: https://gitlab.com/fdroid/repomaker/issues/44#note_29804618 -->
-					<a class="rm-toolbar-account mdl-navigation__link" href="{% url 'account_logout' %}">
-						<i class="material-icons">arrow_drop_down</i>
+					</a>
+					<a class="rm-toolbar-account" href="{% url 'account_logout' %}">
+						<i class="material-icons">exit_to_app</i>
 					</a>
 				{% endif %}
 			</nav>

@@ -117,7 +117,9 @@ body {
 }
 
 .rm-toolbar-account {
-    padding: 0 !important;
+    @extend .mdl-navigation__link;
+    font-weight: 400 !important;
+    padding: 0 6px !important;
 }
 
 .rm-content {
