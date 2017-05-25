@@ -22,15 +22,6 @@ $image_path: unquote(get-setting(NODE_MODULES_URL) + 'material-design-lite/src/i
 		padding: 0 60px;
 	}
 
-	input[type="submit"].full {
-	    background: rgb(63,81,181);
-		color: white;
-	}
-
-	input[type="submit"].full:hover {
-	    background: rgb(43,61,161);
-	}
-
 	input[type="file"] {
 		display: none;
 	}

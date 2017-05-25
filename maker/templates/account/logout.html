@@ -1,0 +1,38 @@
+{% extends "maker/base.html" %}
+
+{% load i18n %}
+{% load sass_tags %}
+
+{% block title %}{% trans "Sign Out" %}{% endblock %}
+
+{% block head %}
+<link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
+{% endblock head %}
+
+{% block rm-header-classes %}rm-header--light{% endblock rm-header-classes %}
+
+{% block toolbar %}
+<div class="mdl-layout-spacer"></div>
+<a href="javascript:history.back()" class="rm-toolbar-item">
+	<i class="material-icons mdl-list__item-icon">close</i>
+</a>
+{% endblock toolbar %}
+
+{% block rm-content %}
+<div class="mdl-grid rm-grid--center">
+
+	<div class="mdl-cell mdl-cell--4-col rm-form">
+	<h1>{% trans "Sign Out" %}</h1>
+
+	<p>{% trans 'Are you sure you want to sign out?' %}</p>
+
+	<form method="post" action="{% url 'account_logout' %}" class="rm-form">
+		{% csrf_token %}
+		{% if redirect_field_value %}
+		<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+		{% endif %}
+		<input type="submit" value="{% trans 'Sign Out' %}" class="rm-button--blue"/>
+	</form>
+	</div>
+</div>
+{% endblock %}

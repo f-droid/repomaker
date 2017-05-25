@@ -106,14 +106,14 @@ body {
 }
 
 .rm-button--blue {
-    background: #0066cc;
+    background: #0066cc !important;
     border: thin solid #0066cc;
-    color: white;
+    color: white !important;
     transition: background-color 0.2s ease;
 }
 
 .rm-button--blue:hover {
-    background: #0079f2;
+    background: #0079f2 !important;
 }
 
 .rm-toolbar-account {
