@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.14.1-dev\n"
+"X-Generator: Weblate 2.15-dev\n"
 
 #: maker/models/app.py:38
 msgid "Summary"
@@ -36,11 +36,11 @@ msgstr "Esta aplicación no tiene ninguna versión disponible que funcione."
 
 #: maker/models/storage.py:61
 msgid "US Standard"
-msgstr ""
+msgstr "Estándar estadounidense"
 
 #: maker/models/storage.py:77
 msgid "Amazon S3 Storage"
-msgstr ""
+msgstr "Almacenamiento en Amazon S3"
 
 #: maker/models/storage.py:98
 msgid "Enter a valid user name consisting of letters, numbers, underscores or hyphens."
@@ -74,11 +74,11 @@ msgstr "Cambiar correo electrónico"
 #: maker/templates/account/logout.html:16
 #: maker/templates/account/logout.html:25
 msgid "Sign Out"
-msgstr ""
+msgstr "Cerrar sesión"
 
 #: maker/templates/account/base.html:33 maker/templates/account/index.html:6
 msgid "Sign In"
-msgstr ""
+msgstr "Iniciar sesión"
 
 #: maker/templates/account/base.html:34 maker/templates/account/index.html:41
 msgid "Sign Up"
@@ -124,6 +124,8 @@ msgstr "Registrarse"
 #: maker/templates/maker/app/add.html:6 maker/templates/maker/app/add.html:17
 msgid "Choose from Repos"
 msgstr ""
+"Lo siento, ahora mismo no hay ningún repositorio. No desespere, puede añadir "
+"uno a continuación."
 
 #: maker/templates/maker/app/add.html:23
 #, python-format
@@ -301,7 +303,7 @@ msgstr "Actualizada hace %(time)s"
 
 #: maker/templates/maker/app/index.html:112
 msgid "version history"
-msgstr ""
+msgstr "historial de versiones"
 
 #: maker/templates/maker/app/index.html:121
 #, fuzzy, python-format
@@ -312,7 +314,7 @@ msgstr "versión %(version)s"
 #: maker/templates/maker/app/index.html:127
 #, python-format
 msgid "Released %(date)s"
-msgstr ""
+msgstr "Publicada %(date)s"
 
 #: maker/templates/maker/app/index.html:134
 msgid "APK is still downloading..."
@@ -433,7 +435,7 @@ msgstr "Crear"
 #: maker/templates/maker/repo/edit.html:5
 #: maker/templates/maker/repo/edit.html:14
 msgid "Edit Repo"
-msgstr ""
+msgstr "Editar repo"
 
 #: maker/templates/maker/repo/edit.html:20
 msgid "Save Changes"
@@ -497,11 +499,13 @@ msgstr "Almacenamiento SSH"
 
 #: maker/templates/maker/repo/index/info.html:39
 msgid "Attention:"
-msgstr ""
+msgstr "Atención:"
 
 #: maker/templates/maker/repo/index/info.html:40
 msgid "This repository has no remote storage. Add one to get your repository published."
 msgstr ""
+"Este repositorio no dispone de almacenamiento remoto. Añada uno para "
+"publicar su repositorio."
 
 #: maker/templates/maker/repo/index/info.html:46
 msgid "Add SSH Storage"
@@ -509,11 +513,11 @@ msgstr ""
 
 #: maker/templates/maker/repo/index/info.html:49
 msgid "Add Git Storage"
-msgstr ""
+msgstr "Añadir almacenamiento Git"
 
 #: maker/templates/maker/repo/index/info.html:52
 msgid "Add Amazon S3 Storage"
-msgstr ""
+msgstr "Añadir almacenamiento en Amazon S3"
 
 #: maker/templates/maker/repo/index/info.html:57
 msgid "Fingerprint"
@@ -566,16 +570,18 @@ msgstr ""
 #: maker/templates/maker/storage/delete.html:5
 #: maker/templates/maker/storage/detail.html:59
 msgid "Delete Storage"
-msgstr ""
+msgstr "Eliminar almacenamiento"
 
 #: maker/templates/maker/storage/delete.html:15
 msgid "Confirm Removal"
-msgstr ""
+msgstr "Confirme la eliminación"
 
 #: maker/templates/maker/storage/delete.html:20
 #, python-format
 msgid "Are you sure you want to remove the remote storage at \"%(object)s\"?"
 msgstr ""
+"¿Está seguro de que quiere eliminar el almacenamiento remoto en \"%(object)"
+"s\"?"
 
 #: maker/templates/maker/storage/detail.html:23
 #, fuzzy
@@ -602,10 +608,19 @@ msgstr "Almacenamiento Git"
 #: maker/templates/maker/storage/detail_git.html:6
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
 msgstr ""
+"Por favor, asegúrese de añadir su clave SSH pública a su cuenta de Git para "
+"subir el trabajo. Encontrará instrucciones para <a href=\""
+"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-"
+"create-your-ssh-keys\"> 1Gitlab</a> 2 y <a href=\""
+"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/"
+"\"> 3GitHub</a> 4."
 
 #: maker/templates/maker/storage/detail_git.html:15
+#, fuzzy
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
 msgstr ""
+"Asimismo, asegúrese de que la rama principal de su repositorio <b>no esté "
+"protegida</b> para forzar envíos."
 
 #: maker/templates/maker/storage/detail_git.html:25
 #: maker/views/gitstorage.py:13
@@ -627,6 +642,10 @@ msgstr ""
 #: maker/templates/maker/storage/detail_ssh.html:6
 msgid "Please make sure to add this public SSH key to your SSH server's <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> file,\tif you have not done so already."
 msgstr ""
+"Asegúrese de haber añadido su clave pública SSH  a fichero <tt> <a href=\""
+"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh."
+"2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> de su servidor SSH si "
+"no lo ha hecho ya."
 
 #: maker/templates/maker/storage/detail_ssh.html:14
 msgid "Security Warning: This gives repomaker write access to that storage. Please limit this user's access as much as possible."
@@ -681,7 +700,7 @@ msgstr ""
 
 #: maker/views/apk.py:17
 msgid "Select APK file for upload"
-msgstr ""
+msgstr "Elija un archivo APK para subir"
 
 #: maker/views/gitstorage.py:14
 msgid "Raw Git URL"
@@ -690,43 +709,50 @@ msgstr ""
 #: maker/views/gitstorage.py:15
 msgid "This is the location where the uploaded files can be accessed from in raw form. Leave empty for GitHub or GitLab.com repositories."
 msgstr ""
+"Ésta es la dirección desde donde se puede acceder a los archivos sin "
+"añadidos. Déjela en blanco en el caso de repositorios en GitHub o GitLab.com"
 
 #: maker/views/gitstorage.py:34
 msgid "This URL must start with 'git@'."
-msgstr ""
+msgstr "La URL debe empezar con 'git@'."
 
 #: maker/views/gitstorage.py:42
 msgid "This URL must end with '.git'."
-msgstr ""
+msgstr "La dirección debe acabar con '.git'."
 
 #: maker/views/gitstorage.py:49
 msgid "This URL is invalid. Please copy the exact SSH URL of your git repository."
 msgstr ""
+"La dirección es incorrecta. Por favor, copie la dirección exacta de la URL "
+"SSH de su repositorio git."
 
 #: maker/views/gitstorage.py:78
 msgid "Please add a valid URLfor the raw content of this git repository."
 msgstr ""
+"Por favor añada una URL válida para el contenido de este repositorio git."
 
 #: maker/views/remoterepository.py:22
 msgid "Repository URL"
-msgstr ""
+msgstr "URL del repositorio"
 
 #: maker/views/remoterepository.py:38
 msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
 msgstr ""
+"Use una URL con huella digital al final, ya que así podremos validar la "
+"autenticidad del repositorio."
 
 #: maker/views/remoterepository.py:45
 msgid "Please don't add one of your own repositories here."
-msgstr ""
+msgstr "No añada ninguno de sus repositorios aquí."
 
 #: maker/views/remoterepository.py:66
 #, python-format
 msgid "Could not validate repository: %s"
-msgstr ""
+msgstr "No se ha podido validar el repositorio: %s"
 
 #: maker/views/repository.py:42
 msgid "Describe the repo"
-msgstr ""
+msgstr "Describa el repositorio"
 
 #: maker/views/s3storage.py:15
 msgid "Bucket Name"
@@ -734,27 +760,27 @@ msgstr ""
 
 #: maker/views/s3storage.py:17
 msgid "Secret Access Key"
-msgstr ""
+msgstr "Clave de acceso secreta"
 
 #: maker/views/s3storage.py:20
 msgid "Other regions are currently not supported."
-msgstr ""
+msgstr "Actualmente no se soportan otras regiones."
 
 #: maker/views/screenshot.py:17
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: maker/views/screenshot.py:18
 msgid "Select Screenshot for upload"
-msgstr ""
+msgstr "Elija una captura de pantalla a subir"
 
 #: maker/views/sshstorage.py:13
 msgid "Use local default SSH Key"
-msgstr ""
+msgstr "Use la clave SSH local por defecto"
 
 #: maker/views/sshstorage.py:31
 msgid "User Name"
-msgstr ""
+msgstr "Nombre de usuario"
 
 #: maker/views/sshstorage.py:32
 msgid "URL"
@@ -763,11 +789,13 @@ msgstr ""
 #: maker/views/sshstorage.py:35
 msgid "This is the location where the uploaded files can be accessed from."
 msgstr ""
+"Ésta es la dirección desde donde se podrá acceder a los ficheros subidos."
 
 #: maker/views/storage.py:13
 msgid "Primary Storage"
-msgstr ""
+msgstr "Almacenamiento primario"
 
 #: maker/views/storage.py:14
 msgid "Make this storage the primary storage of the repository."
 msgstr ""
+"Haga de este almacenamiento el almacenamiento principal del repositorio."
