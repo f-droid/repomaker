@@ -30,9 +30,8 @@ class AppCreateView(RepositoryAuthorizationMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(AppCreateView, self).get_context_data(**kwargs)
-        context['repo_id'] = self.kwargs['repo_id']
-        context['repos'] = RemoteRepository.objects.filter(users__id=self.request.user.id)
-        if 'remote_repo_id' in self.kwargs:
+        context = get_app_context(context, self.kwargs, self.request.user)
+        if 'remote_repo_id' in kwargs:
             context['apps'] = RemoteApp.objects.filter(repo__pk=self.kwargs['remote_repo_id'])
         else:
             context['apps'] = RemoteApp.objects.filter(repo__in=context['repos'])
@@ -74,10 +73,19 @@ class RemoteAppSearchView(RepositoryAuthorizationMixin, ListView):
         )
 
     def get_context_data(self, **kwargs):
-        context = super(RemoteAppSearchView, self).get_context_data(**kwargs)
-        context['repo_id'] = self.kwargs['repo_id']
-        context['repos'] = RemoteRepository.objects.filter(users__id=self.request.user.id)
-        return context
+        return get_app_context(super(RemoteAppSearchView, self).get_context_data(**kwargs),
+                               self.kwargs, self.request.user)
+
+
+def get_app_context(context, kwargs, user):
+    context['repo'] = {}
+    context['repo']['id'] = kwargs['repo_id']
+    context['repos'] = RemoteRepository.objects.filter(users__id=user.id)
+    context['categories'] = Category.objects.filter(
+        Q(user=None) | Q(user=user))
+    if 'remote_repo_id' in kwargs:
+        context['remote_repo'] = RemoteRepository.objects.get(pk=kwargs['remote_repo_id'])
+    return context
 
 
 class AppDetailView(RepositoryAuthorizationMixin, DetailView):
@@ -101,7 +109,6 @@ class AppDetailView(RepositoryAuthorizationMixin, DetailView):
 
 
 class AppForm(BaseModelForm):
-
     def __init__(self, *args, **kwargs):
         super(AppForm, self).__init__(*args, **kwargs)
         if self.instance.category:

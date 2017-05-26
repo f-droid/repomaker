@@ -97,6 +97,7 @@ body {
 }
 
 .rm-button, .rm-button--blue {
+    @extend .mdl-button;
     background: none;
     border: thin solid #4a4a4a;
     border-radius: 25px;
@@ -166,12 +167,12 @@ a.rm-no-underline {
     transition: background-color 0.2s ease;
 
     .rm-app-number {
-        font-family: "Roboto Black";
+        font-family: "Roboto-Black";
         @include font-size(52px);
     }
 
     .rm-repo-title {
-        font-family: "Roboto Medium";
+        font-family: "Roboto-Medium";
         @include font-size(22px);
     }
 

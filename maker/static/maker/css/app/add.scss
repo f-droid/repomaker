@@ -1,0 +1,160 @@
+/*
+ * Repomaker Add App Styles
+ */
+.rm-repo-add-toolbar-title {
+    @extend .rm-toolbar-action-left;
+    font-weight: 500;
+    @include font-size(18px);
+}
+
+.rm-repo-add-toolbar-count {
+    display: none;
+
+    @extend .rm-toolbar-item;
+    color: #0066CC;
+    font-weight: 500;
+    @include font-size(11px);
+    i {
+        @include font-size(16px);
+        padding-right: 3px;
+    }
+}
+
+#rm-repo-add-toolbar-count-span {
+    padding-right: 3px;
+}
+
+.rm-repo-add-toolbar-done {
+    button {
+        @extend .rm-button, .mdl-button;
+        border-color: #0066CC;
+        color: #0066CC;
+    }
+}
+
+.rm-app-add-container {
+    @extend .mdl-grid, .rm-grid--full-width, .rm-grid--center;
+}
+
+.rm-app-add {
+    @extend .mdl-cell, .mdl-cell--8-col, .mdl-grid;
+}
+
+.rm-app-add-search {
+    @extend .mdl-cell, .mdl-cell--4-col;
+}
+
+.rm-app-add-search-field {
+    @extend .mdl-textfield;
+    align-items: center;
+    border: thin solid #ECECEC;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    padding: 0 6px;
+
+    input {
+        border: none;
+    }
+}
+
+.rm-app-add-search-field-input {
+    @extend .mdl-textfield__input;
+}
+
+.rm-app-add-filters-title {
+    color: #000000;
+    font-weight: 500;
+    @include font-size(15px);
+    margin-top: 12px;
+}
+
+.rm-app-add-divider, .rm-app-add-remote-repository-information-divider {
+    border-color: #ECECEC;
+}
+
+.rm-app-add-repositories-title, .rm-app-add-categories-title {
+    font-weight: 500;
+    @include font-size(13px);
+}
+
+.rm-app-add-repositories-list {
+    padding-left: 25px;
+}
+
+.rm-app-add-repositories-list-item {
+    // TODO: Handle selection
+    color: #ECECEC;
+    color: #4a4a4a;
+    a {
+        color: #000000;
+        font-weight: 400;
+        @include font-size(15px);
+        text-decoration: none;
+    }
+}
+
+.rm-app-add-repositories-list-item-add {
+    @extend .rm-app-add-repositories-list-item;
+    list-style-type: none;
+    a {
+        text-decoration: underline;
+    }
+}
+
+.rm-app-add-categories-clear {
+    color: #0368cd;
+    float: right;
+    @include font-size(12px);
+    padding-right: 6px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.rm-app-add-categories-list {
+    @extend .mdl-grid;
+}
+
+.rm-app-add-categories-list-item {
+    // TODO: Handle selection
+    background: none;
+    border: none;
+    margin: 4px;
+    text-align: center;
+    width: 30%;
+}
+
+.rm-app-add-categories-list-item-circle {
+    // TODO: Pick random color: https://stackoverflow.com/a/26922736
+    background: #f25050;
+    border-radius: 50%;
+    display: inline-block;
+    height: 35px;
+    width: 35px;
+}
+
+.rm-app-add-categories-list-item-title {
+    font-family: "Roboto-Regular";
+    @include font-size(13px);
+}
+
+.rm-app-add-apps {
+    @extend .mdl-cell, .mdl-cell--8-col, .mdl-grid;
+}
+
+.rm-app-add-remote-repository-information {
+    @extend .mdl-cell, .mdl-cell--12-col;
+}
+
+.rm-app-add-remote-repository-information-title {
+    color: #000000;
+    font-family: "Roboto-Black";
+    @include font-size(30px);
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+.rm-app-add-remote-repository-information-description {
+    color: #000000;
+    @include font-size(17px);
+}

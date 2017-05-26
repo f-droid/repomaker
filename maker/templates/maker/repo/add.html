@@ -24,13 +24,11 @@
 	<div class="rm-grid--center mdl-cell mdl-cell--4-col">
 		<h4 style="text-align: center">{% trans 'New Repo' %}</h4>
 
-		<div class="rm-form mdl-grid ">
-			<form action="" enctype="multipart/form-data" method="post">
-				{% csrf_token %}
-				{% include '../form.html' %}
-				<input type="submit" value="{% trans 'Create' %}"/>
-			</form>
-		</div>
+		<form class="rm-form mdl-grid" action="" enctype="multipart/form-data" method="post">
+			{% csrf_token %}
+			{% include '../form.html' %}
+			<input type="submit" value="{% trans 'Create' %}"/>
+		</form>
 	</div>
 </div>
 {% endblock rm-content %}

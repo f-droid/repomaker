@@ -62,3 +62,39 @@ a.rm-app-card:hover {
     text-align: right;
     padding-top: 6px;
 }
+
+.rm-app-card-footer {
+    display: flex;
+    align-items: center;
+}
+
+.rm-app-card-categories {
+    align-items: flex-start;
+    display: flex;
+    flex-grow: 2;
+    flex-flow: row;
+}
+
+.rm-app-card-category-chip {
+    background: #f4f4f4;
+    margin: 0 4px 0 4px;
+}
+
+.rm-app-card-category-text {
+    color: #4a4a4a;
+    font-size: 13px;
+}
+
+.rm-app-card-footer-action {
+    align-self: flex-end;
+    button {
+        // TODO: Extend .rm-button from style.css
+        @extend .mdl-button;
+            background: none;
+            border: thin solid #4a4a4a;
+            border-radius: 25px;
+            @include font-size(11px);
+            margin: 10px;
+            padding: 0 40px;
+    }
+}

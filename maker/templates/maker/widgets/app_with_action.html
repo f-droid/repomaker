@@ -1,0 +1,18 @@
+{% extends "maker/widgets/app.html" %}
+{% load i18n %}
+{% block rm-app-card-right %}
+<div class="rm-app-card-footer">
+	<div class="rm-app-card-categories">
+		{% if app.category.exists %}
+		{% for category in app.category.all %}
+		<span class="rm-app-card-category-chip mdl-chip">
+			<span class="rm-app-card-category-text mdl-chip__text">{{ category }}</span>
+		</span>
+		{% endfor %}
+		{% endif %}
+	</div>
+	<a href="{{ url }}" class="rm-app-card-footer-action">
+		<button>{{ action_title }}</button>
+	</a>
+</div>
+{% endblock rm-app-card-right %}

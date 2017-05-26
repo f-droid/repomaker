@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-19 19:17+0000\n"
+"POT-Creation-Date: 2017-05-25 13:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,35 +33,35 @@ msgstr ""
 msgid "This app does not have any working versions available."
 msgstr ""
 
-#: maker/models/storage.py:54
+#: maker/models/storage.py:61
 msgid "US Standard"
 msgstr ""
 
-#: maker/models/storage.py:68
+#: maker/models/storage.py:77
 msgid "Amazon S3 Storage"
 msgstr ""
 
-#: maker/models/storage.py:89
+#: maker/models/storage.py:98
 msgid "Enter a valid user name consisting of letters, numbers, underscores or hyphens."
 msgstr ""
 
-#: maker/models/storage.py:113
+#: maker/models/storage.py:122
 msgid "Enter a valid hostname."
 msgstr ""
 
-#: maker/models/storage.py:131
+#: maker/models/storage.py:140
 msgid "Enter a valid path."
 msgstr ""
 
-#: maker/models/storage.py:203
+#: maker/models/storage.py:215
 msgid "SSH Storage"
 msgstr ""
 
-#: maker/models/storage.py:227
+#: maker/models/storage.py:241
 msgid "Git Storage"
 msgstr ""
 
-#: maker/models/storage.py:301
+#: maker/models/storage.py:318
 msgid "Default Storage"
 msgstr ""
 
@@ -73,56 +73,77 @@ msgstr ""
 msgid "Sign Out"
 msgstr ""
 
-#: maker/templates/account/base.html:33
+#: maker/templates/account/base.html:33 maker/templates/account/login.html:6
 msgid "Sign In"
 msgstr ""
 
-#: maker/templates/account/base.html:34
+#: maker/templates/account/base.html:34 maker/templates/account/login.html:41
 msgid "Sign Up"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:5
-#: maker/templates/maker/app/remote_add.html:5
-msgid "Add App"
+#: maker/templates/account/login.html:21
+msgid "Distribute apps."
 msgstr ""
 
-#: maker/templates/maker/app/add.html:14
-msgid "Add new App"
+#: maker/templates/account/login.html:21
+msgid "Spread the love."
 msgstr ""
 
-#: maker/templates/maker/app/add.html:22
-msgid "Upload APK"
+#: maker/templates/account/login.html:23
+msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
 msgstr ""
 
-#: maker/templates/maker/app/add.html:36
-msgid "Search for apps"
+#: maker/templates/account/login.html:39
+#: maker/templates/account/login_form.html:38
+msgid "Login"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:41
-msgid "Search"
+#: maker/templates/account/login_form.html:34
+msgid "Forgot Password"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:49
-msgid "Remote Repositories"
+#: maker/templates/account/login_form.html:49
+msgid "Or login with"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:55
-msgid "All"
+#: maker/templates/maker/app/add.html:5 maker/templates/maker/app/add.html:17
+msgid "Choose from Repos"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:65
-msgid "Sorry, but there are no remote repositories at the moment. Don't despair, you can add one below."
+#: maker/templates/maker/app/add.html:23
+#, python-format
+msgid "%(apps_count)s added"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:73
+#: maker/templates/maker/app/add.html:28
+msgid "Done"
+msgstr ""
+
+#: maker/templates/maker/app/add.html:48
+msgid "Filters"
+msgstr ""
+
+#: maker/templates/maker/app/add.html:51
+msgid "Repos"
+msgstr ""
+
+#: maker/templates/maker/app/add.html:52
+msgid "clear"
+msgstr ""
+
+#: maker/templates/maker/app/add.html:61 maker/templates/maker/app/add.html:86
 msgid "Add"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:99
+#: maker/templates/maker/app/add.html:64
+msgid "Categories"
+msgstr ""
+
+#: maker/templates/maker/app/add.html:90
 msgid "There are no apps from remote repositories."
 msgstr ""
 
-#: maker/templates/maker/app/add.html:100
+#: maker/templates/maker/app/add.html:91
 msgid "If you just added a remote repository, wait for the apps to download and try again later."
 msgstr ""
 
@@ -166,7 +187,7 @@ msgid "None"
 msgstr ""
 
 #: maker/templates/maker/app/index.html:27
-#: maker/templates/maker/repo/index/apps.html:23
+#: maker/templates/maker/repo/index/info.html:11
 msgid "Edit"
 msgstr ""
 
@@ -214,6 +235,10 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
+#: maker/templates/maker/app/remote_add.html:5
+msgid "Add App"
+msgstr ""
+
 #: maker/templates/maker/app/remote_add.html:14
 #, python-format
 msgid "Add %(app)s to %(repo)s"
@@ -256,12 +281,32 @@ msgstr ""
 msgid "Hello, %(user)s"
 msgstr ""
 
-#: maker/templates/maker/index.html:5
-msgid "Repository List"
+#: maker/templates/maker/index.html:5 maker/templates/maker/index.html:13
+msgid "My Repos"
 msgstr ""
 
-#: maker/templates/maker/index.html:33
-msgid "No repositories are available."
+#: maker/templates/maker/index.html:34
+#, python-format
+msgid ""
+"\n"
+"\t\t\tPublished %(time_ago)s\n"
+"\t\t\t"
+msgstr ""
+
+#: maker/templates/maker/index.html:38
+#, python-format
+msgid ""
+"\n"
+"\t\t\tCreated %(time_ago)s\n"
+"\t\t\t"
+msgstr ""
+
+#: maker/templates/maker/index.html:48
+msgid "There are no repositories are available."
+msgstr ""
+
+#: maker/templates/maker/index.html:52
+msgid "Create Repo"
 msgstr ""
 
 #: maker/templates/maker/repo/add.html:5
@@ -269,7 +314,7 @@ msgstr ""
 msgid "New Repo"
 msgstr ""
 
-#: maker/templates/maker/repo/add.html:31
+#: maker/templates/maker/repo/add.html:30
 msgid "Create"
 msgstr ""
 
@@ -294,80 +339,81 @@ msgstr ""
 msgid "Search for apps in your repository"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:31
-#: maker/templates/maker/repo/index/apps.html:69
+#: maker/templates/maker/repo/index/apps.html:26
+#: maker/templates/maker/repo/index/apps.html:54
 msgid "Add files"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:34
-#: maker/templates/maker/repo/index/apps.html:72
+#: maker/templates/maker/repo/index/apps.html:29
+#: maker/templates/maker/repo/index/apps.html:57
 msgid "Drag and drop .apk, .pdf, .epub, videos, photos or music files"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:37
-#: maker/templates/maker/repo/index/apps.html:75
+#: maker/templates/maker/repo/index/apps.html:32
+#: maker/templates/maker/repo/index/apps.html:60
 msgid "or"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:39
-#: maker/templates/maker/repo/index/apps.html:77
+#: maker/templates/maker/repo/index/apps.html:34
+#: maker/templates/maker/repo/index/apps.html:62
 msgid "browse to upload"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:45
-#: maker/templates/maker/repo/index/apps.html:86
+#: maker/templates/maker/repo/index/apps.html:40
+#: maker/templates/maker/repo/index/apps.html:71
 msgid "add from repos"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:82
+#: maker/templates/maker/repo/index/apps.html:67
 msgid "Discover"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:83
+#: maker/templates/maker/repo/index/apps.html:68
 msgid "Find things to add from other repos"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:14 maker/views/sshstorage.py:34
+#: maker/templates/maker/repo/index/info.html:20 maker/views/sshstorage.py:32
 msgid "URL"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:24
+#: maker/templates/maker/repo/index/info.html:30
 msgid "Fingerprint"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:33
+#: maker/templates/maker/repo/index/info.html:39
 msgid "Created"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:42
+#: maker/templates/maker/repo/index/info.html:48
 msgid "Last Updated"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:51
+#: maker/templates/maker/repo/index/info.html:57
 msgid "Last Publication"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:85
+#: maker/templates/maker/repo/index/info.html:97
 msgid "Attention:"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:85
+#: maker/templates/maker/repo/index/info.html:97
 msgid "This repository has no remote storage. Add one to get your repository published."
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:90
+#: maker/templates/maker/repo/index/info.html:102
 msgid "Add SSH Storage"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:93
+#: maker/templates/maker/repo/index/info.html:105
 msgid "Add Git Storage"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:96
+#: maker/templates/maker/repo/index/info.html:108
 msgid "Add Amazon S3 Storage"
 msgstr ""
 
 #: maker/templates/maker/storage/delete.html:5
+#: maker/templates/maker/storage/detail.html:59
 msgid "Delete Storage"
 msgstr ""
 
@@ -380,21 +426,20 @@ msgstr ""
 msgid "Are you sure you want to remove the remote storage at \"%(object)s\"?"
 msgstr ""
 
-#: maker/templates/maker/storage/detail.html:4
-#: maker/templates/maker/storage/detail.html:10
-msgid "Remote Storage Updated"
-msgstr ""
-
-#: maker/templates/maker/storage/detail.html:16
-msgid "Please make sure to authorize this public SSH key for your remote storage if you have not done so already."
-msgstr ""
-
 #: maker/templates/maker/storage/detail.html:23
-msgid "Your local default SSH key will be used to connect to the storage."
+msgid "Enable Storage"
 msgstr ""
 
-#: maker/templates/maker/storage/detail.html:26
-msgid "If this storage is experiencing problems, please check that the key works properly."
+#: maker/templates/maker/storage/detail.html:30
+msgid "Disable Storage"
+msgstr ""
+
+#: maker/templates/maker/storage/detail.html:40
+msgid "Repo Address"
+msgstr ""
+
+#: maker/templates/maker/storage/detail.html:54
+msgid "Edit Storage"
 msgstr ""
 
 #: maker/templates/maker/storage/detail_git.html:6
@@ -405,8 +450,57 @@ msgstr ""
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
 msgstr ""
 
+#: maker/templates/maker/storage/detail_git.html:25
+#: maker/views/gitstorage.py:13
+msgid "Git Repository SSH Address"
+msgstr ""
+
+#: maker/templates/maker/storage/detail_s3.html:8
+msgid "Region"
+msgstr ""
+
+#: maker/templates/maker/storage/detail_s3.html:17
+msgid "Bucket"
+msgstr ""
+
+#: maker/templates/maker/storage/detail_s3.html:26 maker/views/s3storage.py:16
+msgid "Access Key ID"
+msgstr ""
+
 #: maker/templates/maker/storage/detail_ssh.html:6
 msgid "Please make sure to add this public SSH key to your SSH server's <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> file,\tif you have not done so already."
+msgstr ""
+
+#: maker/templates/maker/storage/detail_ssh.html:14
+msgid "Security Warning: This gives repomaker write access to that storage. Please limit this user's access as much as possible."
+msgstr ""
+
+#: maker/templates/maker/storage/detail_ssh.html:22
+msgid "Username"
+msgstr ""
+
+#: maker/templates/maker/storage/detail_ssh.html:31
+msgid "Host"
+msgstr ""
+
+#: maker/templates/maker/storage/detail_ssh.html:40
+msgid "Path"
+msgstr ""
+
+#: maker/templates/maker/storage/detail_ssh_key.html:12
+msgid "Your local default SSH key will be used to connect to the storage."
+msgstr ""
+
+#: maker/templates/maker/storage/detail_ssh_key.html:17
+msgid "Please make sure to authorize this public SSH key for your remote storage, if you have not done so already."
+msgstr ""
+
+#: maker/templates/maker/storage/detail_ssh_key.html:21
+msgid "Activate this storage only once you have added the SSH key."
+msgstr ""
+
+#: maker/templates/maker/storage/detail_ssh_key.html:25
+msgid "If this storage is experiencing problems, please check that the SSH key works properly."
 msgstr ""
 
 #: maker/templates/maker/storage/form.html:7
@@ -432,31 +526,27 @@ msgstr ""
 msgid "Select APK file for upload"
 msgstr ""
 
-#: maker/views/gitstorage.py:15
-msgid "Git Repository SSH Address"
-msgstr ""
-
-#: maker/views/gitstorage.py:16
+#: maker/views/gitstorage.py:14
 msgid "Raw Git URL"
 msgstr ""
 
-#: maker/views/gitstorage.py:17
+#: maker/views/gitstorage.py:15
 msgid "This is the location where the uploaded files can be accessed from in raw form. Leave empty for GitHub or GitLab.com repositories."
 msgstr ""
 
-#: maker/views/gitstorage.py:36
+#: maker/views/gitstorage.py:34
 msgid "This URL must start with 'git@'."
 msgstr ""
 
-#: maker/views/gitstorage.py:44
+#: maker/views/gitstorage.py:42
 msgid "This URL must end with '.git'."
 msgstr ""
 
-#: maker/views/gitstorage.py:51
+#: maker/views/gitstorage.py:49
 msgid "This URL is invalid. Please copy the exact SSH URL of your git repository."
 msgstr ""
 
-#: maker/views/gitstorage.py:80
+#: maker/views/gitstorage.py:78
 msgid "Please add a valid URLfor the raw content of this git repository."
 msgstr ""
 
@@ -481,19 +571,15 @@ msgstr ""
 msgid "Describe the repo"
 msgstr ""
 
-#: maker/views/s3storage.py:14
+#: maker/views/s3storage.py:15
 msgid "Bucket Name"
 msgstr ""
 
-#: maker/views/s3storage.py:15
-msgid "Access Key ID"
-msgstr ""
-
-#: maker/views/s3storage.py:16
+#: maker/views/s3storage.py:17
 msgid "Secret Access Key"
 msgstr ""
 
-#: maker/views/s3storage.py:19
+#: maker/views/s3storage.py:20
 msgid "Other regions are currently not supported."
 msgstr ""
 
@@ -505,22 +591,22 @@ msgstr ""
 msgid "Select Screenshot for upload"
 msgstr ""
 
-#: maker/views/sshstorage.py:15
+#: maker/views/sshstorage.py:13
 msgid "Use local default SSH Key"
 msgstr ""
 
-#: maker/views/sshstorage.py:33
+#: maker/views/sshstorage.py:31
 msgid "User Name"
 msgstr ""
 
-#: maker/views/sshstorage.py:37
+#: maker/views/sshstorage.py:35
 msgid "This is the location where the uploaded files can be accessed from."
 msgstr ""
 
-#: maker/views/storage.py:12
+#: maker/views/storage.py:13
 msgid "Primary Storage"
 msgstr ""
 
-#: maker/views/storage.py:13
+#: maker/views/storage.py:14
 msgid "Make this storage the primary storage of the repository."
 msgstr ""

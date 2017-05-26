@@ -42,7 +42,8 @@
 				</a>
 			</div>
 			{% for app in apps %}
-				{% include "maker/widgets/app.html" %}
+				{% url 'app' repo.id app.id as url %}
+				{% include "maker/widgets/app.html" with clickable=True url=url width=6 %}
 			{% endfor %}
 		</div>
 		{% else %}
