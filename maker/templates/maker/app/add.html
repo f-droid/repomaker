@@ -1,6 +1,7 @@
 {% extends "maker/base.html" %}
 {% load i18n %}
 {% load sass_tags %}
+{% load static %}
 
 {% block title %}{% trans 'Choose from Repos' %}{% endblock %}
 
@@ -85,6 +86,7 @@
 				</div>
 				{% endif %}
 				<!-- TODO: Add should add app asynchronously in the background, updating the count at the top -->
+				{% csrf_token %}
 				{% for app in apps %}
 					{% url 'add_remote_app' repo.id app.repo.id app.id as url %}
 					{% trans 'Add' as action_title %}
@@ -98,4 +100,6 @@
 			</div>
 	</div>
 </div>
+
+<script src="{% static 'maker/js/app/add.js' %}"></script>
 {% endblock rm-content %}

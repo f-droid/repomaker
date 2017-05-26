@@ -10,15 +10,12 @@
 
 
 {% block rm-content %}
-
-<h1>{% blocktrans with app=app.name repo=repo.name %}Add {{ app }} to {{ repo }}{% endblocktrans %}</h1>
-
-<div class="mdl-grid">
-
-	<div class="mdl-cell mdl-cell--12-col">
-
-		<h2 style="vertical-align: middle;">
-			<img src="{{ app.icon.url }}" alt="Repo Icon" class="rm-icon"/> {{ app.name }}
+<div class="mdl-grid rm-grid--full-width rm-grid--center">
+	<div class="mdl-cell mdl-cell--8-col" style="text-align:center">
+		<h2>
+			{% blocktrans with app=app.name repo=repo.name trimmed %}
+			Add {{ app }} to {{ repo }}
+			{% endblocktrans %}
 		</h2>
 
 		{% if app.summary %}
@@ -26,13 +23,6 @@
 		{% endif %}
 
 		<p>{{ app.description|safe }}</p>
-	</div>
-
-	<div class="mdl-cell mdl-cell--12-col"
-		 style="display: block; white-space: nowrap; overflow: auto; margin-right: 10px; margin-bottom: 10px; padding: 10px">
-		{% for screenshot in app.remotescreenshot_set.all %}
-		<img src="{{ screenshot.get_url }}" style="display: inline-block; margin: 10px 0px 10px 10px; max-height:500px"/>
-		{% endfor %}
 	</div>
 </div>
 
