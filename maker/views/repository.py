@@ -84,6 +84,8 @@ class RepositoryDetailView(RepositoryAuthorizationMixin, DetailView):
 
         context['storage'] = StorageManager.get_storage(repo)
         context['apps'] = App.objects.filter(repo=repo)
+        from .app import ApkForm
+        context['form'] = ApkForm()
         return context
 
 

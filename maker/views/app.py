@@ -17,6 +17,7 @@ from .repository import RepositoryAuthorizationMixin
 class ApkForm(ModelForm):
     class Meta:
         model = ApkPointer
+        # TODO allow multiple files to be uploaded at once
         fields = ['file']
         labels = {
             'file': _('Select APK file for upload'),
@@ -39,6 +40,7 @@ class AppCreateView(RepositoryAuthorizationMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.repo = self.get_repo()
+        # TODO handle multiple files to be uploaded here
         pointer = form.save()  # needed to save file to disk for scanning
         try:
             pointer.initialize()

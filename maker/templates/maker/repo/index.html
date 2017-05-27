@@ -1,8 +1,14 @@
 {% extends "maker/base.html" %}
 {% load i18n %}
 {% load humanize %}
+{% load sass_tags %}
 
 {% block title %}{{ repo.name }}{% endblock %}
+
+{% block head %}
+<link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
+{{ form.media }}
+{% endblock head %}
 
 {% block toolbar-items-left %}
 <a href="/" class="rm-toolbar-item">

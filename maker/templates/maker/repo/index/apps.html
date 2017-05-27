@@ -22,16 +22,28 @@
 			<div class="rm-repo-apps-add mdl-cell mdl-cell--6-col">
 				<div class="rm-repo-apps-add-locally">
 					<!-- TODO: Make this a drag and drop area -->
-					<i class="rm-repo-apps-empty-add-icon material-icons">file_upload</i>
-					<div class="rm-repo-apps-empty-add-title">{% trans 'Add files' %}</div>
+					<div class="rm-repo-apps-empty-add-title">
+						<i class="rm-repo-apps-empty-add-icon material-icons">file_upload</i>
+						{% trans 'Add .apk files' %}
+					</div>
 					<!-- TODO: Make this translatable properly -->
+					<!--
 					<div class="rm-repo-apps-empty-add-description-first">
 						{% trans 'Drag and drop .apk, .pdf, .epub, videos, photos or music files' %}
 					</div>
-					<div class="rm-repo-apps-empty-add-description-second">
-						{% trans 'or' %}
-						<!-- TODO: Make this link working -->
-						<a class="rm-repo-apps-empty-add-upload-browse" href="#">{% trans 'browse to upload' %}</a>
+					-->
+					<div class="rm-repo-apps-empty-add-description-second rm-form">
+						<!--{% trans 'or' %}-->
+						<form action="{% url 'add_app' repo.id %}" enctype="multipart/form-data" method="post">
+							{% csrf_token %}
+							<label for="id_file" class="rm-repo-apps-empty-add-upload-browse">
+								{% trans 'browse to upload' %}
+							</label>
+							<p>{{ form.file }}</p>
+							<button type="submit" class="rm-button--blue mdl-button mdl-js-button">
+								{% trans 'Add' %}
+							</button>
+						</form>
 					</div>
 				</div>
 				<a href="{% url 'add_app' repo.id %}" class="rm-repo-apps-add-remotely">
@@ -47,19 +59,29 @@
 			{% endfor %}
 		</div>
 		{% else %}
-		<div class="mdl-grid mdl-grid--no-spacing">
+		<div class="mdl-grid mdl-grid--no-spacing rm-form">
 			<div class="rm-repo-apps-empty-add mdl-cell mdl-cell--7-col">
 				<!-- TODO: Make this a drag and drop area -->
 				<i class="rm-repo-apps-empty-add-icon material-icons">file_upload</i>
 				<div class="rm-repo-apps-empty-add-title">{% trans 'Add files' %}</div>
 				<!-- TODO: Make this translatable properly -->
+				<!--
 				<div class="rm-repo-apps-empty-add-description-first">
 					{% trans 'Drag and drop .apk, .pdf, .epub, videos, photos or music files' %}
 				</div>
+				-->
 				<div class="rm-repo-apps-empty-add-description-second">
-					{% trans 'or' %}
-					<!-- TODO: Make this link working -->
-					<a class="rm-repo-apps-empty-add-upload-browse" href="#">{% trans 'browse to upload' %}</a>
+					<!--{% trans 'or' %}-->
+					<form action="{% url 'add_app' repo.id %}" enctype="multipart/form-data" method="post">
+						{% csrf_token %}
+						<label for="id_file" class="rm-repo-apps-empty-add-upload-browse">
+							{% trans 'browse to upload' %}
+						</label>
+						<p>{{ form.file }}</p>
+						<button type="submit" class="rm-button--blue mdl-button mdl-js-button">
+							{% trans 'Add' %}
+						</button>
+					</form>
 				</div>
 			</div>
 			<div class="rm-repo-apps-empty-discover mdl-cell mdl-cell--5-col">
@@ -67,7 +89,7 @@
 				<div class="rm-repo-apps-empty-empty-title">{% trans 'Discover' %}</div>
 				<div class="rm-repo-apps-empty-empty-description">{% trans 'Find things to add from other repos' %}</div>
 				<a href="{% url 'add_app' repo.id %}" class="rm-repo-apps-empty-empty-add rm-no-underline">
-					<button class="rm-button--blue mdl-button mdl-js-button">
+					<button type="button" class="rm-button--blue mdl-button mdl-js-button">
 						{% trans 'add from repos' %}
 					</button>
 				</a>

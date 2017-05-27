@@ -109,14 +109,14 @@ body {
 }
 
 .rm-button--blue {
-    background-color: #0066cc;
-    border: thin solid #0066cc;
+    background-color: #0066cc !important;
+    border: thin solid #0066cc !important;
     color: white !important;
     transition: background-color 0.2s ease;
 }
 
 .rm-button--blue:hover {
-    background-color: #0079f2;
+    background-color: #0079f2 !important;
 }
 
 .rm-button--red {
