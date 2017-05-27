@@ -185,10 +185,10 @@ class Repository(AbstractRepository):
         qr_page_string = render_to_string('maker/repo_page/qr_code.html', {'repo': self})
         qr_page_string = qr_page_string.replace('/static/maker/css/', '')
 
-        with open(os.path.join(self.get_repo_path(), 'index.html'), 'w') as f:
+        with open(os.path.join(self.get_repo_path(), 'index.html'), 'w', encoding='utf8') as f:
             f.write(repo_page_string)  # Write repo page to file
 
-        with open(os.path.join(self.get_repo_path(), 'qr_code.html'), 'w') as f:
+        with open(os.path.join(self.get_repo_path(), 'qr_code.html'), 'w', encoding='utf8') as f:
             f.write(qr_page_string)  # Write repo qr page to file
 
         # copy page assets
