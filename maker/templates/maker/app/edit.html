@@ -59,7 +59,7 @@
 {% block screenshot-delete %}
 <a href="{% url 'screenshot_delete' app.repo.id app.id screenshot.id %}"
    class="rm-app-screenshot-delete rm-no-underline">
-	<button class="mdl-button mdl-js-button rm-button--red">
+	<button type="button" class="mdl-button mdl-js-button rm-button--red">
 		<i class="material-icons">delete</i>
 	</button>
 </a>
@@ -88,9 +88,9 @@
 
 {% block apk-delete %}
 <span class="mdl-list__item-secondary-action">
-	<a href=""
+	<a href="{% url 'apk_delete' app.repo.id app.id pointer.id %}"
 	   class="rm-no-underline">
-	<button class="mdl-button mdl-js-button rm-button--red-border">
+	<button type="button" class="mdl-button mdl-js-button rm-button--red-border">
 		<i class="material-icons">delete</i>
 	</button>
 </a>

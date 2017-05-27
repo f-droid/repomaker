@@ -13,6 +13,7 @@ from maker.views.s3storage import S3StorageCreate, S3StorageDetail, S3StorageUpd
 from maker.views.screenshot import ScreenshotCreateView, ScreenshotDeleteView
 from maker.views.sshstorage import SshStorageCreate, SshStorageUpdate, SshStorageDetail, \
     SshStorageDelete
+from maker.views.apk import ApkPointerDeleteView
 from . import views
 
 
@@ -50,6 +51,10 @@ urlpatterns = [
         ScreenshotCreateView.as_view(), name='screenshot_add'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/screenshot/(?P<s_id>[0-9]+)/delete/$',
         ScreenshotDeleteView.as_view(), name='screenshot_delete'),
+
+    # Apks
+    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/apk/(?P<pk>[0-9]+)/delete/$',
+        ApkPointerDeleteView.as_view(), name='apk_delete'),
 
     # Repo Operations
     url(r'^(?P<repo_id>[0-9]+)/update/$$', views.update, name='update'),
