@@ -90,6 +90,12 @@ class App(AbstractApp):
     def get_edit_url(self):
         return reverse('edit_app', kwargs={'repo_id': self.repo.pk, 'app_id': self.pk})
 
+    def get_previous(self):
+        return self.get_previous_by_added_date(repo=self.repo)
+
+    def get_next(self):
+        return self.get_next_by_added_date(repo=self.repo)
+
     @staticmethod
     def from_remote_app(repo, app):
         """

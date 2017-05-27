@@ -101,8 +101,8 @@
 </span>
 {% endblock apk-delete %}
 
-{% block prev-url %}{{ app.get_previous_by_added_date.get_edit_url }}{% endblock %}
+{% block prev-url %}{{ app.get_previous.get_edit_url }}{% endblock %}
 
-{% block next-url %}{{ app.get_next_by_added_date.get_edit_url }}{% endblock %}
+{% block next-url %}{{ app.get_next.get_edit_url }}{% endblock %}
 
 {% block page-footer %}</form>{% endblock page-footer %}
