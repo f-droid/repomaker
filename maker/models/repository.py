@@ -47,6 +47,13 @@ class AbstractRepository(models.Model):
     def get_repo_path(self):
         return os.path.join(self.get_path(), REPO_DIR)
 
+    def get_fingerprint_with_spaces(self):
+        fingerprint = str()
+        # noinspection PyTypeChecker
+        for i in range(0, int(len(self.fingerprint) / 2)):
+            fingerprint += self.fingerprint[i * 2:i * 2 + 2] + ' '
+        return fingerprint.rstrip()
+
     def get_fingerprint_url(self):
         if not self.url:
             return None

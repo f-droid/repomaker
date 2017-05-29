@@ -92,6 +92,12 @@ class RepositoryTestCase(TestCase):
         repo.fingerprint = 'test'
         self.assertEqual(repo.url + '?fingerprint=test', repo.get_fingerprint_url())
 
+    def test_get_fingerprint_with_spaces(self):
+        repo = self.repo
+        repo.fingerprint = 'F66393EB182AB32CB918F217BD2D5564D544BF1CCC432E7FC00AC96B3C4F2250'
+        self.assertEqual('F6 63 93 EB 18 2A B3 2C B9 18 F2 17 BD 2D 55 64 D5 44 BF 1C CC 43 2E 7F '
+                         'C0 0A C9 6B 3C 4F 22 50', repo.get_fingerprint_with_spaces())
+
     def test_get_fingerprint_url_without_url(self):
         self.repo.url = None
         self.assertIsNone(self.repo.get_fingerprint_url())

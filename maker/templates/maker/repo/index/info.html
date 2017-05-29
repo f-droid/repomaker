@@ -1,110 +1,63 @@
 {% load i18n %}
 {% load humanize %}
-
-<h2 style="vertical-align: middle;">
-	<img src="{{ repo.icon.url }}" alt="Repo Icon" class="rm-icon"/> {{ repo.name }}
-</h2>
-<p>{{ repo.description }}</p>
-
-<a href="{% url 'edit_repo' repo.id %}" class="rm-no-underline">
-	<button class="rm-button mdl-button mdl-js-button">
-		{% trans 'Edit' %}
-	</button>
-</a>
-
-<ul class="mdl-list">
-	{% if repo.url %}
-	<li class="mdl-list__item mdl-list__item--two-line">
-		<span class="mdl-list__item-primary-content">
-			<i class="material-icons mdl-list__item-icon">insert_link</i>
-			<span>{% trans 'URL' %}</span>
-			<span class="mdl-list__item-sub-title">
-				<a href="{{ repo.get_fingerprint_url }}">{{ repo.url }}</a>
+<div class="rm-grid--center mdl-grid">
+	<div class="mdl-cell mdl-cell--6-col">
+		<div class="rm-repo-info-header">
+			<span class="rm-repo-info-name-container">
+				<div class="rm-repo-info-name-header">{%  trans 'Name' %}</div>
+				<div class="rm-repo-info-name">{{ repo.name }}</div>
 			</span>
-		</span>
-	</li>
-	{% endif %}
-	<li class="mdl-list__item mdl-list__item--two-line">
-		<span class="mdl-list__item-primary-content">
-			<i class="material-icons mdl-list__item-icon">fingerprint</i>
-			<span>{% trans 'Fingerprint' %}</span>
-			<span class="mdl-list__item-sub-title">
-				{{ repo.fingerprint }}
-			</span>
-		</span>
-	</li>
-	<li class="mdl-list__item mdl-list__item--two-line">
-		<span class="mdl-list__item-primary-content">
-			<i class="material-icons mdl-list__item-icon">watch_later</i>
-			<span>{% trans 'Created' %}</span>
-			<span class="mdl-list__item-sub-title">
-				{{ repo.created_date|naturaltime }} ({{ repo.created_date|date:"SHORT_DATE_FORMAT" }})
-			</span>
-		</span>
-	</li>
-	<li class="mdl-list__item mdl-list__item--two-line">
-		<span class="mdl-list__item-primary-content">
-			<i class="material-icons mdl-list__item-icon">update</i>
-			<span>{% trans 'Last Updated' %}</span>
-			<span class="mdl-list__item-sub-title">
-				{{ repo.last_updated_date|naturaltime }} ({{ repo.last_updated_date|date:"SHORT_DATE_FORMAT" }})
-			</span>
-		</span>
-	</li>
-	<li class="mdl-list__item mdl-list__item--two-line">
-		<span class="mdl-list__item-primary-content">
-			<i class="material-icons mdl-list__item-icon">schedule</i>
-			<span>{% trans 'Last Publication' %}</span>
-			<span class="mdl-list__item-sub-title">
-				{{ repo.last_publication_date|naturaltime }} ({{ repo.last_publication_date|date:"SHORT_DATE_FORMAT" }})
-			</span>
-		</span>
-	</li>
-</ul>
-
-<h3>Storage</h3>
-{% if storage %}
-<ul class="mdl-list">
-	{% for storage in storage %}
-	<li class="mdl-list__item">
-		<a href="{{ storage.get_absolute_url }}">
-		<span class="mdl-list__item-primary-content">
-			{% if storage.disabled %}
-			<i class="material-icons mdl-list__item-icon ">cloud_off</i>
-			{% else %}
-			<i class="material-icons mdl-list__item-icon ">cloud</i>
-			{% endif %}
-			<span>{{ storage }}</span>
-		</span>
-		</a>
-		<span class="mdl-list__item-secondary-content">
-			<a class="mdl-list__item-secondary-action" href="{{ storage.get_repo_url }}">
-				<i class="material-icons">link</i>
+			<a href="{% url 'edit_repo' repo.id %}" class="rm-repo-info-edit">
+				<button class="mdl-js-button">
+					{% trans 'Edit' %}
+				</button>
 			</a>
-			{% if not storage.is_default %}
-				<a class="mdl-list__item-secondary-action" href="{{ storage.get_edit_url }}">
-					<i class="material-icons">edit</i>
-				</a>
-				<a class="mdl-list__item-secondary-action" href="{{ storage.get_delete_url }}">
-					<i class="material-icons">delete</i>
-				</a>
-			{% endif %}
-		</span>
-	</li>
-	{% endfor %}
-</ul>
-{% else %}
-<p><b>{% trans 'Attention:' %}</b> {% trans 'This repository has no remote storage. Add one to get your repository published.' %}</p>
-{% endif %}
+		</div>
 
-<p>
-	<a href="{% url 'storage_ssh_add' repo.id %}" class="rm-no-underline" style="margin-right:1em;">
-		<button class="mdl-button mdl-js-button mdl-button--raised">{% trans 'Add SSH Storage' %}</button>
-	</a>
-	<a href="{% url 'storage_git_add' repo.id %}" class="rm-no-underline" style="margin-right:1em;">
-		<button class="mdl-button mdl-js-button mdl-button--raised">{% trans 'Add Git Storage' %}</button>
-	</a>
-	<a href="{% url 'storage_s3_add' repo.id %}" class="rm-no-underline">
-		<button class="mdl-button mdl-js-button mdl-button--raised">{% trans 'Add Amazon S3 Storage' %}</button>
-	</a>
-</p>
+		<div class="rm-repo-info-description-header">{% trans 'Description' %}</div>
+		<p class="rm-repo-info-description">{{ repo.description }}</p>
+		<hr class="rm-repo-info-divider"/>
+
+		<div class="rm-repo-info-storage-header">{% trans 'Storage' %}</div>
+		{% if storage %}
+		<ul class="rm-repo-info-storages">
+			{% for storage in storage %}
+			<li class="rm-repo-info-storages-item">
+				<a href="{{ storage.get_absolute_url }}" class="mdl-list__item-primary-content">
+					{% if storage.disabled %}
+					<i class="material-icons mdl-list__item-icon ">cloud_off</i>
+					{% else %}
+					<i class="material-icons mdl-list__item-icon ">cloud</i>
+					{% endif %}
+					<span>{{ storage.get_name }}</span>
+					<span class="mdl-list__item-sub-title">{{ storage }}</span>
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+		{% else %}
+		<p><b>{% trans 'Attention:' %}</b> {% trans 'This repository has no remote storage. Add one to get your repository
+			published.' %}</p>
+		{% endif %}
+
+		<p>
+			<a href="{% url 'storage_ssh_add' repo.id %}" class="rm-repo-info-storage-add-ssh">
+				<button class="mdl-js-button">{% trans 'Add SSH Storage' %}</button>
+			</a>
+			<a href="{% url 'storage_git_add' repo.id %}" class="rm-repo-info-storage-add-git">
+				<button class="mdl-js-button">{% trans 'Add Git Storage' %}</button>
+			</a>
+			<a href="{% url 'storage_s3_add' repo.id %}" class="rm-repo-info-storage-add-as3">
+				<button class="mdl-js-button">{% trans 'Add Amazon S3 Storage' %}</button>
+			</a>
+		</p>
+		<hr class="rm-repo-info-divider"/>
+
+		<div class="rm-repo-info-fingerprint-header">{% trans 'Fingerprint' %}</div>
+		<div class="rm-repo-info-fingerprint-container">
+			<!-- TODO: Use monospace font -->
+			<div class="rm-repo-info-fingerprint">{{ repo.get_fingerprint_with_spaces }}
+		</div>
+		<!-- TODO: Implement "delete repo" button -->
+	</div>
+</div>
