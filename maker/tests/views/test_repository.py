@@ -13,7 +13,7 @@ from django.urls import reverse
 from maker import DEFAULT_USER_NAME
 
 from maker.models import App, Repository
-from maker.views.repository import RepositoryCreateView, RepositoryForm, RepositoryDetailView
+from maker.views.repository import RepositoryCreateView, RepositoryForm, RepositoryView
 from .. import TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR
 
 
@@ -141,7 +141,7 @@ class RepositoryTestCase(TestCase):
         self.assertTemplateUsed(response, 'maker/repo/index/apps.html')
         self.assertTemplateUsed(response, 'maker/repo/index/info.html')
         self.assertTemplateUsed(response, 'maker/repo/index/share.html')
-        self.assertTrue(isinstance(response.context['view'], RepositoryDetailView))
+        self.assertTrue(isinstance(response.context['view'], RepositoryView))
         self.assertEqual(self.repo, response.context['repo'])
         self.assertEqual(self.app, response.context['apps'][0])
         self.assertTrue(len(response.context['storage']) == 0)

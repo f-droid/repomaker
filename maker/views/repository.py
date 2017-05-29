@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.db.models import Q
 from django.forms import Textarea
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
 
 from maker.models import Repository, App
@@ -67,26 +68,34 @@ class RepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
         return result
 
 
-class RepositoryDetailView(RepositoryAuthorizationMixin, DetailView):
-    model = Repository
-    pk_url_kwarg = 'repo_id'
-    context_object_name = 'repo'
+class RepositoryView(RepositoryAuthorizationMixin, ListView):
+    model = App
+    context_object_name = 'apps'
     template_name = 'maker/repo/index.html'
 
-    def get_repo(self):
-        return self.get_object()
+    def get_queryset(self):
+        if 'search' in self.request.POST:
+            query = self.request.POST['search']
+            # TODO do a better weighted search query that takes description into account
+            return App.objects.filter(Q(repo=self.get_repo()) &
+                                      (Q(name__icontains=query) | Q(summary__icontains=query))
+                                      )
+        return App.objects.filter(repo=self.get_repo())
 
     def get_context_data(self, **kwargs):
-        context = super(RepositoryDetailView, self).get_context_data(**kwargs)
-        repo = context['repo']
+        context = super(RepositoryView, self).get_context_data(**kwargs)
+        repo = self.get_repo()
+        context['repo'] = repo
         if repo.fingerprint is None or repo.fingerprint == '':
             raise RuntimeError("Repository has not been created properly.")
 
         context['storage'] = StorageManager.get_storage(repo)
-        context['apps'] = App.objects.filter(repo=repo)
         from .app import ApkForm
         context['form'] = ApkForm()
         return context
+
+    def post(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
 
 class RepositoryUpdateView(RepositoryAuthorizationMixin, UpdateView):

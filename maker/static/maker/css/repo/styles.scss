@@ -43,6 +43,7 @@
 .rm-repo-apps-header {
     display: flex;
     align-items: center;
+    margin: 0 !important;
 }
 
 .rm-repo-apps-header-search {
@@ -57,7 +58,7 @@
     color: #000;
 
     .mdl-textfield {
-        padding: 0 6px;
+        margin-left: 16px;
     }
 }
 
@@ -65,17 +66,17 @@
     color: unset;
     text-decoration: none;
     transition: color 0.2s ease;
-    // TODO: Remove when search is working
-    display: none;
+    padding: 20px 0;
 }
 
 .rm-repo-apps-header-search-icon:hover {
     color: #808080;
 }
 
-#rm-repo-apps-header-search-input {
-    // TODO: Remove when search is working
-    display: none;
+.rm-no-search-results {
+    margin-top: 25px;
+    @include font-size(17px);
+    color: #808080;
 }
 
 .rm-repo-apps-add, .rm-repo-apps-empty-add, .rm-repo-apps-empty-discover {
