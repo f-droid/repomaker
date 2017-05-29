@@ -4,32 +4,30 @@
 
 {% block header %}
 <div class="mdl-layout-title">
-	<span class="mdl-layout--large-screen-only">
+	<span class="only-desktop">
 		To install these apps on your Android phone, add them to F-Droid.
-		<a href="#f-droid">Get F-Droid</a>
+		<a href="https://f-droid.org" target="_blank">Get F-Droid</a>
 	</span>
 
 	<div id="repo-buttons-add">
-		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored only-mobile"
 				onclick="showInstallButtons()">
 			Add to F-Droid
 		</button>
 	</div>
-	<div id="repo-buttons-install">
+	<a href="qr_code.html" class="rm-no-underline only-desktop">
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+			Add to F-Droid
+		</button>
+	</a>
+	<div id="repo-buttons-install" class="only-mobile">
 		<a href="https://f-droid.org" target="_blank" class="rm-no-underline">
 			<button id="repo-buttons-install-need"
 					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
 				I need F-Droid
 			</button>
 		</a>
-		<a href="qr_code.html"
-		   class="repo-buttons-install-have mdl-layout--large-screen-only">
-			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-					onclick="addRepo()">
-				I have F-Droid installed
-			</button>
-		</a>
-		<a href="{{ repo.get_mobile_url }}" class="repo-buttons-install-have mdl-layout--small-screen-only">
+		<a href="{{ repo.get_mobile_url }}" class="repo-buttons-install-have">
 			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
 					onclick="addRepo()">
 				I have F-Droid

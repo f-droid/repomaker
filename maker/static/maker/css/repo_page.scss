@@ -40,6 +40,10 @@ p {
     @include font-size(14px);
 }
 
+.mdl-layout__header-row {
+    padding: 0 16px 0 16px;
+}
+
 .mdl-button {
     border-radius: 25px;
     @include font-size(12px);
@@ -51,6 +55,10 @@ p {
         background: #0066CC;
     }
     display: none;
+}
+
+#repo-buttons-install {
+    white-space: nowrap;
 }
 
 #repo-buttons-install-need {
@@ -186,3 +194,4 @@ footer {
 }
 
 @import "app/widget.scss";
+@import "mobile-detect.scss";
