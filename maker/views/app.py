@@ -14,6 +14,18 @@ from . import BaseModelForm
 from .repository import RepositoryAuthorizationMixin
 
 
+class MDLTinyMCE(TinyMCE):
+    """
+    Ugly hack to work around a conflict between MDL and TinyMCE. See #31 for more details.
+    """
+    def _media(self):
+        media = super()._media()
+        media._js.remove('django_tinymce/init_tinymce.js')  # pylint: disable=protected-access
+        media._js.append('maker/js/mdl-tinymce.js')  # pylint: disable=protected-access
+        return media
+    media = property(_media)
+
+
 class ApkForm(ModelForm):
     class Meta:
         model = ApkPointer
@@ -125,8 +137,7 @@ class AppForm(BaseModelForm):
         model = App
         fields = ['summary', 'description', 'author_name', 'website', 'category', 'screenshots',
                   'apks']
-# TODO #31
-#        widgets = {'description': TinyMCE()}
+        widgets = {'description': MDLTinyMCE()}
 
 
 class AppUpdateView(RepositoryAuthorizationMixin, UpdateView):
@@ -178,7 +189,7 @@ class AppTranslationUpdateView(RepositoryAuthorizationMixin, UpdateView):
     model = App
     form_class = translationformset_factory(App, fields=['l_summary', 'l_description',
                                                          'feature_graphic'],
-                                            widgets={'l_description': TinyMCE()}, extra=1)
+                                            widgets={'l_description': MDLTinyMCE()}, extra=1)
     pk_url_kwarg = 'app_id'
     context_object_name = 'app'
     template_name = "maker/app/translate.html"
