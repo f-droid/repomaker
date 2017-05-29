@@ -59,5 +59,14 @@
 	</main>
 </div>
 <script src="{% static 'node_modules/material-design-lite/material.min.js' %}"></script>
+{% if form %}
+{{ form.media }}
+
+<!--
+	This is due to a bug in MDL: https://github.com/google/material-design-lite/issues/1502
+	Remove when migrating to another library
+-->
+<script src="{% static 'maker/js/no-invalid-by-default.js' %}"></script>
+{% endif %}
 </body>
 </html>
