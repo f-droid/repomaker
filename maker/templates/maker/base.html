@@ -49,12 +49,9 @@
 	</header>
 
 	<main class="mdl-layout__content">
-		{% if site_notice %}
-		<div style="padding: 1em; background-color: yellow; text-align: center;">
-			{% autoescape off %}{{ site_notice }}{% endautoescape %}
-		</div>
-		{% endif %}
-		{% block rm-content--without-margin %}{% endblock rm-content--without-margin %}
+		{% block rm-content--without-margin %}
+		{% include 'maker/site_notice.html' %}
+		{% endblock rm-content--without-margin %}
 		<div class="rm-content">{% block rm-content %}{% endblock %}</div>
 	</main>
 </div>

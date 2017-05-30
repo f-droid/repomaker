@@ -33,6 +33,8 @@
 		<a href="#rm-repo-panel-info" class="rm-repo-tabs__tab mdl-tabs__tab">{% trans 'Info' %}</a>
 	</div>
 
+	{% include 'maker/site_notice.html' %}
+
 	<div class="rm-repo-tabs__panels">
 		<div class="mdl-tabs__panel is-active" id="rm-repo-panel-apps">
 			{% include "maker/repo/index/apps.html" %}
