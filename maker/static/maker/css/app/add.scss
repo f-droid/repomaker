@@ -27,7 +27,7 @@
 .rm-repo-add-toolbar-done {
     button {
         @extend .rm-button, .mdl-button;
-        border-color: #0066CC;
+        border-color: #0066CC !important;
         color: #0066CC;
     }
 }
@@ -73,55 +73,76 @@
     border-color: #ECECEC;
 }
 
-.rm-app-add-repositories-title, .rm-app-add-categories-title {
+.rm-app-filter-section span {
     font-weight: 500;
     @include font-size(13px);
+    text-transform: uppercase;
+    color: #9c9c9c;
 }
 
 .rm-app-add-repositories-list {
-    padding-left: 25px;
+    padding-left: 0;
 }
 
 .rm-app-add-repositories-list-item {
-    // TODO: Handle selection
-    color: #ECECEC;
-    color: #4a4a4a;
+    display: flex;
+    list-style: none;
+
     a {
         color: #000000;
         font-weight: 400;
         @include font-size(15px);
         text-decoration: none;
+        width: 100%;
+        padding: 3px;
     }
 }
 
-.rm-app-add-repositories-list-item-add {
-    @extend .rm-app-add-repositories-list-item;
-    list-style-type: none;
-    a {
-        text-decoration: underline;
-    }
+.rm-app-add-repositories-list-item:before {
+   content: '';
+   display: inline-flex;
+   height: 16px;
+   width: 16px;
+   margin-top: 8px;
+   margin-right: 12px;
+   background-size: contain;
+   background-repeat: no-repeat;
+   background-image: url(unquote(get-setting(STATIC_URL) + 'maker/images/list_item.png'));
+}
+
+.rm-app-add-repositories-list .active:before {
+   background-image: url(unquote(get-setting(STATIC_URL) + 'maker/images/list_item_active.png'));
 }
 
 .rm-app-add-categories-clear {
     color: #0368cd;
     float: right;
     @include font-size(12px);
-    padding-right: 6px;
+    padding: 6px;
     text-decoration: none;
     text-transform: uppercase;
 }
 
+.rm-app-add-categories-clear:hover, .rm-app-add-repositories-list-item a:hover,
+.rm-app-add-categories-list-item:hover {
+    background-color: #ececec;
+}
+
 .rm-app-add-categories-list {
     @extend .mdl-grid;
+    clear: both;
+    padding: 0;
+    align-items: flex-start;
+    justify-content: space-around;
 }
 
 .rm-app-add-categories-list-item {
     // TODO: Handle selection
     background: none;
     border: none;
-    margin: 4px;
+    padding: 6px;
     text-align: center;
-    width: 30%;
+    width: 90px;
 }
 
 .rm-app-add-categories-list-item-circle {
@@ -136,10 +157,13 @@
 .rm-app-add-categories-list-item-title {
     font-family: "Roboto-Regular";
     @include font-size(13px);
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .rm-app-add-apps {
     @extend .mdl-cell, .mdl-cell--8-col, .mdl-grid;
+    align-items: flex-start;
 }
 
 .rm-app-add-remote-repository-information {

@@ -225,4 +225,6 @@ TINYMCE_DEFAULT_CONFIG = {
     'plugins': 'autolink link lists',
     'browser_spellcheck': True,
     'statusbar': False,
+    'height': 'auto',
+    'resize': True,
 }

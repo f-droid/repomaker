@@ -42,28 +42,32 @@
 					<div class="rm-app-add-search-field mdl-js-textfield">
 						<i class="material-icons">search</i>
 						<input type="text" name="query" class="rm-app-add-search-field-input"
-							   {% if request.GET.query %}value="{{ request.GET.query }}" {% endif %}/>
+						{% if request.GET.query %}value="{{ request.GET.query }}" {% endif %}/>
 					</div>
 				</form>
 
 				<div class="rm-app-add-filters-title">{% trans 'Filters' %}</div>
+
 				<hr class="rm-app-add-divider" />
-				<div class="rm-app-add-repositories-title">{% trans 'Repos' %}</div>
+
+				<div class="rm-app-filter-section">
+					<span>{% trans 'Repos' %}</span>
+					<a href="{% url 'add_remote_repo' %}" class="rm-app-add-categories-clear">{% trans 'Add' %}</a>
+				</div>
+
 				<ul class="rm-app-add-repositories-list">
-					<li class="rm-app-add-repositories-list-item">
+					<li class="rm-app-add-repositories-list-item{%if not remote_repo %} active{% endif %}">
 						<a href="{% url 'add_app' repo.id %}">{% trans 'All' %}</a>
 					</li>
-					{% for remote_repo in repos %}
-					<li class="rm-app-add-repositories-list-item">
-						<a href="{% url 'add_app_from_remote' repo.id remote_repo.id %}">{{ remote_repo }}</a>
+					{% for r in repos %}
+					<li class="rm-app-add-repositories-list-item{%if r == remote_repo %} active{% endif %}">
+						<a href="{% url 'add_app_from_remote' repo.id r.id %}">{{ r }}</a>
 					</li>
 					{% endfor %}
-					<li class="rm-app-add-repositories-list-item-add">
-						<a href="{% url 'add_remote_repo' %}">{% trans 'Add' %}</a>
-					</li>
 				</ul>
-				<div class="rm-app-add-categories">
-					<span class="rm-app-add-categories-title">{% trans 'Categories' %}</span>
+
+				<div class="rm-app-filter-section">
+					<span>{% trans 'Categories' %}</span>
 					<!-- TODO: Only clear categories, not search and repos too -->
 					<a class="rm-app-add-categories-clear" href="{% url 'add_app' repo.id %}">{% trans 'clear' %}</a>
 				</div>

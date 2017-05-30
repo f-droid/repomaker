@@ -54,6 +54,7 @@ a.rm-app-card:hover {
 .rm-app-card-description {
     @include font-size(14px);
     flex-grow: 1;
+    overflow-wrap: break-word;
 }
 
 .rm-app-card-updated {
@@ -66,6 +67,7 @@ a.rm-app-card:hover {
 .rm-app-card-footer {
     display: flex;
     align-items: center;
+    margin-top: 4px;
 }
 
 .rm-app-card-categories {
@@ -73,11 +75,12 @@ a.rm-app-card:hover {
     display: flex;
     flex-grow: 2;
     flex-flow: row;
+    flex-wrap: wrap;
 }
 
 .rm-app-card-category-chip {
     background: #f4f4f4;
-    margin: 0 4px 0 4px;
+    margin: 4px;
 }
 
 .rm-app-card-category-text {
@@ -86,7 +89,7 @@ a.rm-app-card:hover {
 }
 
 .rm-app-card-footer-action {
-    align-self: flex-end;
+    align-self: center;
     button {
         // TODO: Extend .rm-button from style.css
         @extend .mdl-button;
