@@ -110,6 +110,8 @@ class RemoteAppCreateView(RepositoryAuthorizationMixin, CreateView):
                                            'app_id': self.object.pk})
 
 
+# TODO remove and use RemoteAppCreateView instead
+# https://docs.djangoproject.com/en/1.11/topics/class-based-views/mixins/#more-than-just-html
 class RemoteAppCreateHeadlessView(RepositoryAuthorizationMixin, View):
     def post(self, request, *args, **kwargs):
         remote_repo_id = kwargs['remote_repo_id']

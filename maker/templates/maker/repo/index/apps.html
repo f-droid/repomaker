@@ -35,7 +35,7 @@
 			-->
 			<div class="rm-repo-apps-empty-add-description-second rm-form">
 				<!--{% trans 'or' %}-->
-				<form action="{% url 'add_app' repo.id %}" enctype="multipart/form-data" method="post">
+				<form action="{% url 'apk_upload' repo.id %}" enctype="multipart/form-data" method="post">
 					{% csrf_token %}
 					<label for="id_file" class="rm-repo-apps-empty-add-upload-browse">
 						{% trans 'browse to upload' %}
@@ -72,7 +72,7 @@
 			-->
 			<div class="rm-repo-apps-empty-add-description-second">
 				<!--{% trans 'or' %}-->
-				<form action="{% url 'add_app' repo.id %}" enctype="multipart/form-data" method="post">
+				<form action="{% url 'apk_upload' repo.id %}" enctype="multipart/form-data" method="post">
 					{% csrf_token %}
 					<label for="id_file" class="rm-repo-apps-empty-add-upload-browse">
 						{% trans 'browse to upload' %}

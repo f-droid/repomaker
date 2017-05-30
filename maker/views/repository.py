@@ -90,7 +90,7 @@ class RepositoryView(RepositoryAuthorizationMixin, ListView):
             raise RuntimeError("Repository has not been created properly.")
 
         context['storage'] = StorageManager.get_storage(repo)
-        from .app import ApkForm
+        from .apk import ApkForm
         context['form'] = ApkForm()
         return context
 

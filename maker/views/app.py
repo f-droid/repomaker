@@ -1,10 +1,8 @@
 from django.db.models import Q
-from django.forms import ModelForm, FileField, ClearableFileInput
-from django.http import HttpResponseRedirect
+from django.forms import FileField, ClearableFileInput
 from django.urls import reverse, reverse_lazy
-from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView, ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import UpdateView, DeleteView
 from hvad.forms import translationformset_factory
 from tinymce.widgets import TinyMCE
 
@@ -26,80 +24,36 @@ class MDLTinyMCE(TinyMCE):
     media = property(_media)
 
 
-class ApkForm(ModelForm):
-    class Meta:
-        model = ApkPointer
-        # TODO allow multiple files to be uploaded at once
-        fields = ['file']
-        labels = {
-            'file': _('Select APK file for upload'),
-        }
-
-
-class AppCreateView(RepositoryAuthorizationMixin, CreateView):
-    model = ApkPointer
-    form_class = ApkForm
-    template_name = "maker/app/add.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(AppCreateView, self).get_context_data(**kwargs)
-        context = get_app_context(context, self.kwargs, self.request.user)
-        if 'remote_repo_id' in self.kwargs:
-            context['apps'] = RemoteApp.objects.filter(repo__pk=self.kwargs['remote_repo_id'])
-        else:
-            context['apps'] = RemoteApp.objects.filter(repo__in=context['repos'])
-        return context
-
-    def form_valid(self, form):
-        form.instance.repo = self.get_repo()
-        # TODO handle multiple files to be uploaded here
-        pointer = form.save()  # needed to save file to disk for scanning
-        try:
-            pointer.initialize()
-        except Exception as e:
-            pointer.delete()
-            raise e
-
-        if pointer.app.summary != '':  # app did exist already, show it
-            return HttpResponseRedirect(reverse('app', args=[pointer.repo.pk, pointer.app.pk]))
-        return super(AppCreateView, self).form_valid(form)
-
-    def get_success_url(self):
-        # edit new app
-        return reverse_lazy('edit_app', kwargs={'repo_id': self.object.repo.pk,
-                                                'app_id': self.object.app.pk})
-
-
-class RemoteAppSearchView(RepositoryAuthorizationMixin, ListView):
+class AppAddView(RepositoryAuthorizationMixin, ListView):
     model = RemoteApp
     context_object_name = 'apps'
     template_name = "maker/app/add.html"
 
+    def post(self, request, *args, **kwargs):
+        return self.get(self, request, *args, **kwargs)
+
     def get_queryset(self):
-        if 'query' not in self.request.GET:
-            return RemoteApp.objects.none()
-        query = self.request.GET['query']
-        return RemoteApp.objects.filter(
-            Q(repo__users__id=self.request.user.id) & (
-                Q(name__icontains=query) |
-                Q(summary__icontains=query)
-            )
-        )
+        qs = RemoteApp.objects.filter(repo__users__id=self.request.user.id)
+        if 'remote_repo_id' in self.kwargs:
+            qs = qs.filter(repo__pk=self.kwargs['remote_repo_id'])
+        if 'search' in self.request.POST:
+            query = self.request.POST['search']
+            qs = qs.filter(Q(name__icontains=query) | Q(summary__icontains=query))
+        if 'category_id' in self.kwargs:
+            qs = qs.filter(category__id=self.kwargs['category_id'])
+        return qs
 
     def get_context_data(self, **kwargs):
-        return get_app_context(super(RemoteAppSearchView, self).get_context_data(**kwargs),
-                               self.kwargs, self.request.user)
-
-
-def get_app_context(context, kwargs, user):
-    context['repo'] = {}
-    context['repo']['id'] = kwargs['repo_id']
-    context['repos'] = RemoteRepository.objects.filter(users__id=user.id)
-    context['categories'] = Category.objects.filter(
-        Q(user=None) | Q(user=user))
-    if 'remote_repo_id' in kwargs:
-        context['remote_repo'] = RemoteRepository.objects.get(pk=kwargs['remote_repo_id'])
-    return context
+        context = super(AppAddView, self).get_context_data(**kwargs)
+        context['repo'] = self.get_repo()
+        context['remote_repos'] = RemoteRepository.objects.filter(users__id=self.request.user.id)
+        context['categories'] = Category.objects.filter(
+            Q(user=None) | Q(user=self.request.user))
+        if 'remote_repo_id' in self.kwargs:
+            context['remote_repo'] = RemoteRepository.objects.get(pk=self.kwargs['remote_repo_id'])
+        if 'category_id' in self.kwargs:
+            context['category'] = context['categories'].get(pk=self.kwargs['category_id'])
+        return context
 
 
 class AppDetailView(RepositoryAuthorizationMixin, DetailView):

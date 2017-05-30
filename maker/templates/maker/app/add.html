@@ -36,13 +36,13 @@
 {% block rm-content %}
 <div class="rm-app-add-container">
 	<div class="rm-app-add ">
-			<div class="rm-app-add-search">
-				<form action="{% url 'app_search' repo.id %}" method="get">
+			<div class="rm-app-add-filters">
+				<form action="" method="post">
 					{% csrf_token %}
-					<div class="rm-app-add-search-field mdl-js-textfield">
+					<div class="rm-app-add-filters-field mdl-js-textfield">
 						<i class="material-icons">search</i>
-						<input type="text" name="query" class="rm-app-add-search-field-input"
-						{% if request.GET.query %}value="{{ request.GET.query }}" {% endif %}/>
+						<input type="text" name="search" class="rm-app-add-filters-field-input"
+							   value="{{ request.POST.search }}"/>
 					</div>
 				</form>
 
@@ -57,27 +57,31 @@
 
 				<ul class="rm-app-add-repositories-list">
 					<li class="rm-app-add-repositories-list-item{%if not remote_repo %} active{% endif %}">
-						<a href="{% url 'add_app' repo.id %}">{% trans 'All' %}</a>
+						<a href="{% if category %}{% url 'add_app_with_category' repo.id category.id %}{% else %}{% url 'add_app' repo.id %}{% endif %}">{% trans 'All' %}</a>
 					</li>
-					{% for r in repos %}
+					{% for r in remote_repos %}
 					<li class="rm-app-add-repositories-list-item{%if r == remote_repo %} active{% endif %}">
-						<a href="{% url 'add_app_from_remote' repo.id r.id %}">{{ r }}</a>
+						<a href="{% if category %}{% url 'add_app_with_category' repo.id r.id category.id %}{% else %}{% url 'add_app' repo.id r.id %}{% endif %}">
+							{{ r.name }}
+						</a>
 					</li>
 					{% endfor %}
 				</ul>
 
 				<div class="rm-app-filter-section">
 					<span>{% trans 'Categories' %}</span>
-					<!-- TODO: Only clear categories, not search and repos too -->
-					<a class="rm-app-add-categories-clear" href="{% url 'add_app' repo.id %}">{% trans 'clear' %}</a>
+					{% if category %}
+					<a href="{% if remote_repo %}{% url 'add_app' repo.id remote_repo.id %}{% else %}{% url 'add_app' repo.id %}{% endif %}"
+					   class="rm-app-add-categories-clear">{% trans 'clear' %}</a>
+					{% endif %}
 				</div>
-				<!-- TODO: Handle selection -->
 				<div class="rm-app-add-categories-list">
-					{% for category in categories %}
-						<button name="category" value="{{ category.id }}" class="rm-app-add-categories-list-item">
-							<div class="rm-app-add-categories-list-item-circle"></div>
-							<div class="rm-app-add-categories-list-item-title">{{ category }}</div>
-						</button>
+					{% for c in categories %}
+					<a href="{% if remote_repo %}{% url 'add_app_with_category' repo.id remote_repo.id c.id %}{% else %}{% url 'add_app_with_category' repo.id c.id %}{% endif %}"
+					   class="rm-app-add-categories-list-item{% if c == category %} active{% endif %}">
+						<div class="rm-app-add-categories-list-item-circle"></div>
+						<div class="rm-app-add-categories-list-item-title">{{ c.name }}</div>
+					</a>
 					{% endfor %}
 				</div>
 			</div>
@@ -96,10 +100,25 @@
 					{% trans 'Add' as action_title %}
 					{% include "maker/widgets/app_with_action.html" with url=url width=12 action_title=action_title %}
 				{% empty %}
-					<p>
-						{% trans 'There are no apps from remote repositories.' %}
-						{% trans 'If you just added a remote repository, wait for the apps to download and try again later.' %}
-					</p>
+					<div class="rm-app-add-no-results">
+						{% if request.POST.search %}
+							{% blocktrans with search_term=request.POST.search trimmed %}
+								No apps found that match '{{ search_term }}'.
+								Please try a different search or remove other filter criteria.
+							{% endblocktrans %}
+						{% elif not category %}
+							{% if remote_repo %}
+								{% trans 'There are no apps in this repo.' %}
+							{% else %}
+								{% trans 'There are no apps available in the repos.' %}
+							{% endif %}
+							{% trans 'If you just added a repo, wait for the apps to download and try again later.' %}
+						{% elif remote_repo %}
+							{% trans 'This repo has no apps in the selected category. Try clearing it or select a different repo.' %}
+						{% else %}
+							{% trans 'There are no apps available in the selected category. Try clearing it.' %}
+						{% endif %}
+					</div>
 				{% endfor %}
 			</div>
 	</div>

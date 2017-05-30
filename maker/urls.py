@@ -1,8 +1,8 @@
 from django.conf.urls import url
 
 from maker.models import S3Storage, SshStorage, GitStorage
-from maker.views.app import AppCreateView, RemoteAppSearchView, AppDetailView, AppUpdateView, \
-    AppDeleteView, AppTranslationUpdateView
+from maker.views.app import AppAddView, AppDetailView, AppUpdateView, AppDeleteView, \
+    AppTranslationUpdateView
 from maker.views.gitstorage import GitStorageCreate, GitStorageUpdate, GitStorageDetail, \
     GitStorageDelete
 from maker.views.remoterepository import RemoteRepositoryCreateView, RemoteAppCreateView, \
@@ -13,7 +13,7 @@ from maker.views.s3storage import S3StorageCreate, S3StorageDetail, S3StorageUpd
 from maker.views.screenshot import ScreenshotCreateView, ScreenshotDeleteView
 from maker.views.sshstorage import SshStorageCreate, SshStorageUpdate, SshStorageDetail, \
     SshStorageDelete
-from maker.views.apk import ApkPointerDeleteView
+from maker.views.apk import ApkUploadView, ApkPointerDeleteView
 from . import views
 
 
@@ -30,14 +30,18 @@ urlpatterns = [
     url(r'^remote/(?P<remote_repo_id>[0-9]+)/update/$', views.remote_update, name='remote_update'),
 
     # App
-    url(r'^(?P<repo_id>[0-9]+)/app/add/$', AppCreateView.as_view(), name='add_app'),
+    url(r'^(?P<repo_id>[0-9]+)/app/add/$', AppAddView.as_view(), name='add_app'),
     url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/$',
-        AppCreateView.as_view(), name='add_app_from_remote'),
+        AppAddView.as_view(), name='add_app'),
+    url(r'^(?P<repo_id>[0-9]+)/app/add/category/(?P<category_id>[0-9]+)/$',
+        AppAddView.as_view(), name='add_app_with_category'),
+    url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/' +
+        r'category/(?P<category_id>[0-9]+)/$',
+        AppAddView.as_view(), name='add_app_with_category'),
     url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/(?P<app_id>[0-9]+)$',
         RemoteAppCreateView.as_view(), name='add_remote_app'),
     url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add_hl/(?P<app_id>[0-9]+)$',
-        RemoteAppCreateHeadlessView.as_view(), name='add_remote_app_headless'),
-    url(r'^(?P<repo_id>[0-9]+)/app/search/$', RemoteAppSearchView.as_view(), name='app_search'),
+        RemoteAppCreateHeadlessView.as_view(), name='add_remote_app_headless'),  # TODO remove
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/$', AppDetailView.as_view(), name='app'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/edit/$', AppUpdateView.as_view(),
         name='edit_app'),
@@ -53,6 +57,7 @@ urlpatterns = [
         ScreenshotDeleteView.as_view(), name='screenshot_delete'),
 
     # Apks
+    url(r'^(?P<repo_id>[0-9]+)/app/apk/upload/$', ApkUploadView.as_view(), name='apk_upload'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/apk/(?P<pk>[0-9]+)/delete/$',
         ApkPointerDeleteView.as_view(), name='apk_delete'),
 

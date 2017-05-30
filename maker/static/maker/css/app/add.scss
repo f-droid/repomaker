@@ -40,11 +40,11 @@
     @extend .mdl-cell, .mdl-cell--8-col, .mdl-grid;
 }
 
-.rm-app-add-search {
+.rm-app-add-filters {
     @extend .mdl-cell, .mdl-cell--4-col;
 }
 
-.rm-app-add-search-field {
+.rm-app-add-filters-field {
     @extend .mdl-textfield;
     align-items: center;
     border: thin solid #ECECEC;
@@ -58,7 +58,7 @@
     }
 }
 
-.rm-app-add-search-field-input {
+.rm-app-add-filters-field-input {
     @extend .mdl-textfield__input;
 }
 
@@ -137,21 +137,31 @@
 }
 
 .rm-app-add-categories-list-item {
+    @extend .rm-no-underline;
     // TODO: Handle selection
     background: none;
     border: none;
     padding: 6px;
     text-align: center;
     width: 90px;
+    flex-grow: 1;
 }
 
 .rm-app-add-categories-list-item-circle {
-    // TODO: Pick random color: https://stackoverflow.com/a/26922736
-    background: #f25050;
+    background-color: #ececec;
     border-radius: 50%;
     display: inline-block;
     height: 35px;
     width: 35px;
+}
+
+a:hover .rm-app-add-categories-list-item-circle {
+    background-color: #ffecec;
+}
+
+.active .rm-app-add-categories-list-item-circle,
+a.active:hover .rm-app-add-categories-list-item-circle {
+    background-color: #4a4a4a;
 }
 
 .rm-app-add-categories-list-item-title {
@@ -164,6 +174,7 @@
 .rm-app-add-apps {
     @extend .mdl-cell, .mdl-cell--8-col, .mdl-grid;
     align-items: flex-start;
+    align-content: flex-start;
 }
 
 .rm-app-add-remote-repository-information {
@@ -181,4 +192,12 @@
 .rm-app-add-remote-repository-information-description {
     color: #000000;
     @include font-size(17px);
+}
+
+.rm-app-add-no-results {
+    width: 100%;
+    @include font-size(18px);
+    line-height: 24px;
+    text-align: center;
+    color: gray;
 }
