@@ -36,8 +36,10 @@
 			{% endfor %}
 		</ul>
 		{% else %}
-		<p><b>{% trans 'Attention:' %}</b> {% trans 'This repository has no remote storage. Add one to get your repository
-			published.' %}</p>
+		<p>
+			<b>{% trans 'Attention:' %}</b>
+			{% trans 'This repository has no remote storage. Add one to get your repository published.' %}
+		</p>
 		{% endif %}
 
 		<p>
