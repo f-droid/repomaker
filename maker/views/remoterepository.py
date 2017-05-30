@@ -125,4 +125,5 @@ class RemoteAppCreateHeadlessView(RepositoryAuthorizationMixin, View):
             return HttpResponse(False)
         except OperationalError:
             return HttpResponse(2)
+        self.get_repo().update_async()  # schedule repository update
         return HttpResponse(True)
