@@ -35,7 +35,7 @@
 					{% load account %}
 					<!-- TODO: Open account view instead -->
 					<a class="rm-toolbar-account" href="{% url 'account_email' %}">
-					{% blocktrans with user=user.username trimmed %}
+					{% blocktrans with user=user.first_name|default:user.username trimmed %}
 					Hello, {{ user }}
 					{% endblocktrans %}
 					</a>

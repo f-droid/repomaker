@@ -1,4 +1,4 @@
-{% extends "maker/base.html" %}
+{% extends "maker/base_modal.html" %}
 {% load i18n %}
 {% load sass_tags %}
 
@@ -8,18 +8,7 @@
 <link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
 {% endblock head %}
 
-{% block rm-header-classes %}rm-header--light{% endblock rm-header-classes %}
-
-{% block toolbar-title %}{% endblock toolbar-title %}
-
-{% block toolbar-items-right %}
-<a href="{% url 'edit_app' object.app.repo.id object.app.id %}" class="rm-toolbar-item">
-	<i class="material-icons mdl-list__item-icon">close</i>
-</a>
-{% endblock toolbar-items-right %}
-
 {% block rm-content %}
-
 <div class="rm-form mdl-grid rm-grid--center">
 	<form action="" method="post">
 		{% csrf_token %}
@@ -34,5 +23,4 @@
 		</div>
 	</form>
 </div>
-
 {% endblock rm-content %}

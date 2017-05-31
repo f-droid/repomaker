@@ -1,4 +1,4 @@
-{% extends "maker/base.html" %}
+{% extends "maker/base_modal.html" %}
 
 {% load i18n %}
 {% load sass_tags %}
@@ -9,8 +9,6 @@
 <link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
 <link href="{% sass_src 'maker/css/login.scss' %}" rel="stylesheet" type="text/css" media="all">
 {% endblock %}
-
-{% block rm-header-classes %}rm-header--light{% endblock rm-header-classes %}
 
 {% block toolbar %}<span class="rm-logo">repomaker</span>{% endblock toolbar %}
 

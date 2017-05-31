@@ -227,4 +227,5 @@ TINYMCE_DEFAULT_CONFIG = {
     'statusbar': False,
     'height': 'auto',
     'resize': True,
+    'branding': False,
 }

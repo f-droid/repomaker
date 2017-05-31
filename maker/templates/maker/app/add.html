@@ -1,4 +1,4 @@
-{% extends "maker/base.html" %}
+{% extends "maker/base_modal.html" %}
 {% load i18n %}
 {% load sass_tags %}
 {% load static %}
@@ -9,7 +9,6 @@
 <link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
 {% endblock head %}
 
-{% block rm-header-classes %}rm-header--light{% endblock rm-header-classes %}
 {% block toolbar %}
 <div class="rm-grid--full-width rm-grid--center mdl-grid">
 	<div class="rm-app-toolbar mdl-cell mdl-cell--8-col">

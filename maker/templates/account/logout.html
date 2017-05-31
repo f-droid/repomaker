@@ -1,4 +1,4 @@
-{% extends "maker/base.html" %}
+{% extends "maker/base_modal.html" %}
 
 {% load i18n %}
 {% load sass_tags %}
@@ -8,15 +8,6 @@
 {% block head %}
 <link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
 {% endblock head %}
-
-{% block rm-header-classes %}rm-header--light{% endblock rm-header-classes %}
-
-{% block toolbar %}
-<div class="mdl-layout-spacer"></div>
-<a href="javascript:history.back()" class="rm-toolbar-item">
-	<i class="material-icons mdl-list__item-icon">close</i>
-</a>
-{% endblock toolbar %}
 
 {% block rm-content %}
 <div class="mdl-grid rm-grid--center">
