@@ -27,17 +27,15 @@ class MDLTinyMCE(TinyMCE):
 class AppAddView(RepositoryAuthorizationMixin, ListView):
     model = RemoteApp
     context_object_name = 'apps'
+    paginate_by = 15
     template_name = "maker/app/add.html"
-
-    def post(self, request, *args, **kwargs):
-        return self.get(self, request, *args, **kwargs)
 
     def get_queryset(self):
         qs = RemoteApp.objects.filter(repo__users__id=self.request.user.id)
         if 'remote_repo_id' in self.kwargs:
             qs = qs.filter(repo__pk=self.kwargs['remote_repo_id'])
-        if 'search' in self.request.POST:
-            query = self.request.POST['search']
+        if 'search' in self.request.GET:
+            query = self.request.GET['search']
             qs = qs.filter(Q(name__icontains=query) | Q(summary__icontains=query))
         if 'category_id' in self.kwargs:
             qs = qs.filter(category__id=self.kwargs['category_id'])
@@ -47,12 +45,13 @@ class AppAddView(RepositoryAuthorizationMixin, ListView):
         context = super(AppAddView, self).get_context_data(**kwargs)
         context['repo'] = self.get_repo()
         context['remote_repos'] = RemoteRepository.objects.filter(users__id=self.request.user.id)
-        context['categories'] = Category.objects.filter(
-            Q(user=None) | Q(user=self.request.user))
+        context['categories'] = Category.objects.filter(Q(user=None) | Q(user=self.request.user))
         if 'remote_repo_id' in self.kwargs:
             context['remote_repo'] = RemoteRepository.objects.get(pk=self.kwargs['remote_repo_id'])
         if 'category_id' in self.kwargs:
             context['category'] = context['categories'].get(pk=self.kwargs['category_id'])
+        if 'search' in self.request.GET and self.request.GET['search'] != '':
+            context['search_params'] = 'search=%s' % self.request.GET['search']
         return context
 
 

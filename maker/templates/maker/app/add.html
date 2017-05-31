@@ -36,12 +36,11 @@
 <div class="rm-app-add-container">
 	<div class="rm-app-add ">
 			<div class="rm-app-add-filters">
-				<form action="" method="post">
-					{% csrf_token %}
+				<form action="" method="get">
 					<div class="rm-app-add-filters-field mdl-js-textfield">
 						<i class="material-icons">search</i>
 						<input type="text" name="search" class="rm-app-add-filters-field-input"
-							   value="{{ request.POST.search }}"/>
+							   value="{{ request.GET.search }}"/>
 					</div>
 				</form>
 
@@ -56,11 +55,13 @@
 
 				<ul class="rm-app-add-repositories-list">
 					<li class="rm-app-add-repositories-list-item{%if not remote_repo %} active{% endif %}">
-						<a href="{% if category %}{% url 'add_app_with_category' repo.id category.id %}{% else %}{% url 'add_app' repo.id %}{% endif %}">{% trans 'All' %}</a>
+						<a href="{% if category %}{% url 'add_app_with_category' repo.id category.id %}{% else %}{% url 'add_app' repo.id %}{% endif %}?{{ search_params }}">
+							{% trans 'All' %}
+						</a>
 					</li>
 					{% for r in remote_repos %}
 					<li class="rm-app-add-repositories-list-item{%if r == remote_repo %} active{% endif %}">
-						<a href="{% if category %}{% url 'add_app_with_category' repo.id r.id category.id %}{% else %}{% url 'add_app' repo.id r.id %}{% endif %}">
+						<a href="{% if category %}{% url 'add_app_with_category' repo.id r.id category.id %}{% else %}{% url 'add_app' repo.id r.id %}{% endif %}?{{ search_params }}">
 							{{ r.name }}
 						</a>
 					</li>
@@ -70,13 +71,13 @@
 				<div class="rm-app-filter-section">
 					<span>{% trans 'Categories' %}</span>
 					{% if category %}
-					<a href="{% if remote_repo %}{% url 'add_app' repo.id remote_repo.id %}{% else %}{% url 'add_app' repo.id %}{% endif %}"
+					<a href="{% if remote_repo %}{% url 'add_app' repo.id remote_repo.id %}{% else %}{% url 'add_app' repo.id %}{% endif %}?{{ search_params }}"
 					   class="rm-app-add-categories-clear">{% trans 'clear' %}</a>
 					{% endif %}
 				</div>
 				<div class="rm-app-add-categories-list">
 					{% for c in categories %}
-					<a href="{% if remote_repo %}{% url 'add_app_with_category' repo.id remote_repo.id c.id %}{% else %}{% url 'add_app_with_category' repo.id c.id %}{% endif %}"
+					<a href="{% if remote_repo %}{% url 'add_app_with_category' repo.id remote_repo.id c.id %}{% else %}{% url 'add_app_with_category' repo.id c.id %}{% endif %}?{{ search_params }}"
 					   class="rm-app-add-categories-list-item{% if c == category %} active{% endif %}">
 						<div class="rm-app-add-categories-list-item-circle"></div>
 						<div class="rm-app-add-categories-list-item-title">{{ c.name }}</div>
@@ -100,8 +101,8 @@
 					{% include "maker/widgets/app_with_action.html" with url=url width=12 action_title=action_title %}
 				{% empty %}
 					<div class="rm-app-add-no-results">
-						{% if request.POST.search %}
-							{% blocktrans with search_term=request.POST.search trimmed %}
+						{% if request.GET.search %}
+							{% blocktrans with search_term=request.GET.search trimmed %}
 								No apps found that match '{{ search_term }}'.
 								Please try a different search or remove other filter criteria.
 							{% endblocktrans %}
@@ -122,6 +123,30 @@
 			</div>
 	</div>
 </div>
+
+{% if is_paginated %}
+<div class="rm-app-add-pagination">
+	{% if page_obj.has_previous %}
+	<a href="?page={{ page_obj.previous_page_number }}&amp;{{ search_params }}">
+		<i class="material-icons mdl-list__item-icon">arrow_back</i>
+	</a>
+	{% endif %}
+
+	{% for page in paginator.page_range %}
+	{% if page == page_obj.number %}
+	<span class="active">{{ page }}</span>
+	{% else %}
+	<a href="?page={{ page }}&amp;{{ search_params }}">{{ page }}</a>
+	{% endif %}
+	{% endfor %}
+
+	{% if page_obj.has_next %}
+	<a href="?page={{ page_obj.next_page_number }}&amp;{{ search_params }}">
+		<i class="material-icons mdl-list__item-icon">arrow_forward</i>
+	</a>
+	{% endif %}
+</div>
+{% endif %}
 
 <script src="{% static 'maker/js/app/add.js' %}"></script>
 {% endblock rm-content %}
