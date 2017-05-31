@@ -11,10 +11,13 @@
 		<div class="rm-app-card-title">{{ app.name }}</div>
 		<div class="rm-app-card-summary">{{ app.summary }}</div>
 		<div class="rm-app-card-description">{{ app.description|striptags|truncatechars:168 }}</div>
-		{% if repo_page %}
-		<div class="rm-app-card-updated">Updated {{ app.last_updated_date|date:"SHORT_DATE_FORMAT" }}</div>
-		{% endif %}
 		{% block rm-app-card-right %}{% endblock rm-app-card-right %}
+		<div class="rm-app-card-updated">
+			{% if app.get_version_name %}
+			Version {{ app.get_version_name }}
+			{% endif %}
+			{{ app.last_updated_date|date:"DATE_FORMAT" }}
+		</div>
 	</div>
 {% if clickable and not repo_page %}
 </a>

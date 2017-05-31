@@ -70,8 +70,6 @@ class AppDetailView(RepositoryAuthorizationMixin, DetailView):
         if app.name is None or app.name == '':
             raise RuntimeError("App has not been created properly.")
         context['apks'] = ApkPointer.objects.filter(app=app).order_by('-apk__version_code')
-        if context['apks']:
-            context['latest_apk'] = context['apks'][0].apk
         return context
 
 

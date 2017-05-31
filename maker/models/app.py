@@ -61,6 +61,9 @@ class AbstractApp(TranslatableModel):
     def get_icon_basename(self):
         return os.path.basename(self.icon.path)
 
+    def get_version_name(self):
+        raise NotImplementedError()
+
     def delete_old_icon(self):
         icon_path = os.path.dirname(self.icon.path)
         if icon_path != settings.MEDIA_ROOT:
@@ -205,6 +208,13 @@ class App(AbstractApp):
                     remote_app.tv_banner_etag = etag
             app.save()
             remote_app.save()
+
+    def get_version_name(self):
+        from .apk import ApkPointer
+        pointers = ApkPointer.objects.filter(app=self).order_by('-apk__version_code')
+        if pointers.exists() and pointers[0].apk:
+            return pointers[0].apk.version_name
+        return None
 
 
 class RemoteApp(AbstractApp):
@@ -394,6 +404,13 @@ class RemoteApp(AbstractApp):
             remote.download_async(app)
 
         return app
+
+    def get_version_name(self):
+        from .apk import RemoteApkPointer
+        pointers = RemoteApkPointer.objects.filter(app=self).order_by('-apk__version_code')
+        if pointers.exists() and pointers[0].apk:
+            return pointers[0].apk.version_name
+        return None
 
 
 @receiver(post_delete, sender=App)
