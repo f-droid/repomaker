@@ -7,17 +7,23 @@
 {% block toolbar %}
 <div class="rm-grid--full-width rm-grid--center mdl-grid">
 	<div class="rm-app-toolbar mdl-cell mdl-cell--8-col">
-		<a href="{% block back-url %}{% url 'repo' app.repo.id %}{% endblock back-url %}" class="rm-toolbar-action-left">
+		{% block back-button %}
+		<a href="{% url 'repo' app.repo.id %}" class="rm-toolbar-action-left">
 			<i class="material-icons">arrow_back</i>
 		</a>
+		{% endblock back-button %}
 		<div>
 			{% block top-buttons %}
 			<span class="rm-toolbar-item">
+				<!-- TODO enable after user tests
 				<a href="{% url 'app_translate' app.repo.id app.id %}" class="rm-no-underline">
+				-->
 				{% blocktrans with count=app.get_available_languages.count trimmed %}
 				Language ({{ count }})
 				{% endblocktrans %}
+				<!--
 				</a>
+				-->
 				<i class="material-icons">expand_more</i>
 				<!-- TODO: Make Language dropdown working
 				{% trans 'None' as None %}
@@ -109,13 +115,13 @@
 			<li class="rm-app-versions-item mdl-list__item mdl-list__item--two-line">
 				<span class="mdl-list__item-primary-content">
 					<span>
-						{% blocktrans with version=pointer.apk.version_name trimmed %}
-						Version {{ version }}
+						{% blocktrans with version=pointer.apk.version_name code=pointer.apk.version_code trimmed %}
+						Version {{ version }} ({{ code }})
 						{% endblocktrans %}
 					</span>
 					{% if pointer.file %}
 					<span class="mdl-list__item-sub-title">
-						{% blocktrans with date=pointer.apk.added_date|date:"F j, Y" trimmed %}
+						{% blocktrans with date=pointer.apk.added_date|date:"DATE_FORMAT" trimmed %}
 						Released {{ date }}
 						{% endblocktrans %}
 					</span>

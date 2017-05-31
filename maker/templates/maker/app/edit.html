@@ -8,12 +8,10 @@
 <link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
 {% endblock head %}
 
-{% block page-header %}
-{% endblock page-header %}
-
-{% block back-url %}{% url 'app' app.repo.id app.id %}{% endblock back-url %}
+{% block back-button %}<div class="mdl-layout-spacer"></div>{% endblock back-button %}
 
 {% block top-buttons %}
+<div class="mdl-layout-spacer"></div>
 <form action="" enctype="multipart/form-data" method="post">
 {% csrf_token %}
 <a href="{% url 'delete_app' app.repo.id app.id %}" class="rm-no-underline">
