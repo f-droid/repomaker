@@ -54,6 +54,7 @@
 		<label for="id_screenshots" class="rm-repo-apps-empty-add-upload-browse">{% trans 'browse to upload' %}</label>
 		{{ form.screenshots }}
 	</div>
+	{{ form.screenshots.errors }}
 </div>
 {% endblock screenshot-drop %}
 

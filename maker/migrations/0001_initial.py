@@ -261,7 +261,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('language_code', models.CharField(default='en', max_length=32)),
                 ('type', models.CharField(choices=[('phoneScreenshots', 'Phone'), ('sevenInchScreenshots', "7'' Tablet"), ('tenInchScreenshots', "10'' Tablet"), ('tvScreenshots', 'TV'), ('wearScreenshots', 'Wearable')], default='phoneScreenshots', max_length=32)),
-                ('file', models.FileField(max_length=1024, storage=maker.storage.RepoStorage(), upload_to=maker.storage.get_screenshot_file_path)),
+                ('file', models.ImageField(max_length=1024, storage=maker.storage.RepoStorage(), upload_to=maker.storage.get_screenshot_file_path)),
                 ('app', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='maker.App')),
             ],
             options={

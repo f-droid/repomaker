@@ -41,8 +41,8 @@ class AbstractScreenshot(models.Model):
 
 class Screenshot(AbstractScreenshot):
     app = models.ForeignKey(App, on_delete=models.CASCADE)
-    file = models.FileField(upload_to=get_screenshot_file_path, storage=RepoStorage(),
-                            max_length=1024)
+    file = models.ImageField(upload_to=get_screenshot_file_path, storage=RepoStorage(),
+                             max_length=1024)
     # TODO add a thumbnail to be automatically generated from file
 
     def __str__(self):

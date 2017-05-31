@@ -99,6 +99,13 @@
     margin: 10px 0px 10px 10px;
     min-width: 250px;
     text-align: center;
+
+    .errorlist {
+        color: red;
+        list-style: none;
+        font-weight: bold;
+        padding-left: 0;
+    }
 }
 
 .rm-app-screenshot-delete {

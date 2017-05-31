@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.forms import FileField, ClearableFileInput
+from django.forms import FileField, ImageField, ClearableFileInput
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import UpdateView, DeleteView
@@ -77,7 +77,7 @@ class AppDetailView(RepositoryAuthorizationMixin, DetailView):
 
 
 class AppForm(BaseModelForm):
-    screenshots = FileField(required=False, widget=ClearableFileInput(attrs={'multiple': True}))
+    screenshots = ImageField(required=False, widget=ClearableFileInput(attrs={'multiple': True}))
     apks = FileField(required=False, widget=ClearableFileInput(attrs={'multiple': True}))
 
     def __init__(self, *args, **kwargs):
