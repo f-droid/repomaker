@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-25 13:49+0000\n"
+"POT-Creation-Date: 2017-06-01 13:18+0000\n"
 "PO-Revision-Date: 2017-05-22 22:21+0000\n"
 "Last-Translator: monolifed <monolifed@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/f-droid/repomaker/tr/>\n"
@@ -22,15 +22,15 @@ msgstr ""
 msgid "Summary"
 msgstr "Özet"
 
-#: maker/models/app.py:39
+#: maker/models/app.py:39 maker/templates/maker/repo/index/info.html:16
 msgid "Description"
 msgstr "Açıklama"
 
-#: maker/models/app.py:356
+#: maker/models/app.py:375
 msgid "This app does already exist in your repository."
 msgstr "Bu uygulama zaten deponuzda var."
 
-#: maker/models/app.py:361
+#: maker/models/app.py:380
 msgid "This app does not have any working versions available."
 msgstr "Bu uygulamanın mevcut çalışan bir sürümü yok."
 
@@ -70,31 +70,33 @@ msgstr "Öntanımlı Depolama"
 msgid "Change E-mail"
 msgstr "E-postayı Değiştir"
 
-#: maker/templates/account/base.html:31
+#: maker/templates/account/base.html:31 maker/templates/account/logout.html:6
+#: maker/templates/account/logout.html:16
+#: maker/templates/account/logout.html:25
 msgid "Sign Out"
 msgstr "Oturumu Kapat"
 
-#: maker/templates/account/base.html:33 maker/templates/account/login.html:6
+#: maker/templates/account/base.html:33 maker/templates/account/index.html:6
 msgid "Sign In"
 msgstr "Oturum Aç"
 
-#: maker/templates/account/base.html:34 maker/templates/account/login.html:41
+#: maker/templates/account/base.html:34 maker/templates/account/index.html:41
 msgid "Sign Up"
 msgstr "Kaydol"
 
-#: maker/templates/account/login.html:21
+#: maker/templates/account/index.html:19
 msgid "Distribute apps."
 msgstr ""
 
-#: maker/templates/account/login.html:21
+#: maker/templates/account/index.html:19
 msgid "Spread the love."
 msgstr ""
 
-#: maker/templates/account/login.html:23
+#: maker/templates/account/index.html:21
 msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
 msgstr ""
 
-#: maker/templates/account/login.html:39
+#: maker/templates/account/index.html:38
 #: maker/templates/account/login_form.html:38
 msgid "Login"
 msgstr ""
@@ -107,7 +109,19 @@ msgstr ""
 msgid "Or login with"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:5 maker/templates/maker/app/add.html:17
+#: maker/templates/account/logout.html:18
+#, fuzzy
+#| msgid "Are you sure you want to delete your app \"%(object)s\"?"
+msgid "Are you sure you want to sign out?"
+msgstr "\"%(object)s\" uygulamanızı silmek istediğinizden emin misiniz?"
+
+#: maker/templates/account/signup_form.html:10
+#, fuzzy
+#| msgid "Sign Up"
+msgid "Signup"
+msgstr "Kaydol"
+
+#: maker/templates/maker/app/add.html:6 maker/templates/maker/app/add.html:17
 msgid "Choose from Repos"
 msgstr ""
 
@@ -116,42 +130,89 @@ msgstr ""
 msgid "%(apps_count)s added"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:28
+#: maker/templates/maker/app/add.html:28 maker/templates/maker/app/edit.html:24
 msgid "Done"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:48
+#: maker/templates/maker/app/add.html:47
 msgid "Filters"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:51
+#: maker/templates/maker/app/add.html:52
 #, fuzzy
 #| msgid "New Repo"
 msgid "Repos"
 msgstr "Yeni Depo"
 
-#: maker/templates/maker/app/add.html:52
-msgid "clear"
-msgstr ""
-
-#: maker/templates/maker/app/add.html:61 maker/templates/maker/app/add.html:86
+#: maker/templates/maker/app/add.html:53 maker/templates/maker/app/add.html:100
+#: maker/templates/maker/repo/index/apps.html:45
+#: maker/templates/maker/repo/index/apps.html:82
 msgid "Add"
 msgstr "Ekle"
 
-#: maker/templates/maker/app/add.html:64
+#: maker/templates/maker/app/add.html:59
+msgid "All"
+msgstr ""
+
+#: maker/templates/maker/app/add.html:72
 msgid "Categories"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:90
-msgid "There are no apps from remote repositories."
+#: maker/templates/maker/app/add.html:75
+msgid "clear"
+msgstr ""
+
+#: maker/templates/maker/app/add.html:105
+#, python-format
+msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
+msgstr ""
+
+#: maker/templates/maker/app/add.html:111
+#, fuzzy
+#| msgid "There are no apps from remote repositories."
+msgid "There are no apps in this repo."
 msgstr "Uzak depolardan olan uygulama yok."
 
-#: maker/templates/maker/app/add.html:91
-msgid "If you just added a remote repository, wait for the apps to download and try again later."
+#: maker/templates/maker/app/add.html:113
+#, fuzzy
+#| msgid "There are no apps from remote repositories."
+msgid "There are no apps available in the repos."
+msgstr "Uzak depolardan olan uygulama yok."
+
+#: maker/templates/maker/app/add.html:115
+#, fuzzy
+#| msgid "If you just added a remote repository, wait for the apps to download and try again later."
+msgid "If you just added a repo, wait for the apps to download and try again later."
 msgstr "Bir uzak depoyu henüz eklediyseniz, uygulamaların indirilmesini bekleyin ve daha sonra tekrar deneyin."
 
+#: maker/templates/maker/app/add.html:117
+msgid "This repo has no apps in the selected category. Try clearing it or select a different repo."
+msgstr ""
+
+#: maker/templates/maker/app/add.html:119
+msgid "There are no apps available in the selected category. Try clearing it."
+msgstr ""
+
+#: maker/templates/maker/app/apk_delete.html:5
+#, fuzzy
+#| msgid "Delete App"
+msgid "Delete App Version"
+msgstr "Uygulamayı Sil"
+
+#: maker/templates/maker/app/apk_delete.html:17
+#, fuzzy, python-format
+#| msgid "Are you sure you want to delete this screenshot from your app \"%(app)s\"?"
+msgid "Are you sure you want to delete this version <strong>%(version)s</strong> (%(code)s) from your app <strong>%(app)s</strong>?"
+msgstr "Bu ekran görüntüsünü \"%(app)s\" uygulamanızdan silmek istediğinize emin misiniz?"
+
+#: maker/templates/maker/app/apk_delete.html:22
+#: maker/templates/maker/app/delete.html:20
+#: maker/templates/maker/app/screenshot_delete.html:28
+#: maker/templates/maker/storage/delete.html:22
+msgid "Confirm"
+msgstr "Onayla"
+
 #: maker/templates/maker/app/delete.html:5
-#: maker/templates/maker/app/screenshot_delete.html:5
 msgid "Delete App"
 msgstr "Uygulamayı Sil"
 
@@ -160,81 +221,109 @@ msgstr "Uygulamayı Sil"
 msgid "Are you sure you want to delete your app \"%(object)s\"?"
 msgstr "\"%(object)s\" uygulamanızı silmek istediğinizden emin misiniz?"
 
-#: maker/templates/maker/app/delete.html:20
-#: maker/templates/maker/app/screenshot_delete.html:22
-#: maker/templates/maker/storage/delete.html:22
-msgid "Confirm"
-msgstr "Onayla"
-
 #: maker/templates/maker/app/edit.html:5
-msgid "Edit App"
-msgstr "Uygulamayı Düzenle"
-
-#: maker/templates/maker/app/edit.html:17
 #, python-format
 msgid "Edit %(app)s"
 msgstr "%(app)s Uygulamasını Düzenle"
 
-#: maker/templates/maker/app/edit.html:25
-#: maker/templates/maker/repo/edit.html:30
-msgid "Save Changes"
-msgstr "Değişiklikleri Kaydet"
+#: maker/templates/maker/app/edit.html:19
+#, fuzzy
+#| msgid "Delete App"
+msgid "Remove App"
+msgstr "Uygulamayı Sil"
 
-#: maker/templates/maker/app/index.html:15
+#: maker/templates/maker/app/edit.html:30
+#, fuzzy
+#| msgid "Developed by %(author)s"
+msgid "Developed by"
+msgstr "%(author)s tarafından geliştirildi"
+
+#: maker/templates/maker/app/edit.html:43
+#: maker/templates/maker/app/edit.html:76
+#: maker/templates/maker/repo/index/apps.html:66
+msgid "Add files"
+msgstr ""
+
+#: maker/templates/maker/app/edit.html:47
+#, fuzzy
+#| msgid "Add Screenshot"
+msgid "Drag and drop screenshots"
+msgstr "Ekran Görüntüsü Ekle"
+
+#: maker/templates/maker/app/edit.html:51
+#: maker/templates/maker/app/edit.html:84
+#: maker/templates/maker/repo/index/apps.html:37
+#: maker/templates/maker/repo/index/apps.html:74
+msgid "or"
+msgstr ""
+
+#: maker/templates/maker/app/edit.html:52
+#: maker/templates/maker/app/edit.html:85
+#: maker/templates/maker/repo/index/apps.html:41
+#: maker/templates/maker/repo/index/apps.html:78
+msgid "browse to upload"
+msgstr ""
+
+#: maker/templates/maker/app/edit.html:80
+msgid "Drag and drop .apk files"
+msgstr ""
+
+#: maker/templates/maker/app/index.html:21
 #, python-format
 msgid "Language (%(count)s)"
 msgstr "Dil (%(count)s)"
 
-#: maker/templates/maker/app/index.html:21
+#: maker/templates/maker/app/index.html:29
 msgid "None"
 msgstr "Hiçbiri"
 
-#: maker/templates/maker/app/index.html:27
+#: maker/templates/maker/app/index.html:35
 #: maker/templates/maker/repo/index/info.html:11
 msgid "Edit"
 msgstr "Düzenle"
 
-#: maker/templates/maker/app/index.html:44
+#: maker/templates/maker/app/index.html:54
 #, python-format
 msgid "Developed by %(author)s"
 msgstr "%(author)s tarafından geliştirildi"
 
-#: maker/templates/maker/app/index.html:58
+#: maker/templates/maker/app/index.html:69
 #, python-format
 msgid "Updated %(time)s ago"
 msgstr "%(time)s önce güncellendi"
 
-#: maker/templates/maker/app/index.html:98
+#: maker/templates/maker/app/index.html:109
 msgid "version history"
 msgstr "sürüm geçmişi"
 
-#: maker/templates/maker/app/index.html:106
-#, python-format
-msgid "Version %(version)s"
+#: maker/templates/maker/app/index.html:118
+#, fuzzy, python-format
+#| msgid "Version %(version)s"
+msgid "Version %(version)s (%(code)s)"
 msgstr "Sürüm %(version)s"
 
-#: maker/templates/maker/app/index.html:112
+#: maker/templates/maker/app/index.html:124
 #, python-format
 msgid "Released %(date)s"
 msgstr "%(date)s tarihinde yayımlandı"
 
-#: maker/templates/maker/app/index.html:119
+#: maker/templates/maker/app/index.html:131
 msgid "APK is still downloading..."
 msgstr "APK hala indiriliyor..."
 
-#: maker/templates/maker/app/index.html:127
+#: maker/templates/maker/app/index.html:140
 msgid "This app has no APK files."
 msgstr "Bu uygulamanın APK dosyası yok."
 
-#: maker/templates/maker/app/index.html:128
+#: maker/templates/maker/app/index.html:141
 msgid "If you added this app from a remote repo, try deleting it and adding it again."
 msgstr "Bu uygulamayı uzak bir depodan eklediyseniz, onu silip tekrar eklemeyi deneyin."
 
-#: maker/templates/maker/app/index.html:137
+#: maker/templates/maker/app/index.html:151
 msgid "Previous"
 msgstr "Önceki"
 
-#: maker/templates/maker/app/index.html:145
+#: maker/templates/maker/app/index.html:160
 msgid "Next"
 msgstr "Sonraki"
 
@@ -242,12 +331,12 @@ msgstr "Sonraki"
 msgid "Add App"
 msgstr "Uygulama Ekle"
 
-#: maker/templates/maker/app/remote_add.html:14
+#: maker/templates/maker/app/remote_add.html:16
 #, python-format
 msgid "Add %(app)s to %(repo)s"
 msgstr "%(app)s uygulamasını %(repo)s deposuna ekle"
 
-#: maker/templates/maker/app/remote_add.html:45
+#: maker/templates/maker/app/remote_add.html:35
 #, python-format
 msgid "Add App to %(repo)s"
 msgstr "Uygulamayı %(repo)s deposuna ekle"
@@ -261,36 +350,46 @@ msgstr "Ekran Görüntüsü Ekle"
 msgid "Upload Screenshot"
 msgstr "Karşıya Ekran Görüntüsü Yükle"
 
-#: maker/templates/maker/app/screenshot_delete.html:20
-#, python-format
-msgid "Are you sure you want to delete this screenshot from your app \"%(app)s\"?"
+#: maker/templates/maker/app/screenshot_delete.html:5
+#, fuzzy
+#| msgid "Add Screenshot"
+msgid "Delete Screenshot"
+msgstr "Ekran Görüntüsü Ekle"
+
+#: maker/templates/maker/app/screenshot_delete.html:17
+#, fuzzy, python-format
+#| msgid "Are you sure you want to delete this screenshot from your app \"%(app)s\"?"
+msgid ""
+"\n"
+"\t\t\tAre you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?\n"
+"\t\t\t"
 msgstr "Bu ekran görüntüsünü \"%(app)s\" uygulamanızdan silmek istediğinize emin misiniz?"
 
 #: maker/templates/maker/app/translate.html:5
 msgid "Translate App"
 msgstr "Uygulamayı Çevir"
 
-#: maker/templates/maker/app/translate.html:17
+#: maker/templates/maker/app/translate.html:16
 #, python-format
 msgid "Translate %(app)s"
 msgstr "%(app)s Uygulamasını Çevir"
 
-#: maker/templates/maker/app/translate.html:25
+#: maker/templates/maker/app/translate.html:24
 msgid "Save Translation"
 msgstr "Çeviriyi Kaydet"
 
-#: maker/templates/maker/base.html:36
+#: maker/templates/maker/base.html:38
 #, python-format
 msgid "Hello, %(user)s"
 msgstr "Merhaba, %(user)s"
 
-#: maker/templates/maker/index.html:5 maker/templates/maker/index.html:13
+#: maker/templates/maker/index.html:6 maker/templates/maker/index.html:14
 #, fuzzy
 #| msgid "New Repo"
 msgid "My Repos"
 msgstr "Yeni Depo"
 
-#: maker/templates/maker/index.html:34
+#: maker/templates/maker/index.html:35
 #, python-format
 msgid ""
 "\n"
@@ -298,7 +397,7 @@ msgid ""
 "\t\t\t"
 msgstr ""
 
-#: maker/templates/maker/index.html:38
+#: maker/templates/maker/index.html:39
 #, python-format
 msgid ""
 "\n"
@@ -306,126 +405,160 @@ msgid ""
 "\t\t\t"
 msgstr ""
 
-#: maker/templates/maker/index.html:48
-#, fuzzy
-#| msgid "No repositories are available."
-msgid "There are no repositories are available."
-msgstr "Mevcut depo yok."
+#: maker/templates/maker/index.html:51
+msgid "Make a collection of apps to share"
+msgstr ""
 
-#: maker/templates/maker/index.html:52
+#: maker/templates/maker/index.html:54
 #, fuzzy
 #| msgid "Create"
 msgid "Create Repo"
 msgstr "Oluştur"
 
-#: maker/templates/maker/repo/add.html:5
-#: maker/templates/maker/repo/add.html:25
+#: maker/templates/maker/repo/add.html:5 maker/templates/maker/repo/add.html:15
 msgid "New Repo"
 msgstr "Yeni Depo"
 
-#: maker/templates/maker/repo/add.html:30
+#: maker/templates/maker/repo/add.html:20
 msgid "Create"
 msgstr "Oluştur"
 
 #: maker/templates/maker/repo/edit.html:5
-#: maker/templates/maker/repo/edit.html:24
+#: maker/templates/maker/repo/edit.html:14
 #, fuzzy
 #| msgid "Edit App"
 msgid "Edit Repo"
 msgstr "Uygulamayı Düzenle"
 
-#: maker/templates/maker/repo/index.html:26
+#: maker/templates/maker/repo/edit.html:20
+msgid "Save Changes"
+msgstr "Değişiklikleri Kaydet"
+
+#: maker/templates/maker/repo/index.html:31
 msgid "Apps"
 msgstr "Uygulamalar"
 
-#: maker/templates/maker/repo/index.html:27
-msgid "Info"
-msgstr "Bilgi"
-
-#: maker/templates/maker/repo/index.html:28
+#: maker/templates/maker/repo/index.html:32
 msgid "Share"
 msgstr "Paylaş"
 
-#: maker/templates/maker/repo/index/apps.html:15
+#: maker/templates/maker/repo/index.html:33
+msgid "Info"
+msgstr "Bilgi"
+
+#: maker/templates/maker/repo/index/apps.html:14
 #, fuzzy
 #| msgid "No apps in this repository."
 msgid "Search for apps in your repository"
 msgstr "Bu depoda uygulama yok."
 
-#: maker/templates/maker/repo/index/apps.html:26
-#: maker/templates/maker/repo/index/apps.html:54
-msgid "Add files"
+#: maker/templates/maker/repo/index/apps.html:28
+msgid "Add .apk files"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:29
-#: maker/templates/maker/repo/index/apps.html:57
+#: maker/templates/maker/repo/index/apps.html:33
+#: maker/templates/maker/repo/index/apps.html:70
 msgid "Drag and drop .apk, .pdf, .epub, videos, photos or music files"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:32
-#: maker/templates/maker/repo/index/apps.html:60
-msgid "or"
-msgstr ""
-
-#: maker/templates/maker/repo/index/apps.html:34
-#: maker/templates/maker/repo/index/apps.html:62
-msgid "browse to upload"
-msgstr ""
-
-#: maker/templates/maker/repo/index/apps.html:40
-#: maker/templates/maker/repo/index/apps.html:71
+#: maker/templates/maker/repo/index/apps.html:53
+#: maker/templates/maker/repo/index/apps.html:93
 #, fuzzy
 #| msgid "Add App to %(repo)s"
 msgid "add from repos"
 msgstr "Uygulamayı %(repo)s deposuna ekle"
 
-#: maker/templates/maker/repo/index/apps.html:67
+#: maker/templates/maker/repo/index/apps.html:89
 msgid "Discover"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:68
+#: maker/templates/maker/repo/index/apps.html:90
 msgid "Find things to add from other repos"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:20 maker/views/sshstorage.py:32
-msgid "URL"
-msgstr "URL"
+#: maker/templates/maker/repo/index/apps.html:100
+msgid "Your search did not return any results."
+msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:30
-msgid "Fingerprint"
-msgstr "Parmak izi"
+#: maker/templates/maker/repo/index/info.html:6
+#, fuzzy
+#| msgid "User Name"
+msgid "Name"
+msgstr "Kullanıcı Adı"
+
+#: maker/templates/maker/repo/index/info.html:20
+#, fuzzy
+#| msgid "SSH Storage"
+msgid "Storage"
+msgstr "SSH Depolama"
 
 #: maker/templates/maker/repo/index/info.html:39
-msgid "Created"
-msgstr "Oluşturulma"
-
-#: maker/templates/maker/repo/index/info.html:48
-msgid "Last Updated"
-msgstr "Son Güncelleme"
-
-#: maker/templates/maker/repo/index/info.html:57
-msgid "Last Publication"
-msgstr "Son Yayımlanma"
-
-#: maker/templates/maker/repo/index/info.html:97
 msgid "Attention:"
 msgstr "Dikkat:"
 
-#: maker/templates/maker/repo/index/info.html:97
+#: maker/templates/maker/repo/index/info.html:40
 msgid "This repository has no remote storage. Add one to get your repository published."
 msgstr "Bu deponun uzak depolaması yok. Deponuzu yayımlatmak için bir tane ekleyin."
 
-#: maker/templates/maker/repo/index/info.html:102
+#: maker/templates/maker/repo/index/info.html:46
 msgid "Add SSH Storage"
 msgstr "SSH Depolama Ekle"
 
-#: maker/templates/maker/repo/index/info.html:105
+#: maker/templates/maker/repo/index/info.html:49
 msgid "Add Git Storage"
 msgstr "Git Depolama Ekle"
 
-#: maker/templates/maker/repo/index/info.html:108
+#: maker/templates/maker/repo/index/info.html:52
 msgid "Add Amazon S3 Storage"
 msgstr "Amazon S3 Depolama Ekle"
+
+#: maker/templates/maker/repo/index/info.html:57
+msgid "Fingerprint"
+msgstr "Parmak izi"
+
+#: maker/templates/maker/repo/index/share.html:7
+msgid "Your repo did not get published yet. Do you already have added and enabled a storage?"
+msgstr ""
+
+#: maker/templates/maker/repo/index/share.html:12
+#, python-format
+msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
+msgid_plural "You have  <span>%(app_count)s apps</span> in your repo. Share it!"
+msgstr[0] ""
+msgstr[1] ""
+
+#: maker/templates/maker/repo/index/share.html:20
+msgid "view repo"
+msgstr ""
+
+#: maker/templates/maker/repo/index/share.html:25
+msgid "share public link"
+msgstr ""
+
+#: maker/templates/maker/repo/index/share.html:29
+msgid "copy link"
+msgstr ""
+
+#: maker/templates/maker/repo/index/share.html:34
+msgid "add to an android phone"
+msgstr ""
+
+#: maker/templates/maker/repo/index/share.html:37
+msgid "To install these apps on your Android phone, add them to F-Droid."
+msgstr ""
+
+#: maker/templates/maker/repo/index/share.html:38
+msgid "F-Droid ensures access to secure app updates."
+msgstr ""
+
+#: maker/templates/maker/repo/index/share.html:42
+msgid "Scan QR"
+msgstr ""
+
+#: maker/templates/maker/repo/index/share.html:48
+#, python-format
+msgid "Check out this F-Droid repo: %(name)s"
+msgstr ""
 
 #: maker/templates/maker/storage/delete.html:5
 #: maker/templates/maker/storage/detail.html:59
@@ -553,7 +686,7 @@ msgstr "%(storage_name)s ekle"
 msgid "Here's how to find and copy the Git Repository SSH Address in your %(gitlab)s repository:"
 msgstr "İşte, %(gitlab)s deponuzdaki Git Deposu SSH Adresinin nasıl bulunacağı ve kopyalanacağı:"
 
-#: maker/views/app.py:22
+#: maker/views/apk.py:17
 msgid "Select APK file for upload"
 msgstr "Karşıya yükleme için APK dosyası seç"
 
@@ -581,24 +714,24 @@ msgstr "Bu URL geçersiz. Lütfen git deponuzun tam SSH URL'sini kopyalayın."
 msgid "Please add a valid URLfor the raw content of this git repository."
 msgstr "Lütfen bu git deposunun ham içeriği için geçerli bir URL ekleyin."
 
-#: maker/views/remoterepository.py:19
+#: maker/views/remoterepository.py:22
 msgid "Repository URL"
 msgstr "Depo URL'si"
 
-#: maker/views/remoterepository.py:35
+#: maker/views/remoterepository.py:38
 msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
 msgstr "Lütfen sonunda parmak izi olan bir URL kullanın, böylece deponun geçerliliğini onaylayabiliriz."
 
-#: maker/views/remoterepository.py:42
+#: maker/views/remoterepository.py:45
 msgid "Please don't add one of your own repositories here."
 msgstr "Lütfen buraya kendi depolarınızdan birini eklemeyin."
 
-#: maker/views/remoterepository.py:63
+#: maker/views/remoterepository.py:66
 #, python-format
 msgid "Could not validate repository: %s"
 msgstr "Depo doğrulanamadı: %s"
 
-#: maker/views/repository.py:41
+#: maker/views/repository.py:42
 msgid "Describe the repo"
 msgstr "Depoyu açıkla"
 
@@ -629,6 +762,10 @@ msgstr "Yerel öntanımlı SSH Anahtarını kullan"
 #: maker/views/sshstorage.py:31
 msgid "User Name"
 msgstr "Kullanıcı Adı"
+
+#: maker/views/sshstorage.py:32
+msgid "URL"
+msgstr "URL"
 
 #: maker/views/sshstorage.py:35
 msgid "This is the location where the uploaded files can be accessed from."

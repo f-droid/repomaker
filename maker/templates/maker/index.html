@@ -1,5 +1,6 @@
 {% extends "maker/base.html" %}
 {% load i18n %}
+{% load static %}
 {% load humanize %}
 
 {% block title %}{% trans 'My Repos' %}{% endblock %}
@@ -45,8 +46,9 @@
 		</div>
 	</a>
 	{% empty %}
-	<p>{% trans "There are no repositories are available." %}</p>
-	<div class="mdl-cell mdl-cell--12-col rm-repo-apps-add">
+	<div class="rm-repo-empty-box">
+		<img src="{% static 'maker/images/repo_index_empty_state.png' %}"/>
+		<p>{% trans 'Make a collection of apps to share' %}</p>
 		<a href="{% url 'add_repo' %}" class="rm-no-underline">
 			<button class="rm-button--blue mdl-button mdl-js-button">
 				{% trans 'Create Repo' %}

@@ -189,6 +189,34 @@ a.rm-no-underline {
     height: $size;
     width: $size;
 }
+/*
+ * Repo Empty State
+ */
+
+.rm-repo-empty-box {
+    @extend .mdl-cell, .mdl-cell--8-col;
+    background-color: #F6F8FC;
+    margin: 25px auto;
+    padding: 25px;
+    text-align: center;
+
+    img {
+        width: 200px;
+        max-width: 100%;
+    }
+
+    p {
+        @include font-size(22px);
+    }
+
+    button {
+        @extend .rm-button--blue;
+        font-size: 14px !important;
+        height: 52px;
+        padding: 0 52px;
+        white-space: nowrap;
+    }
+}
 
 /*
  * Repo card
