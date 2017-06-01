@@ -535,7 +535,7 @@ class RemoteRepositoryTestCase(TestCase):
 
         # get initial update task from pre-installed remote repository
         all_tasks = Task.objects.all()
-        self.assertEqual(1, all_tasks.count())
+        self.assertEqual(2, all_tasks.count())
         task = all_tasks[0]
 
         # set initial update task to be one short of the maximum number of attempts
