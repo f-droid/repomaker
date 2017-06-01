@@ -48,7 +48,9 @@
 
 .rm-app-summary-category {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: flex-end;
 }
 
 .rm-app-summary {
@@ -56,20 +58,90 @@
     display: flex;
     flex-grow: 2;
     flex-flow: column;
-    margin-left: 16px;
+    margin-right: 16px;
+    margin-bottom: 8px;
     font-style: italic;
-    font-size: 17px;
+    @include font-size(17px);
     color: #000;
 }
 
 .rm-app-category-chip {
+    @extend .mdl-chip, .mdl-chip--deletable;
     background: #f4f4f4;
-    margin: 0 4px 0 4px;
+    margin: 0 4px 8px 4px;
+    padding-right: 12px;
 }
 
-.rm-app-category-text {
-    color: #4a4a4a;
-    font-size: 13px;
+#rm-app-categories {
+    display: none;
+
+    .rm-app-category-chip {
+        padding-right: 4px;
+
+        .material-icons {
+            @include font-size(16px);
+            line-height: 24px;
+        }
+    }
+
+    .rm-app-category-text {
+        @extend .mdl-chip__text;
+        color: #4a4a4a;
+        @include font-size(13px);
+    }
+
+    .rm-app-category-chip-add {
+        @extend .rm-app-category-chip;
+        padding-left: 0;
+
+        .rm-app-category-text {
+            padding-right: 8px;
+        }
+    }
+
+    .rm-app-category-menu {
+        @extend .mdl-menu;
+        padding: 8px;
+        min-width: 175px;
+        max-height: 500px;
+        overflow: auto;
+
+        p {
+            @include font-size(16px);
+            margin-bottom: 4px;
+        }
+
+        button {
+            display: block;
+            background-color: Transparent;
+            background-repeat:no-repeat;
+            border: none;
+            outline:none;
+            width: 100%;
+            @include font-size(14px);
+            text-align: left;
+            padding: 5px;
+        }
+
+        button:hover:enabled {
+            background-color: #f4f4f4;
+        }
+    }
+
+    .mdl-menu__outline {
+        border-radius: 8px;
+    }
+}
+
+.rm-app-category-label {
+    width: 100%;
+    font-weight: bold;
+    margin-top: 16px;
+}
+
+select#id_category {
+    height: 200px;
+    margin-top: 8px;
 }
 
 .rm-app-screenshots {
@@ -122,7 +194,7 @@
 
 .rm-app-description {
     color: #000;
-    font-size: 15px;
+    @include font-size(15px);
     overflow-wrap: break-word;
 }
 

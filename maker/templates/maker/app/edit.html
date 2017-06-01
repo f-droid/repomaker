@@ -1,5 +1,6 @@
 {% extends "maker/app/index.html" %}
 {% load i18n %}
+{% load static %}
 {% load sass_tags %}
 
 {% block title %}{% blocktrans with app=app.name %}Edit {{ app }}{% endblocktrans %}{% endblock %}
@@ -9,6 +10,7 @@
 {% endblock head %}
 
 {% block back-button %}<div class="mdl-layout-spacer"></div>{% endblock back-button %}
+
 
 {% block top-buttons %}
 <div class="mdl-layout-spacer"></div>
@@ -25,6 +27,7 @@
 </button>
 {% endblock top-buttons %}
 
+
 {% block author %}
 <div class="rm-app-author">
 	{% trans 'Developed by' %}
@@ -35,6 +38,37 @@
 {% block summary %}
 {{ form.summary }}
 {% endblock summary %}
+
+
+{% block categories %}
+<div id="rm-app-categories">
+	{% for category in app.category.all %}
+	<span id="category_{{ category.id }}" class="rm-app-category-chip">
+		<span class="rm-app-category-text">{{ category.name }}</span>
+		<button type="button" class="mdl-chip__action" onclick="removeCategory({{ category.id }})">
+			<i class="material-icons">clear</i>
+		</button>
+	</span>
+	{% endfor %}
+	<button type="button" id="rm-app-category-add" class="rm-app-category-chip-add mdl-js-button">
+		<span class="mdl-chip__action"><i class="material-icons">add</i></span>
+		<span class="rm-app-category-text">{% trans 'Category' %}</span>
+	</button>
+	<div class="rm-app-category-menu mdl-js-menu mdl-js-ripple-effect" data-mdl-for="rm-app-category-add">
+		<p>{% trans 'Choose Category' %}</p>
+		{% for category in form.category.field.queryset.all %}
+		<button type="button" id="add_category_{{ category.id }}" onclick="addCategory({{ category.id }})">
+			{{ category.name }}
+		</button>
+		{% endfor %}
+	</div>
+</div>
+<noscript class="rm-app-category-label">
+	<label for="id_category">{% trans 'Choose Category' %}</label>
+</noscript>
+{{ form.category }}
+{% endblock categories %}
+
 
 {% block screenshot-drop %}
 <div class="rm-app-screenshot-drop rm-form">
@@ -56,6 +90,7 @@
 </div>
 {% endblock screenshot-drop %}
 
+
 {% block screenshot-delete %}
 <a href="{% url 'screenshot_delete' app.repo.id app.id screenshot.id %}"
    class="rm-app-screenshot-delete rm-no-underline">
@@ -65,9 +100,11 @@
 </a>
 {% endblock screenshot-delete %}
 
+
 {% block description %}
 {{ form.description }}
 {% endblock description %}
+
 
 {% block apk-drop %}
 <div class="rm-app-versions-drop rm-form">
@@ -88,6 +125,7 @@
 </div>
 {% endblock apk-drop %}
 
+
 {% block apk-delete %}
 <span class="mdl-list__item-secondary-action">
 	<a href="{% url 'apk_delete' app.repo.id app.id pointer.id %}"
@@ -99,8 +137,13 @@
 </span>
 {% endblock apk-delete %}
 
+
 {% block prev-url %}{{ app.get_previous.get_edit_url }}{% endblock %}
 
 {% block next-url %}{{ app.get_next.get_edit_url }}{% endblock %}
 
-{% block page-footer %}</form>{% endblock page-footer %}
+
+{% block page-footer %}
+</form>
+<script src="{% static 'maker/js/app/edit.js' %}"></script>
+{% endblock page-footer %}

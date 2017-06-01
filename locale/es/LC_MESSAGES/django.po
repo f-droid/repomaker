@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-01 13:18+0000\n"
+"POT-Creation-Date: 2017-06-01 18:33+0000\n"
 "PO-Revision-Date: 2017-05-22 19:44+0000\n"
 "Last-Translator: Alberto Moshpirit <aru@openmailbox.org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/f-droid/repomaker/es/>\n"
@@ -130,7 +130,7 @@ msgstr ""
 msgid "%(apps_count)s added"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:28 maker/templates/maker/app/edit.html:24
+#: maker/templates/maker/app/add.html:28 maker/templates/maker/app/edit.html:26
 msgid "Done"
 msgstr ""
 
@@ -219,50 +219,59 @@ msgstr "Eliminar aplicación"
 msgid "Are you sure you want to delete your app \"%(object)s\"?"
 msgstr "¿Estás seguro de querer eliminar tu aplicación \"%(object)s\"?"
 
-#: maker/templates/maker/app/edit.html:5
+#: maker/templates/maker/app/edit.html:6
 #, python-format
 msgid "Edit %(app)s"
 msgstr "Editar %(app)s"
 
-#: maker/templates/maker/app/edit.html:19
+#: maker/templates/maker/app/edit.html:21
 #, fuzzy
 #| msgid "Delete App"
 msgid "Remove App"
 msgstr "Eliminar aplicación"
 
-#: maker/templates/maker/app/edit.html:30
+#: maker/templates/maker/app/edit.html:33
 #, fuzzy
 #| msgid "Developed by %(author)s"
 msgid "Developed by"
 msgstr "Desarrollada por%(author)s"
 
-#: maker/templates/maker/app/edit.html:43
-#: maker/templates/maker/app/edit.html:76
+#: maker/templates/maker/app/edit.html:55
+msgid "Category"
+msgstr ""
+
+#: maker/templates/maker/app/edit.html:58
+#: maker/templates/maker/app/edit.html:67
+msgid "Choose Category"
+msgstr ""
+
+#: maker/templates/maker/app/edit.html:77
+#: maker/templates/maker/app/edit.html:113
 #: maker/templates/maker/repo/index/apps.html:66
 msgid "Add files"
 msgstr ""
 
-#: maker/templates/maker/app/edit.html:47
+#: maker/templates/maker/app/edit.html:81
 #, fuzzy
 #| msgid "Add Screenshot"
 msgid "Drag and drop screenshots"
 msgstr "Añadir captura de pantalla"
 
-#: maker/templates/maker/app/edit.html:51
-#: maker/templates/maker/app/edit.html:84
+#: maker/templates/maker/app/edit.html:85
+#: maker/templates/maker/app/edit.html:121
 #: maker/templates/maker/repo/index/apps.html:37
 #: maker/templates/maker/repo/index/apps.html:74
 msgid "or"
 msgstr ""
 
-#: maker/templates/maker/app/edit.html:52
-#: maker/templates/maker/app/edit.html:85
+#: maker/templates/maker/app/edit.html:86
+#: maker/templates/maker/app/edit.html:122
 #: maker/templates/maker/repo/index/apps.html:41
 #: maker/templates/maker/repo/index/apps.html:78
 msgid "browse to upload"
 msgstr ""
 
-#: maker/templates/maker/app/edit.html:80
+#: maker/templates/maker/app/edit.html:117
 msgid "Drag and drop .apk files"
 msgstr ""
 
@@ -290,38 +299,38 @@ msgstr "Desarrollada por%(author)s"
 msgid "Updated %(time)s ago"
 msgstr "Actualizada hace %(time)s"
 
-#: maker/templates/maker/app/index.html:109
+#: maker/templates/maker/app/index.html:112
 msgid "version history"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:118
+#: maker/templates/maker/app/index.html:121
 #, fuzzy, python-format
 #| msgid "Version %(version)s"
 msgid "Version %(version)s (%(code)s)"
 msgstr "versión %(version)s"
 
-#: maker/templates/maker/app/index.html:124
+#: maker/templates/maker/app/index.html:127
 #, python-format
 msgid "Released %(date)s"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:131
+#: maker/templates/maker/app/index.html:134
 msgid "APK is still downloading..."
 msgstr "Todavía se está descargando la APK..."
 
-#: maker/templates/maker/app/index.html:140
+#: maker/templates/maker/app/index.html:143
 msgid "This app has no APK files."
 msgstr "Esta aplicación no tiene archivos APK."
 
-#: maker/templates/maker/app/index.html:141
+#: maker/templates/maker/app/index.html:144
 msgid "If you added this app from a remote repo, try deleting it and adding it again."
 msgstr ""
 
-#: maker/templates/maker/app/index.html:151
+#: maker/templates/maker/app/index.html:154
 msgid "Previous"
 msgstr "Anterior"
 
-#: maker/templates/maker/app/index.html:160
+#: maker/templates/maker/app/index.html:163
 msgid "Next"
 msgstr "Siguiente"
 
