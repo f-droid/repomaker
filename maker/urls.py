@@ -5,8 +5,7 @@ from maker.views.app import AppAddView, AppDetailView, AppUpdateView, AppDeleteV
     AppTranslationUpdateView
 from maker.views.gitstorage import GitStorageCreate, GitStorageUpdate, GitStorageDetail, \
     GitStorageDelete
-from maker.views.remoterepository import RemoteRepositoryCreateView, RemoteAppCreateView, \
-    RemoteAppCreateHeadlessView
+from maker.views.remoterepository import RemoteRepositoryCreateView, RemoteAppCreateView
 from maker.views.repository import RepositoryListView, RepositoryCreateView, RepositoryView, \
     RepositoryUpdateView
 from maker.views.s3storage import S3StorageCreate, S3StorageDetail, S3StorageUpdate, S3StorageDelete
@@ -40,8 +39,6 @@ urlpatterns = [
         AppAddView.as_view(), name='add_app_with_category'),
     url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/(?P<app_id>[0-9]+)$',
         RemoteAppCreateView.as_view(), name='add_remote_app'),
-    url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add_hl/(?P<app_id>[0-9]+)$',
-        RemoteAppCreateHeadlessView.as_view(), name='add_remote_app_headless'),  # TODO remove
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/$', AppDetailView.as_view(), name='app'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/edit/$', AppUpdateView.as_view(),
         name='edit_app'),

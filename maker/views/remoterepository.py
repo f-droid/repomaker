@@ -1,11 +1,8 @@
 import urllib.parse
 
-from django.core.exceptions import ValidationError
-from django.db.utils import OperationalError
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import View
 from django.views.generic.edit import CreateView
 from fdroidserver import index
 
@@ -108,24 +105,3 @@ class RemoteAppCreateView(RepositoryAuthorizationMixin, CreateView):
         # edit new app
         return reverse_lazy('app', kwargs={'repo_id': self.object.repo.pk,
                                            'app_id': self.object.pk})
-
-
-# TODO remove and use RemoteAppCreateView instead
-# https://docs.djangoproject.com/en/1.11/topics/class-based-views/mixins/#more-than-just-html
-class RemoteAppCreateHeadlessView(RepositoryAuthorizationMixin, View):
-    def post(self, request, *args, **kwargs):
-        remote_repo_id = kwargs['remote_repo_id']
-        app_id = kwargs['app_id']
-        remote_app = RemoteApp.objects.get(repo__id=remote_repo_id, pk=app_id,
-                                           repo__users__id=request.user.id)
-        try:
-            remote_app.add_to_repo(self.get_repo())
-        except ValidationError as e:
-            # TODO: Identify error based on code
-            if "This app does already exist in your repository." == e.message:
-                return HttpResponse(1)
-            return HttpResponse(False)
-        except OperationalError:
-            return HttpResponse(2)
-        self.get_repo().update_async()  # schedule repository update
-        return HttpResponse(True)

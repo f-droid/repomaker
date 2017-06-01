@@ -89,8 +89,9 @@ a.rm-app-card:hover {
 }
 
 .rm-app-card-footer-action {
+    @extend .rm-no-underline;
     align-self: center;
-    button {
+    button, button:focus:not(:active) {
         // TODO: Extend .rm-button from style.css
         @extend .mdl-button;
         background: none;

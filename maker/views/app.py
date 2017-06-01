@@ -1,4 +1,9 @@
+import json
+
+from django.core.exceptions import ValidationError
+from django.db.utils import OperationalError
 from django.db.models import Q
+from django.http import Http404, HttpResponse
 from django.forms import FileField, ImageField, ClearableFileInput
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
@@ -53,6 +58,27 @@ class AppAddView(RepositoryAuthorizationMixin, ListView):
         if 'search' in self.request.GET and self.request.GET['search'] != '':
             context['search_params'] = 'search=%s' % self.request.GET['search']
         return context
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            apps_to_add = json.loads(request.body.decode("utf-8"))
+            for app in apps_to_add:
+                app_id = app['appId']
+                remote_repo_id = app['appRepoId']
+                remote_app = RemoteApp.objects.get(repo__id=remote_repo_id, pk=app_id,
+                                                   repo__users__id=request.user.id)
+                try:
+                    remote_app.add_to_repo(self.get_repo())
+                except OperationalError:
+                    return HttpResponse(1, status=500)
+                except ValidationError as e:
+                    # TODO: Remove with https://gitlab.com/fdroid/repomaker/issues/93
+                    if "This app does already exist in your repository." == e.message:
+                        return HttpResponse(2, status=400)
+                    return HttpResponse(status=400)
+            self.get_repo().update_async()  # schedule repository update
+            return HttpResponse(status=204)
+        return Http404()
 
 
 class AppDetailView(RepositoryAuthorizationMixin, DetailView):

@@ -202,6 +202,10 @@ a.active:hover .rm-app-add-categories-list-item-circle {
     color: gray;
 }
 
+#rm-app-add-errors {
+    @extend .error;
+}
+
 .rm-app-add-pagination {
     background-color: #f6f6f6;
     color: rgb(117,117,117);

@@ -1,58 +1,98 @@
 var buttonAdd = document.getElementById('rm-app-card-footer-action')
 
 // Exceptions that can occur
-var EXCEPTION_ALREADY_ADDED = '1'
-var EXCEPTION_DATABASE_LOCKED = '2'
+var EXCEPTION_DATABASE_LOCKED = '1'
 
-// IDs of resources
+// TODO: Remove with https://gitlab.com/fdroid/repomaker/issues/93
+var EXCEPTION_ALREADY_ADDED = '2'
+
+// Apps to be added when user click "Done"
+var appsToAdd = []
+
+// Repo ID
 window.repoId = '0'
-window.appRepoId = '0'
-window.appId = '0'
-window.element = 'null'
 
 function addRemoteApp(event, repoId, appRepoId, appId) {
     // Prevent opening new page
     event.preventDefault()
 
-    // Set global variables
-    window.repoId = repoId
-    window.appRepoId = appRepoId
-    window.appId = appId
-    window.element = 'rm-app-card-footer-action--' + appId
+    if (window.repoId === '0') {
+        window.repoId = repoId
+    }
+    else if (window.repoId !== repoId) {
+        throw new Error('Repository ID where the apps should be added to differs')
+    }
 
-    var url = '/repo/' + repoId + '/app/remote/' + appRepoId + '/add_hl/' + appId
-    buttonSetLoading()
-    httpGet(url, remoteAppAdded)
+    var app = {
+        appRepoId: appRepoId,
+        appId: appId
+    }
+    var element = 'rm-app-card-footer-action--' + appId
+    var appAlreadyAdded = false
+    for(var i = 0; i < appsToAdd.length; i++) {
+        if (appsToAdd[i].appRepoId == appRepoId && appsToAdd[i].appId == appId) {
+            appAlreadyAdded = true
+            appsToAdd.splice(i, 1)
+            buttonSetNormal(element)
+            break
+        }
+    }
+    if (!appAlreadyAdded) {
+        appsToAdd.push(app)
+        buttonSetAdded(element)
+    }
 }
 
-function remoteAppAdded(responseText) {
-    if ("True" === responseText) {
-        buttonSetSuccessful()
+function done(event) {
+    if (appsToAdd.length === 0) {
+        return
     }
-    else if (EXCEPTION_ALREADY_ADDED === responseText) {
-        buttonSetFailed('The app already exists in your repo.')
+    // Prevent opening new page
+    event.preventDefault()
+
+    var url = '/repo/' + window.repoId + '/app/add/'
+    var request = new XMLHttpRequest()
+    request.onreadystatechange = function() {
+        if (request.readyState === 4) {
+            appsAdded(request)
+        }
     }
-    else if (EXCEPTION_DATABASE_LOCKED === responseText) {
-        buttonSetFailed('Please wait a moment, there is currently some background activity ongoing.')
+    request.open("POST", url, true) // true for asynchronous
+    request.setRequestHeader("X-CSRFToken", document.getElementsByName('csrfmiddlewaretoken')[0].value)
+    request.setRequestHeader('X-REQUESTED-WITH', 'XMLHttpRequest') // For Django's request.is_ajax()
+    request.send(JSON.stringify(appsToAdd))
+}
+
+function appsAdded(request) {
+    if (request.status === 204) {
+        window.location = '/repo/' + window.repoId
+    }
+    else if (request.status === 400 && request.responseText === EXCEPTION_ALREADY_ADDED){
+        showError('One of the apps already exists in your repo.')
+    }
+    else if (request.status === 500 && request.responseText === EXCEPTION_DATABASE_LOCKED) {
+        showError('Please wait a moment, there is currently some background activity ongoing.')
     }
     else {
-        buttonSetFailed('There was a problem with adding the app...')
+        showError('There was a problem with adding the app.')
     }
 }
 
-function buttonSetLoading() {
-    // TODO: Implement https://gitlab.com/fdroid/repomaker/issues/41#states-of-adding
-    setContentOfElement(window.element, 'Loading')
+function buttonSetAdded(element) {
+    setClassOfElement(element, 'rm-app-card-footer-action--successful')
+    setContentOfElement(element + '-button', '<i class="material-icons">done</i>')
 }
 
-function buttonSetSuccessful() {
-    setClassOfElement(window.element, 'rm-app-card-footer-action--successful')
-    setContentOfElement(window.element, '<i class="material-icons">done</i>')
+function buttonSetNormal(element) {
+    setClassOfElement(element, 'rm-app-card-footer-action')
+    // TODO: i18n
+    setContentOfElement(element + '-button', 'Add')
 }
 
-function buttonSetFailed(text) {
-    setClassOfElement(window.element, 'rm-app-card-footer-action--failed')
-    setContentOfElement(window.element, '<i class="material-icons">error</i>')
+function showError(text) {
+    var element = 'rm-app-add-errors'
+    setContentOfElement(element, text)
+    setHiddenOfElement(element, false)
 }
 
 function setClassOfElement(element, myClass) {
@@ -60,18 +100,9 @@ function setClassOfElement(element, myClass) {
 }
 
 function setContentOfElement(element, content) {
-    console.debug(document.getElementById(element + '-button'))
-    document.getElementById(element + '-button').innerHTML = content
+    document.getElementById(element).innerHTML = content
 }
 
-function httpGet(url, callback) {
-    var xmlHttp = new XMLHttpRequest()
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            callback(xmlHttp.responseText)
-        }
-    }
-    xmlHttp.open("POST", url, true) // true for asynchronous
-    xmlHttp.setRequestHeader("X-CSRFToken", document.getElementsByName('csrfmiddlewaretoken')[0].value);
-    xmlHttp.send(null)
+function setHiddenOfElement(element, hidden) {
+    document.getElementById(element).hidden = hidden
 }

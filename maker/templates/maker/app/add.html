@@ -24,7 +24,7 @@
 				{{ apps_count }} added
 				{% endblocktrans %}
 			</span>
-			<a href="{% url 'repo' repo.id %}" class="rm-repo-add-toolbar-done">
+			<a href="{% url 'repo' repo.id %}" class="rm-repo-add-toolbar-done" onclick="done(event)">
 				<button>{% trans 'Done' %}</button>
 			</a>
 		</div>
@@ -86,6 +86,7 @@
 				</div>
 			</div>
 			<div class="rm-app-add-apps">
+				<p id="rm-app-add-errors" hidden></p>
 				{% if remote_repo %}
 				<div class="rm-app-add-remote-repository-information">
 					<h1 class="rm-app-add-remote-repository-information-title">{{ remote_repo.name }}</h1>
