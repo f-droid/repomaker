@@ -509,3 +509,4 @@ class Options:
     no_checksum = False
     identity_file = None
     delete_unknown = False
+    rename_apks = False

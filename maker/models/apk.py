@@ -69,9 +69,9 @@ class Apk(models.Model):
             update.scan_apk_aapt(apk_info, file_abs_path)
             if 'packageName' not in apk_info:
                 raise common.BuildException('APK has no packageName.')
-            signature = update.getsig(os.path.join(os.getcwd(), file_abs_path))
-            if signature is None:
-                raise common.BuildException('Invalid.')
+            apk_path = os.path.join(os.getcwd(), file_abs_path)
+            if not common.verify_apk_signature(apk_path):
+                raise common.BuildException('Invalid APK.')
         except common.BuildException as e:
             logging.warning('Deleting invalid APK file: %s', e)
             ApkPointer.objects.filter(apk=self).all().delete()
