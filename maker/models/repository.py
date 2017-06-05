@@ -483,9 +483,9 @@ class RemoteRepository(AbstractRepository):
         :param packages: A list of package names that should not be removed
         """
         from maker.models.app import RemoteApp
-        old_apps = RemoteApp.objects.filter(repo=self).exclude(package_id__in=packages)
-        if old_apps.exists():
-            for app in old_apps.all():
+        old_apps = RemoteApp.objects.filter(repo=self)
+        for app in old_apps.all():
+            if app.package_id not in packages:
                 app.delete()
 
     class Meta(AbstractRepository.Meta):

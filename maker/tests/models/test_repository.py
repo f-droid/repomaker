@@ -588,6 +588,33 @@ class RemoteRepositoryTestCase(TestCase):
         self.repo = RemoteRepository.objects.get(pk=1)
         self.assertTrue(self.repo.disabled)
 
+    def test_remove_old_apps(self):
+        RemoteApp.objects.create(repo=self.repo, package_id="delete",
+                                 last_updated_date=self.repo.last_updated_date)
+        RemoteApp.objects.create(repo=self.repo, package_id="do not delete",
+                                 last_updated_date=self.repo.last_updated_date)
+        packages = ["do not delete"]
+        self.repo._remove_old_apps(packages)  # pylint: disable=protected-access
+
+        # assert that only the expected app was deleted
+        self.assertEqual(1, RemoteApp.objects.count())
+        self.assertEqual("do not delete", RemoteApp.objects.all()[0].package_id)
+
+    def test_remove_old_apps_thousands(self):
+        """
+        Tests that we do not run into sqlite3.OperationalError: too many SQL variables
+        """
+        RemoteApp.objects.create(repo=self.repo, package_id="delete",
+                                 last_updated_date=self.repo.last_updated_date)
+        # add lots of fake packages
+        packages = []
+        for i in range(1, 3000):
+            packages.append(str(i))
+        self.repo._remove_old_apps(packages)  # pylint: disable=protected-access
+
+        # assert that all remote apps could be deleted
+        self.assertFalse(RemoteApp.objects.exists())
+
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, STATIC_ROOT=TEST_STATIC_DIR)
 class RepositoryPageTestCase(TestCase):
