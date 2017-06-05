@@ -1,0 +1,63 @@
+@import "index_apps.scss";
+@import "index_share.scss";
+@import "index_info.scss";
+
+.rm-repo-tabs__tab-bar {
+    background: #39414a;
+}
+
+.rm-repo-tabs__tab {
+    color: #abafb3;
+    @include font-size(13px);
+    padding: 0 50px;
+    outline: 0;
+}
+
+.rm-repo-tabs__tab:first-child {
+    margin-left: 100px;
+}
+
+// On devices smaller than desktops tabs are handled differently
+@media (max-width: $grid-desktop-breakpoint - 1) {
+    .rm-repo-tabs__tab-bar {
+        justify-content: center;
+    }
+    .rm-repo-tabs__tab {
+        padding: 0 24px;
+    }
+    .rm-repo-tabs__tab:first-child {
+        margin-left: 0;
+    }
+}
+
+.rm-repo-tabs__panels {
+    margin: 16px;
+}
+
+/*
+ * Repo Empty State
+ */
+
+.rm-repo-empty-box {
+    @extend .mdl-cell, .mdl-cell--8-col;
+    background-color: #F6F8FC;
+    margin: 25px auto;
+    padding: 25px;
+    text-align: center;
+
+    img {
+        max-width: 100%;
+    }
+
+    p {
+        @include font-size(22px);
+    }
+
+    button {
+        @extend .rm-button--blue;
+        font-size: 14px;
+        height: 52px;
+        padding: 0 52px;
+        white-space: nowrap;
+    }
+}

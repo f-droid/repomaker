@@ -5,13 +5,7 @@
 {% block title %}{% trans 'Delete App' %}{% endblock %}
 {% block toolbar-title %}<a href="{% url 'repo' app.repo.id %}">{{ app.repo.name }}</a>{% endblock %}
 
-{% block head %}
-<link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
-{% endblock head %}
-
-
 {% block rm-content %}
-
 <div class="rm-form">
     <form action="" method="post">
         {% csrf_token %}
@@ -21,5 +15,4 @@
         </div>
     </form>
 </div>
-
 {% endblock rm-content %}

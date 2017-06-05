@@ -191,9 +191,9 @@ class RepositoryTestCase(TestCase):
     @override_settings(STATIC_ROOT=TEST_STATIC_DIR)
     def test_copy_page_assets(self):
         # create fake stylesheet for copying
-        stylesheet_path = os.path.join(settings.STATIC_ROOT, 'maker', 'css')
+        stylesheet_path = os.path.join(settings.STATIC_ROOT, 'maker', 'css', 'repo')
         os.makedirs(stylesheet_path)
-        with open(os.path.join(stylesheet_path, 'repo_page.css'), 'w') as f:
+        with open(os.path.join(stylesheet_path, 'page.css'), 'w') as f:
             f.write('foo')
 
         # copy page assets to repo
@@ -205,7 +205,7 @@ class RepositoryTestCase(TestCase):
         self.assertTrue(os.path.getsize(mdl_js_abs_path) > 200)
 
         # assert that the repo homepage's stylesheet has been created
-        style_abs_path = os.path.join(self.repo.get_repo_path(), 'repo_page.css')
+        style_abs_path = os.path.join(self.repo.get_repo_path(), 'page.css')
         self.assertTrue(os.path.isfile(style_abs_path))
 
         # assert that the Roboto fonts has been copied
@@ -674,6 +674,6 @@ class RepositoryPageTestCase(TestCase):
             self.assertTrue('AnotherTestDesc' in repo_page_string)
 
         # assert that the repo homepage's stylesheet has been created
-        style_abs_path = os.path.join(settings.STATIC_ROOT, 'maker', 'css', 'repo_page.css')
+        style_abs_path = os.path.join(settings.STATIC_ROOT, 'maker', 'css', 'repo', 'page.css')
         self.assertTrue(os.path.isfile(style_abs_path))
         self.assertTrue(os.path.getsize(style_abs_path) > 200)

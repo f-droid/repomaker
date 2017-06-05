@@ -1,0 +1,37 @@
+/*
+ * Repo card
+ */
+
+.rm-repo-card {
+    @extend .mdl-cell, .mdl-cell--4-col, .mdl-card, .mdl-shadow--2dp;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+
+    .rm-app-number {
+        font-family: "Roboto-Black";
+        @include font-size(52px);
+    }
+
+    .rm-repo-title {
+        font-family: "Roboto-Medium";
+        @include font-size(22px);
+    }
+
+    .mdl-card__title {
+        padding-bottom: 0px;
+    }
+
+    .mdl-card__supporting-text {
+        @include font-size(14px);
+        color: #000000;
+    }
+
+    .rm-repo-date {
+        padding-bottom: 0px;
+        color: #575757;
+    }
+}
+
+.rm-repo-card:hover {
+    @extend .rm-app-card:hover;
+}

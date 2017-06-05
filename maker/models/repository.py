@@ -186,11 +186,11 @@ class Repository(AbstractRepository):
 
         # Render page to string
         repo_page_string = render_to_string('maker/repo_page/index.html', {'repo': self})
-        repo_page_string = repo_page_string.replace('/static/maker/css/', '')
+        repo_page_string = repo_page_string.replace('/static/maker/css/repo/', '')
 
         # Render qr_code page to string
         qr_page_string = render_to_string('maker/repo_page/qr_code.html', {'repo': self})
-        qr_page_string = qr_page_string.replace('/static/maker/css/', '')
+        qr_page_string = qr_page_string.replace('/static/maker/css/repo/', '')
 
         with open(os.path.join(self.get_repo_path(), 'index.html'), 'w', encoding='utf8') as f:
             f.write(repo_page_string)  # Write repo page to file
@@ -210,8 +210,8 @@ class Repository(AbstractRepository):
             (os.path.join(settings.NODE_MODULES_ROOT, 'material-design-lite', 'material.min.js'),
              os.path.join(self.get_repo_path(), 'material.min.js')),
             # Stylesheet
-            (os.path.join(settings.STATIC_ROOT, 'maker', 'css', 'repo_page.css'),
-             os.path.join(self.get_repo_path(), 'repo_page.css')),
+            (os.path.join(settings.STATIC_ROOT, 'maker', 'css', 'repo', 'page.css'),
+             os.path.join(self.get_repo_path(), 'page.css')),
         ]
 
         # Ensure Roboto fonts path exists

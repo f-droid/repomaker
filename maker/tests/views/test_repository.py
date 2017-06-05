@@ -138,9 +138,9 @@ class RepositoryTestCase(TestCase):
 
         # Assert that we are in the right view with the correct templates
         self.assertTemplateUsed(response, 'maker/repo/index.html')
-        self.assertTemplateUsed(response, 'maker/repo/index/apps.html')
-        self.assertTemplateUsed(response, 'maker/repo/index/info.html')
-        self.assertTemplateUsed(response, 'maker/repo/index/share.html')
+        self.assertTemplateUsed(response, 'maker/repo/index_apps.html')
+        self.assertTemplateUsed(response, 'maker/repo/index_info.html')
+        self.assertTemplateUsed(response, 'maker/repo/index_share.html')
         self.assertTrue(isinstance(response.context['view'], RepositoryView))
         self.assertEqual(self.repo, response.context['repo'])
         self.assertEqual(self.app, response.context['apps'][0])

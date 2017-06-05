@@ -11,7 +11,7 @@
     display: none;
 
     @extend .rm-toolbar-item;
-    color: #0066CC;
+    color: $rm-blue;
     font-weight: 500;
     @include font-size(11px);
     i {
@@ -27,8 +27,8 @@
 .rm-repo-add-toolbar-done {
     button {
         @extend .rm-button, .mdl-button;
-        border-color: #0066CC !important;
-        color: #0066CC;
+        border-color: $rm-blue;
+        color: $rm-blue;
     }
 }
 
@@ -232,7 +232,7 @@ a.active:hover .rm-app-add-categories-list-item-circle {
     }
 
     .active {
-        background-color: #0066cc;
+        background-color: $rm-blue;
         color: white;
     }
 }

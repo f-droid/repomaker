@@ -1,13 +1,19 @@
-@import "mixins";
 
-.mdl-tabs__tab-bar {
+.rm-login-tab-bar {
+    @extend .mdl-tabs__tab-bar;
     margin-bottom: 25px;
+
+    .rm-login-tab {
+        @extend .mdl-tabs__tab;
+        width: 50%;
+        @include font-size(15px);
+        text-transform: unset;
+    }
 }
 
-.rm-login-tab {
-    width: 50%;
-    @include font-size(15px);
-    text-transform: unset;
+.mdl-tabs.is-upgraded .rm-login-tab-bar .is-active.rm-login-tab {
+    color: black;
+    font-weight: bold;
 }
 
 .rm-login-form {
@@ -28,7 +34,7 @@
     }
     input[type="submit"] {
         width: 80%;
-        margin-top: 10px !important;
+        margin-top: 10px;
     }
     a {
         text-decoration: none;
@@ -49,21 +55,24 @@ ul.socialaccount_providers {
 }
 
 .socialaccount_providers {
+
     a {
         text-decoration: none;
         color: unset;
     }
+
     li {
         display: inline-block;
         margin-right: 15px;
         margin-bottom: 10px;
     }
+
     a.socialaccount_provider {
         text-align: center;
         display: block;
         @include font-size(12px);
     }
-    $socialaccount_provider_url: unquote(get-setting(STATIC_URL) + 'maker/images/socialaccount_providers/');
+
     a.github:before {
         content:url($socialaccount_provider_url + 'github.png');
         display: grid;
@@ -96,4 +105,5 @@ ul.socialaccount_providers {
         content:url($socialaccount_provider_url + 'facebook.png');
         display: grid;
     }
+
 }

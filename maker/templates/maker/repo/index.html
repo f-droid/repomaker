@@ -5,10 +5,6 @@
 
 {% block title %}{{ repo.name }}{% endblock %}
 
-{% block head %}
-<link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
-{% endblock head %}
-
 {% block toolbar-items-left %}
 <a href="/" class="rm-toolbar-item">
 	<i class="material-icons">home</i>
@@ -37,13 +33,13 @@
 
 	<div class="rm-repo-tabs__panels">
 		<div class="mdl-tabs__panel is-active" id="rm-repo-panel-apps">
-			{% include "maker/repo/index/apps.html" %}
+			{% include "maker/repo/index_apps.html" %}
 		</div>
 		<div class="mdl-tabs__panel" id="rm-repo-panel-share">
-			{% include "maker/repo/index/share.html" %}
+			{% include "maker/repo/index_share.html" %}
 		</div>
 		<div class="mdl-tabs__panel" id="rm-repo-panel-info">
-			{% include "maker/repo/index/info.html" %}
+			{% include "maker/repo/index_info.html" %}
 		</div>
 	</div>
 </div>

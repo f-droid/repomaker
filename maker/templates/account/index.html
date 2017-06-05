@@ -5,11 +5,6 @@
 
 {% block title %}{% trans "Sign In" %}{% endblock %}
 
-{% block head %}
-<link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
-<link href="{% sass_src 'maker/css/login.scss' %}" rel="stylesheet" type="text/css" media="all">
-{% endblock %}
-
 {% block toolbar %}<span class="rm-logo">repomaker</span>{% endblock toolbar %}
 
 {% block rm-content %}
@@ -33,11 +28,11 @@
 
 		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 
-			<div class="mdl-tabs__tab-bar">
-				<a href="{{ login_url }}" class="mdl-tabs__tab rm-login-tab {% block login-active %}{% endblock %}">
+			<div class="rm-login-tab-bar">
+				<a href="{{ login_url }}" class="rm-login-tab {% block login-active %}{% endblock %}">
 					{% trans "Login" %}
 				</a>
-				<a href="{{ signup_url }}" class="mdl-tabs__tab rm-login-tab {% block signup-active %}{% endblock %}">
+				<a href="{{ signup_url }}" class="rm-login-tab {% block signup-active %}{% endblock %}">
 					{% trans "Sign Up" %}
 				</a>
 			</div>

@@ -5,10 +5,6 @@
 {% block title %}{% trans 'Translate App' %}{% endblock %}
 {% block toolbar-title %}{{ app.repo.name }} - <a href="{% url 'app' app.repo.id app.id %}">{{ app.name }}</a>{% endblock %}
 
-{% block head %}
-<link href="{% sass_src 'maker/css/forms.scss' %}" rel="stylesheet" type="text/css" media="all">
-{% endblock head %}
-
 
 {% block rm-content %}
 

@@ -1,4 +1,4 @@
-@media screen and (max-width: 800px) {
+@media screen and (max-width: $grid-desktop-breakpoint) {
 
     .only-desktop {
         display: none;
@@ -10,7 +10,7 @@
 
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: $grid-desktop-breakpoint - 1) {
 
     .only-desktop {
         display: unset;

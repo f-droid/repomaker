@@ -1,0 +1,114 @@
+/*
+ * Styles for Apps section
+ */
+
+.rm-repo-apps-header {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.rm-repo-apps-header-search {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 2;
+    flex-flow: row;
+    margin-left: 16px;
+    font-style: italic;
+    font-size: 17px;
+    color: #000;
+
+    .mdl-textfield {
+        margin-left: 16px;
+    }
+}
+
+.rm-repo-apps-header-search-icon {
+    color: unset;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    padding: 20px 0;
+}
+
+.rm-repo-apps-header-search-icon:hover {
+    color: #808080;
+}
+
+.rm-no-search-results {
+    margin-top: 25px;
+    @include font-size(17px);
+    color: #808080;
+}
+
+.rm-repo-apps-add, .rm-repo-apps-empty-add, .rm-repo-apps-empty-discover {
+    display: block;
+    padding: 90px;
+    text-align: center;
+}
+.rm-repo-apps-empty-add {
+    background: #fafafa;
+    border: 1px dashed #d7d7d7;
+}
+
+.rm-repo-apps-add {
+    padding: 0;
+}
+
+.rm-repo-apps-add-locally {
+    background: #fafafa;
+    border-left: 1px dashed #d7d7d7;
+    border-right: 1px dashed #d7d7d7;
+    border-top: 1px dashed #d7d7d7;
+    height: calc(70% - 2 * 15px);
+    padding: 15px;
+}
+
+.rm-repo-apps-add-remotely {
+    align-items: center;
+    background: white;
+    border: 1px solid #d7d7d7;
+    color: unset;
+    display: flex;
+    height: calc(30%);
+    justify-content: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.rm-repo-apps-add-remotely:hover {
+    background: #f2f2f2;
+}
+
+.rm-repo-apps-add-remotely-title {
+    color: #575757;
+    @include font-size(11px);
+    margin-left: 6px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.rm-repo-apps-empty-discover {
+    border-bottom: 1px solid #d7d7d7;
+    border-right: 1px solid #d7d7d7;
+    border-top: 1px solid #d7d7d7;
+}
+
+.rm-repo-apps-empty-add-title, .rm-repo-apps-empty-empty-title {
+    @include font-size(15px);
+}
+
+.rm-repo-apps-empty-add-description-first,
+.rm-repo-apps-empty-add-description-second,
+.rm-repo-apps-empty-empty-description {
+    color: #575757;
+    @include font-size(14px);
+}
+
+.rm-repo-apps-empty-add-upload-browse {
+    color: $rm-blue;
+    @include font-size(13px);
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: pointer;
+}

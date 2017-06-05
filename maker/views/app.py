@@ -159,6 +159,7 @@ class AppDeleteView(RepositoryAuthorizationMixin, DeleteView):
         return self.get_object().repo
 
     def get_success_url(self):
+        self.get_repo().update_async()  # schedule repository update
         return reverse_lazy('repo', kwargs={'repo_id': self.kwargs['repo_id']})
 
 

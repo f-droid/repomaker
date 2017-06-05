@@ -1,0 +1,72 @@
+/*
+ * Styles for Info section
+ */
+
+.rm-repo-info-header {
+    display: flex;
+}
+
+.rm-repo-info-name-container {
+    flex-grow: 1;
+}
+
+.rm-repo-info-name-header, .rm-repo-info-description-header,
+.rm-repo-info-storage-header, .rm-repo-info-fingerprint-header {
+    color: #575757;
+    @include font-size(14px);
+    padding: 15px 0;
+    text-transform: uppercase;
+}
+
+.rm-repo-info-name {
+    @include font-size(18px);
+}
+
+.rm-repo-info-edit, .rm-repo-info-storage-add-ssh,
+.rm-repo-info-storage-add-git, .rm-repo-info-storage-add-as3 {
+    @extend .rm-no-underline;
+    button {
+        @extend .rm-button, .mdl-button;
+        padding: 0 35px;
+    }
+}
+
+.rm-repo-info-description-header {
+    padding-top: 45px;
+}
+
+.rm-repo-info-description {
+    color: #000000;
+    padding-bottom: 25px;
+}
+
+.rm-repo-info-divider {
+    border-color: #ECECEC;
+}
+
+.rm-repo-info-storage-header {
+    padding-top: 3px;
+}
+
+.rm-repo-info-storages {
+    @extend .mdl-list;
+}
+
+.rm-repo-info-storages-item {
+    @extend .mdl-list__item, .mdl-list__item--two-line;
+    transition: background-color 0.2s ease;
+}
+
+.rm-repo-info-storages-item:hover {
+    background: #f2f2f2;
+}
+
+.rm-repo-info-storage-add-ssh, .rm-repo-info-storage-add-git, .rm-repo-info-storage-add-as3 {
+    margin-right: 3px;
+}
+
+.rm-repo-info-fingerprint {
+    font-family: monospace;
+    @include font-size(18px);
+    word-spacing: 10px;
+}

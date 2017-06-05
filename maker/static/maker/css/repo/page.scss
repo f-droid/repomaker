@@ -1,4 +1,4 @@
-$roboto-font-path: "roboto-fonts";
+@import "../variables";
 @import "roboto-fontface/css/roboto/sass/roboto-fontface";
 
 @import "material-design-lite/src/button/button";
@@ -10,10 +10,12 @@ $roboto-font-path: "roboto-fonts";
 @import "material-design-lite/src/shadow/shadow";
 @import "material-design-lite/src/typography/typography";
 
-@import "mixins";
+@import "../mixins";
+@import "../mobile-detect";
+@import "../app/widget";
 
 a {
-    color: #0066CC;
+    color: $rm-blue;
 }
 
 a.rm-no-underline {
@@ -52,7 +54,7 @@ p {
 
 #repo-buttons-add {
     button {
-        background: #0066CC;
+        background: $rm-blue;
     }
     display: none;
 }
@@ -70,8 +72,8 @@ p {
 .repo-buttons-install-have {
     button {
         background: none;
-        border: thin solid #0066CC;
-        color: #0066CC;
+        border: thin solid $rm-blue;
+        color: $rm-blue;
     }
 }
 
@@ -107,9 +109,9 @@ p {
 
 .qr-content {
     h3 {
-        font-family: "Roboto-Black";
+        font-family: "Roboto-Bold";
         a {
-            color: #0066CC;
+            color: $rm-blue;
         }
     }
 
@@ -192,6 +194,3 @@ footer {
     }
 
 }
-
-@import "app/widget.scss";
-@import "mobile-detect.scss";
