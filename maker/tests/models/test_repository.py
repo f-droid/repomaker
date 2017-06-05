@@ -3,12 +3,13 @@ import json
 import os
 import shutil
 from datetime import datetime, timezone
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 import background_task
 import requests
 import sass_processor.processor
 import sass_processor.storage
+from requests.exceptions import HTTPError
 from background_task.tasks import Task
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -514,6 +515,42 @@ class RemoteRepositoryTestCase(TestCase):
 
         # assert that an attempt was made to update the apps
         self.assertTrue(_update_apps.called)
+
+    @patch('maker.models.app.RemoteApp.update_from_json')
+    @patch('fdroidserver.index.download_repo_index')
+    def test_update_index_retry_when_failed(self, download_repo_index, update_from_json):
+        """
+        Test that a remote repository is only updated when the index changed since last time.
+        """
+        # return a fake index
+        index = {
+            'repo': {
+               'name': 'Test Name',
+               'description': 'Test Description',
+               'timestamp': datetime.utcnow().timestamp() * 1000,
+            },
+            'apps': [
+               {
+                   'packageName': 'org.example',
+                   'name': 'test app',
+                   'lastUpdated': datetime.utcnow().timestamp() * 1000,
+                   'icon': 'test.png',
+               },
+            ],
+            'packages': {
+               'org.example': []
+            },
+        }
+        download_repo_index.return_value = index, 'etag'
+        update_from_json.side_effect = HTTPError(Mock(status=502))
+
+        with self.assertRaises(HTTPError):
+            self.repo.update_index(update_apps=True)
+        download_repo_index.assert_called_once_with(self.repo.get_fingerprint_url(), etag=None)
+
+        update_from_json.assert_called_once_with(index['apps'][0])
+        self.assertEqual(datetime.fromtimestamp(0, timezone.utc), self.repo.last_change_date)
+        self.assertIsNone(self.repo.index_etag)
 
     @patch('fdroidserver.net.http_get')
     def test_update_icon_without_pk(self, http_get):

@@ -367,9 +367,17 @@ class RemoteRepository(AbstractRepository):
         if repo_index is None:
             logging.info("Remote repo ETag for '%s' did not change, not updating.", str(self))
             return  # the index did not change since last time
+
+        try:
+            self._update(repo_index, update_apps)  # also saves at the end
+        except Exception as e:
+            # reset date of last change, so the update will be re-tried
+            self.last_change_date = datetime.datetime.fromtimestamp(0, timezone.utc)
+            raise e
+
         if update_apps:  # TODO improve this once the workflow has been designed
             self.index_etag = etag  # don't set etag when only adding the repo, so it fetches again
-        self._update(repo_index, update_apps)  # also saves at the end
+            self.save()
 
     def _update(self, repo_index, update_apps):
         """
