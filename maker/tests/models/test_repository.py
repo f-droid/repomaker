@@ -9,7 +9,6 @@ import background_task
 import requests
 import sass_processor.processor
 import sass_processor.storage
-from requests.exceptions import HTTPError
 from background_task.tasks import Task
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -17,11 +16,12 @@ from django.core.files import File
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from fdroidserver.update import METADATA_VERSION
+from requests.exceptions import HTTPError
 
 from maker.models import App, RemoteApp, Apk, ApkPointer, RemoteApkPointer, Repository, \
     RemoteRepository, S3Storage, SshStorage, GitStorage
 from maker.models.repository import AbstractRepository
-from maker.storage import get_repo_file_path, get_remote_repo_path
+from maker.storage import get_repo_file_path, get_remote_repo_path, REPO_DIR
 from .. import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_STATIC_DIR, \
     datetime_is_recent, fake_repo_create
 
@@ -118,6 +118,7 @@ class RepositoryTestCase(TestCase):
         self.assertTrue(self.repo.icon)
         icon_path = self.repo.icon.path
         self.assertTrue(os.path.isfile(icon_path))
+        self.assertTrue(REPO_DIR + '/icons' in icon_path)
 
         self.repo.delete_old_icon()  # delete the old icon safely
 
@@ -509,7 +510,7 @@ class RemoteRepositoryTestCase(TestCase):
         self.assertEqual('["mirror1", "mirror2"]', repo.mirrors)
 
         # assert that new repository icon was downloaded and changed
-        get.assert_called_once_with(repo.url + '/' + 'test-icon.png',
+        get.assert_called_once_with(repo.url + '/icons/' + 'test-icon.png',
                                     headers={'User-Agent': 'F-Droid'})
         self.assertEqual(os.path.join(get_remote_repo_path(repo), 'test-icon.png'), repo.icon.name)
 
@@ -534,7 +535,6 @@ class RemoteRepositoryTestCase(TestCase):
                    'packageName': 'org.example',
                    'name': 'test app',
                    'lastUpdated': datetime.utcnow().timestamp() * 1000,
-                   'icon': 'test.png',
                },
             ],
             'packages': {
@@ -560,6 +560,8 @@ class RemoteRepositoryTestCase(TestCase):
         # update icon
         http_get.return_value = b'icon-data', 'new_etag'
         repo._update_icon('test.png')  # pylint: disable=protected-access
+
+        http_get.assert_called_once_with('http://test/icons/test.png', None)
 
         # assert that there is no `None` in the path, but the repo number (primary key)
         self.assertFalse('None' in repo.icon.name)

@@ -20,7 +20,8 @@ from django.utils import timezone
 from fdroidserver import common, index, server, update, net
 
 from maker import tasks
-from maker.storage import REPO_DIR, get_repo_file_path, get_remote_repo_path, get_repo_root_path
+from maker.storage import REPO_DIR, get_repo_file_path, get_remote_repo_path, get_repo_root_path, \
+    get_icon_file_path
 from maker.utils import clean
 
 
@@ -28,7 +29,7 @@ class AbstractRepository(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     url = models.URLField(max_length=2048, blank=True, null=True)
-    icon = models.ImageField(upload_to=get_repo_file_path, default=settings.REPO_DEFAULT_ICON)
+    icon = models.ImageField(upload_to=get_icon_file_path, default=settings.REPO_DEFAULT_ICON)
     public_key = models.TextField(blank=True)
     fingerprint = models.CharField(max_length=512, blank=True)
     update_scheduled = models.BooleanField(default=False)
@@ -418,7 +419,7 @@ class RemoteRepository(AbstractRepository):
             self._update_apps(repo_index['apps'], repo_index['packages'])
 
     def _update_icon(self, icon_name):
-        url = self.url + '/' + icon_name
+        url = self.url + '/icons/' + icon_name
         icon, etag = net.http_get(url, self.icon_etag)
         if icon is None:
             return  # icon did not change

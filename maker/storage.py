@@ -51,6 +51,14 @@ def get_screenshot_file_path(screenshot, filename):
     return os.path.join(path, filename)
 
 
+def get_icon_file_path(repo, filename):
+    if hasattr(repo, 'user'):
+        icon_path = os.path.join('icons', filename)
+        return os.path.join(get_repo_path(repo), icon_path)
+    else:
+        return os.path.join(get_remote_repo_path(repo), filename)
+
+
 def get_identity_file_path(storage, filename):
     return os.path.join(get_repo_root_path(storage.repo), filename)
 
