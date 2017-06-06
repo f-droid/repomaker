@@ -1,0 +1,23 @@
+{% if is_paginated %}
+<div class="rm-pagination">
+	{% if page_obj.has_previous %}
+	<a href="?page={{ page_obj.previous_page_number }}&amp;{{ search_params }}">
+		<i class="material-icons mdl-list__item-icon">arrow_back</i>
+	</a>
+	{% endif %}
+
+	{% for page in paginator.page_range %}
+	{% if page == page_obj.number %}
+	<span class="active">{{ page }}</span>
+	{% else %}
+	<a href="?page={{ page }}&amp;{{ search_params }}">{{ page }}</a>
+	{% endif %}
+	{% endfor %}
+
+	{% if page_obj.has_next %}
+	<a href="?page={{ page_obj.next_page_number }}&amp;{{ search_params }}">
+		<i class="material-icons mdl-list__item-icon">arrow_forward</i>
+	</a>
+	{% endif %}
+</div>
+{% endif %}

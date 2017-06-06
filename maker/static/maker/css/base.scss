@@ -159,6 +159,37 @@ a.rm-no-underline {
     width: $rm-icon-size-large;
 }
 
+.rm-pagination {
+     background-color: #f6f6f6;
+     color: rgb(117,117,117);
+     @include font-size(18px);
+     padding: 50px;
+     display: flex;
+     flex-wrap: wrap;
+     align-items: center;
+     justify-content: center;
+
+     a, span {
+         @extend .rm-no-underline;
+         height: 24px;
+         width: 24px;
+         line-height: 24px;
+         padding: 8px;
+         text-align: center;
+         border-radius: 50%;
+         margin-right: 3px;
+     }
+
+     a:hover {
+         background-color: #d6d6d6;
+     }
+
+     .active {
+         background-color: $rm-blue;
+         color: white;
+     }
+ }
+
 .error {
     color: rgb(213,0,0);
 }

@@ -1,6 +1,6 @@
 {% load i18n %}
 <div class="rm-grid--center mdl-grid mdl-cell--9-col">
-	{% if request.POST.search or apps.count >= 10 %}
+	{% if request.GET.search or is_paginated %}
 	<div class="rm-repo-apps-header mdl-cell mdl-cell--12-col">
 		<div class="rm-repo-apps-header-search">
 			<a href="#" onclick="toggleSearch()" class="rm-repo-apps-header-search-icon">
@@ -8,12 +8,11 @@
 			</a>
 			<div id="rm-repo-apps-header-search-input"
 				 class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label rm-form">
-				<form action="" method="post">
-					{% csrf_token %}
+				<form action="" method="get">
 					<label for="id_search" class="mdl-textfield__label">
 						{% trans 'Search for apps in your repository' %}
 					</label>
-					<input type="text" name="search" id="id_search" class="mdl-textfield__input" value="{{ request.POST.search }}">
+					<input type="text" name="search" id="id_search" class="mdl-textfield__input" value="{{ request.GET.search }}">
 				</form>
 			</div>
 		</div>

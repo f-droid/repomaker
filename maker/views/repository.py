@@ -70,17 +70,17 @@ class RepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
 
 class RepositoryView(RepositoryAuthorizationMixin, ListView):
     model = App
+    paginate_by = 15
     context_object_name = 'apps'
     template_name = 'maker/repo/index.html'
 
     def get_queryset(self):
-        if 'search' in self.request.POST:
-            query = self.request.POST['search']
+        qs = App.objects.filter(repo=self.get_repo())
+        if 'search' in self.request.GET:
+            query = self.request.GET['search']
             # TODO do a better weighted search query that takes description into account
-            return App.objects.filter(Q(repo=self.get_repo()) &
-                                      (Q(name__icontains=query) | Q(summary__icontains=query))
-                                      )
-        return App.objects.filter(repo=self.get_repo())
+            qs = qs.filter(Q(name__icontains=query) | Q(summary__icontains=query))
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super(RepositoryView, self).get_context_data(**kwargs)
@@ -92,10 +92,9 @@ class RepositoryView(RepositoryAuthorizationMixin, ListView):
         context['storage'] = StorageManager.get_storage(repo)
         from .apk import ApkForm
         context['form'] = ApkForm()
+        if 'search' in self.request.GET and self.request.GET['search'] != '':
+            context['search_params'] = 'search=%s' % self.request.GET['search']
         return context
-
-    def post(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
 
 
 class RepositoryUpdateView(RepositoryAuthorizationMixin, UpdateView):
