@@ -59,9 +59,9 @@
 				{% endblock author %}
 			</div>
 			<div class="rm-app-secondary-content">
-				{% if app.get_version_name %}
+				{% if app.get_latest_version %}
 				<div class="rm-app-version">
-					Version: {{ app.get_version_name }}
+					Version: {{ app.get_latest_version.version_name }}
 				</div>
 				{% endif %}
 				<div class="rm-app-last-time-updated">

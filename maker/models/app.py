@@ -61,7 +61,7 @@ class AbstractApp(TranslatableModel):
     def get_icon_basename(self):
         return os.path.basename(self.icon.path)
 
-    def get_version_name(self):
+    def get_latest_version(self):
         raise NotImplementedError()
 
     def delete_old_icon(self):
@@ -209,11 +209,11 @@ class App(AbstractApp):
             app.save()
             remote_app.save()
 
-    def get_version_name(self):
+    def get_latest_version(self):
         from .apk import ApkPointer
         pointers = ApkPointer.objects.filter(app=self).order_by('-apk__version_code')
         if pointers.exists() and pointers[0].apk:
-            return pointers[0].apk.version_name
+            return pointers[0].apk
         return None
 
 
@@ -405,11 +405,11 @@ class RemoteApp(AbstractApp):
 
         return app
 
-    def get_version_name(self):
+    def get_latest_version(self):
         from .apk import RemoteApkPointer
         pointers = RemoteApkPointer.objects.filter(app=self).order_by('-apk__version_code')
         if pointers.exists() and pointers[0].apk:
-            return pointers[0].apk.version_name
+            return pointers[0].apk
         return None
 
 

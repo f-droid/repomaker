@@ -12,12 +12,12 @@
 		<div class="rm-app-card-summary">{{ app.summary }}</div>
 		<div class="rm-app-card-description">{{ app.description|striptags|truncatechars:168 }}</div>
 		{% block rm-app-card-right %}{% endblock rm-app-card-right %}
+		{% if app.get_latest_version %}
 		<div class="rm-app-card-updated">
-			{% if app.get_version_name %}
-			Version {{ app.get_version_name }}
-			{% endif %}
-			{{ app.last_updated_date|date:"DATE_FORMAT" }}
+			Version {{ app.get_latest_version.version_name }}
+			{{ app.get_latest_version.added_date|date:"DATE_FORMAT" }}
 		</div>
+		{% endif %}
 	</div>
 {% if clickable and not repo_page %}
 </a>
