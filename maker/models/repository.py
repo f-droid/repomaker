@@ -255,7 +255,7 @@ class Repository(AbstractRepository):
             return  # no need to update a repo twice with same data
         self.update_scheduled = True
         self.save()
-        tasks.update_repo(self.id)
+        tasks.update_repo(self.id, priority=-1)  # pylint: disable=unexpected-keyword-arg
 
     def update(self):
         """
@@ -354,7 +354,7 @@ class RemoteRepository(AbstractRepository):
         self.update_scheduled = True
         self.save()
         # pylint: disable=unexpected-keyword-arg
-        tasks.update_remote_repo(self.id, repeat=Task.DAILY)
+        tasks.update_remote_repo(self.id, repeat=Task.DAILY, priority=-2)
 
     def update_index(self, update_apps=True):
         """

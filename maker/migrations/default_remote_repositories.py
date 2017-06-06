@@ -23,10 +23,11 @@ def forwards_func(apps, schema_editor):
         fingerprint='43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB',
         pre_installed=True,
         last_change_date=datetime.datetime.fromtimestamp(0, timezone.utc),
+        update_scheduled=True,
     )
     repo.users = User.objects.all()
     repo.save()
-    tasks.update_remote_repo(repo.pk, repeat=Task.DAILY)
+    tasks.update_remote_repo(repo.pk, repeat=Task.DAILY, priority=-2)
 
     repo = RemoteRepository.objects.using(db_alias).create(
         name='Guardian Project Official Releases',
@@ -36,10 +37,11 @@ def forwards_func(apps, schema_editor):
         fingerprint='B7C2EEFD8DAC7806AF67DFCD92EB18126BC08312A7F2D6F3862E46013C7A6135',
         pre_installed=True,
         last_change_date=datetime.datetime.fromtimestamp(0, timezone.utc),
+        update_scheduled=True,
     )
     repo.users = User.objects.all()
     repo.save()
-    tasks.update_remote_repo(repo.pk, repeat=Task.DAILY)
+    tasks.update_remote_repo(repo.pk, repeat=Task.DAILY, priority=-2)
 
 
 def reverse_func(apps, schema_editor):

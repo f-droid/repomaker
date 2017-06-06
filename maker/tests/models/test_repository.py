@@ -224,12 +224,12 @@ class RepositoryTestCase(TestCase):
         self.assertTrue(os.path.isfile(os.path.join(icon_path, 'facebook.png')))
 
     @patch('maker.tasks.update_repo')
-    def test_update_async(self, update_remote_repo):
+    def test_update_async(self, update_repo):
         """
         Makes sure that the asynchronous update starts a background task.
         """
         self.repo.update_async()
-        update_remote_repo.assert_called_once_with(self.repo.id)
+        update_repo.assert_called_once_with(self.repo.id, priority=-1)
         self.assertTrue(self.repo.update_scheduled)
 
     @patch('maker.tasks.update_repo')
@@ -433,8 +433,10 @@ class RemoteRepositoryTestCase(TestCase):
         """
         Makes sure that the asynchronous update starts a background task.
         """
+        self.repo.update_scheduled = False
+
         self.repo.update_async()
-        update_remote_repo.assert_called_once_with(self.repo.id, repeat=Task.DAILY)
+        update_remote_repo.assert_called_once_with(self.repo.id, repeat=Task.DAILY, priority=-2)
         self.assertTrue(self.repo.update_scheduled)
 
     @patch('maker.tasks.update_remote_repo')
