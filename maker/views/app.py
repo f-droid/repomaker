@@ -57,6 +57,8 @@ class AppAddView(RepositoryAuthorizationMixin, ListView):
             context['category'] = context['categories'].get(pk=self.kwargs['category_id'])
         if 'search' in self.request.GET and self.request.GET['search'] != '':
             context['search_params'] = 'search=%s' % self.request.GET['search']
+        for app in context['apps']:
+            app.added = app.is_in_repo(context['repo'])
         return context
 
     def post(self, request, *args, **kwargs):

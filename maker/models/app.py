@@ -370,8 +370,7 @@ class RemoteApp(AbstractApp):
         """
         from .apk import ApkPointer
         from .screenshot import RemoteScreenshot
-        apps = App.objects.filter(repo=repo, package_id=self.package_id)
-        if apps.exists():
+        if self.is_in_repo(repo):
             raise ValidationError(_("This app does already exist in your repository."))
 
         # add only latest APK
@@ -411,6 +410,13 @@ class RemoteApp(AbstractApp):
         if pointers.exists() and pointers[0].apk:
             return pointers[0].apk
         return None
+
+    def is_in_repo(self, repo):
+        """
+        :param repo: A Repository object.
+        :return: True if an app with this package_id is in repo, False otherwise
+        """
+        return App.objects.filter(repo=repo, package_id=self.package_id).exists()
 
 
 @receiver(post_delete, sender=App)

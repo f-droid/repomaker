@@ -90,7 +90,7 @@
 					<hr class="rm-app-add-remote-repository-information-divider" />
 				</div>
 				{% endif %}
-				<!-- TODO: Add should add app asynchronously in the background, updating the count at the top -->
+				<!-- TODO: Add should update the count at the top -->
 				{% csrf_token %}
 				{% for app in apps %}
 					{% url 'add_remote_app' repo.id app.repo.id app.id as url %}

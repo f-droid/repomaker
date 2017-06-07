@@ -619,6 +619,17 @@ class RemoteRepositoryTestCase(TestCase):
         # assert that all remote apps could be deleted
         self.assertFalse(RemoteApp.objects.exists())
 
+    def test_is_in_repo(self):
+        repo = Repository.objects.create(user=User.objects.create_user('user2'))
+        app = App.objects.create(repo=repo, package_id="org.example")
+        remote_app = RemoteApp.objects.create(repo=self.repo, package_id="org.example",
+                                              last_updated_date=self.repo.last_updated_date)
+        self.assertTrue(remote_app.is_in_repo(repo))
+
+        app.package_id = "different"
+        app.save()
+        self.assertFalse(remote_app.is_in_repo(repo))
+
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, STATIC_ROOT=TEST_STATIC_DIR)
 class RepositoryPageTestCase(TestCase):
