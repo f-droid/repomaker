@@ -13,6 +13,7 @@ from django.test import TestCase, override_settings
 from django.utils import timezone
 from fdroidserver.update import get_all_icon_dirs
 
+import maker.models.app
 from maker.models import Apk, ApkPointer, RemoteApkPointer, App, RemoteApp, RemoteRepository, \
     Repository
 from maker.storage import get_apk_file_path
@@ -347,6 +348,155 @@ class ApkPointerTestCase(TestCase):
         self.assertEqual('org.bitbucket.tickytacky.mirrormirror', app.name)
         self.assertTrue(app.icon)
 
+    def test_initialize_non_apk(self):
+        # overwrite APK file with image file
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.png'), 'test.png')
+
+        # initialize the ApkPointer with its stored image file
+        self.apk_pointer.initialize()
+
+        # assert that image was added properly
+        self.assertEqual('test', self.apk_pointer.apk.package_id)
+        self.assertEqual(10, len(str(self.apk_pointer.apk.version_code)))
+        self.assertEqual(datetime.now().strftime('%Y-%m-%d'), self.apk_pointer.apk.version_name)
+        self.assertEqual(11575, self.apk_pointer.apk.size)
+        self.assertEqual('9b6acf7fa93477170b222bea2d0395fda2557f2ce953f138b011825f333ff02c',
+                         self.apk_pointer.apk.hash)
+        self.assertEqual('sha256', self.apk_pointer.apk.hash_type)
+
+        # assert that image "app" was added properly
+        apps = App.objects.all()
+        self.assertEqual(1, apps.count())
+        self.assertEqual(apps[0], self.apk_pointer.app)  # pointer app
+        self.assertEqual('test', apps[0].name)  # name
+        self.assertEqual('test', apps[0].package_id)  # package ID
+        self.assertEqual(maker.models.app.IMAGE, apps[0].type)  # app type
+        self.assertEqual(settings.APP_DEFAULT_ICON, apps[0].icon.name)  # icon
+
+    def test_initialize_standard_file_name(self):
+        # overwrite APK file with image that has standard file name
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.png'), 'package_name_1337.png')
+
+        # initialize the ApkPointer with its stored image file
+        self.apk_pointer.initialize()
+
+        # assert that version and package name were extracted properly from filename
+        self.assertEqual('package_name', self.apk_pointer.apk.package_id)
+        self.assertEqual(1337, self.apk_pointer.apk.version_code)
+        self.assertEqual('1337', self.apk_pointer.apk.version_name)
+
+        # assert that package ID was applied to app
+        apps = App.objects.all()
+        self.assertEqual('package_name', apps[0].name)  # name
+        self.assertEqual('package_name', apps[0].package_id)  # package ID
+
+    def test_initialize_no_file_extension(self):
+        # overwrite APK file with image that has no file extension
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.png'), 'test')
+        self.assertEqual('test', os.path.basename(self.apk_pointer.file.name))
+
+        # initialize the ApkPointer with its stored image file
+        self.apk_pointer.initialize()
+
+        # assert that version and package name were extracted properly from filename
+        self.assertEqual('test', self.apk_pointer.apk.package_id)
+        apps = App.objects.all()
+        self.assertEqual('test', apps[0].name)  # name
+        self.assertEqual('test', apps[0].package_id)  # package ID
+
+    def test_initialize_videos(self):
+        # initialize the ApkPointer with video file
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.avi'), 'test1.avi')
+        self.apk_pointer.initialize()
+        # assert that video type was recognized
+        self.assertEqual(maker.models.app.VIDEO, App.objects.get(package_id='test1').type)
+
+        # initialize the ApkPointer with video file
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.mp4'), 'test2.mp4')
+        self.apk_pointer.initialize()
+        # assert that video type was recognized
+        self.assertEqual(maker.models.app.VIDEO, App.objects.get(package_id='test2').type)
+
+        # initialize the ApkPointer with video file
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.webm'), 'test3.webm')
+        self.apk_pointer.initialize()
+        # assert that video type was recognized
+        self.assertEqual(maker.models.app.VIDEO, App.objects.get(package_id='test3').type)
+
+    def test_initialize_audios(self):
+        # initialize the ApkPointer with audio file
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.flac'), 'test1.flac')
+        self.apk_pointer.initialize()
+        # assert that audio type was recognized
+        self.assertEqual(maker.models.app.AUDIO, App.objects.get(package_id='test1').type)
+
+        # initialize the ApkPointer with audio file
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.mp3'), 'test2.mp3')
+        self.apk_pointer.initialize()
+        # assert that audio type was recognized
+        self.assertEqual(maker.models.app.AUDIO, App.objects.get(package_id='test2').type)
+
+        # initialize the ApkPointer with audio file
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.ogg'), 'test3.ogg')
+        self.apk_pointer.initialize()
+        # assert that audio type was recognized
+        self.assertEqual(maker.models.app.AUDIO, App.objects.get(package_id='test3').type)
+
+    def test_initialize_books(self):
+        # initialize the ApkPointer with book file
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.epub'), 'test1.epub')
+        self.apk_pointer.initialize()
+        # assert that book type was recognized
+        self.assertEqual(maker.models.app.BOOK, App.objects.get(package_id='test1').type)
+
+        # initialize the ApkPointer with book file
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.mobi'), 'test2.mobi')
+        self.apk_pointer.initialize()
+        # assert that book type was recognized
+        self.assertEqual(maker.models.app.BOOK, App.objects.get(package_id='test2').type)
+
+    def test_initialize_documents(self):
+        # initialize the ApkPointer with document file
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.docx'), 'test1.docx')
+        self.apk_pointer.initialize()
+        # assert that document type was recognized
+        self.assertEqual(maker.models.app.DOCUMENT, App.objects.get(package_id='test1').type)
+
+        # initialize the ApkPointer with document file
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.odt'), 'test2.odt')
+        self.apk_pointer.initialize()
+        # assert that document type was recognized
+        self.assertEqual(maker.models.app.DOCUMENT, App.objects.get(package_id='test2').type)
+
+        # initialize the ApkPointer with document file
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.ods'), 'test3.ods')
+        self.apk_pointer.initialize()
+        # assert that document type was recognized
+        self.assertEqual(maker.models.app.DOCUMENT, App.objects.get(package_id='test3').type)
+
+        # initialize the ApkPointer with document file
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'test.pdf'), 'test4.pdf')
+        self.apk_pointer.initialize()
+        # assert that document type was recognized
+        self.assertEqual(maker.models.app.DOCUMENT, App.objects.get(package_id='test4').type)
+
+    def test_initialize_unsupported_type(self):
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'keystore.jks'), 'test.php')
+        with self.assertRaises(ValidationError):
+            self.apk_pointer.initialize()
+
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'keystore.jks'), 'test.py')
+        with self.assertRaises(ValidationError):
+            self.apk_pointer.initialize()
+
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'keystore.jks'), 'test.pl')
+        with self.assertRaises(ValidationError):
+            self.apk_pointer.initialize()
+
+        self.replace_pointer_file(os.path.join(TEST_FILES_DIR, 'keystore.jks'), 'test.cgi')
+        with self.assertRaises(ValidationError):
+            self.apk_pointer.initialize()
+
     def test_icons_get_deleted_from_repo(self):
         # create the repository environment
         fake_repo_create(self.apk_pointer.repo)
@@ -394,6 +544,16 @@ class ApkPointerTestCase(TestCase):
         self.apk_pointer.link_file_from_apk()  # linking should bail out, because file exists
 
         self.assertEqual(file_path, self.apk_pointer.file.path)
+
+    def replace_pointer_file(self, file_path, file_name):
+        """
+        Overwrites this test's ApkPointer file with the given file_path.
+        :param file_path: The absolute path to the file to be used.
+        :param file_name: The new filename of the saved file.
+        """
+        self.apk_pointer.file.delete()
+        with open(file_path, 'rb') as f:
+            self.apk_pointer.file.save(file_name, File(f), save=True)
 
 
 class RemoteApkPointerTestCase(TestCase):

@@ -8,6 +8,7 @@ django-tinymce
 qrcode
 six>=1.9  # until bleach depends on html5lib>=1.0
 bleach
+python-magic
 apache-libcloud>=2.0.0rc2
 cryptography>=1.4.0
 #fdroidserver>=0.8.0

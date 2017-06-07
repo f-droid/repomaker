@@ -14,10 +14,6 @@ function uploadFiles(element, files) {
     var type = element.id.split("--").pop()
     var formData = new FormData()
     for (var i = 0; i < files.length; i++) {
-        if (type == 'apks' && !isApk(files[i])) {
-            showError(element, 'You can only upload apks here.')
-            return
-        }
         if (type == 'screenshots' && !isImage(files[i])) {
             showError(element, 'You can only upload images here.')
             return
@@ -134,10 +130,6 @@ function showError(element, text) {
     document.getElementById(element.id + '--loading').hidden = true
     element.innerHTML = '<p class="error">' + text + '</p>'
     element.innerHTML += '<p>Try to drag and drop again!</p>'
-}
-
-function isApk(file) {
-    return file['type'] === 'application/vnd.android.package-archive'
 }
 
 function isImage(file) {

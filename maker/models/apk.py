@@ -1,24 +1,26 @@
-import datetime
 import logging
 import os
 import zipfile
+from datetime import datetime
 from io import BytesIO
 
+import magic  # this is python-magic in requirements.txt
 import requests
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 from fdroidserver import common, update
 from fdroidserver.update import get_all_icon_dirs
 
 from maker import tasks
 from maker.models.repository import AbstractRepository
 from maker.storage import get_apk_file_path, RepoStorage
-from .app import Repository, RemoteApp, App
+from .app import Repository, RemoteApp, App, OTHER, IMAGE, VIDEO, AUDIO, DOCUMENT, BOOK
 
 
 class Apk(models.Model):
@@ -27,7 +29,7 @@ class Apk(models.Model):
     version_name = models.CharField(max_length=128, blank=True)
     version_code = models.PositiveIntegerField(default=0)
     size = models.PositiveIntegerField(default=0)
-    signature = models.CharField(max_length=512, blank=True)
+    signature = models.CharField(max_length=512, blank=True, null=True)
     hash = models.CharField(max_length=512, blank=True)
     hash_type = models.CharField(max_length=32, blank=True)
     added_date = models.DateTimeField(default=timezone.now)
@@ -98,8 +100,7 @@ class Apk(models.Model):
             size=package_info['size'],
             hash=package_info['hash'],
             hash_type=package_info['hashType'],
-            added_date=datetime.datetime.fromtimestamp(package_info['added'] / 1000,
-                                                       timezone.utc)
+            added_date=datetime.fromtimestamp(package_info['added'] / 1000, timezone.utc)
         )
         if 'versionCode' in package_info:
             apk.version_code = package_info['versionCode']
@@ -140,18 +141,24 @@ class ApkPointer(AbstractApkPointer):
 
         :return: Instance of HttpResponse in case of error, None otherwise
         """
-        try:
-            apk_info = self._get_info_from_file()
-        except zipfile.BadZipFile as e:
-            raise ValidationError(e)
+        ext = os.path.splitext(self.file.name)[1]
+        if ext == '.apk':
+            try:
+                apk_info = self._get_info_from_apk()
+            except zipfile.BadZipFile as e:
+                raise ValidationError(e)
 
-        if apk_info is None:
-            raise ValidationError('Invalid APK.')
+            if apk_info is None:
+                raise ValidationError('Invalid APK.')
+            apk_info['type'] = 'apk'
+        else:
+            apk_info = self._get_info_from_file()
+
         self._attach_apk(apk_info)
         self._attach_app(apk_info)
         self.save()
 
-    def _get_info_from_file(self):
+    def _get_info_from_apk(self):
         """
         Scans the APK file and returns a dictionary of information.
         It also extracts icons and stores them in the repository on disk.
@@ -165,6 +172,48 @@ class ApkPointer(AbstractApkPointer):
         if skip:
             return None
         return apk_info
+
+    def _get_info_from_file(self):
+        repo_file = {
+            'size': self.file.size,
+            'sig': None,
+            'hash': update.sha256sum(self.file.path),
+            'hashType': 'sha256',
+            'type': self._get_type()
+        }
+        file_name = os.path.basename(self.file.name)
+        match = common.STANDARD_FILE_NAME_REGEX.match(file_name)
+        if match:
+            repo_file['packageName'] = match.group(1)
+            repo_file['versionName'] = match.group(2)
+            repo_file['versionCode'] = int(match.group(2))
+        else:
+            repo_file['packageName'] = os.path.splitext(file_name)[0]
+            repo_file['versionName'] = datetime.now().strftime('%Y-%m-%d')
+            repo_file['versionCode'] = int(datetime.now().timestamp())
+        repo_file['name'] = repo_file['packageName']
+
+        return repo_file
+
+    def _get_type(self):
+        mime = magic.from_file(self.file.path, mime=True)
+        mime_start = mime.split('/', 1)[0]
+        ext = os.path.splitext(self.file.name)[1]
+        if mime_start == 'image':
+            return IMAGE
+        if mime_start == 'video':
+            return VIDEO
+        if mime_start == 'audio':
+            return AUDIO
+        if mime == 'application/epub+zip' or ext == '.mobi':
+            return BOOK
+        if mime == 'application/pdf' or mime.startswith('application/vnd.oasis.opendocument') \
+                or ext == '.docx' or ext == '.txt':
+            return DOCUMENT
+        # TODO add more types
+        if ext.startswith('.php') or ext == '.py' or ext == '.pl' or ext == '.cgi':
+            raise ValidationError(_('Unsupported File Type'))
+        return OTHER
 
     def _attach_apk(self, apk_info):
         """
@@ -203,8 +252,20 @@ class ApkPointer(AbstractApkPointer):
         """
         # check if app exists already in repo and if so, get latest version
         latest_version = self.apk.version_code
-        try:
-            old_app = App.objects.get(repo=self.repo, package_id=self.apk.package_id)
+        apps = App.objects.filter(repo=self.repo, package_id=self.apk.package_id)
+        if not apps.exists():
+            app = App.objects.create(
+                repo=self.repo,
+                package_id=self.apk.package_id,
+                type=apk_info['type'],
+            )
+            app.save()
+            self.app = app
+        elif apps.count() == 1:
+            old_app = apps[0]
+            if old_app.type != apk_info['type']:
+                raise ValidationError(
+                    _('This file is of a different type than the other versions of this app.'))
             existing_pointers = ApkPointer.objects.filter(app=old_app)
             for pointer in existing_pointers:
                 if pointer.apk.version_code > latest_version:
@@ -214,13 +275,9 @@ class ApkPointer(AbstractApkPointer):
                         'This app \'%s\' already exists in your repo, ' % self.apk.package_id +
                         'but has a different signature.')
             self.app = old_app
-        except ObjectDoesNotExist:
-            app = App.objects.create(
-                repo=self.repo,
-                package_id=self.apk.package_id,
-            )
-            app.save()
-            self.app = app
+        else:
+            raise RuntimeError('More than one app in repo %d with package ID %s' %
+                               (self.repo.pk, self.apk.package_id))
 
         # apply latest info to the app itself
         if self.apk.version_code == latest_version:

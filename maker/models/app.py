@@ -21,6 +21,23 @@ from maker.utils import clean
 from .category import Category
 from .repository import Repository, RemoteRepository
 
+APK = 'apk'
+BOOK = 'book'
+DOCUMENT = 'document'
+IMAGE = 'image'
+AUDIO = 'audio'
+VIDEO = 'video'
+OTHER = 'other'
+TYPE_CHOICES = (
+    (APK, _('APK')),
+    (BOOK, _('Book')),
+    (DOCUMENT, _('Document')),
+    (IMAGE, _('Image')),
+    (AUDIO, _('Audio')),
+    (VIDEO, _('Video')),
+    (OTHER, _('Other')),
+)
+
 
 class AbstractApp(TranslatableModel):
     package_id = models.CharField(max_length=255, blank=True)
@@ -77,6 +94,7 @@ class AbstractApp(TranslatableModel):
 
 class App(AbstractApp):
     repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
+    type = models.CharField(max_length=16, choices=TYPE_CHOICES, default=APK)
     last_updated_date = models.DateTimeField(auto_now=True)
     translations = TranslatedFields(
         feature_graphic=models.ImageField(blank=True, max_length=1024,

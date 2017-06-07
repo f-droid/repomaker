@@ -6,6 +6,7 @@ import requests
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+from django.utils.translation import ugettext_lazy as _
 
 from maker import tasks
 from maker.storage import get_screenshot_file_path, RepoStorage
@@ -17,11 +18,11 @@ TEN_INCH = 'tenInchScreenshots'
 TV = 'tvScreenshots'
 WEAR = 'wearScreenshots'
 TYPE_CHOICES = (
-    (PHONE, 'Phone'),
-    (SEVEN_INCH, "7'' Tablet"),
-    (TEN_INCH, "10'' Tablet"),
-    (TV, 'TV'),
-    (WEAR, 'Wearable'),
+    (PHONE, _('Phone')),
+    (SEVEN_INCH, _("7'' Tablet")),
+    (TEN_INCH, _("10'' Tablet")),
+    (TV, _('TV')),
+    (WEAR, _('Wearable')),
 )
 
 
