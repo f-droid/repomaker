@@ -1,12 +1,15 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.core.exceptions import ValidationError
 from django.db.models import Q
+from django.db.utils import OperationalError, IntegrityError
 from django.forms import Textarea
+from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
 
-from maker.models import Repository, App
+from maker.models import Repository, App, ApkPointer
 from maker.models.storage import StorageManager
 from . import BaseModelForm, LoginOrSingleUserRequiredMixin
 
@@ -95,6 +98,35 @@ class RepositoryView(RepositoryAuthorizationMixin, ListView):
         if 'search' in self.request.GET and self.request.GET['search'] != '':
             context['search_params'] = 'search=%s' % self.request.GET['search']
         return context
+
+    def post(self, request, *args, **kwargs):
+        if 'HTTP_RM_BACKGROUND_TYPE' in request.META:
+            if request.META['HTTP_RM_BACKGROUND_TYPE'] == 'apks':
+                try:
+                    self.add_apks()
+                except OperationalError:
+                    return HttpResponse(1, status=500)
+                except IntegrityError:
+                    return HttpResponse(2, status=400)
+                except ValidationError:
+                    return HttpResponse(3, status=400)
+                self.get_repo().update_async()  # schedule repository update
+                return HttpResponse(status=204)
+        return Http404()
+
+    def add_apks(self):
+        """
+        :raise OperationalError: Database is locked
+        :raise IntegrityError: APK is already added
+        :raise ValidationError: APK file is invalid
+        """
+        for apk in self.request.FILES.getlist('apks'):
+            pointer = ApkPointer.objects.create(repo=self.get_repo(), file=apk)
+            try:
+                pointer.initialize()  # this also attaches the app
+            except Exception as e:
+                pointer.delete()
+                raise e
 
 
 class RepositoryUpdateView(RepositoryAuthorizationMixin, UpdateView):

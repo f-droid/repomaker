@@ -1,7 +1,7 @@
 import json
 
 from django.core.exceptions import ValidationError
-from django.db.utils import OperationalError
+from django.db.utils import OperationalError, IntegrityError
 from django.db.models import Q
 from django.http import Http404, HttpResponse
 from django.forms import FileField, ImageField, ClearableFileInput
@@ -21,11 +21,13 @@ class MDLTinyMCE(TinyMCE):
     """
     Ugly hack to work around a conflict between MDL and TinyMCE. See #31 for more details.
     """
+
     def _media(self):
         media = super()._media()
         media._js.remove('django_tinymce/init_tinymce.js')  # pylint: disable=protected-access
         media._js.append('maker/js/mdl-tinymce.js')  # pylint: disable=protected-access
         return media
+
     media = property(_media)
 
 
@@ -118,6 +120,9 @@ class AppForm(BaseModelForm):
                   'apks']
         widgets = {'description': MDLTinyMCE()}
 
+    class Media:
+        js = ('maker/js/drag-and-drop.js',)
+
 
 class AppUpdateView(RepositoryAuthorizationMixin, UpdateView):
     model = App
@@ -136,20 +141,53 @@ class AppUpdateView(RepositoryAuthorizationMixin, UpdateView):
     def form_valid(self, form):
         result = super(AppUpdateView, self).form_valid(form)
 
-        for screenshot in self.request.FILES.getlist('screenshots'):
-            Screenshot.objects.create(app=self.object, file=screenshot)
+        self.add_screenshots()
+        self.add_apks()
 
+        form.instance.repo.update_async()  # schedule repository update
+        return result
+
+    def post(self, request, *args, **kwargs):
+        if 'HTTP_RM_BACKGROUND_TYPE' in request.META:
+            if request.META['HTTP_RM_BACKGROUND_TYPE'] == 'apks':
+                try:
+                    self.add_apks()
+                except OperationalError:
+                    return HttpResponse(1, status=500)
+                except IntegrityError:
+                    return HttpResponse(2, status=400)
+                except ValidationError:
+                    return HttpResponse(3, status=400)
+                self.get_repo().update_async()  # schedule repository update
+                return HttpResponse(status=204)
+            if request.META['HTTP_RM_BACKGROUND_TYPE'] == 'screenshots':
+                try:
+                    self.add_screenshots()
+                except OperationalError:
+                    return HttpResponse(1, status=500)
+                self.get_repo().update_async()  # schedule repository update
+                return HttpResponse(status=204)
+        return super(AppUpdateView, self).post(request, *args, **kwargs)
+
+    def add_apks(self):
+        """
+        :raise OperationalError: Database is locked
+        :raise IntegrityError: APK is already added
+        :raise ValidationError: APK file is invalid
+        """
         for apk in self.request.FILES.getlist('apks'):
-            pointer = ApkPointer.objects.create(repo=self.object.repo, file=apk)
+            pointer = ApkPointer.objects.create(repo=self.get_repo(), file=apk)
             try:
                 # TODO check that the APK belongs to this app and that signature matches
+                # TODO could this be part of an ApkUploadMixin that also extends RepositoryView?
                 pointer.initialize()  # this also attaches the app
             except Exception as e:
                 pointer.delete()
                 raise e
 
-        form.instance.repo.update_async()  # schedule repository update
-        return result
+    def add_screenshots(self):
+        for screenshot in self.request.FILES.getlist('screenshots'):
+            Screenshot.objects.create(app=self.get_object(), file=screenshot)
 
 
 class AppDeleteView(RepositoryAuthorizationMixin, DeleteView):

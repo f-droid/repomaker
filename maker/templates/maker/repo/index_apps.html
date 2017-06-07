@@ -19,35 +19,35 @@
 	</div>
 	{% endif %}
 	{% if apps %}
-	<div class="rm-repo-apps-add mdl-cell mdl-cell--6-col">
-		<div class="rm-repo-apps-add-locally">
-			<!-- TODO: Make this a drag and drop area -->
-			<div class="rm-repo-apps-empty-add-title">
-				<i class="rm-repo-apps-empty-add-icon material-icons">file_upload</i>
-				{% trans 'Add .apk files' %}
+	<div class="rm-repo-apps-add">
+		<div id="rm-dnd-holder--apks" class="rm-repo-apps-add-locally">
+			<i class="rm-repo-apps-add-locally-icon">file_upload</i>
+			<div class="rm-repo-apps-add-locally-title">{% trans 'Add .apk files' %}</div>
+			<!-- TODO: Make this properly translatable -->
+			<div class="rm-repo-apps-add-locally-description-first rm-dng-text" hidden>
+				{% trans 'Drag and drop .apk files' %}
 			</div>
-			<!-- TODO: Make this translatable properly -->
-			<!--
-			<div class="rm-repo-apps-empty-add-description-first">
-				{% trans 'Drag and drop .apk, .pdf, .epub, videos, photos or music files' %}
-			</div>
-			-->
-			<div class="rm-repo-apps-empty-add-description-second rm-form">
-				<!--{% trans 'or' %}-->
-				<form action="{% url 'apk_upload' repo.id %}" enctype="multipart/form-data" method="post">
-					{% csrf_token %}
-					<label for="id_file" class="rm-repo-apps-empty-add-upload-browse">
+			<form action="{% url 'apk_upload' repo.id %}" enctype="multipart/form-data" method="post">
+				{% csrf_token %}
+				<div class="rm-repo-apps-add-locally-description-second">
+					<span class="rm-dng-text" hidden>{% trans 'or' %}</span>
+					<label for="id_file" class="rm-repo-apps-add-locally-upload-browse">
 						{% trans 'browse to upload' %}
 					</label>
-					<p>{{ form.file }}</p>
-					<button type="submit" class="rm-button--blue mdl-button mdl-js-button">
-						{% trans 'Add' %}
-					</button>
-				</form>
-			</div>
+				</div>
+				<p>{{ form.file }}</p>
+				<button type="submit" class="rm-button--blue mdl-js-button">
+					{% trans 'Add' %}
+				</button>
+			</form>
+		</div>
+		<div id="rm-dnd-holder--apks--loading" class="rm-repo-apps-add-locally--loading" hidden>
+			{% csrf_token %}
+			<div class="rm-dnd-progress mdl-js-progress"></div>
+			<h3 id="rm-dnd-holder--apks--loading-title" class="rm-repo-apps-add-locally--loading-title"></h3>
 		</div>
 		<a href="{% url 'add_app' repo.id %}" class="rm-repo-apps-add-remotely">
-			<i class="rm-repo-apps-empty-empty-icon material-icons">explore</i>
+			<i class="rm-repo-apps-add-remotely-icon">explore</i>
 			<div class="rm-repo-apps-add-remotely-title">
 				{% trans 'add from repos' %}
 			</div>
@@ -59,35 +59,37 @@
 	{% endfor %}
 	{% else %}
 	<div class="mdl-grid mdl-grid--no-spacing rm-form">
-		<div class="rm-repo-apps-empty-add mdl-cell mdl-cell--6-col">
-			<!-- TODO: Make this a drag and drop area -->
-			<i class="rm-repo-apps-empty-add-icon material-icons">file_upload</i>
+		<div id="rm-dnd-holder-2--apks"  class="rm-repo-apps-empty-add">
+			<i class="rm-repo-apps-empty-add-icon">file_upload</i>
 			<div class="rm-repo-apps-empty-add-title">{% trans 'Add files' %}</div>
 			<!-- TODO: Make this translatable properly -->
-			<!--
-			<div class="rm-repo-apps-empty-add-description-first">
-				{% trans 'Drag and drop .apk, .pdf, .epub, videos, photos or music files' %}
+			<div class="rm-repo-apps-empty-add-description-first rm-dng-text" hidden>
+				{% trans 'Drag and drop .apk files' %}
 			</div>
-			-->
-			<div class="rm-repo-apps-empty-add-description-second">
-				<!--{% trans 'or' %}-->
-				<form action="{% url 'apk_upload' repo.id %}" enctype="multipart/form-data" method="post">
-					{% csrf_token %}
+			<form action="{% url 'apk_upload' repo.id %}" enctype="multipart/form-data" method="post">
+				{% csrf_token %}
+				<div class="rm-repo-apps-empty-add-description-second">
+					<span class="rm-dng-text" hidden>{% trans 'or' %}</span>
 					<label for="id_file" class="rm-repo-apps-empty-add-upload-browse">
 						{% trans 'browse to upload' %}
 					</label>
-					<p>{{ form.file }}</p>
-					<button type="submit" class="rm-button--blue mdl-button mdl-js-button">
-						{% trans 'Add' %}
-					</button>
-				</form>
-			</div>
+				</div>
+				<p>{{ form.file }}</p>
+				<button type="submit" class="rm-button--blue mdl-button mdl-js-button">
+					{% trans 'Add' %}
+				</button>
+			</form>
 		</div>
-		<div class="rm-repo-apps-empty-discover mdl-cell mdl-cell--6-col">
-			<i class="rm-repo-apps-empty-empty-icon material-icons">explore</i>
-			<div class="rm-repo-apps-empty-empty-title">{% trans 'Discover' %}</div>
-			<div class="rm-repo-apps-empty-empty-description">{% trans 'Find things to add from other repos' %}</div>
-			<a href="{% url 'add_app' repo.id %}" class="rm-repo-apps-empty-empty-add rm-no-underline">
+		<div id="rm-dnd-holder-2--apks--loading" class="rm-repo-apps-empty-add--loading" hidden>
+			{% csrf_token %}
+			<div class="rm-dnd-progress mdl-js-progress"></div>
+			<h3 id="rm-dnd-holder-2--apks--loading-title" class="rm-repo-apps-empty-add--loading-title"></h3>
+		</div>
+		<div class="rm-repo-apps-empty-discover">
+			<i class="rm-repo-apps-empty-discover-icon">explore</i>
+			<div class="rm-repo-apps-empty-discover-title">{% trans 'Discover' %}</div>
+			<div class="rm-repo-apps-empty-discover-description">{% trans 'Find things to add from other repos' %}</div>
+			<a href="{% url 'add_app' repo.id %}" class="rm-repo-apps-empty-discover-add rm-no-underline">
 				<button type="button" class="rm-button--blue mdl-button mdl-js-button">
 					{% trans 'add from repos' %}
 				</button>

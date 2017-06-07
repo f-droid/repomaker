@@ -193,3 +193,26 @@ a.rm-no-underline {
 .error {
     color: rgb(213,0,0);
 }
+
+/*
+ * Drag and drop
+ */
+.rm-dnd-hover {
+    background-color: #F6F8FC;
+    outline: 3px solid #005abd;
+}
+
+.rm-dnd--loading {
+    border: none !important;
+    padding: 0 !important;
+}
+
+.rm-dnd--loading-title {
+    color: black;
+    @include font-size(18px);
+}
+
+.rm-dnd-progress {
+    @extend .mdl-progress;
+    width: 100%;
+}

@@ -17,6 +17,9 @@ class ApkForm(ModelForm):
             'file': _('Select APK file for upload'),
         }
 
+    class Media:
+        js = ('maker/js/drag-and-drop.js',)
+
 
 class ApkUploadView(RepositoryAuthorizationMixin, CreateView):
     model = ApkPointer

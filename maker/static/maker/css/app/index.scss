@@ -233,6 +233,23 @@ select#id_category {
 }
 
 /*
+ * Loading
+ */
+.rm-app-versions-drop--loading {
+    @extend .rm-app-versions-drop, .rm-dnd--loading;
+}
+
+.rm-app-screenshot-drop--loading  {
+    @extend .rm-app-screenshot-drop, .rm-dnd--loading;
+}
+
+.rm-app-screenshot-drop--loading-title,
+.rm-app-versions-drop--loading-title {
+    @extend .rm-dnd--loading-title;
+    padding: 15px;
+}
+
+/*
  * Navigation between apps
  */
 

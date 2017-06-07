@@ -2,6 +2,10 @@
  * Styles for Apps section
  */
 
+/*
+ * Search
+ */
+
 .rm-repo-apps-header {
     display: flex;
     align-items: center;
@@ -41,17 +45,17 @@
     color: #808080;
 }
 
+/*
+ * Add apps
+ */
+
 .rm-repo-apps-add, .rm-repo-apps-empty-add, .rm-repo-apps-empty-discover {
-    display: block;
+    @extend .mdl-cell, .mdl-cell--6-col, .center;
     padding: 90px;
-    text-align: center;
-}
-.rm-repo-apps-empty-add {
-    background: #fafafa;
-    border: 1px dashed #d7d7d7;
 }
 
 .rm-repo-apps-add {
+    @extend .rm-form;
     padding: 0;
 }
 
@@ -80,12 +84,9 @@
     background: #f2f2f2;
 }
 
-.rm-repo-apps-add-remotely-title {
-    color: #575757;
-    @include font-size(11px);
-    margin-left: 6px;
-    text-decoration: none;
-    text-transform: uppercase;
+.rm-repo-apps-empty-add {
+    background: #fafafa;
+    border: 1px dashed #d7d7d7;
 }
 
 .rm-repo-apps-empty-discover {
@@ -94,21 +95,57 @@
     border-top: 1px solid #d7d7d7;
 }
 
-.rm-repo-apps-empty-add-title, .rm-repo-apps-empty-empty-title {
+.rm-repo-apps-add-locally-icon,
+.rm-repo-apps-empty-add-icon,
+.rm-repo-apps-add-remotely-icon,
+.rm-repo-apps-empty-discover-icon {
+    @extend .material-icons;
+}
+
+.rm-repo-apps-add-locally-title,
+.rm-repo-apps-empty-add-title,
+.rm-repo-apps-empty-discover-title {
     @include font-size(15px);
 }
 
+.rm-repo-apps-add-locally-description-first,
+.rm-repo-apps-add-locally-description-second,
 .rm-repo-apps-empty-add-description-first,
-.rm-repo-apps-empty-add-description-second,
-.rm-repo-apps-empty-empty-description {
+.rm-repo-apps-empty-add-description-second {
     color: #575757;
     @include font-size(14px);
 }
 
+.rm-repo-apps-add-remotely-title {
+    color: #575757;
+    @include font-size(11px);
+    margin-left: 6px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.rm-repo-apps-add-locally-upload-browse,
 .rm-repo-apps-empty-add-upload-browse {
     color: $rm-blue;
     @include font-size(13px);
     text-decoration: none;
     text-transform: uppercase;
     cursor: pointer;
+}
+
+/*
+ * Add apps - loading
+ */
+.rm-repo-apps-add-locally--loading {
+    @extend .rm-repo-apps-add-locally, .rm-dnd--loading;
+    height: calc(70%);
+}
+
+.rm-repo-apps-empty-add--loading {
+    @extend .rm-repo-apps-empty-add, .rm-dnd--loading;
+}
+
+.rm-repo-apps-add-locally--loading-title,
+.rm-repo-apps-empty-add--loading-title {
+    @extend .rm-dnd--loading-title;
 }

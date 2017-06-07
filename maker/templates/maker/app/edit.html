@@ -67,22 +67,23 @@
 
 
 {% block screenshot-drop %}
-<div class="rm-app-screenshot-drop rm-form">
-	<!-- TODO: Make this a drag and drop area -->
+<div id="rm-dnd-holder--screenshots"  class="rm-app-screenshot-drop rm-form">
 	<i class="rm-repo-apps-empty-add-icon material-icons">file_upload</i>
 	<div class="rm-repo-apps-empty-add-title">{% trans 'Add files' %}</div>
 	<!-- TODO: Make this translatable properly -->
-	<!--
 	<div class="rm-repo-apps-empty-add-description-first">
-		{% trans 'Drag and drop screenshots' %}
+		<span class="rm-dng-text" hidden>{% trans 'Drag and drop screenshots' %}</span>
 	</div>
-	-->
 	<div class="rm-repo-apps-empty-add-description-second">
-		<!--{% trans 'or' %}-->
+		<span class="rm-dng-text" hidden>{% trans 'or' %}</span>
 		<label for="id_screenshots" class="rm-repo-apps-empty-add-upload-browse">{% trans 'browse to upload' %}</label>
 		{{ form.screenshots }}
 	</div>
 	{{ form.screenshots.errors }}
+</div>
+<div id="rm-dnd-holder--screenshots--loading" class="rm-app-screenshot-drop--loading" hidden>
+	<div class="rm-dnd-progress mdl-js-progress"></div>
+	<h3 id="rm-dnd-holder--screenshots--loading-title" class="rm-app-screenshot-drop--loading-title"></h3>
 </div>
 {% endblock screenshot-drop %}
 
@@ -103,21 +104,22 @@
 
 
 {% block apk-drop %}
-<div class="rm-app-versions-drop rm-form">
-	<!-- TODO: Make this a drag and drop area -->
+<div id="rm-dnd-holder--apks" class="rm-app-versions-drop rm-form">
 	<i class="rm-repo-apps-empty-add-icon material-icons">file_upload</i>
 	<div class="rm-repo-apps-empty-add-title">{% trans 'Add files' %}</div>
 	<!-- TODO: Make this translatable properly -->
-	<!--
 	<div class="rm-repo-apps-empty-add-description-first">
-		{% trans 'Drag and drop .apk files' %}
+		<span class="rm-dng-text" hidden>{% trans 'Drag and drop .apk files' %}</span>
 	</div>
-	-->
 	<div class="rm-repo-apps-empty-add-description-second">
-		<!--{% trans 'or' %}-->
+		<span class="rm-dng-text" hidden>{% trans 'or' %}</span>
 		<label for="id_apks" class="rm-repo-apps-empty-add-upload-browse">{% trans 'browse to upload' %}</label>
 		{{ form.apks }}
 	</div>
+</div>
+<div id="rm-dnd-holder--apks--loading" class="rm-app-versions-drop--loading" hidden>
+	<div class="rm-dnd-progress mdl-js-progress"></div>
+	<h3 id="rm-dnd-holder--apks--loading-title" class="rm-app-versions-drop--loading-title"></h3>
 </div>
 {% endblock apk-drop %}
 
