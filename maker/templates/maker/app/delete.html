@@ -1,18 +1,21 @@
-{% extends "maker/base.html" %}
+{% extends "maker/base_modal.html" %}
 {% load i18n %}
 {% load sass_tags %}
 
 {% block title %}{% trans 'Delete App' %}{% endblock %}
-{% block toolbar-title %}<a href="{% url 'repo' app.repo.id %}">{{ app.repo.name }}</a>{% endblock %}
 
 {% block rm-content %}
-<div class="rm-form">
-    <form action="" method="post">
-        {% csrf_token %}
-        <p>{% blocktrans %}Are you sure you want to delete your app "{{ object }}"?{% endblocktrans %}</p>
-        <div class="mdl-cell mdl-cell--6-col">
+<div class="rm-form mdl-grid rm-grid--center">
+    <div class="mdl-cell mdl-cell--6-col center">
+        <p>
+            {% blocktrans with app=object.app %}
+            Are you sure you want to delete your app <strong>{{ object }}</strong>?
+            {% endblocktrans %}
+        </p>
+        <form action="" method="post">
+            {% csrf_token %}
             <input type="submit" value="{% trans 'Confirm' %}"/>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 {% endblock rm-content %}
