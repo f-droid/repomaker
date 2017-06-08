@@ -6,17 +6,17 @@
 
 {% block rm-content %}
 <div class="rm-form mdl-grid rm-grid--center">
-	<form action="" method="post">
-		{% csrf_token %}
-		<div class="mdl-cell mdl-cell--8-col">
-			<p>
+	<div class="mdl-cell mdl-cell--6-col center">
+		<p>
 			{% blocktrans with app=object.app version=object.apk.version_name code=object.apk.version_code trimmed %}
 			Are you sure you want to delete this version <strong>{{ version }}</strong> ({{ code }})
 			from your app <strong>{{ app }}</strong>?
 			{% endblocktrans %}
-			</p>
+		</p>
+		<form action="" method="post">
+			{% csrf_token %}
 			<input type="submit" value="{% trans 'Confirm' %}"/>
-		</div>
-	</form>
+		</form>
+	</div>
 </div>
 {% endblock rm-content %}
