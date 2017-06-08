@@ -1,5 +1,7 @@
 var button = document.getElementsByClassName('rm-repo-share-share-copy')[0];
-button.style.display = 'inline-block';
+if (button !== undefined) {
+    button.style.display = 'inline-block';
+}
 function copyLink(link) {
     var textArea = document.createElement("textarea");
     textArea.value = link;

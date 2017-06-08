@@ -105,8 +105,11 @@
 </div>
 
 <script type="text/javascript">
+	var rmRepoAppsHeaderSearch = document.getElementById('id_search');
 	var rmRepoAppsHeaderSearchInput = document.getElementById('rm-repo-apps-header-search-input');
-	if (document.getElementById('id_search').value == '') rmRepoAppsHeaderSearchInput.style.display = 'none';
+	if (rmRepoAppsHeaderSearch !== null && rmRepoAppsHeaderSearch.value == '') {
+		rmRepoAppsHeaderSearchInput.style.display = 'none';
+	}
 	function toggleSearch() {
 		if (rmRepoAppsHeaderSearchInput.style.display == 'none') {
 			rmRepoAppsHeaderSearchInput.style.display = 'block';
