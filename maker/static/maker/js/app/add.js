@@ -9,8 +9,22 @@ var EXCEPTION_ALREADY_ADDED = '2'
 // Apps to be added when user click "Done"
 var appsToAdd = []
 
+// Keys for HTML5 session storage
+var sessionStorageKeyApps = 'rmAppsToAdd'
+var sessionStorageKeyRepo = 'rmRepo'
+
 // Repo ID
 window.repoId = '0'
+
+// Get apps to add from local storage
+if (typeof(Storage) !== "undefined") {
+    var sessionStorageAppsToAdd = JSON.parse(sessionStorage.getItem(sessionStorageKeyApps))
+    if (sessionStorageAppsToAdd !== null && sessionStorageAppsToAdd.length !== 0 && appsToAdd.length === 0) {
+        appsToAdd = sessionStorageAppsToAdd
+        markAppsToAdd()
+        updateAppsToAddCount()
+    }
+}
 
 function addRemoteApp(event, repoId, appRepoId, appId) {
     // Prevent opening new page
@@ -18,6 +32,7 @@ function addRemoteApp(event, repoId, appRepoId, appId) {
 
     if (window.repoId === '0') {
         window.repoId = repoId
+        sessionStorage.setItem(sessionStorageKeyRepo, repoId)
     }
     else if (window.repoId !== repoId) {
         throw new Error('Repository ID where the apps should be added to differs')
@@ -29,6 +44,8 @@ function addRemoteApp(event, repoId, appRepoId, appId) {
     }
     var element = 'rm-app-card-footer-action--' + appId
     var appAlreadyAdded = false
+
+    // Check if app is already to be added
     for(var i = 0; i < appsToAdd.length; i++) {
         if (appsToAdd[i].appRepoId == appRepoId && appsToAdd[i].appId == appId) {
             appAlreadyAdded = true
@@ -41,11 +58,20 @@ function addRemoteApp(event, repoId, appRepoId, appId) {
         appsToAdd.push(app)
         buttonSetAdded(element)
     }
+
+    // Synchronize JS with session storage
+    if (typeof(Storage) !== "undefined") {
+        sessionStorage.setItem(sessionStorageKeyApps, JSON.stringify(appsToAdd))
+        updateAppsToAddCount()
+    }
 }
 
 function done(event) {
     if (appsToAdd.length === 0) {
         return
+    }
+    if (window.repoId === '0') {
+        window.repoId = sessionStorage.getItem(sessionStorageKeyRepo)
     }
     // Prevent opening new page
     event.preventDefault()
@@ -65,6 +91,12 @@ function done(event) {
 
 function appsAdded(request) {
     if (request.status === 204) {
+        // Clear session storage list
+        if (typeof(Storage) !== "undefined") {
+            sessionStorage.removeItem(sessionStorageKeyApps)
+            sessionStorage.removeItem(sessionStorageKeyRepo)
+        }
+
         window.location = '/repo/' + window.repoId
     }
     else if (request.status === 400 && request.responseText === EXCEPTION_ALREADY_ADDED){
@@ -78,6 +110,36 @@ function appsAdded(request) {
     }
 }
 
+function markAppsToAdd() {
+    for (var i = 0; i < appsToAdd.length; i++) {
+        var element = 'rm-app-card-footer-action--' + appsToAdd[i]['appId']
+        buttonSetAdded(element)
+    }
+}
+
+function updateAppsToAddCount() {
+    var count = appsToAdd.length
+    var countContainer = document.querySelector('.rm-repo-add-toolbar-count')
+    countContainer.hidden = false
+    var countText = document.getElementById('rm-repo-add-toolbar-count-text')
+    if (count === 1) {
+        countText.textContent = '1 app to be added'
+    }
+    else if (count > 1) {
+        countText.textContent = count + ' apps to be added'
+    }
+    else {
+        countContainer.hidden = true
+    }
+}
+
+function clearAppsToAdd(event) {
+    // Clear session storage list
+    if (typeof(Storage) !== "undefined") {
+        sessionStorage.removeItem(sessionStorageKeyApps)
+    }
+}
+
 function buttonSetAdded(element) {
     setClassOfElement(element, 'rm-app-card-footer-action--successful')
     setContentOfElement(element + '-button', '<i class="material-icons">done</i>')
@@ -85,7 +147,6 @@ function buttonSetAdded(element) {
 
 function buttonSetNormal(element) {
     setClassOfElement(element, 'rm-app-card-footer-action')
-    // TODO: i18n
     setContentOfElement(element + '-button', 'Add')
 }
 
@@ -96,13 +157,22 @@ function showError(text) {
 }
 
 function setClassOfElement(element, myClass) {
-    document.getElementById(element).className = myClass
+    element = document.getElementById(element)
+    if (element !== null) {
+        element.className = myClass
+    }
 }
 
 function setContentOfElement(element, content) {
-    document.getElementById(element).innerHTML = content
+    element = document.getElementById(element)
+    if (element !== null) {
+        element.innerHTML = content
+    }
 }
 
 function setHiddenOfElement(element, hidden) {
-    document.getElementById(element).hidden = hidden
+    element = document.getElementById(element)
+    if (element !== null) {
+        element.hidden = hidden
+    }
 }

@@ -8,12 +8,19 @@
 }
 
 .rm-repo-add-toolbar-count {
-    display: none;
-
     @extend .rm-toolbar-item;
     color: $rm-blue;
     font-weight: 500;
     @include font-size(11px);
+
+    a {
+        @extend .rm-no-underline;
+        color: $rm-blue;
+        display: flex;
+        align-items: center;
+        padding-left: 3px;
+    }
+
     i {
         @include font-size(16px);
         padding-right: 3px;

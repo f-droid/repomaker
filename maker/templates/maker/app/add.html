@@ -13,12 +13,11 @@
 			{% trans 'Choose from Repos' %}
 		</span>
 		<div>
-			<span class="rm-repo-add-toolbar-count">
-				<i class="material-icons">done</i>
-				<!-- TODO: Make app count working -->
-				{% blocktrans with apps_count='<span id="rm-repo-add-toolbar-count-span">2</span>' trimmed %}
-				{{ apps_count }} added
-				{% endblocktrans %}
+			<span class="rm-repo-add-toolbar-count" hidden>
+				<span id="rm-repo-add-toolbar-count-text">3 apps to be added</span>
+				<a href="" onclick="clearAppsToAdd(event)">
+					<i class="material-icons">clear</i>
+				</a>
 			</span>
 			<a href="{% url 'repo' repo.id %}" class="rm-repo-add-toolbar-done" onclick="done(event)">
 				<button>{% trans 'Done' %}</button>
