@@ -4,6 +4,7 @@ import logging
 import os
 from io import BytesIO
 from shutil import copy
+from shutil import rmtree
 
 import qrcode
 from allauth.account.signals import user_signed_up
@@ -13,6 +14,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from django.db import models
+from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -499,6 +501,18 @@ def after_user_signed_up(**kwargs):
     user = kwargs['user']
     for remote_repo in RemoteRepository.objects.filter(pre_installed=True).all():
         remote_repo.users.add(user)
+
+
+@receiver(post_delete, sender=Repository)
+def repository_post_delete_handler(**kwargs):
+    repo = kwargs['instance']
+    logging.info("Deleting Repo: %s", repo.name)
+    repo_local_path = repo.get_path()
+    if os.path.exists(repo_local_path):
+        rmtree(repo_local_path)
+    repo_private_path = repo.get_private_path()
+    if os.path.exists(repo_private_path):
+        rmtree(repo_private_path)
 
 
 class Options:

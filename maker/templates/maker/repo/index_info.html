@@ -57,8 +57,15 @@
 		<div class="rm-repo-info-fingerprint-header">{% trans 'Fingerprint' %}</div>
 		<div class="rm-repo-info-fingerprint-container">
 			<!-- TODO: Use monospace font -->
-			<div class="rm-repo-info-fingerprint">{{ repo.get_fingerprint_with_spaces }}
+			<div class="rm-repo-info-fingerprint">{{ repo.get_fingerprint_with_spaces }}</div>
 		</div>
-		<!-- TODO: Implement "delete repo" button -->
+		<hr class="rm-repo-info-divider"/>
+		<div class="center">
+			<a href="{% url 'delete_repo' repo.id %}" class="rm-no-underline">
+				<button type="button" class="rm-button--red-border mdl-button mdl-js-button">
+					{% trans 'Remove Repo' %}
+				</button>
+			</a>
+		</div>
 	</div>
 </div>

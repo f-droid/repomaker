@@ -7,7 +7,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from maker.models import Repository, App, ApkPointer
 from maker.models.storage import StorageManager
@@ -140,3 +140,12 @@ class RepositoryUpdateView(RepositoryAuthorizationMixin, UpdateView):
         result = super(RepositoryUpdateView, self).form_valid(form)
         form.instance.update_async()  # schedule repository update
         return result
+
+
+class RepositoryDeleteView(RepositoryAuthorizationMixin, DeleteView):
+    model = Repository
+    pk_url_kwarg = 'repo_id'
+    template_name = 'maker/repo/delete.html'
+
+    def get_success_url(self):
+        return '/'

@@ -7,7 +7,7 @@ from maker.views.gitstorage import GitStorageCreate, GitStorageUpdate, GitStorag
     GitStorageDelete
 from maker.views.remoterepository import RemoteRepositoryCreateView, RemoteAppCreateView
 from maker.views.repository import RepositoryListView, RepositoryCreateView, RepositoryView, \
-    RepositoryUpdateView
+    RepositoryUpdateView, RepositoryDeleteView
 from maker.views.s3storage import S3StorageCreate, S3StorageDetail, S3StorageUpdate, S3StorageDelete
 from maker.views.screenshot import ScreenshotCreateView, ScreenshotDeleteView
 from maker.views.sshstorage import SshStorageCreate, SshStorageUpdate, SshStorageDetail, \
@@ -23,6 +23,8 @@ urlpatterns = [
     url(r'^(?P<repo_id>[0-9]+)/$', RepositoryView.as_view(), name='repo'),
     url(r'^(?P<repo_id>[0-9]+)/edit/$', RepositoryUpdateView.as_view(),
         name='edit_repo'),
+    url(r'^(?P<repo_id>[0-9]+)/delete/$', RepositoryDeleteView.as_view(),
+        name='delete_repo'),
 
     # Remote Repo
     url(r'^remote/add$', RemoteRepositoryCreateView.as_view(), name='add_remote_repo'),
