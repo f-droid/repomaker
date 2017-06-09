@@ -153,3 +153,8 @@ class RepositoryTestCase(TestCase):
         self.assertContains(response, self.app.description, 1)
 
         # TODO: Add tests for INFO and SHARE pages when design is implemented
+
+    def test_delete(self):
+        response = self.client.post(reverse('delete_repo', kwargs={'repo_id': self.repo.id}))
+        self.assertRedirects(response, '/')
+        self.assertEqual(0, len(Repository.objects.all()))

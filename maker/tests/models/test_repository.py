@@ -403,6 +403,24 @@ class RepositoryTestCase(TestCase):
         self.assertEqual(url + 'icon.png', remote_app.high_res_icon_url)
         self.assertEqual(url + 'tv.png', remote_app.tv_banner_url)
 
+    def test_delete(self):
+        # Check that repo exists
+        self.assertEqual(1, len(Repository.objects.all()))
+
+        # Fake create repo directories
+        self.assertIsNone(os.makedirs(self.repo.get_path()))
+        self.assertTrue(os.path.exists(self.repo.get_path()))
+        self.assertIsNone(os.makedirs(self.repo.get_private_path()))
+        self.assertTrue(os.path.exists(self.repo.get_private_path()))
+
+        # Delete repo
+        self.assertTrue(self.repo.delete())
+
+        # Check that repo and its directories were deleted
+        self.assertEqual(0, len(Repository.objects.all()))
+        self.assertFalse(os.path.exists(self.repo.get_path()))
+        self.assertFalse(os.path.exists(self.repo.get_private_path()))
+
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class RemoteRepositoryTestCase(TestCase):
