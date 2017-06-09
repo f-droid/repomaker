@@ -17,10 +17,6 @@ def get_repo_file_path(repo, filename):
         return os.path.join(get_remote_repo_path(repo), filename)
 
 
-def get_repo_file_path_for_app(app, filename):
-    return get_repo_file_path(app.repo, filename)
-
-
 def get_repo_root_path(repo):
     return os.path.join('user_{0}'.format(repo.user.pk), 'repo_{0}'.format(repo.pk))
 
@@ -57,6 +53,14 @@ def get_icon_file_path(repo, filename):
         return os.path.join(get_repo_path(repo), icon_path)
     else:
         return os.path.join(get_remote_repo_path(repo), filename)
+
+
+def get_icon_file_path_for_app(app, filename):
+    if hasattr(app.repo, 'user'):
+        icon_path = os.path.join('icons-640', filename)
+        return os.path.join(get_repo_path(app.repo), icon_path)
+    else:
+        return os.path.join(get_remote_repo_path(app.repo), filename)
 
 
 def get_identity_file_path(storage, filename):

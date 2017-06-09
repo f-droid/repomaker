@@ -16,7 +16,7 @@ from fdroidserver import metadata, net
 from hvad.models import TranslatableModel, TranslatedFields
 
 from maker import tasks
-from maker.storage import get_repo_file_path_for_app, get_graphic_asset_file_path
+from maker.storage import get_icon_file_path_for_app, get_graphic_asset_file_path
 from maker.utils import clean
 from .category import Category
 from .repository import Repository, RemoteRepository
@@ -46,7 +46,7 @@ class AbstractApp(TranslatableModel):
     description = models.TextField(blank=True)  # always clean and then consider safe
     author_name = models.CharField(max_length=255, blank=True)
     website = models.URLField(max_length=2048, blank=True)
-    icon = models.ImageField(upload_to=get_repo_file_path_for_app,
+    icon = models.ImageField(upload_to=get_icon_file_path_for_app,
                              default=settings.APP_DEFAULT_ICON)
     category = models.ManyToManyField(Category, blank=True, limit_choices_to={'user': None})
     added_date = models.DateTimeField(default=timezone.now)
@@ -404,6 +404,7 @@ class RemoteApp(AbstractApp):
         app.category = self.category.all()
         app.save()
 
+        # TODO still necessary?
         # create a local pointer to the APK
         pointer = ApkPointer(apk=apk, repo=repo, app=app)
         if apk.file:

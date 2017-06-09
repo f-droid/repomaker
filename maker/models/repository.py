@@ -3,8 +3,7 @@ import json
 import logging
 import os
 from io import BytesIO
-from shutil import copy
-from shutil import rmtree
+from shutil import copy, rmtree
 
 import qrcode
 from allauth.account.signals import user_signed_up
@@ -467,7 +466,8 @@ class RemoteRepository(AbstractRepository):
         if apks.exists():
             apk = apks.get()
         else:
-            apk = Apk.from_json(package_info)
+            apk = Apk()
+            apk.apply_json_package_info(package_info)
             apk.save()
 
         pointers = RemoteApkPointer.objects.filter(apk=apk, app=app)

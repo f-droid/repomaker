@@ -1,17 +1,17 @@
 import json
 
 from django.core.exceptions import ValidationError
-from django.db.utils import OperationalError, IntegrityError
 from django.db.models import Q
-from django.http import Http404, HttpResponse
+from django.db.utils import OperationalError, IntegrityError
 from django.forms import FileField, ImageField, ClearableFileInput
+from django.http import Http404, HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import UpdateView, DeleteView
 from hvad.forms import translationformset_factory
 from tinymce.widgets import TinyMCE
 
-from maker.models import RemoteRepository, App, RemoteApp, ApkPointer, Screenshot
+from maker.models import RemoteRepository, App, RemoteApp, Apk, ApkPointer, Screenshot
 from maker.models.category import Category
 from . import BaseModelForm
 from .repository import RepositoryAuthorizationMixin
@@ -171,18 +171,19 @@ class AppUpdateView(RepositoryAuthorizationMixin, UpdateView):
 
     def add_apks(self):
         """
-        :raise OperationalError: Database is locked
         :raise IntegrityError: APK is already added
         :raise ValidationError: APK file is invalid
         """
-        for apk in self.request.FILES.getlist('apks'):
-            pointer = ApkPointer.objects.create(repo=self.get_repo(), file=apk)
+        repo = self.get_repo()
+        for apk_file in self.request.FILES.getlist('apks'):
+            apk = Apk.objects.create(file=apk_file)
             try:
                 # TODO check that the APK belongs to this app and that signature matches
                 # TODO could this be part of an ApkUploadMixin that also extends RepositoryView?
-                pointer.initialize()  # this also attaches the app
+                apk.initialize(repo)  # this also creates a pointer and attaches the app
             except Exception as e:
-                pointer.delete()
+                if apk.pk:
+                    apk.delete()
                 raise e
 
     def add_screenshots(self):

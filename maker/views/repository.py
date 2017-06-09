@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from maker.models import Repository, App, ApkPointer
+from maker.models import Repository, App, Apk
 from maker.models.storage import StorageManager
 from . import BaseModelForm, LoginOrSingleUserRequiredMixin
 
@@ -116,16 +116,17 @@ class RepositoryView(RepositoryAuthorizationMixin, ListView):
 
     def add_apks(self):
         """
-        :raise OperationalError: Database is locked
         :raise IntegrityError: APK is already added
         :raise ValidationError: APK file is invalid
         """
-        for apk in self.request.FILES.getlist('apks'):
-            pointer = ApkPointer.objects.create(repo=self.get_repo(), file=apk)
+        repo = self.get_repo()
+        for apk_file in self.request.FILES.getlist('apks'):
+            apk = Apk.objects.create(file=apk_file)
             try:
-                pointer.initialize()  # this also attaches the app
+                apk.initialize(repo)  # this also creates a pointer and attaches the app
             except Exception as e:
-                pointer.delete()
+                if apk.pk:
+                    apk.delete()
                 raise e
 
 

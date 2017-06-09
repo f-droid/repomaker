@@ -6,26 +6,24 @@ from io import BytesIO
 
 import magic  # this is python-magic in requirements.txt
 import requests
-from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.core.files import File
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from fdroidserver import common, update
+from fdroidserver import common, exception, update
 from fdroidserver.update import get_all_icon_dirs
 
 from maker import tasks
 from maker.models.repository import AbstractRepository
 from maker.storage import get_apk_file_path, RepoStorage
-from .app import Repository, RemoteApp, App, OTHER, IMAGE, VIDEO, AUDIO, DOCUMENT, BOOK
+from .app import Repository, RemoteApp, App, OTHER, IMAGE, VIDEO, AUDIO, DOCUMENT, BOOK, APK
 
 
 class Apk(models.Model):
     package_id = models.CharField(max_length=255, blank=True)
-    file = models.FileField(storage=RepoStorage())
+    file = models.FileField(upload_to=get_apk_file_path, storage=RepoStorage())
     version_name = models.CharField(max_length=128, blank=True)
     version_code = models.PositiveIntegerField(default=0)
     size = models.PositiveIntegerField(default=0)
@@ -56,107 +54,73 @@ class Apk(models.Model):
             return
 
         # download and store file
-        file_rel_path = get_apk_file_path(self, url.rsplit('/', 1)[-1])
+        file_name = url.rsplit('/', 1)[-1]
         r = requests.get(url)
         if r.status_code != requests.codes.ok:
             # TODO delete self and ApkPointer when this fails permanently
             r.raise_for_status()
-        self.file.save(file_rel_path, BytesIO(r.content), save=True)
+        self.file.save(file_name, BytesIO(r.content), save=True)
 
-        # check if the APK file is valid and delete it if not
-        file_abs_path = os.path.join(settings.MEDIA_ROOT, file_rel_path)
-        AbstractRepository().get_config()
-        apk_info = {'icons_src': {}, 'uses-permission': []}
+        # initialize the APK and delete it if there was a problem
         try:
-            update.scan_apk_aapt(apk_info, file_abs_path)
-            if 'packageName' not in apk_info:
-                raise common.BuildException('APK has no packageName.')
-            apk_path = os.path.join(os.getcwd(), file_abs_path)
-            if not common.verify_apk_signature(apk_path):
-                raise common.BuildException('Invalid APK.')
-        except common.BuildException as e:
+            apk = self.initialize()
+        except ValidationError as e:
             logging.warning('Deleting invalid APK file: %s', e)
             ApkPointer.objects.filter(apk=self).all().delete()
             RemoteApkPointer.objects.filter(apk=self).all().delete()
             self.delete()
             return
 
+        # TODO
         # update apk pointers
-        pointers = ApkPointer.objects.filter(apk=self).all()
+        pointers = ApkPointer.objects.filter(apk=apk).all()
         for pointer in pointers:
             pointer.link_file_from_apk()
             pointer.repo.update_async()
 
-    @staticmethod
-    def from_json(package_info):
-        """
-        Returns an Apk object created from index v1 JSON package information.
-
-        Attention: This only returns the object, but does not save it.
-        """
-        apk = Apk(
-            package_id=package_info['packageName'],
-            version_name=package_info['versionName'],
-            size=package_info['size'],
-            hash=package_info['hash'],
-            hash_type=package_info['hashType'],
-            added_date=datetime.fromtimestamp(package_info['added'] / 1000, timezone.utc)
-        )
-        if 'versionCode' in package_info:
-            apk.version_code = package_info['versionCode']
-        if 'sig' in package_info:
-            apk.signature = package_info['sig']
-        return apk
-
-    def delete_if_no_pointers(self):
-        apk_pointers_exist = ApkPointer.objects.filter(apk=self).exists()
-        remote_apk_pointers_exist = RemoteApkPointer.objects.filter(apk=self).exists()
-        if not apk_pointers_exist and not remote_apk_pointers_exist:
-            self.delete()
-
-
-class AbstractApkPointer(models.Model):
-    apk = models.ForeignKey(Apk, on_delete=models.CASCADE, null=True)
-
-    def __str__(self):
-        return self.app.__str__() + " - " + str(self.apk.version_code)
-
-    class Meta:
-        abstract = True
-
-
-class ApkPointer(AbstractApkPointer):
-    repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
-    app = models.ForeignKey(App, on_delete=models.CASCADE, null=True)
-    file = models.FileField(upload_to=get_apk_file_path, storage=RepoStorage())
-
-    def __str__(self):
-        return super().__str__() + " - " + self.file.name
-
-    def initialize(self):
+    def initialize(self, repo=None):
         """
         Initializes this object based on information retrieved from self.file.
-        When done, this object will point to an App from self.repo
-        and to a globally stored Apk.
 
-        :return: Instance of HttpResponse in case of error, None otherwise
+        :param repo: If a Repository is passed here, an ApkPointer (and if needed an App)
+                     are created as well.
+        :raises: ValidationError if Apk can not be initialized. Delete it, if you get this error!
+        :return: An instance of this Apk objects or a different one if it existed already
         """
+        if not self.file:
+            raise RuntimeError('Trying to initialize an Apk without file')
+
         ext = os.path.splitext(self.file.name)[1]
         if ext == '.apk':
             try:
-                apk_info = self._get_info_from_apk()
+                repo_file = self._get_info_from_apk()
+            except exception.BuildException as e:
+                raise ValidationError(e)
             except zipfile.BadZipFile as e:
                 raise ValidationError(e)
-
-            if apk_info is None:
-                raise ValidationError('Invalid APK.')
-            apk_info['type'] = 'apk'
         else:
-            apk_info = self._get_info_from_file()
+            repo_file = self._get_info_from_file()
 
-        self._attach_apk(apk_info)
-        self._attach_app(apk_info)
-        self.save()
+        repo_file['hash'] = update.sha256sum(self.file.path)
+        repo_file['hashType'] = 'sha256'
+        repo_file['size'] = self.file.size
+
+        apk_set = Apk.objects.filter(package_id=repo_file['packageName'], hash=repo_file['hash'])
+        if not apk_set.exists():
+            self.apply_json_package_info(repo_file)
+            self.save()
+            apk = self
+        elif apk_set.count() == 1:
+            self.delete()
+            apk = apk_set[0]
+        else:
+            raise RuntimeError('More than one APK with package ID %s' % repo_file['packageName'])
+
+        if repo is not None:
+            pointer = ApkPointer(apk=apk, repo=repo)
+            pointer.initialize(repo_file)
+
+        return apk
 
     def _get_info_from_apk(self):
         """
@@ -165,17 +129,31 @@ class ApkPointer(AbstractApkPointer):
 
         :return: A dict of APK information or None
         """
-        self.repo.get_config()
-        filename = os.path.basename(self.file.name)
-        skip, apk_info, _ = update.scan_apk({}, filename, self.repo.get_repo_path(),
-                                            common.KnownApks(), False)
-        if skip:
-            return None
-        return apk_info
+        AbstractRepository().get_config()
+
+        # verify APK before scanning
+        if not common.verify_apk_signature(self.file.path):
+            raise ValidationError(_('Invalid APK signature.'))
+
+        # scan APK and extract information about it
+        repo_file = {'type': APK, 'icons_src': {}, 'uses-permission': []}
+        try:
+            # TODO switch to androguard when available
+            update.scan_apk_aapt(repo_file, self.file.path)
+        except exception.BuildException as e:
+            raise ValidationError(e)
+
+        if 'packageName' not in repo_file:
+            raise ValidationError(_('Invalid APK.'))
+
+        repo_file['sig'] = update.getsig(self.file.path)
+        if not repo_file['sig']:
+            raise ValidationError(_('Failed to retrieve APK signature.'))
+
+        return repo_file
 
     def _get_info_from_file(self):
         repo_file = {
-            'size': self.file.size,
             'sig': None,
             'hash': update.sha256sum(self.file.path),
             'hashType': 'sha256',
@@ -215,41 +193,64 @@ class ApkPointer(AbstractApkPointer):
             raise ValidationError(_('Unsupported File Type'))
         return OTHER
 
-    def _attach_apk(self, apk_info):
+    def apply_json_package_info(self, package_info):
         """
-        Attaches either an existing or a new Apk to this object.
+        Saves package information from index v1 JSON to a fresh Apk object.
 
-        :param apk_info: A dict with information about the APK as returned by get_info_from_file()
+        Attention: This does not save the object.
         """
-        apk_set = Apk.objects.filter(package_id=apk_info['packageName'], hash=apk_info['hash'])
-        if apk_set.exists():
-            self.apk = apk_set.get()
-        else:
-            self.apk = Apk.objects.create(
-                package_id=apk_info['packageName'],
-                version_name=apk_info['versionName'],
-                version_code=apk_info['versionCode'],
-                size=apk_info['size'],
-                signature=apk_info['sig'],
-                hash=apk_info['hash'],
-                hash_type=apk_info['hashType']
-            )
+        if self.package_id:
+            raise RuntimeError('Trying to apply information to an initialized Apk object.')
+        self.package_id = package_info['packageName']
+        self.version_name = package_info['versionName']
+        self.size = package_info['size']
+        self.hash = package_info['hash']
+        self.hash_type = package_info['hashType']
+        if 'added' in package_info:
+            self.added_date = datetime.fromtimestamp(package_info['added'] / 1000, timezone.utc)
+        if 'versionCode' in package_info:
+            self.version_code = package_info['versionCode']
+        if 'sig' in package_info:
+            self.signature = package_info['sig']
 
-        # hardlink/copy file if it does not exist, yet
-        if not self.apk.file:
-            source = self.file.name
-            target = get_apk_file_path(None, os.path.basename(self.file.name))
-            target = self.file.storage.link(source, target)
-            self.apk.file.name = target
-            self.apk.save()
+    def delete_if_no_pointers(self):
+        apk_pointers_exist = ApkPointer.objects.filter(apk=self).exists()
+        remote_apk_pointers_exist = RemoteApkPointer.objects.filter(apk=self).exists()
+        if not apk_pointers_exist and not remote_apk_pointers_exist:
+            self.delete()
 
-    def _attach_app(self, apk_info):
+
+class AbstractApkPointer(models.Model):
+    apk = models.ForeignKey(Apk, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.app.__str__() + " - " + str(self.apk.version_code)
+
+    class Meta:
+        abstract = True
+
+
+class ApkPointer(AbstractApkPointer):
+    repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
+    app = models.ForeignKey(App, on_delete=models.CASCADE, null=True)
+    file = models.FileField(upload_to=get_apk_file_path, storage=RepoStorage())
+
+    def __str__(self):
+        return super().__str__() + " - " + self.file.name
+
+    def initialize(self, apk_info):
         """
         Attaches either an existing or a new App to this object
         and updates app information if this Apk holds more recent information.
 
         :param apk_info: A dict with information about the APK as returned by get_info_from_file()
         """
+        if not self.apk or not self.apk.package_id or not self.repo:
+            raise RuntimeError('Trying to initialize incomplete ApkPointer.')
+
+        # Link/Copy file from Apk to this pointer
+        self.link_file_from_apk()
+
         # check if app exists already in repo and if so, get latest version
         latest_version = self.apk.version_code
         apps = App.objects.filter(repo=self.repo, package_id=self.apk.package_id)
@@ -281,16 +282,25 @@ class ApkPointer(AbstractApkPointer):
 
         # apply latest info to the app itself
         if self.apk.version_code == latest_version:
+            # update app name
             self.app.name = apk_info['name']
             if not self.app.name:  # if the app has no name, use the package name instead
                 self.app.name = self.app.package_id
-            # TODO check if the icon will update automatically, if so just set path once above
-            if 'icon' in apk_info and apk_info['icon'] is not None:
-                icon_path = os.path.join(self.repo.get_repo_path(), "icons-640", apk_info['icon'])
-                if os.path.isfile(icon_path):
+
+            # update app icon
+            if 'icons_src' in apk_info and '-1' in apk_info['icons_src']:
+                icon_src = apk_info['icons_src']['-1']
+                if '640' in apk_info['icons_src']:
+                    # try higher resolution and use if available
+                    icon_src = apk_info['icons_src']['640']
+                # this will be overwritten on the next repo update
+                with zipfile.ZipFile(self.file.path, 'r') as f:
                     self.app.delete_old_icon()
-                    self.app.icon.save(apk_info['icon'], File(open(icon_path, 'rb')), save=False)
+                    icon_name = "%s.%s.png" % (apk_info['packageName'], apk_info['versionCode'])
+                    icon_bytes = update.get_icon_bytes(f, icon_src)
+                    self.app.icon.save(icon_name, BytesIO(icon_bytes), save=False)
             self.app.save()
+        self.save()
 
     def link_file_from_apk(self):
         """

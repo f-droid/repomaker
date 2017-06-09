@@ -11,7 +11,7 @@ from django.test import TestCase, override_settings
 
 from maker.models import Repository, RemoteRepository, App, RemoteApp, Apk, ApkPointer, \
     RemoteApkPointer, RemoteScreenshot
-from maker.storage import get_repo_file_path_for_app
+from maker.storage import get_icon_file_path_for_app
 from .. import TEST_DIR, TEST_MEDIA_DIR, datetime_is_recent
 
 
@@ -217,7 +217,7 @@ class RemoteAppTestCase(TestCase):
 
         # assert that old icon got deleted and new one was saved
         self.assertFalse(os.path.isfile(old_icon_path))
-        new_icon_name = get_repo_file_path_for_app(self.app, 'icon.png')
+        new_icon_name = get_icon_file_path_for_app(self.app, 'icon.png')
         self.assertEqual(new_icon_name, self.app.icon.name)
         self.assertTrue(os.path.isfile(self.app.icon.path))
 
