@@ -18,6 +18,7 @@ from django.urls import reverse
 from fdroidserver.update import METADATA_VERSION
 from requests.exceptions import HTTPError
 
+from maker.models.app import VIDEO, APK
 from maker.models import App, RemoteApp, Apk, ApkPointer, RemoteApkPointer, Repository, \
     RemoteRepository, S3Storage, SshStorage, GitStorage
 from maker.models.repository import AbstractRepository
@@ -312,7 +313,7 @@ class RepositoryTestCase(TestCase):
     @patch('maker.models.repository.Repository._generate_page')
     def test_full_cyclic_integration(self, _generate_page, get):
         """
-        This test creates a local repository with one app
+        This test creates a local repository with one app and one non-apk app
         and then imports it again as a remote repository.
         """
         # create repo
@@ -323,7 +324,7 @@ class RepositoryTestCase(TestCase):
         apk_hash = '64021f6d632eb5ba55bdeb5c4a78ed612bd3facc25d9a8a5d1c9d5d7a6bcc047'
         app = App.objects.create(repo=repo, package_id='org.bitbucket.tickytacky.mirrormirror',
                                  name='TestApp', summary='TestSummary', description='TestDesc',
-                                 website='TestSite', author_name='author')
+                                 website='TestSite', author_name='author', type=APK)
         apk = Apk.objects.create(package_id='org.bitbucket.tickytacky.mirrormirror', version_code=2,
                                  hash=apk_hash)
         file_path = os.path.join(TEST_FILES_DIR, 'test_1.apk')
@@ -339,6 +340,16 @@ class RepositoryTestCase(TestCase):
         app.high_res_icon.save('icon.png', io.BytesIO(b'foo'), save=False)
         app.tv_banner.save('tv.png', io.BytesIO(b'foo'), save=False)
         app.save()
+
+        # add non-apk app
+        apk_hash = '5ec4b30df6a98cc58628e763f35a560e1b333712f1d1f3c9f95f8a1ece54b254'
+        app2 = App.objects.create(repo=repo, package_id='test', name='TestMedia', type=VIDEO)
+        apk2 = Apk.objects.create(package_id='test', version_code=1337, hash=apk_hash)
+        with open(os.path.join(TEST_FILES_DIR, 'test.webm'), 'rb') as f:
+            apk2.file.save('test.webm', File(f), save=True)
+        apk_pointer2 = ApkPointer.objects.create(repo=repo, app=app2, apk=apk2)
+        apk_pointer2.link_file_from_apk()
+        print(apk_pointer2.file.path)
 
         # update repo
         repo.update()
@@ -370,9 +381,9 @@ class RepositoryTestCase(TestCase):
             headers={'User-Agent': 'F-Droid'}
         )
 
-        # assert that a new remote app has been created properly
+        # assert that new remote apps have been created properly
         remote_apps = RemoteApp.objects.all()
-        self.assertEqual(1, len(remote_apps))
+        self.assertEqual(2, len(remote_apps))
         remote_app = remote_apps[0]
         self.assertEqual(app.name, remote_app.name)
         self.assertEqual(app.package_id, remote_app.package_id)
@@ -381,19 +392,30 @@ class RepositoryTestCase(TestCase):
         self.assertEqual(app.website, remote_app.website)
         self.assertEqual(app.author_name, remote_app.author_name)
         self.assertTrue(remote_app.icon)
+        # non-apk app
+        remote_app2 = remote_apps[1]
+        self.assertEqual(app2.name, remote_app2.name)
+        self.assertEqual(app2.package_id, remote_app2.package_id)
+        self.assertTrue(remote_app.icon)
 
-        # assert that the existing apk got re-used (based on package_id and hash)
+        # assert that the existing Apks got re-used (based on package_id and hash)
         apks = Apk.objects.all()
-        self.assertEqual(1, len(apks))
+        self.assertEqual(2, len(apks))
         self.assertEqual(apk, apks[0])
+        self.assertEqual(apk2, apks[1])
 
-        # assert that there is one RemoteApkPointer now pointing to the same APK
+        # assert that there is two RemoteApkPointer now pointing to the same APKs
         remote_apk_pointers = RemoteApkPointer.objects.all()
-        self.assertEqual(1, len(remote_apk_pointers))
+        self.assertEqual(2, len(remote_apk_pointers))
         remote_apk_pointer = remote_apk_pointers[0]
         self.assertEqual(remote_app, remote_apk_pointer.app)
         self.assertEqual(remote_app, remote_apk_pointer.app)
         self.assertEqual(apk, remote_apk_pointer.apk)
+        # non-apk pointer
+        remote_apk_pointer2 = remote_apk_pointers[1]
+        self.assertEqual(remote_app2, remote_apk_pointer2.app)
+        self.assertEqual(remote_app2, remote_apk_pointer2.app)
+        self.assertEqual(apk2, remote_apk_pointer2.apk)
 
         # assert that all graphic assets are pointing to right location
         self.assertTrue('en' in remote_app.get_available_languages())

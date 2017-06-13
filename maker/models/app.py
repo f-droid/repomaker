@@ -404,7 +404,6 @@ class RemoteApp(AbstractApp):
         app.category = self.category.all()
         app.save()
 
-        # TODO still necessary?
         # create a local pointer to the APK
         pointer = ApkPointer(apk=apk, repo=repo, app=app)
         if apk.file:

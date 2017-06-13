@@ -71,7 +71,6 @@ class Apk(models.Model):
             self.delete()
             return
 
-        # TODO
         # update apk pointers
         pointers = ApkPointer.objects.filter(apk=apk).all()
         for pointer in pointers:

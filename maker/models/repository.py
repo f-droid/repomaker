@@ -265,6 +265,7 @@ class Repository(AbstractRepository):
         You normally don't need to call this directly
         as it is meant to be run in a background task scheduled by update_async().
         """
+        from maker.models import App, ApkPointer
         from maker.models.storage import StorageManager
         self.chdir()
         config = self.get_config()
@@ -280,19 +281,42 @@ class Repository(AbstractRepository):
 
         # Scan all apks in the main repo
         knownapks = common.KnownApks()
-        apks, cachechanged = update.scan_apks(apkcache, REPO_DIR, knownapks, False)
+        apks, cache_changed = update.scan_apks(apkcache, REPO_DIR, knownapks, False)
 
         # Apply app metadata from database
         apps = {}
         categories = set()
         for apk in apks:
             try:
-                from maker.models.app import App
                 app = App.objects.get(repo=self, package_id=apk['packageName']).to_metadata_app()
                 apps[app.id] = app
                 categories.update(app.Categories)
             except ObjectDoesNotExist:
                 logging.warning("App '%s' not found in database", apk['packageName'])
+
+        # Scan non-apk files in the repo
+        files, file_cache_changed = update.scan_repo_files(apkcache, REPO_DIR, knownapks, False)
+
+        # Apply metadata from database
+        for file in files:
+            pointers = ApkPointer.objects.filter(repo=self, apk__hash=file['hash'])
+            if not pointers.exists():
+                logging.warning("App with hash '%s' not found in database", file['hash'])
+            elif pointers.count() > 1:
+                logging.error("Repo %d has more than one app with hash '%s'", self.pk, file['hash'])
+            else:
+                # add app to list of apps to be included in index
+                pointer = pointers[0]
+                app = pointer.app.to_metadata_app()
+                apps[pointer.app.package_id] = app
+                categories.update(app.Categories)
+
+                # update package data and add to repo files
+                file['name'] = pointer.app.name
+                file['versionCode'] = pointer.apk.version_code
+                file['versionName'] = pointer.apk.version_name
+                file['packageName'] = pointer.apk.package_id
+                apks.append(file)
 
         update.apply_info_from_latest_apk(apps, apks)
 
@@ -304,10 +328,10 @@ class Repository(AbstractRepository):
         update.make_categories_txt(REPO_DIR, categories)
 
         # Update cache if it changed
-        if cachechanged:
+        if cache_changed or file_cache_changed:
             update.write_cache(apkcache)
 
-        # Update page
+        # Update repo page
         self._generate_page()
 
     def publish(self):

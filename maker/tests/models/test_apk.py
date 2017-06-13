@@ -190,24 +190,24 @@ class ApkTestCase(TestCase):
         apk_pointer = ApkPointer.objects.create(apk=self.apk, repo=Repository.objects.get(id=1))
         self.assertFalse(apk_pointer.file)
 
-        # fake return value of GET request for APK
+        # fake return value of GET request for test file
         get.return_value.status_code = requests.codes.ok
-        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+        with open(os.path.join(TEST_FILES_DIR, 'test.webm'), 'rb') as f:
             get.return_value.content = f.read()
 
         # download file and assert there was a GET request for the URL
-        self.apk.download('url/download.apk')
-        get.assert_called_once_with('url/download.apk')
+        self.apk.download('url/test.webm')
+        get.assert_called_once_with('url/test.webm')
 
         # assert that downloaded file has been saved
-        self.assertEqual(get_apk_file_path(self.apk, 'download.apk'), self.apk.file.name)
-        path = os.path.join(settings.MEDIA_ROOT, get_apk_file_path(self.apk, 'download.apk'))
+        self.assertEqual(get_apk_file_path(self.apk, 'test.webm'), self.apk.file.name)
+        path = os.path.join(settings.MEDIA_ROOT, get_apk_file_path(self.apk, 'test.webm'))
         self.assertTrue(os.path.isfile(path))
 
         # assert that ApkPointer was updated with a new copy/link of the downloaded file
         apk_pointer = ApkPointer.objects.get(pk=apk_pointer.pk)
         self.assertTrue(apk_pointer.file)
-        self.assertEqual(get_apk_file_path(apk_pointer, 'download.apk'), apk_pointer.file.name)
+        self.assertEqual(get_apk_file_path(apk_pointer, 'test.webm'), apk_pointer.file.name)
         path = os.path.join(settings.MEDIA_ROOT, apk_pointer.file.name)
         self.assertTrue(os.path.isfile(path))
 
