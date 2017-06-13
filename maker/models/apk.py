@@ -8,7 +8,7 @@ import magic  # this is python-magic in requirements.txt
 import requests
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models.signals import post_delete
+from django.db.models.signals import post_delete, pre_delete
 from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -110,6 +110,8 @@ class Apk(models.Model):
             self.save()
             apk = self
         elif apk_set.count() == 1:
+            # TODO this will blow with existing Apk with missing file was just downloaded
+            logging.info("Existing Apk found, trying to reuse...")
             self.delete()
             apk = apk_set[0]
         else:
@@ -264,6 +266,7 @@ class ApkPointer(AbstractApkPointer):
         elif apps.count() == 1:
             old_app = apps[0]
             if old_app.type != apk_info['type']:
+                # TODO clarify filename and app in the error message
                 raise ValidationError(
                     _('This file is of a different type than the other versions of this app.'))
             existing_pointers = ApkPointer.objects.filter(app=old_app)
@@ -348,6 +351,14 @@ class RemoteApkPointer(AbstractApkPointer):
         unique_together = (("apk", "app"),)
 
 
+@receiver(pre_delete, sender=Apk)
+def apk_pre_delete_handler(**kwargs):
+    apk = kwargs['instance']
+    # delete pointers first, so they can still access APK information when cleaning up
+    ApkPointer.objects.filter(apk=apk).delete()
+    RemoteApkPointer.objects.filter(apk=apk).delete()
+
+
 @receiver(post_delete, sender=Apk)
 def apk_post_delete_handler(**kwargs):
     apk = kwargs['instance']
@@ -360,13 +371,19 @@ def apk_pointer_post_delete_handler(**kwargs):
     apk_pointer = kwargs['instance']
     logging.info("Deleting APK Pointer: %s", apk_pointer.file.name)
     apk_pointer.file.delete(save=False)
-    if apk_pointer.apk:
-        apk_pointer.delete_app_icons_from_repo()
-        apk_pointer.apk.delete_if_no_pointers()
+    try:
+        if apk_pointer.apk:
+            apk_pointer.delete_app_icons_from_repo()
+            apk_pointer.apk.delete_if_no_pointers()
+    except Apk.DoesNotExist:
+        pass  # APK must have been deleted already
 
 
 @receiver(post_delete, sender=RemoteApkPointer)
 def remote_apk_pointer_post_delete_handler(**kwargs):
     remote_apk_pointer = kwargs['instance']
     logging.info("Deleting Remote APK Pointer: %s", remote_apk_pointer)
-    remote_apk_pointer.apk.delete_if_no_pointers()
+    try:
+        remote_apk_pointer.apk.delete_if_no_pointers()
+    except Apk.DoesNotExist:
+        pass  # APK must have been deleted already

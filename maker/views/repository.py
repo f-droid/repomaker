@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import ValidationError
 from django.db.models import Q
@@ -104,11 +106,14 @@ class RepositoryView(RepositoryAuthorizationMixin, ListView):
             if request.META['HTTP_RM_BACKGROUND_TYPE'] == 'apks':
                 try:
                     self.add_apks()
-                except OperationalError:
+                except OperationalError as e:
+                    logging.error(e)
                     return HttpResponse(1, status=500)
-                except IntegrityError:
+                except IntegrityError as e:
+                    logging.error(e)
                     return HttpResponse(2, status=400)
-                except ValidationError:
+                except ValidationError as e:
+                    logging.error(e)
                     return HttpResponse(3, status=400)
                 self.get_repo().update_async()  # schedule repository update
                 return HttpResponse(status=204)
