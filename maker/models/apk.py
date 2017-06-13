@@ -109,8 +109,11 @@ class Apk(models.Model):
             self.apply_json_package_info(repo_file)
             self.save()
             apk = self
+        elif apk_set.count() == 1 and self == apk_set[0]:
+            # we are initializing a new APK from a remote repo,
+            # so don't override APK info with local scanning data
+            apk = self
         elif apk_set.count() == 1:
-            # TODO this will blow with existing Apk with missing file was just downloaded
             logging.info("Existing Apk found, trying to reuse...")
             self.delete()
             apk = apk_set[0]

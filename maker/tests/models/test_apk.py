@@ -186,6 +186,13 @@ class ApkTestCase(TestCase):
         self.apk.file.delete()
         self.assertFalse(self.apk.file)
 
+        # adjust package IDs and hash, so that existing Apk can be found
+        self.remote_app.package_id = 'test'
+        self.remote_app.save()
+        self.apk.package_id = 'test'
+        self.apk.hash = '5ec4b30df6a98cc58628e763f35a560e1b333712f1d1f3c9f95f8a1ece54b254'
+        self.apk.save()
+
         # create ApkPointer and assert it doesn't have a file
         apk_pointer = ApkPointer.objects.create(apk=self.apk, repo=Repository.objects.get(id=1))
         self.assertFalse(apk_pointer.file)
