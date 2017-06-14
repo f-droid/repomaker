@@ -6,6 +6,7 @@ cache:
     - node_modules
 
 before_script:
+  - apt update && apt install libmagic1
   - ./setup.sh
   - pip3 install -r requirements-dev.txt
   - npm install --user

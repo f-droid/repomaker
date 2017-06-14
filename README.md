@@ -21,6 +21,7 @@ and start from scratch after each update.
 * apksigner `apt install apksigner` or alternatively jarsigner from Java Development Kit (JDK)
   `apt install openjdk-8-jdk`
 * Android Asset Packaging Tool (aapt) `apt install aapt`
+* libmagic for mime-type detection `apt install libmagic1`
 
 ## Development
 
