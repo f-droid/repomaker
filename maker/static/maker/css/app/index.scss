@@ -154,6 +154,12 @@ select#id_category {
     margin-top: 8px;
 }
 
+.rm-app-section {
+    color: #999999;
+    @include font-size(13px);
+    text-transform: uppercase;
+}
+
 .rm-app-screenshots {
     display: flex;
     flex-direction: row;
@@ -220,12 +226,6 @@ select#id_category {
     margin-bottom: 25px;
     min-width: 250px;
     text-align: center;
-}
-
-.rm-app-versions-title {
-    color: #999999;
-    @include font-size(13px);
-    text-transform: uppercase;
 }
 
 .rm-app-versions-item {

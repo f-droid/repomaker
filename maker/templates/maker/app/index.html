@@ -73,7 +73,7 @@
 			</div>
 		</div>
 		<div class="rm-app-summary-category">
-			<div class="rm-app-summary">{% block summary %}{{ app.summary }}{% endblock summary %}</div>
+			{% block summary %}<div class="rm-app-summary">{{ app.summary }}</div>{% endblock summary %}
 			{% block categories %}
 			{% if app.category.exists %}
 			{% for category in app.category.all %}
@@ -88,6 +88,7 @@
 </div>
 {% if form or app.screenshot_set.exists %}
 <div class="rm-grid--center mdl-grid">
+	{% block screenshot-header %}{% endblock screenshot-header %}
 	<div class="rm-app-screenshots mdl-cell mdl-cell--8-col">
 		{% block screenshot-drop %}{% endblock screenshot-drop %}
 		{% for screenshot in app.screenshot_set.all %}
@@ -108,7 +109,7 @@
 </div>
 <div class="rm-grid--center mdl-grid">
 	<div class="rm-app-versions mdl-cell mdl-cell--6-col">
-		<h4 class="rm-app-versions-title">
+		<h4 class="rm-app-section">
 			{% trans 'version history' %}
 		</h4>
 		{% block apk-drop %}{% endblock apk-drop %}

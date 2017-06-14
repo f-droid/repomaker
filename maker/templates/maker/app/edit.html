@@ -25,14 +25,17 @@
 
 
 {% block author %}
-<div class="rm-app-author">
-	{% trans 'Developed by' %}
+<div class="rm-app-author mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+	<label for="id_author_name" class="mdl-textfield__label">{% trans 'Developed by' %}</label>
 	{{ form.author_name }}
 </div>
 {% endblock author %}
 
 {% block summary %}
-{{ form.summary }}
+<div class="rm-app-summary mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+	<label for="id_summary" class="mdl-textfield__label">{% trans 'Short Summary (40 characters)' %}</label>
+	{{ form.summary }}
+</div>
 {% endblock summary %}
 
 
@@ -65,6 +68,12 @@
 {{ form.category }}
 {% endblock categories %}
 
+
+{% block screenshot-header %}
+<div class="rm-app-section mdl-cell mdl-cell--8-col">
+	{% trans 'Screenshots' %}
+</div>
+{% endblock screenshot-header %}
 
 {% block screenshot-drop %}
 <div id="rm-dnd-holder--screenshots"  class="rm-app-screenshot-drop rm-form">
@@ -99,6 +108,7 @@
 
 
 {% block description %}
+<h4 class="rm-app-section">{% trans 'Description' %}</h4>
 {{ form.description }}
 {% endblock description %}
 
