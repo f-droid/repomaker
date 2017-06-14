@@ -12,5 +12,5 @@ python-magic
 apache-libcloud>=2.0.0rc2
 cryptography>=1.4.0
 #fdroidserver>=0.8.0
-#git+https://gitlab.com/grote/fdroidserver.git@c137231d8bd47017bf17833c8f97693645be3dee#egg=fdroidserver
-git+https://gitlab.com/fdroid/fdroidserver.git@061093d0144a32d4c9c031674d3d82c3ce90ead3#egg=fdroidserver
+git+https://gitlab.com/grote/fdroidserver.git@686c7423623035fc37dff26ff51e8aeccea9ba27#egg=fdroidserver
+#git+https://gitlab.com/fdroid/fdroidserver.git@061093d0144a32d4c9c031674d3d82c3ce90ead3#egg=fdroidserver

@@ -12,6 +12,7 @@ from django.core.files import File
 from django.test import TestCase, override_settings
 from django.utils import timezone
 from fdroidserver.update import get_all_icon_dirs
+from fdroidserver.exception import BuildException
 
 import maker.models.app
 from maker.models import Apk, ApkPointer, RemoteApkPointer, App, RemoteApp, RemoteRepository, \
@@ -242,9 +243,9 @@ class ApkTestCase(TestCase):
         with self.assertRaises(ValidationError):
             self.apk.initialize()
 
-    @patch('fdroidserver.update.scan_apk_aapt')
+    @patch('fdroidserver.update.scan_apk')
     def test_initialize_rejects_invalid_apk_scan(self, scan_apk):
-        scan_apk.return_value = None
+        scan_apk.side_effect = BuildException
         with self.assertRaises(ValidationError):
             self.apk.initialize()
 

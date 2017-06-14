@@ -279,9 +279,9 @@ class Repository(AbstractRepository):
         # cached data if possible.
         apkcache = update.get_cache()
 
-        # Scan all apks in the main repo
+        # Process all apks in the main repo
         knownapks = common.KnownApks()
-        apks, cache_changed = update.scan_apks(apkcache, REPO_DIR, knownapks, False)
+        apks, cache_changed = update.process_apks(apkcache, REPO_DIR, knownapks, False)
 
         # Apply app metadata from database
         apps = {}

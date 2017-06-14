@@ -100,10 +100,6 @@ class Apk(models.Model):
         else:
             repo_file = self._get_info_from_file()
 
-        repo_file['hash'] = update.sha256sum(self.file.path)
-        repo_file['hashType'] = 'sha256'
-        repo_file['size'] = self.file.size
-
         apk_set = Apk.objects.filter(package_id=repo_file['packageName'], hash=repo_file['hash'])
         if not apk_set.exists():
             self.apply_json_package_info(repo_file)
@@ -135,24 +131,15 @@ class Apk(models.Model):
         """
         AbstractRepository().get_config()
 
-        # verify APK before scanning
-        if not common.verify_apk_signature(self.file.path):
-            raise ValidationError(_('Invalid APK signature.'))
-
         # scan APK and extract information about it
-        repo_file = {'type': APK, 'icons_src': {}, 'uses-permission': []}
         try:
-            # TODO switch to androguard when available
-            update.scan_apk_aapt(repo_file, self.file.path)
+            repo_file = update.scan_apk(self.file.path)
+            repo_file['type'] = APK
         except exception.BuildException as e:
             raise ValidationError(e)
 
         if 'packageName' not in repo_file:
             raise ValidationError(_('Invalid APK.'))
-
-        repo_file['sig'] = update.getsig(self.file.path)
-        if not repo_file['sig']:
-            raise ValidationError(_('Failed to retrieve APK signature.'))
 
         return repo_file
 
@@ -161,6 +148,7 @@ class Apk(models.Model):
             'sig': None,
             'hash': update.sha256sum(self.file.path),
             'hashType': 'sha256',
+            'size': self.file.size,
             'type': self._get_type()
         }
         file_name = os.path.basename(self.file.name)
