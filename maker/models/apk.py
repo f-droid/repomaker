@@ -117,6 +117,8 @@ class Apk(models.Model):
             raise RuntimeError('More than one APK with package ID %s' % repo_file['packageName'])
 
         if repo is not None:
+            if ApkPointer.objects.filter(apk=apk, repo=repo).exists():
+                raise ValidationError(_('This APK already exists in the current repo.'))
             pointer = ApkPointer(apk=apk, repo=repo)
             pointer.initialize(repo_file)
 

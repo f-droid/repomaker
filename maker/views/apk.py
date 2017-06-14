@@ -24,6 +24,7 @@ class ApkForm(ModelForm):
 class ApkUploadView(RepositoryAuthorizationMixin, CreateView):
     model = ApkPointer
     form_class = ApkForm
+    template_name = "maker/error.html"
 
     def get(self, request, *args, **kwargs):
         # don't answer GET requests
@@ -38,7 +39,8 @@ class ApkUploadView(RepositoryAuthorizationMixin, CreateView):
         except Exception as e:
             if apk.pk:
                 apk.delete()
-            raise e
+            form.add_error('file', e)
+            return super(ApkUploadView, self).form_invalid(form)
         return super(ApkUploadView, self).form_valid(form)
 
     def get_success_url(self):

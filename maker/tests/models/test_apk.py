@@ -249,6 +249,11 @@ class ApkTestCase(TestCase):
         with self.assertRaises(ValidationError):
             self.apk.initialize()
 
+    def test_initialize_rejects_existing_apk(self):
+        self.apk.initialize(self.repo)
+        with self.assertRaises(ValidationError):
+            self.apk.initialize(self.repo)
+
     def test_initialize_reuses_existing_apk(self):
         # create existing Apk object with same package_id and hash
         apk = Apk(package_id='org.bitbucket.tickytacky.mirrormirror',
@@ -310,12 +315,14 @@ class ApkTestCase(TestCase):
         self.assertEqual(maker.models.app.VIDEO, App.objects.get(package_id='test1').type)
 
         # initialize the Apk with video file
+        ApkPointer.objects.all().delete()
         self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.mp4'), 'test2.mp4')
         self.apk.initialize(self.repo)
         # assert that video type was recognized
         self.assertEqual(maker.models.app.VIDEO, App.objects.get(package_id='test2').type)
 
         # initialize the Apk with video file
+        ApkPointer.objects.all().delete()
         self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.webm'), 'test3.webm')
         self.apk.initialize(self.repo)
         # assert that video type was recognized
@@ -329,12 +336,14 @@ class ApkTestCase(TestCase):
         self.assertEqual(maker.models.app.AUDIO, App.objects.get(package_id='test1').type)
 
         # initialize the Apk with audio file
+        ApkPointer.objects.all().delete()
         self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.mp3'), 'test2.mp3')
         self.apk.initialize(self.repo)
         # assert that audio type was recognized
         self.assertEqual(maker.models.app.AUDIO, App.objects.get(package_id='test2').type)
 
         # initialize the Apk with audio file
+        ApkPointer.objects.all().delete()
         self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.ogg'), 'test3.ogg')
         self.apk.initialize(self.repo)
         # assert that audio type was recognized
@@ -348,6 +357,7 @@ class ApkTestCase(TestCase):
         self.assertEqual(maker.models.app.BOOK, App.objects.get(package_id='test1').type)
 
         # initialize the Apk with book file
+        ApkPointer.objects.all().delete()
         self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.mobi'), 'test2.mobi')
         self.apk.initialize(self.repo)
         # assert that book type was recognized
@@ -361,18 +371,21 @@ class ApkTestCase(TestCase):
         self.assertEqual(maker.models.app.DOCUMENT, App.objects.get(package_id='test1').type)
 
         # initialize the Apk with document file
+        ApkPointer.objects.all().delete()
         self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.odt'), 'test2.odt')
         self.apk.initialize(self.repo)
         # assert that document type was recognized
         self.assertEqual(maker.models.app.DOCUMENT, App.objects.get(package_id='test2').type)
 
         # initialize the Apk with document file
+        ApkPointer.objects.all().delete()
         self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.ods'), 'test3.ods')
         self.apk.initialize(self.repo)
         # assert that document type was recognized
         self.assertEqual(maker.models.app.DOCUMENT, App.objects.get(package_id='test3').type)
 
         # initialize the Apk with document file
+        ApkPointer.objects.all().delete()
         self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.pdf'), 'test4.pdf')
         self.apk.initialize(self.repo)
         # assert that document type was recognized

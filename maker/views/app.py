@@ -143,7 +143,11 @@ class AppUpdateView(RepositoryAuthorizationMixin, UpdateView):
         result = super(AppUpdateView, self).form_valid(form)
 
         self.add_screenshots()
-        self.add_apks()
+        try:
+            self.add_apks()
+        except ValidationError as e:
+            form.add_error('apks', e)
+            return super(AppUpdateView, self).form_invalid(form)
 
         form.instance.repo.update_async()  # schedule repository update
         return result

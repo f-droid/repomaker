@@ -1,7 +1,6 @@
 {% extends "maker/app/index.html" %}
 {% load i18n %}
 {% load static %}
-{% load sass_tags %}
 
 {% block title %}{% blocktrans with app=app.name %}Edit {{ app }}{% endblocktrans %}{% endblock %}
 
@@ -114,6 +113,7 @@
 
 
 {% block apk-drop %}
+<span class="error">{{ form.apks.errors }}</span>
 <div id="rm-dnd-holder--apks" class="rm-app-versions-drop rm-form">
 	<i class="rm-repo-apps-empty-add-icon material-icons">file_upload</i>
 	<div class="rm-repo-apps-empty-add-title">{% trans 'Add files' %}</div>

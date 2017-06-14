@@ -1,6 +1,5 @@
 {% extends "maker/base.html" %}
 {% load i18n %}
-{% load sass_tags %}
 
 {% block title %}{% trans 'Delete Storage' %}{% endblock %}
 {% block toolbar-title %}<a href="{% url 'repo' object.repo.id %}">{{ object.repo.name }}</a>{% endblock %}
