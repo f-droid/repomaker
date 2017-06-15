@@ -32,11 +32,11 @@
 		</div>
 		<div class="mdl-card__supporting-text rm-repo-date">
 			{% if repo.last_publication_date %}
-			{% blocktrans with repo.last_publication_date|naturaltime as time_ago %}
+			{% blocktrans with repo.last_publication_date|naturaltime as time_ago trimmed %}
 			Published {{ time_ago }}
 			{% endblocktrans %}
 			{% else %}
-			{% blocktrans with repo.created_date|naturaltime as time_ago %}
+			{% blocktrans with repo.created_date|naturaltime as time_ago trimmed %}
 			Created {{ time_ago }}
 			{% endblocktrans %}
 			{% endif %}

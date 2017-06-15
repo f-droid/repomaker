@@ -6,12 +6,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: team@f-droid.org\n"
-"POT-Creation-Date: 2017-05-19 19:17+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-06-15 13:18+0000\n"
 "PO-Revision-Date: 2017-06-01 18:52+0000\n"
 "Last-Translator: Adrià García-Alzórriz <adria@fsfe.org>\n"
-"Language-Team: Catalan "
-"<https://hosted.weblate.org/projects/f-droid/repomaker/ca/>\n"
+"Language-Team: Catalan <https://hosted.weblate.org/projects/f-droid/repomaker/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,444 +18,773 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.15-dev\n"
 
+#: maker/models/apk.py:121
+#, fuzzy
+#| msgid "This app does already exist in your repository."
+msgid "This APK already exists in the current repo."
+msgstr "Aquesta «app» ja existeix al seu repositori."
+
+#: maker/models/apk.py:144
+msgid "Invalid APK."
+msgstr ""
+
+#: maker/models/apk.py:187
+msgid "Unsupported File Type"
+msgstr ""
+
+#: maker/models/apk.py:264
+msgid "This file is of a different type than the other versions of this app."
+msgstr ""
+
+#: maker/models/app.py:32
+msgid "APK"
+msgstr ""
+
+#: maker/models/app.py:33
+msgid "Book"
+msgstr ""
+
+#: maker/models/app.py:34
+msgid "Document"
+msgstr ""
+
+#: maker/models/app.py:35
+msgid "Image"
+msgstr ""
+
+#: maker/models/app.py:36
+msgid "Audio"
+msgstr ""
+
+#: maker/models/app.py:37
+msgid "Video"
+msgstr ""
+
 #: maker/models/app.py:38
+msgid "Other"
+msgstr ""
+
+#: maker/models/app.py:55
 msgid "Summary"
 msgstr "Resum"
 
-#: maker/models/app.py:39
+#: maker/models/app.py:56 maker/templates/maker/app/edit.html:110
+#: maker/templates/maker/repo/index_info.html:16
 msgid "Description"
 msgstr "Descripció"
 
-#: maker/models/app.py:356
+#: maker/models/app.py:392
 msgid "This app does already exist in your repository."
 msgstr "Aquesta «app» ja existeix al seu repositori."
 
-#: maker/models/app.py:361
+#: maker/models/app.py:397
 msgid "This app does not have any working versions available."
 msgstr "Aquesta «app» no té cap versió funcional disponible."
 
-#: maker/models/storage.py:54
+#: maker/models/screenshot.py:21
+msgid "Phone"
+msgstr ""
+
+#: maker/models/screenshot.py:22
+msgid "7'' Tablet"
+msgstr ""
+
+#: maker/models/screenshot.py:23
+msgid "10'' Tablet"
+msgstr ""
+
+#: maker/models/screenshot.py:24
+msgid "TV"
+msgstr ""
+
+#: maker/models/screenshot.py:25
+msgid "Wearable"
+msgstr ""
+
+#: maker/models/storage.py:61
 msgid "US Standard"
 msgstr "Estàndard nordamericà"
 
-#: maker/models/storage.py:68
+#: maker/models/storage.py:77
 msgid "Amazon S3 Storage"
 msgstr "Emmagatzematge a Amazon S3"
 
-#: maker/models/storage.py:89
+#: maker/models/storage.py:98
 msgid "Enter a valid user name consisting of letters, numbers, underscores or hyphens."
-msgstr ""
-"Escriviu un nom d'usuari vàlid que contingui lletres, números, guions baixos "
-"o guions mitjos."
+msgstr "Escriviu un nom d'usuari vàlid que contingui lletres, números, guions baixos o guions mitjos."
 
-#: maker/models/storage.py:113
+#: maker/models/storage.py:122
 #, fuzzy
 msgid "Enter a valid hostname."
 msgstr "Escriviu un nom de host vàlid."
 
-#: maker/models/storage.py:131
+#: maker/models/storage.py:140
 msgid "Enter a valid path."
 msgstr "Introduïu una ruta vàlida."
 
-#: maker/models/storage.py:203
+#: maker/models/storage.py:215
 msgid "SSH Storage"
 msgstr "Emmagatzematge SSH"
 
-#: maker/models/storage.py:227
+#: maker/models/storage.py:241
 msgid "Git Storage"
 msgstr "Emmagatzematge Git"
 
-#: maker/models/storage.py:301
+#: maker/models/storage.py:318
 msgid "Default Storage"
 msgstr "Emmagatzematge per defecte"
 
-#: maker/templates/account/base.html:30
+#: maker/templates/account/base.html:29
 msgid "Change E-mail"
 msgstr "Canvieu l'e-mail"
 
-#: maker/templates/account/base.html:31
+#: maker/templates/account/base.html:30 maker/templates/account/logout.html:6
+#: maker/templates/account/logout.html:12
+#: maker/templates/account/logout.html:21
 msgid "Sign Out"
 msgstr "Tanqueu la sessió"
 
-#: maker/templates/account/base.html:33
+#: maker/templates/account/base.html:32 maker/templates/account/index.html:6
 msgid "Sign In"
 msgstr "Inicieu la sessió"
 
-#: maker/templates/account/base.html:34
+#: maker/templates/account/base.html:33 maker/templates/account/index.html:36
+#: maker/templates/account/signup.html:4
 msgid "Sign Up"
 msgstr "Doneu-vos d'alta"
 
-#: maker/templates/maker/app/add.html:5
-#: maker/templates/maker/app/remote_add.html:5
-msgid "Add App"
-msgstr "Afegiu una «app»"
+#: maker/templates/account/index.html:14
+msgid "Distribute apps."
+msgstr ""
 
-#: maker/templates/maker/app/add.html:14
-msgid "Add new App"
-msgstr "Afegiu una nova «app»"
+#: maker/templates/account/index.html:14
+msgid "Spread the love."
+msgstr ""
 
-#: maker/templates/maker/app/add.html:22
-msgid "Upload APK"
-msgstr "Afegiu un APK"
+#: maker/templates/account/index.html:16
+msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
+msgstr ""
 
-#: maker/templates/maker/app/add.html:36
-msgid "Search for apps"
-msgstr "Cerqueu «apps»"
+#: maker/templates/account/index.html:33
+#: maker/templates/account/login_form.html:38
+msgid "Login"
+msgstr ""
+
+#: maker/templates/account/login_form.html:34
+msgid "Forgot Password"
+msgstr ""
+
+#: maker/templates/account/login_form.html:49
+msgid "Or login with"
+msgstr ""
+
+#: maker/templates/account/logout.html:14
+#, fuzzy
+#| msgid "Are you sure you want to delete your app \"%(object)s\"?"
+msgid "Are you sure you want to sign out?"
+msgstr "Esteu segurs d'eliminar la vostra app \"%(object)s\"?"
+
+#: maker/templates/account/signup_form.html:10
+#, fuzzy
+#| msgid "Sign Up"
+msgid "Signup"
+msgstr "Doneu-vos d'alta"
+
+#: maker/templates/maker/app/add.html:5 maker/templates/maker/app/add.html:12
+#, fuzzy
+#| msgid "add from repos"
+msgid "Choose from Repos"
+msgstr "Afegir des dels repositoris"
+
+#: maker/templates/maker/app/add.html:22 maker/templates/maker/app/edit.html:21
+msgid "Done"
+msgstr ""
 
 #: maker/templates/maker/app/add.html:41
-msgid "Search"
-msgstr "Cerca"
-
-#: maker/templates/maker/app/add.html:49
-msgid "Remote Repositories"
-msgstr "Repositoris remots"
-
-#: maker/templates/maker/app/add.html:55
-#, fuzzy
-msgid "All"
-msgstr "Tot"
-
-#: maker/templates/maker/app/add.html:65
-msgid "Sorry, but there are no remote repositories at the moment. Don't despair, you can add one below."
+msgid "Filters"
 msgstr ""
-"Ho sentim, però ara mateix no hi ha repositoris remots. No desespereu, en "
-"podeu afegir un a continuació."
 
-#: maker/templates/maker/app/add.html:73
+#: maker/templates/maker/app/add.html:46
+#, fuzzy
+#| msgid "New Repo"
+msgid "Repos"
+msgstr "Nou repositori"
+
+#: maker/templates/maker/app/add.html:47 maker/templates/maker/app/add.html:95
+#: maker/templates/maker/repo/index_apps.html:40
+#: maker/templates/maker/repo/index_apps.html:79
 #, fuzzy
 msgid "Add"
 msgstr "Afegir-ne"
 
-#: maker/templates/maker/app/add.html:99
-msgid "There are no apps from remote repositories."
-msgstr "No hi ha «apps» de repositoris remots."
+#: maker/templates/maker/app/add.html:53
+#, fuzzy
+msgid "All"
+msgstr "Tot"
+
+#: maker/templates/maker/app/add.html:66
+msgid "Categories"
+msgstr ""
+
+#: maker/templates/maker/app/add.html:69
+msgid "clear"
+msgstr ""
 
 #: maker/templates/maker/app/add.html:100
-msgid "If you just added a remote repository, wait for the apps to download and try again later."
+#, python-format
+msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
 msgstr ""
-"Si acabeu d'afegir un repositori remot, espereu a descarregar les «apps» i "
-"proveu-ho de nou més tard."
 
-#: maker/templates/maker/app/delete.html:5
-#: maker/templates/maker/app/screenshot_delete.html:5
-msgid "Delete App"
+#: maker/templates/maker/app/add.html:106
+#, fuzzy
+#| msgid "There are no apps from remote repositories."
+msgid "There are no apps in this repo."
+msgstr "No hi ha «apps» de repositoris remots."
+
+#: maker/templates/maker/app/add.html:108
+#, fuzzy
+#| msgid "There are no apps from remote repositories."
+msgid "There are no apps available in the repos."
+msgstr "No hi ha «apps» de repositoris remots."
+
+#: maker/templates/maker/app/add.html:110
+#, fuzzy
+#| msgid "If you just added a remote repository, wait for the apps to download and try again later."
+msgid "If you just added a repo, wait for the apps to download and try again later."
+msgstr "Si acabeu d'afegir un repositori remot, espereu a descarregar les «apps» i proveu-ho de nou més tard."
+
+#: maker/templates/maker/app/add.html:112
+msgid "This repo has no apps in the selected category. Try clearing it or select a different repo."
+msgstr ""
+
+#: maker/templates/maker/app/add.html:114
+msgid "There are no apps available in the selected category. Try clearing it."
+msgstr ""
+
+#: maker/templates/maker/app/apk_delete.html:4
+#, fuzzy
+#| msgid "Delete App"
+msgid "Delete App Version"
 msgstr "Esborreu una «app»"
 
-#: maker/templates/maker/app/delete.html:18
-#, python-format
-msgid "Are you sure you want to delete your app \"%(object)s\"?"
-msgstr "Esteu segurs d'eliminar la vostra app \"%(object)s\"?"
+#: maker/templates/maker/app/apk_delete.html:10
+#, fuzzy, python-format
+#| msgid "Are you sure you want to delete this screenshot from your app \"%(app)s\"?"
+msgid "Are you sure you want to delete this version <strong>%(version)s</strong> (%(code)s) from your app <strong>%(app)s</strong>?"
+msgstr "Esteu segurs que voleu eliminar aquesta captura de pantalla de la vostra «app» \"%(app)s\"?"
 
-#: maker/templates/maker/app/delete.html:20
-#: maker/templates/maker/app/screenshot_delete.html:22
-#: maker/templates/maker/storage/delete.html:22
+#: maker/templates/maker/app/apk_delete.html:17
+#: maker/templates/maker/app/delete.html:16
+#: maker/templates/maker/app/screenshot_delete.html:24
+#: maker/templates/maker/storage/delete.html:17
 msgid "Confirm"
 msgstr "Confirmeu"
 
-#: maker/templates/maker/app/edit.html:5
-msgid "Edit App"
-msgstr "Editeu una «app»"
+#: maker/templates/maker/app/delete.html:4
+msgid "Delete App"
+msgstr "Esborreu una «app»"
 
-#: maker/templates/maker/app/edit.html:17
+#: maker/templates/maker/app/delete.html:10
+#, fuzzy, python-format
+#| msgid "Are you sure you want to remove the remote storage at \"%(object)s\"?"
+msgid "Are you sure you want to delete your app <strong>%(object)s</strong>?"
+msgstr "Esteu segurs que voleu eliminar l'emmagatzematge remot de \"%(object)s\"?"
+
+#: maker/templates/maker/app/edit.html:5
 #, python-format
 msgid "Edit %(app)s"
 msgstr "Editeu %(app)s"
 
-#: maker/templates/maker/app/edit.html:25
-#: maker/templates/maker/repo/edit.html:30
-msgid "Save Changes"
-msgstr "Deseu els canvis"
+#: maker/templates/maker/app/edit.html:16
+#, fuzzy
+#| msgid "Delete App"
+msgid "Remove App"
+msgstr "Esborreu una «app»"
 
-#: maker/templates/maker/app/index.html:15
+#: maker/templates/maker/app/edit.html:28
+#, fuzzy
+#| msgid "Developed by %(author)s"
+msgid "Developed by"
+msgstr "Desenvolupat per %(author)s"
+
+#: maker/templates/maker/app/edit.html:35
+msgid "Short Summary (40 characters)"
+msgstr ""
+
+#: maker/templates/maker/app/edit.html:53
+msgid "Category"
+msgstr ""
+
+#: maker/templates/maker/app/edit.html:56
+#: maker/templates/maker/app/edit.html:65
+msgid "Choose Category"
+msgstr ""
+
+#: maker/templates/maker/app/edit.html:73
+#, fuzzy
+#| msgid "Add Screenshot"
+msgid "Screenshots"
+msgstr "Afegiu captura de pantalla"
+
+#: maker/templates/maker/app/edit.html:80
+#: maker/templates/maker/app/edit.html:119
+#: maker/templates/maker/repo/index_apps.html:64
+msgid "Add files"
+msgstr "Afegiu arxius"
+
+#: maker/templates/maker/app/edit.html:83
+#, fuzzy
+#| msgid "Add Screenshot"
+msgid "Drag and drop screenshots"
+msgstr "Afegiu captura de pantalla"
+
+#: maker/templates/maker/app/edit.html:86
+#: maker/templates/maker/app/edit.html:125
+#: maker/templates/maker/repo/index_apps.html:33
+#: maker/templates/maker/repo/index_apps.html:72
+msgid "or"
+msgstr "o"
+
+#: maker/templates/maker/app/edit.html:87
+#: maker/templates/maker/app/edit.html:126
+#: maker/templates/maker/repo/index_apps.html:35
+#: maker/templates/maker/repo/index_apps.html:74
+msgid "browse to upload"
+msgstr "Navegueu per actualitzar"
+
+#: maker/templates/maker/app/edit.html:122
+#: maker/templates/maker/repo/index_apps.html:28
+#: maker/templates/maker/repo/index_apps.html:67
+msgid "Drag and drop .apk files"
+msgstr ""
+
+#: maker/templates/maker/app/index.html:21
 #, python-format
 msgid "Language (%(count)s)"
 msgstr "Idioma (%(count)s)"
 
-#: maker/templates/maker/app/index.html:21
+#: maker/templates/maker/app/index.html:29
 msgid "None"
 msgstr "Cap"
 
-#: maker/templates/maker/app/index.html:27
-#: maker/templates/maker/repo/index/apps.html:23
+#: maker/templates/maker/app/index.html:35
+#: maker/templates/maker/repo/index_info.html:11
 msgid "Edit"
 msgstr "Edició"
 
-#: maker/templates/maker/app/index.html:44
+#: maker/templates/maker/app/index.html:54
 #, python-format
 msgid "Developed by %(author)s"
 msgstr "Desenvolupat per %(author)s"
 
-#: maker/templates/maker/app/index.html:58
+#: maker/templates/maker/app/index.html:69
 #, python-format
 msgid "Updated %(time)s ago"
 msgstr "Actualitzat fa %(time)s"
 
-#: maker/templates/maker/app/index.html:98
+#: maker/templates/maker/app/index.html:113
 msgid "version history"
 msgstr "historial de versions"
 
-#: maker/templates/maker/app/index.html:106
-#, python-format
-msgid "Version %(version)s"
+#: maker/templates/maker/app/index.html:122
+#, fuzzy, python-format
+#| msgid "Version %(version)s"
+msgid "Version %(version)s (%(code)s)"
 msgstr "Versió %(version)s"
 
-#: maker/templates/maker/app/index.html:112
+#: maker/templates/maker/app/index.html:128
 #, python-format
 msgid "Released %(date)s"
 msgstr "Publicació %(date)s"
 
-#: maker/templates/maker/app/index.html:119
+#: maker/templates/maker/app/index.html:135
 msgid "APK is still downloading..."
 msgstr "L'APK encara s'està descarregant…"
 
-#: maker/templates/maker/app/index.html:127
+#: maker/templates/maker/app/index.html:144
 msgid "This app has no APK files."
 msgstr "Aquesta «app» no té arxius APK."
 
-#: maker/templates/maker/app/index.html:128
+#: maker/templates/maker/app/index.html:145
 msgid "If you added this app from a remote repo, try deleting it and adding it again."
-msgstr ""
-"Si heu afegit aquesta «app» des d'un repositori remot, intenteu eliminar-la "
-"i afegir-la de nou."
+msgstr "Si heu afegit aquesta «app» des d'un repositori remot, intenteu eliminar-la i afegir-la de nou."
 
-#: maker/templates/maker/app/index.html:137
+#: maker/templates/maker/app/index.html:155
 msgid "Previous"
 msgstr "Anterior"
 
-#: maker/templates/maker/app/index.html:145
+#: maker/templates/maker/app/index.html:164
 msgid "Next"
 msgstr "Següent"
 
-#: maker/templates/maker/app/remote_add.html:14
+#: maker/templates/maker/app/remote_add.html:4
+msgid "Add App"
+msgstr "Afegiu una «app»"
+
+#: maker/templates/maker/app/remote_add.html:11
 #, python-format
 msgid "Add %(app)s to %(repo)s"
 msgstr "Afegiu %(app)s a %(repo)s"
 
-#: maker/templates/maker/app/remote_add.html:45
+#: maker/templates/maker/app/remote_add.html:30
 #, python-format
 msgid "Add App to %(repo)s"
 msgstr "Afegiu l'«app» a %(repo)s"
 
-#: maker/templates/maker/app/screenshot_add.html:5
-#: maker/templates/maker/app/screenshot_add.html:14
+#: maker/templates/maker/app/screenshot_add.html:4
+#: maker/templates/maker/app/screenshot_add.html:9
 msgid "Add Screenshot"
 msgstr "Afegiu captura de pantalla"
 
-#: maker/templates/maker/app/screenshot_add.html:21
+#: maker/templates/maker/app/screenshot_add.html:16
 msgid "Upload Screenshot"
 msgstr "Pugeu captura de pantalla"
 
-#: maker/templates/maker/app/screenshot_delete.html:20
-#, python-format
-msgid "Are you sure you want to delete this screenshot from your app \"%(app)s\"?"
-msgstr ""
-"Esteu segurs que voleu eliminar aquesta captura de pantalla de la vostra "
-"«app» \"%(app)s\"?"
+#: maker/templates/maker/app/screenshot_delete.html:4
+#, fuzzy
+#| msgid "Add Screenshot"
+msgid "Delete Screenshot"
+msgstr "Afegiu captura de pantalla"
 
-#: maker/templates/maker/app/translate.html:5
+#: maker/templates/maker/app/screenshot_delete.html:13
+#, fuzzy, python-format
+#| msgid "Are you sure you want to delete this screenshot from your app \"%(app)s\"?"
+msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
+msgstr "Esteu segurs que voleu eliminar aquesta captura de pantalla de la vostra «app» \"%(app)s\"?"
+
+#: maker/templates/maker/app/translate.html:4
 msgid "Translate App"
 msgstr "Traduïu l'«app»"
 
-#: maker/templates/maker/app/translate.html:17
+#: maker/templates/maker/app/translate.html:11
 #, python-format
 msgid "Translate %(app)s"
 msgstr "Traduïu %(app)s"
 
-#: maker/templates/maker/app/translate.html:25
+#: maker/templates/maker/app/translate.html:19
 msgid "Save Translation"
 msgstr "Deseu la traducció"
 
-#: maker/templates/maker/base.html:36
+#: maker/templates/maker/base.html:38
 #, python-format
 msgid "Hello, %(user)s"
 msgstr "Hola %(user)s"
 
-#: maker/templates/maker/index.html:5
+#: maker/templates/maker/error.html:4 maker/templates/maker/error.html:10
+msgid "Error"
+msgstr ""
+
+#: maker/templates/maker/index.html:6 maker/templates/maker/index.html:14
 #, fuzzy
-msgid "Repository List"
-msgstr "Llista del repositori"
+#| msgid "New Repo"
+msgid "My Repos"
+msgstr "Nou repositori"
 
-#: maker/templates/maker/index.html:33
-msgid "No repositories are available."
-msgstr "No hi ha cap repositori disponible."
+#: maker/templates/maker/index.html:35
+#, fuzzy, python-format
+#| msgid "Updated %(time)s ago"
+msgid "Published %(time_ago)s"
+msgstr "Actualitzat fa %(time)s"
 
-#: maker/templates/maker/repo/add.html:5
-#: maker/templates/maker/repo/add.html:25
+#: maker/templates/maker/index.html:39
+#, fuzzy, python-format
+#| msgid "Updated %(time)s ago"
+msgid "Created %(time_ago)s"
+msgstr "Actualitzat fa %(time)s"
+
+#: maker/templates/maker/index.html:51
+msgid "Make a collection of apps to share"
+msgstr ""
+
+#: maker/templates/maker/index.html:54
+#, fuzzy
+#| msgid "Create"
+msgid "Create Repo"
+msgstr "Crear"
+
+#: maker/templates/maker/repo/add.html:4 maker/templates/maker/repo/add.html:10
 msgid "New Repo"
 msgstr "Nou repositori"
 
-#: maker/templates/maker/repo/add.html:31
+#: maker/templates/maker/repo/add.html:15
 msgid "Create"
 msgstr "Crear"
 
-#: maker/templates/maker/repo/edit.html:5
-#: maker/templates/maker/repo/edit.html:24
+#: maker/templates/maker/repo/delete.html:4
+#, fuzzy
+#| msgid "Delete App"
+msgid "Delete Repo"
+msgstr "Esborreu una «app»"
+
+#: maker/templates/maker/repo/delete.html:10
+#, fuzzy, python-format
+#| msgid "Are you sure you want to remove the remote storage at \"%(object)s\"?"
+msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
+msgstr "Esteu segurs que voleu eliminar l'emmagatzematge remot de \"%(object)s\"?"
+
+#: maker/templates/maker/repo/delete.html:15
+msgid "This will also delete all apps and other files from your repo. You will not be able to get them back, users of your repo will not be able to use it anymore and not receive updates for the apps they received from you. There is no way to recover this repo!"
+msgstr ""
+
+#: maker/templates/maker/repo/delete.html:25
+msgid "Please only proceed if you know what you are doing!"
+msgstr ""
+
+#: maker/templates/maker/repo/delete.html:32
+msgid "Yes, I want to delete the repo"
+msgstr ""
+
+#: maker/templates/maker/repo/edit.html:4
+#: maker/templates/maker/repo/edit.html:10
 msgid "Edit Repo"
 msgstr "Editeu repositori"
+
+#: maker/templates/maker/repo/edit.html:16
+msgid "Save Changes"
+msgstr "Deseu els canvis"
 
 #: maker/templates/maker/repo/index.html:26
 msgid "Apps"
 msgstr "«Apps»"
 
 #: maker/templates/maker/repo/index.html:27
-msgid "Info"
-msgstr "Info"
-
-#: maker/templates/maker/repo/index.html:28
 msgid "Share"
 msgstr "Compartir"
 
-#: maker/templates/maker/repo/index/apps.html:15
+#: maker/templates/maker/repo/index.html:28
+msgid "Info"
+msgstr "Info"
+
+#: maker/templates/maker/repo/index_apps.html:13
 msgid "Search for apps in your repository"
 msgstr "Cerqueu «apps» al seu repositori"
 
-#: maker/templates/maker/repo/index/apps.html:31
-#: maker/templates/maker/repo/index/apps.html:69
-msgid "Add files"
+#: maker/templates/maker/repo/index_apps.html:25
+#, fuzzy
+#| msgid "Add files"
+msgid "Add .apk files"
 msgstr "Afegiu arxius"
 
-#: maker/templates/maker/repo/index/apps.html:34
-#: maker/templates/maker/repo/index/apps.html:72
-msgid "Drag and drop .apk, .pdf, .epub, videos, photos or music files"
-msgstr ""
-"Arrossegueu i deixeu anar fitxers .apk, .pdf, .epub, vídeos, imatges o "
-"fitxers de so"
-
-#: maker/templates/maker/repo/index/apps.html:37
-#: maker/templates/maker/repo/index/apps.html:75
-msgid "or"
-msgstr "o"
-
-#: maker/templates/maker/repo/index/apps.html:39
-#: maker/templates/maker/repo/index/apps.html:77
-msgid "browse to upload"
-msgstr "Navegueu per actualitzar"
-
-#: maker/templates/maker/repo/index/apps.html:45
-#: maker/templates/maker/repo/index/apps.html:86
+#: maker/templates/maker/repo/index_apps.html:52
+#: maker/templates/maker/repo/index_apps.html:94
 msgid "add from repos"
 msgstr "Afegir des dels repositoris"
 
-#: maker/templates/maker/repo/index/apps.html:82
+#: maker/templates/maker/repo/index_apps.html:90
 msgid "Discover"
 msgstr "Descobrir"
 
-#: maker/templates/maker/repo/index/apps.html:83
+#: maker/templates/maker/repo/index_apps.html:91
 msgid "Find things to add from other repos"
 msgstr "Trobeu coses per afegir des d'altres repositoris"
 
-#: maker/templates/maker/repo/index/info.html:14 maker/views/sshstorage.py:34
-msgid "URL"
-msgstr "URL"
+#: maker/templates/maker/repo/index_apps.html:101
+msgid "Your search did not return any results."
+msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:24
-msgid "Fingerprint"
-msgstr "Empremta digital"
-
-#: maker/templates/maker/repo/index/info.html:33
+#: maker/templates/maker/repo/index_info.html:6
 #, fuzzy
-msgid "Created"
-msgstr "Creat"
+#| msgid "User Name"
+msgid "Name"
+msgstr "Nom d'usuari"
 
-#: maker/templates/maker/repo/index/info.html:42
-msgid "Last Updated"
-msgstr "Última actualització"
+#: maker/templates/maker/repo/index_info.html:20
+#, fuzzy
+#| msgid "SSH Storage"
+msgid "Storage"
+msgstr "Emmagatzematge SSH"
 
-#: maker/templates/maker/repo/index/info.html:51
-msgid "Last Publication"
-msgstr "Última publicació"
-
-#: maker/templates/maker/repo/index/info.html:85
+#: maker/templates/maker/repo/index_info.html:39
 msgid "Attention:"
 msgstr "Atenció:"
 
-#: maker/templates/maker/repo/index/info.html:85
+#: maker/templates/maker/repo/index_info.html:40
 msgid "This repository has no remote storage. Add one to get your repository published."
-msgstr ""
-"Aquest repositori no té un emmagatzematge remot. Afegiu-ne un per publicar "
-"el seu repositori."
+msgstr "Aquest repositori no té un emmagatzematge remot. Afegiu-ne un per publicar el seu repositori."
 
-#: maker/templates/maker/repo/index/info.html:90
+#: maker/templates/maker/repo/index_info.html:46
 msgid "Add SSH Storage"
 msgstr "Afegir emmagatzematge SSH"
 
-#: maker/templates/maker/repo/index/info.html:93
+#: maker/templates/maker/repo/index_info.html:49
 msgid "Add Git Storage"
 msgstr "Afegit emmagatzematge Git"
 
-#: maker/templates/maker/repo/index/info.html:96
+#: maker/templates/maker/repo/index_info.html:52
 msgid "Add Amazon S3 Storage"
 msgstr "Afegir Emmagatzematge a Amazon S3"
 
-#: maker/templates/maker/storage/delete.html:5
+#: maker/templates/maker/repo/index_info.html:57
+msgid "Fingerprint"
+msgstr "Empremta digital"
+
+#: maker/templates/maker/repo/index_info.html:66
+#, fuzzy
+#| msgid "Remote Repositories"
+msgid "Remove Repo"
+msgstr "Repositoris remots"
+
+#: maker/templates/maker/repo/index_share.html:7
+msgid "Your repo did not get published yet. Do you already have added and enabled a storage?"
+msgstr ""
+
+#: maker/templates/maker/repo/index_share.html:12
+#, python-format
+msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
+msgid_plural "You have  <span>%(app_count)s apps</span> in your repo. Share it!"
+msgstr[0] ""
+msgstr[1] ""
+
+#: maker/templates/maker/repo/index_share.html:20
+msgid "view repo"
+msgstr ""
+
+#: maker/templates/maker/repo/index_share.html:25
+msgid "share public link"
+msgstr ""
+
+#: maker/templates/maker/repo/index_share.html:29
+msgid "copy link"
+msgstr ""
+
+#: maker/templates/maker/repo/index_share.html:34
+msgid "add to an android phone"
+msgstr ""
+
+#: maker/templates/maker/repo/index_share.html:37
+msgid "To install these apps on your Android phone, add them to F-Droid."
+msgstr ""
+
+#: maker/templates/maker/repo/index_share.html:38
+msgid "F-Droid ensures access to secure app updates."
+msgstr ""
+
+#: maker/templates/maker/repo/index_share.html:42
+msgid "Scan QR"
+msgstr ""
+
+#: maker/templates/maker/repo/index_share.html:48
+#, python-format
+msgid "Check out this F-Droid repo: %(name)s"
+msgstr ""
+
+#: maker/templates/maker/storage/delete.html:4
+#: maker/templates/maker/storage/detail.html:59
 msgid "Delete Storage"
 msgstr "Elimineu emmagatzematge"
 
-#: maker/templates/maker/storage/delete.html:15
+#: maker/templates/maker/storage/delete.html:10
 msgid "Confirm Removal"
 msgstr "Confirmeu l'eliminació"
 
-#: maker/templates/maker/storage/delete.html:20
+#: maker/templates/maker/storage/delete.html:15
 #, python-format
 msgid "Are you sure you want to remove the remote storage at \"%(object)s\"?"
-msgstr ""
-"Esteu segurs que voleu eliminar l'emmagatzematge remot de \"%(object)s\"?"
-
-#: maker/templates/maker/storage/detail.html:4
-#: maker/templates/maker/storage/detail.html:10
-msgid "Remote Storage Updated"
-msgstr "Emmagatzematge remot actualitzat"
-
-#: maker/templates/maker/storage/detail.html:16
-msgid "Please make sure to authorize this public SSH key for your remote storage if you have not done so already."
-msgstr ""
-"Assegureu-vos que heu autoritzat aquesta clau SSH pública al vostre "
-"emmagatzematge remot, si no ho heu fet ja."
+msgstr "Esteu segurs que voleu eliminar l'emmagatzematge remot de \"%(object)s\"?"
 
 #: maker/templates/maker/storage/detail.html:23
-msgid "Your local default SSH key will be used to connect to the storage."
-msgstr ""
-"S'usarà la seva clau SSH per defecte per connectar-se a l'emmagatzematge."
+#, fuzzy
+#| msgid "Delete Storage"
+msgid "Enable Storage"
+msgstr "Elimineu emmagatzematge"
 
-#: maker/templates/maker/storage/detail.html:26
-msgid "If this storage is experiencing problems, please check that the key works properly."
-msgstr ""
-"Si aquest emmagatzematge presenta problemes, assegureu-vos que la clau "
-"funciona adequadament."
+#: maker/templates/maker/storage/detail.html:30
+#, fuzzy
+#| msgid "Delete Storage"
+msgid "Disable Storage"
+msgstr "Elimineu emmagatzematge"
+
+#: maker/templates/maker/storage/detail.html:40
+#, fuzzy
+#| msgid "Git Repository SSH Address"
+msgid "Repo Address"
+msgstr "Adreça SSH del repositori Git"
+
+#: maker/templates/maker/storage/detail.html:54
+#, fuzzy
+#| msgid "Git Storage"
+msgid "Edit Storage"
+msgstr "Emmagatzematge Git"
 
 #: maker/templates/maker/storage/detail_git.html:6
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
-msgstr ""
-"Si us plau, assegureu-vos d'haver afegit aquesta clau SSH al seu compte de "
-"Git per tal que la pujada funcioni.Trobareu instruccions per<a>Gitlab</a> i <"
-"a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-"
-"github-account/\">GitHub</a>."
+msgstr "Si us plau, assegureu-vos d'haver afegit aquesta clau SSH al seu compte de Git per tal que la pujada funcioni.Trobareu instruccions per<a>Gitlab</a> i <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
 
 #: maker/templates/maker/storage/detail_git.html:15
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
+msgstr "Tanmateix, assegureu-vos que la branca principal del vostre repositori <b>no està protegida</b> per forçar enviaments."
+
+#: maker/templates/maker/storage/detail_git.html:25
+#: maker/views/gitstorage.py:13
+msgid "Git Repository SSH Address"
+msgstr "Adreça SSH del repositori Git"
+
+#: maker/templates/maker/storage/detail_s3.html:8
+msgid "Region"
 msgstr ""
-"Tanmateix, assegureu-vos que la branca principal del vostre repositori <b>no "
-"està protegida</b> per forçar enviaments."
+
+#: maker/templates/maker/storage/detail_s3.html:17
+#, fuzzy
+msgid "Bucket"
+msgstr "Nom del contenidor"
+
+#: maker/templates/maker/storage/detail_s3.html:26 maker/views/s3storage.py:16
+msgid "Access Key ID"
+msgstr "ID de la clau d'accés"
 
 #: maker/templates/maker/storage/detail_ssh.html:6
 #, fuzzy
 msgid "Please make sure to add this public SSH key to your SSH server's <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> file,\tif you have not done so already."
-msgstr ""
-"Assegureu-vos d'afegir aquesta clau púbica SSH al vostre fitxer <tt><a href="
-"\""
-"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh."
-"2Fauthorized_keys\">~/.ssh/authorized_keys</a></tt> si no ho heu fet ja."
+msgstr "Assegureu-vos d'afegir aquesta clau púbica SSH al vostre fitxer <tt><a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a></tt> si no ho heu fet ja."
 
-#: maker/templates/maker/storage/form.html:7
-#: maker/templates/maker/storage/form.html:22
-#: maker/templates/maker/storage/form.html:36
+#: maker/templates/maker/storage/detail_ssh.html:14
+msgid "Security Warning: This gives repomaker write access to that storage. Please limit this user's access as much as possible."
+msgstr ""
+
+#: maker/templates/maker/storage/detail_ssh.html:22
+#, fuzzy
+#| msgid "User Name"
+msgid "Username"
+msgstr "Nom d'usuari"
+
+#: maker/templates/maker/storage/detail_ssh.html:31
+msgid "Host"
+msgstr ""
+
+#: maker/templates/maker/storage/detail_ssh.html:40
+msgid "Path"
+msgstr ""
+
+#: maker/templates/maker/storage/detail_ssh_key.html:12
+msgid "Your local default SSH key will be used to connect to the storage."
+msgstr "S'usarà la seva clau SSH per defecte per connectar-se a l'emmagatzematge."
+
+#: maker/templates/maker/storage/detail_ssh_key.html:17
+#, fuzzy
+#| msgid "Please make sure to authorize this public SSH key for your remote storage if you have not done so already."
+msgid "Please make sure to authorize this public SSH key for your remote storage, if you have not done so already."
+msgstr "Assegureu-vos que heu autoritzat aquesta clau SSH pública al vostre emmagatzematge remot, si no ho heu fet ja."
+
+#: maker/templates/maker/storage/detail_ssh_key.html:21
+msgid "Activate this storage only once you have added the SSH key."
+msgstr ""
+
+#: maker/templates/maker/storage/detail_ssh_key.html:25
+#, fuzzy
+#| msgid "If this storage is experiencing problems, please check that the key works properly."
+msgid "If this storage is experiencing problems, please check that the SSH key works properly."
+msgstr "Si aquest emmagatzematge presenta problemes, assegureu-vos que la clau funciona adequadament."
+
+#: maker/templates/maker/storage/form.html:6
+#: maker/templates/maker/storage/form.html:17
+#: maker/templates/maker/storage/form.html:31
 #, python-format
 msgid "Update %(storage_name)s"
 msgstr "Actualitzeu %(storage_name)s"
 
-#: maker/templates/maker/storage/form.html:9
-#: maker/templates/maker/storage/form.html:24
-#: maker/templates/maker/storage/form.html:38
+#: maker/templates/maker/storage/form.html:8
+#: maker/templates/maker/storage/form.html:19
+#: maker/templates/maker/storage/form.html:33
 #, python-format
 msgid "Add %(storage_name)s"
 msgstr "Afegiu %(storage_name)s"
@@ -464,44 +792,38 @@ msgstr "Afegiu %(storage_name)s"
 #: maker/templates/maker/storage/form_git.html:7
 #, python-format
 msgid "Here's how to find and copy the Git Repository SSH Address in your %(gitlab)s repository:"
-msgstr ""
-"Aquí pot trobar com copiar l'adreça SSH del repositori Git al seu repositori "
-"%(gitlab)s:"
+msgstr "Aquí pot trobar com copiar l'adreça SSH del repositori Git al seu repositori %(gitlab)s:"
 
-#: maker/views/app.py:22
+#: maker/templates/maker/widgets/app_with_action.html:15
+msgid "Added"
+msgstr ""
+
+#: maker/views/apk.py:17
 msgid "Select APK file for upload"
 msgstr "Escolliu l'arxiu APK per pujar"
 
-#: maker/views/gitstorage.py:15
-msgid "Git Repository SSH Address"
-msgstr "Adreça SSH del repositori Git"
-
-#: maker/views/gitstorage.py:16
+#: maker/views/gitstorage.py:14
 #, fuzzy
 msgid "Raw Git URL"
 msgstr "URL Git"
 
-#: maker/views/gitstorage.py:17
+#: maker/views/gitstorage.py:15
 msgid "This is the location where the uploaded files can be accessed from in raw form. Leave empty for GitHub or GitLab.com repositories."
-msgstr ""
-"Aquesta és l'adreça des d'on es pot accedir als fitxers pujats sense "
-"modificar. Deixeu-la en blanc per repositoris a GitHub o Gitlab.com."
+msgstr "Aquesta és l'adreça des d'on es pot accedir als fitxers pujats sense modificar. Deixeu-la en blanc per repositoris a GitHub o Gitlab.com."
 
-#: maker/views/gitstorage.py:36
+#: maker/views/gitstorage.py:34
 msgid "This URL must start with 'git@'."
 msgstr "Aquesta URL ha de començar amb 'git@'."
 
-#: maker/views/gitstorage.py:44
+#: maker/views/gitstorage.py:42
 msgid "This URL must end with '.git'."
 msgstr "Aquesta URL ha d'acabar amb '.git'."
 
-#: maker/views/gitstorage.py:51
+#: maker/views/gitstorage.py:49
 msgid "This URL is invalid. Please copy the exact SSH URL of your git repository."
-msgstr ""
-"Aquesta URL és invàlida. Si us plau copieu la URL de SSH exacta del vostre "
-"repositori git."
+msgstr "Aquesta URL és invàlida. Si us plau copieu la URL de SSH exacta del vostre repositori git."
 
-#: maker/views/gitstorage.py:80
+#: maker/views/gitstorage.py:78
 #, fuzzy
 msgid "Please add a valid URLfor the raw content of this git repository."
 msgstr "Afegiu una URL vàlida pel contingut en cru d'aquest repositori git."
@@ -512,9 +834,7 @@ msgstr "URL del repositori"
 
 #: maker/views/remoterepository.py:35
 msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
-msgstr ""
-"Useu una URL amb una empremta digital al final, d'aquesta manera podrem "
-"validar l'autenticitat del repositori."
+msgstr "Useu una URL amb una empremta digital al final, d'aquesta manera podrem validar l'autenticitat del repositori."
 
 #: maker/views/remoterepository.py:42
 msgid "Please don't add one of your own repositories here."
@@ -525,24 +845,20 @@ msgstr "No afegiu cap dels vostres repositoris aquí."
 msgid "Could not validate repository: %s"
 msgstr "El repositori %s no s'ha pogut validar"
 
-#: maker/views/repository.py:41
+#: maker/views/repository.py:47
 msgid "Describe the repo"
 msgstr "Descripció del repositori"
 
-#: maker/views/s3storage.py:14
+#: maker/views/s3storage.py:15
 #, fuzzy
 msgid "Bucket Name"
 msgstr "Nom del contenidor"
 
-#: maker/views/s3storage.py:15
-msgid "Access Key ID"
-msgstr "ID de la clau d'accés"
-
-#: maker/views/s3storage.py:16
+#: maker/views/s3storage.py:17
 msgid "Secret Access Key"
 msgstr "Clau d'accés secreta"
 
-#: maker/views/s3storage.py:19
+#: maker/views/s3storage.py:20
 msgid "Other regions are currently not supported."
 msgstr "Ara mateix no es suporten altres regions."
 
@@ -554,22 +870,26 @@ msgstr "Idioma"
 msgid "Select Screenshot for upload"
 msgstr "Esculliu una captura de pantalla per pujar"
 
-#: maker/views/sshstorage.py:15
+#: maker/views/sshstorage.py:13
 msgid "Use local default SSH Key"
 msgstr "Useu la clau SSL local per defecte"
 
-#: maker/views/sshstorage.py:33
+#: maker/views/sshstorage.py:31
 msgid "User Name"
 msgstr "Nom d'usuari"
 
-#: maker/views/sshstorage.py:37
+#: maker/views/sshstorage.py:32
+msgid "URL"
+msgstr "URL"
+
+#: maker/views/sshstorage.py:35
 msgid "This is the location where the uploaded files can be accessed from."
 msgstr "Aquesta és l'adreça des d'on s'accedirà als arxius pujats."
 
-#: maker/views/storage.py:12
+#: maker/views/storage.py:13
 msgid "Primary Storage"
 msgstr "Emmagatzematge principal"
 
-#: maker/views/storage.py:13
+#: maker/views/storage.py:14
 msgid "Make this storage the primary storage of the repository."
 msgstr "Feu d'aquest emmagatzematge el principal del repositori."

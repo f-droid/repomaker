@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-01 18:33+0000\n"
+"POT-Creation-Date: 2017-06-15 13:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,20 +18,85 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
+#: maker/models/apk.py:121
+msgid "This APK already exists in the current repo."
+msgstr ""
+
+#: maker/models/apk.py:144
+msgid "Invalid APK."
+msgstr ""
+
+#: maker/models/apk.py:187
+msgid "Unsupported File Type"
+msgstr ""
+
+#: maker/models/apk.py:264
+msgid "This file is of a different type than the other versions of this app."
+msgstr ""
+
+#: maker/models/app.py:32
+msgid "APK"
+msgstr ""
+
+#: maker/models/app.py:33
+msgid "Book"
+msgstr ""
+
+#: maker/models/app.py:34
+msgid "Document"
+msgstr ""
+
+#: maker/models/app.py:35
+msgid "Image"
+msgstr ""
+
+#: maker/models/app.py:36
+msgid "Audio"
+msgstr ""
+
+#: maker/models/app.py:37
+msgid "Video"
+msgstr ""
+
 #: maker/models/app.py:38
+msgid "Other"
+msgstr ""
+
+#: maker/models/app.py:55
 msgid "Summary"
 msgstr ""
 
-#: maker/models/app.py:39 maker/templates/maker/repo/index/info.html:16
+#: maker/models/app.py:56 maker/templates/maker/app/edit.html:110
+#: maker/templates/maker/repo/index_info.html:16
 msgid "Description"
 msgstr ""
 
-#: maker/models/app.py:375
+#: maker/models/app.py:392
 msgid "This app does already exist in your repository."
 msgstr ""
 
-#: maker/models/app.py:380
+#: maker/models/app.py:397
 msgid "This app does not have any working versions available."
+msgstr ""
+
+#: maker/models/screenshot.py:21
+msgid "Phone"
+msgstr ""
+
+#: maker/models/screenshot.py:22
+msgid "7'' Tablet"
+msgstr ""
+
+#: maker/models/screenshot.py:23
+msgid "10'' Tablet"
+msgstr ""
+
+#: maker/models/screenshot.py:24
+msgid "TV"
+msgstr ""
+
+#: maker/models/screenshot.py:25
+msgid "Wearable"
 msgstr ""
 
 #: maker/models/storage.py:61
@@ -66,37 +131,38 @@ msgstr ""
 msgid "Default Storage"
 msgstr ""
 
-#: maker/templates/account/base.html:30
+#: maker/templates/account/base.html:29
 msgid "Change E-mail"
 msgstr ""
 
-#: maker/templates/account/base.html:31 maker/templates/account/logout.html:6
-#: maker/templates/account/logout.html:16
-#: maker/templates/account/logout.html:25
+#: maker/templates/account/base.html:30 maker/templates/account/logout.html:6
+#: maker/templates/account/logout.html:12
+#: maker/templates/account/logout.html:21
 msgid "Sign Out"
 msgstr ""
 
-#: maker/templates/account/base.html:33 maker/templates/account/index.html:6
+#: maker/templates/account/base.html:32 maker/templates/account/index.html:6
 msgid "Sign In"
 msgstr ""
 
-#: maker/templates/account/base.html:34 maker/templates/account/index.html:41
+#: maker/templates/account/base.html:33 maker/templates/account/index.html:36
+#: maker/templates/account/signup.html:4
 msgid "Sign Up"
 msgstr ""
 
-#: maker/templates/account/index.html:19
+#: maker/templates/account/index.html:14
 msgid "Distribute apps."
 msgstr ""
 
-#: maker/templates/account/index.html:19
+#: maker/templates/account/index.html:14
 msgid "Spread the love."
 msgstr ""
 
-#: maker/templates/account/index.html:21
+#: maker/templates/account/index.html:16
 msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
 msgstr ""
 
-#: maker/templates/account/index.html:38
+#: maker/templates/account/index.html:33
 #: maker/templates/account/login_form.html:38
 msgid "Login"
 msgstr ""
@@ -109,7 +175,7 @@ msgstr ""
 msgid "Or login with"
 msgstr ""
 
-#: maker/templates/account/logout.html:18
+#: maker/templates/account/logout.html:14
 msgid "Are you sure you want to sign out?"
 msgstr ""
 
@@ -117,142 +183,147 @@ msgstr ""
 msgid "Signup"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:6 maker/templates/maker/app/add.html:17
+#: maker/templates/maker/app/add.html:5 maker/templates/maker/app/add.html:12
 msgid "Choose from Repos"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:23
-#, python-format
-msgid "%(apps_count)s added"
-msgstr ""
-
-#: maker/templates/maker/app/add.html:28 maker/templates/maker/app/edit.html:26
+#: maker/templates/maker/app/add.html:22 maker/templates/maker/app/edit.html:21
 msgid "Done"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:47
+#: maker/templates/maker/app/add.html:41
 msgid "Filters"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:52
+#: maker/templates/maker/app/add.html:46
 msgid "Repos"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:53 maker/templates/maker/app/add.html:100
-#: maker/templates/maker/repo/index/apps.html:45
-#: maker/templates/maker/repo/index/apps.html:82
+#: maker/templates/maker/app/add.html:47 maker/templates/maker/app/add.html:95
+#: maker/templates/maker/repo/index_apps.html:40
+#: maker/templates/maker/repo/index_apps.html:79
 msgid "Add"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:59
+#: maker/templates/maker/app/add.html:53
 msgid "All"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:72
+#: maker/templates/maker/app/add.html:66
 msgid "Categories"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:75
+#: maker/templates/maker/app/add.html:69
 msgid "clear"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:105
+#: maker/templates/maker/app/add.html:100
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
 msgstr ""
 
-#: maker/templates/maker/app/add.html:111
+#: maker/templates/maker/app/add.html:106
 msgid "There are no apps in this repo."
 msgstr ""
 
-#: maker/templates/maker/app/add.html:113
+#: maker/templates/maker/app/add.html:108
 msgid "There are no apps available in the repos."
 msgstr ""
 
-#: maker/templates/maker/app/add.html:115
+#: maker/templates/maker/app/add.html:110
 msgid "If you just added a repo, wait for the apps to download and try again later."
 msgstr ""
 
-#: maker/templates/maker/app/add.html:117
+#: maker/templates/maker/app/add.html:112
 msgid "This repo has no apps in the selected category. Try clearing it or select a different repo."
 msgstr ""
 
-#: maker/templates/maker/app/add.html:119
+#: maker/templates/maker/app/add.html:114
 msgid "There are no apps available in the selected category. Try clearing it."
 msgstr ""
 
-#: maker/templates/maker/app/apk_delete.html:5
+#: maker/templates/maker/app/apk_delete.html:4
 msgid "Delete App Version"
 msgstr ""
 
-#: maker/templates/maker/app/apk_delete.html:17
+#: maker/templates/maker/app/apk_delete.html:10
 #, python-format
 msgid "Are you sure you want to delete this version <strong>%(version)s</strong> (%(code)s) from your app <strong>%(app)s</strong>?"
 msgstr ""
 
-#: maker/templates/maker/app/apk_delete.html:22
-#: maker/templates/maker/app/delete.html:20
-#: maker/templates/maker/app/screenshot_delete.html:28
-#: maker/templates/maker/storage/delete.html:22
+#: maker/templates/maker/app/apk_delete.html:17
+#: maker/templates/maker/app/delete.html:16
+#: maker/templates/maker/app/screenshot_delete.html:24
+#: maker/templates/maker/storage/delete.html:17
 msgid "Confirm"
 msgstr ""
 
-#: maker/templates/maker/app/delete.html:5
+#: maker/templates/maker/app/delete.html:4
 msgid "Delete App"
 msgstr ""
 
-#: maker/templates/maker/app/delete.html:18
+#: maker/templates/maker/app/delete.html:10
 #, python-format
-msgid "Are you sure you want to delete your app \"%(object)s\"?"
+msgid "Are you sure you want to delete your app <strong>%(object)s</strong>?"
 msgstr ""
 
-#: maker/templates/maker/app/edit.html:6
+#: maker/templates/maker/app/edit.html:5
 #, python-format
 msgid "Edit %(app)s"
 msgstr ""
 
-#: maker/templates/maker/app/edit.html:21
+#: maker/templates/maker/app/edit.html:16
 msgid "Remove App"
 msgstr ""
 
-#: maker/templates/maker/app/edit.html:33
+#: maker/templates/maker/app/edit.html:28
 msgid "Developed by"
 msgstr ""
 
-#: maker/templates/maker/app/edit.html:55
+#: maker/templates/maker/app/edit.html:35
+msgid "Short Summary (40 characters)"
+msgstr ""
+
+#: maker/templates/maker/app/edit.html:53
 msgid "Category"
 msgstr ""
 
-#: maker/templates/maker/app/edit.html:58
-#: maker/templates/maker/app/edit.html:67
+#: maker/templates/maker/app/edit.html:56
+#: maker/templates/maker/app/edit.html:65
 msgid "Choose Category"
 msgstr ""
 
-#: maker/templates/maker/app/edit.html:77
-#: maker/templates/maker/app/edit.html:113
-#: maker/templates/maker/repo/index/apps.html:66
+#: maker/templates/maker/app/edit.html:73
+msgid "Screenshots"
+msgstr ""
+
+#: maker/templates/maker/app/edit.html:80
+#: maker/templates/maker/app/edit.html:119
+#: maker/templates/maker/repo/index_apps.html:64
 msgid "Add files"
 msgstr ""
 
-#: maker/templates/maker/app/edit.html:81
+#: maker/templates/maker/app/edit.html:83
 msgid "Drag and drop screenshots"
 msgstr ""
 
-#: maker/templates/maker/app/edit.html:85
-#: maker/templates/maker/app/edit.html:121
-#: maker/templates/maker/repo/index/apps.html:37
-#: maker/templates/maker/repo/index/apps.html:74
+#: maker/templates/maker/app/edit.html:86
+#: maker/templates/maker/app/edit.html:125
+#: maker/templates/maker/repo/index_apps.html:33
+#: maker/templates/maker/repo/index_apps.html:72
 msgid "or"
 msgstr ""
 
-#: maker/templates/maker/app/edit.html:86
-#: maker/templates/maker/app/edit.html:122
-#: maker/templates/maker/repo/index/apps.html:41
-#: maker/templates/maker/repo/index/apps.html:78
+#: maker/templates/maker/app/edit.html:87
+#: maker/templates/maker/app/edit.html:126
+#: maker/templates/maker/repo/index_apps.html:35
+#: maker/templates/maker/repo/index_apps.html:74
 msgid "browse to upload"
 msgstr ""
 
-#: maker/templates/maker/app/edit.html:117
+#: maker/templates/maker/app/edit.html:122
+#: maker/templates/maker/repo/index_apps.html:28
+#: maker/templates/maker/repo/index_apps.html:67
 msgid "Drag and drop .apk files"
 msgstr ""
 
@@ -266,7 +337,7 @@ msgid "None"
 msgstr ""
 
 #: maker/templates/maker/app/index.html:35
-#: maker/templates/maker/repo/index/info.html:11
+#: maker/templates/maker/repo/index_info.html:11
 msgid "Edit"
 msgstr ""
 
@@ -280,85 +351,82 @@ msgstr ""
 msgid "Updated %(time)s ago"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:112
+#: maker/templates/maker/app/index.html:113
 msgid "version history"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:121
+#: maker/templates/maker/app/index.html:122
 #, python-format
 msgid "Version %(version)s (%(code)s)"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:127
+#: maker/templates/maker/app/index.html:128
 #, python-format
 msgid "Released %(date)s"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:134
+#: maker/templates/maker/app/index.html:135
 msgid "APK is still downloading..."
 msgstr ""
 
-#: maker/templates/maker/app/index.html:143
+#: maker/templates/maker/app/index.html:144
 msgid "This app has no APK files."
 msgstr ""
 
-#: maker/templates/maker/app/index.html:144
+#: maker/templates/maker/app/index.html:145
 msgid "If you added this app from a remote repo, try deleting it and adding it again."
 msgstr ""
 
-#: maker/templates/maker/app/index.html:154
+#: maker/templates/maker/app/index.html:155
 msgid "Previous"
 msgstr ""
 
-#: maker/templates/maker/app/index.html:163
+#: maker/templates/maker/app/index.html:164
 msgid "Next"
 msgstr ""
 
-#: maker/templates/maker/app/remote_add.html:5
+#: maker/templates/maker/app/remote_add.html:4
 msgid "Add App"
 msgstr ""
 
-#: maker/templates/maker/app/remote_add.html:16
+#: maker/templates/maker/app/remote_add.html:11
 #, python-format
 msgid "Add %(app)s to %(repo)s"
 msgstr ""
 
-#: maker/templates/maker/app/remote_add.html:35
+#: maker/templates/maker/app/remote_add.html:30
 #, python-format
 msgid "Add App to %(repo)s"
 msgstr ""
 
-#: maker/templates/maker/app/screenshot_add.html:5
-#: maker/templates/maker/app/screenshot_add.html:14
+#: maker/templates/maker/app/screenshot_add.html:4
+#: maker/templates/maker/app/screenshot_add.html:9
 msgid "Add Screenshot"
 msgstr ""
 
-#: maker/templates/maker/app/screenshot_add.html:21
+#: maker/templates/maker/app/screenshot_add.html:16
 msgid "Upload Screenshot"
 msgstr ""
 
-#: maker/templates/maker/app/screenshot_delete.html:5
+#: maker/templates/maker/app/screenshot_delete.html:4
 msgid "Delete Screenshot"
 msgstr ""
 
-#: maker/templates/maker/app/screenshot_delete.html:17
+#: maker/templates/maker/app/screenshot_delete.html:13
 #, python-format
-msgid ""
-"\n"
-"\t\t\tAre you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?\n"
-"\t\t\t"
+msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
 msgstr ""
 
-#: maker/templates/maker/app/translate.html:5
+#: maker/templates/maker/app/translate.html:4
 msgid "Translate App"
 msgstr ""
 
-#: maker/templates/maker/app/translate.html:16
+#: maker/templates/maker/app/translate.html:11
 #, python-format
 msgid "Translate %(app)s"
 msgstr ""
 
-#: maker/templates/maker/app/translate.html:24
+#: maker/templates/maker/app/translate.html:19
 msgid "Save Translation"
 msgstr ""
 
@@ -367,24 +435,22 @@ msgstr ""
 msgid "Hello, %(user)s"
 msgstr ""
 
+#: maker/templates/maker/error.html:4 maker/templates/maker/error.html:10
+msgid "Error"
+msgstr ""
+
 #: maker/templates/maker/index.html:6 maker/templates/maker/index.html:14
 msgid "My Repos"
 msgstr ""
 
 #: maker/templates/maker/index.html:35
 #, python-format
-msgid ""
-"\n"
-"\t\t\tPublished %(time_ago)s\n"
-"\t\t\t"
+msgid "Published %(time_ago)s"
 msgstr ""
 
 #: maker/templates/maker/index.html:39
 #, python-format
-msgid ""
-"\n"
-"\t\t\tCreated %(time_ago)s\n"
-"\t\t\t"
+msgid "Created %(time_ago)s"
 msgstr ""
 
 #: maker/templates/maker/index.html:51
@@ -395,151 +461,171 @@ msgstr ""
 msgid "Create Repo"
 msgstr ""
 
-#: maker/templates/maker/repo/add.html:5 maker/templates/maker/repo/add.html:15
+#: maker/templates/maker/repo/add.html:4 maker/templates/maker/repo/add.html:10
 msgid "New Repo"
 msgstr ""
 
-#: maker/templates/maker/repo/add.html:20
+#: maker/templates/maker/repo/add.html:15
 msgid "Create"
 msgstr ""
 
-#: maker/templates/maker/repo/edit.html:5
-#: maker/templates/maker/repo/edit.html:14
+#: maker/templates/maker/repo/delete.html:4
+msgid "Delete Repo"
+msgstr ""
+
+#: maker/templates/maker/repo/delete.html:10
+#, python-format
+msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
+msgstr ""
+
+#: maker/templates/maker/repo/delete.html:15
+msgid "This will also delete all apps and other files from your repo. You will not be able to get them back, users of your repo will not be able to use it anymore and not receive updates for the apps they received from you. There is no way to recover this repo!"
+msgstr ""
+
+#: maker/templates/maker/repo/delete.html:25
+msgid "Please only proceed if you know what you are doing!"
+msgstr ""
+
+#: maker/templates/maker/repo/delete.html:32
+msgid "Yes, I want to delete the repo"
+msgstr ""
+
+#: maker/templates/maker/repo/edit.html:4
+#: maker/templates/maker/repo/edit.html:10
 msgid "Edit Repo"
 msgstr ""
 
-#: maker/templates/maker/repo/edit.html:20
+#: maker/templates/maker/repo/edit.html:16
 msgid "Save Changes"
 msgstr ""
 
-#: maker/templates/maker/repo/index.html:31
+#: maker/templates/maker/repo/index.html:26
 msgid "Apps"
 msgstr ""
 
-#: maker/templates/maker/repo/index.html:32
+#: maker/templates/maker/repo/index.html:27
 msgid "Share"
 msgstr ""
 
-#: maker/templates/maker/repo/index.html:33
+#: maker/templates/maker/repo/index.html:28
 msgid "Info"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:14
+#: maker/templates/maker/repo/index_apps.html:13
 msgid "Search for apps in your repository"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:28
+#: maker/templates/maker/repo/index_apps.html:25
 msgid "Add .apk files"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:33
-#: maker/templates/maker/repo/index/apps.html:70
-msgid "Drag and drop .apk, .pdf, .epub, videos, photos or music files"
-msgstr ""
-
-#: maker/templates/maker/repo/index/apps.html:53
-#: maker/templates/maker/repo/index/apps.html:93
+#: maker/templates/maker/repo/index_apps.html:52
+#: maker/templates/maker/repo/index_apps.html:94
 msgid "add from repos"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:89
+#: maker/templates/maker/repo/index_apps.html:90
 msgid "Discover"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:90
+#: maker/templates/maker/repo/index_apps.html:91
 msgid "Find things to add from other repos"
 msgstr ""
 
-#: maker/templates/maker/repo/index/apps.html:100
+#: maker/templates/maker/repo/index_apps.html:101
 msgid "Your search did not return any results."
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:6
+#: maker/templates/maker/repo/index_info.html:6
 msgid "Name"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:20
+#: maker/templates/maker/repo/index_info.html:20
 msgid "Storage"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:39
+#: maker/templates/maker/repo/index_info.html:39
 msgid "Attention:"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:40
+#: maker/templates/maker/repo/index_info.html:40
 msgid "This repository has no remote storage. Add one to get your repository published."
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:46
+#: maker/templates/maker/repo/index_info.html:46
 msgid "Add SSH Storage"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:49
+#: maker/templates/maker/repo/index_info.html:49
 msgid "Add Git Storage"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:52
+#: maker/templates/maker/repo/index_info.html:52
 msgid "Add Amazon S3 Storage"
 msgstr ""
 
-#: maker/templates/maker/repo/index/info.html:57
+#: maker/templates/maker/repo/index_info.html:57
 msgid "Fingerprint"
 msgstr ""
 
-#: maker/templates/maker/repo/index/share.html:7
+#: maker/templates/maker/repo/index_info.html:66
+msgid "Remove Repo"
+msgstr ""
+
+#: maker/templates/maker/repo/index_share.html:7
 msgid "Your repo did not get published yet. Do you already have added and enabled a storage?"
 msgstr ""
 
-#: maker/templates/maker/repo/index/share.html:12
+#: maker/templates/maker/repo/index_share.html:12
 #, python-format
 msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
 msgid_plural "You have  <span>%(app_count)s apps</span> in your repo. Share it!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: maker/templates/maker/repo/index/share.html:20
+#: maker/templates/maker/repo/index_share.html:20
 msgid "view repo"
 msgstr ""
 
-#: maker/templates/maker/repo/index/share.html:25
+#: maker/templates/maker/repo/index_share.html:25
 msgid "share public link"
 msgstr ""
 
-#: maker/templates/maker/repo/index/share.html:29
+#: maker/templates/maker/repo/index_share.html:29
 msgid "copy link"
 msgstr ""
 
-#: maker/templates/maker/repo/index/share.html:34
+#: maker/templates/maker/repo/index_share.html:34
 msgid "add to an android phone"
 msgstr ""
 
-#: maker/templates/maker/repo/index/share.html:37
+#: maker/templates/maker/repo/index_share.html:37
 msgid "To install these apps on your Android phone, add them to F-Droid."
 msgstr ""
 
-#: maker/templates/maker/repo/index/share.html:38
+#: maker/templates/maker/repo/index_share.html:38
 msgid "F-Droid ensures access to secure app updates."
 msgstr ""
 
-#: maker/templates/maker/repo/index/share.html:42
+#: maker/templates/maker/repo/index_share.html:42
 msgid "Scan QR"
 msgstr ""
 
-#: maker/templates/maker/repo/index/share.html:48
+#: maker/templates/maker/repo/index_share.html:48
 #, python-format
 msgid "Check out this F-Droid repo: %(name)s"
 msgstr ""
 
-#: maker/templates/maker/storage/delete.html:5
+#: maker/templates/maker/storage/delete.html:4
 #: maker/templates/maker/storage/detail.html:59
 msgid "Delete Storage"
 msgstr ""
 
-#: maker/templates/maker/storage/delete.html:15
+#: maker/templates/maker/storage/delete.html:10
 msgid "Confirm Removal"
 msgstr ""
 
-#: maker/templates/maker/storage/delete.html:20
+#: maker/templates/maker/storage/delete.html:15
 #, python-format
 msgid "Are you sure you want to remove the remote storage at \"%(object)s\"?"
 msgstr ""
@@ -621,16 +707,16 @@ msgstr ""
 msgid "If this storage is experiencing problems, please check that the SSH key works properly."
 msgstr ""
 
-#: maker/templates/maker/storage/form.html:7
-#: maker/templates/maker/storage/form.html:22
-#: maker/templates/maker/storage/form.html:36
+#: maker/templates/maker/storage/form.html:6
+#: maker/templates/maker/storage/form.html:17
+#: maker/templates/maker/storage/form.html:31
 #, python-format
 msgid "Update %(storage_name)s"
 msgstr ""
 
-#: maker/templates/maker/storage/form.html:9
-#: maker/templates/maker/storage/form.html:24
-#: maker/templates/maker/storage/form.html:38
+#: maker/templates/maker/storage/form.html:8
+#: maker/templates/maker/storage/form.html:19
+#: maker/templates/maker/storage/form.html:33
 #, python-format
 msgid "Add %(storage_name)s"
 msgstr ""
@@ -638,6 +724,10 @@ msgstr ""
 #: maker/templates/maker/storage/form_git.html:7
 #, python-format
 msgid "Here's how to find and copy the Git Repository SSH Address in your %(gitlab)s repository:"
+msgstr ""
+
+#: maker/templates/maker/widgets/app_with_action.html:15
+msgid "Added"
 msgstr ""
 
 #: maker/views/apk.py:17
@@ -668,24 +758,24 @@ msgstr ""
 msgid "Please add a valid URLfor the raw content of this git repository."
 msgstr ""
 
-#: maker/views/remoterepository.py:22
+#: maker/views/remoterepository.py:19
 msgid "Repository URL"
 msgstr ""
 
-#: maker/views/remoterepository.py:38
+#: maker/views/remoterepository.py:35
 msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
 msgstr ""
 
-#: maker/views/remoterepository.py:45
+#: maker/views/remoterepository.py:42
 msgid "Please don't add one of your own repositories here."
 msgstr ""
 
-#: maker/views/remoterepository.py:66
+#: maker/views/remoterepository.py:63
 #, python-format
 msgid "Could not validate repository: %s"
 msgstr ""
 
-#: maker/views/repository.py:42
+#: maker/views/repository.py:47
 msgid "Describe the repo"
 msgstr ""
 

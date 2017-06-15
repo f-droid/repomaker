@@ -7,7 +7,7 @@
 <div class="rm-form mdl-grid rm-grid--center">
     <div class="mdl-cell mdl-cell--6-col center">
         <p>
-            {% blocktrans with app=object.app %}
+            {% blocktrans with app=object.app trimmed %}
             Are you sure you want to delete your app <strong>{{ object }}</strong>?
             {% endblocktrans %}
         </p>
