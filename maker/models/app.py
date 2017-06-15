@@ -19,7 +19,8 @@ from maker import tasks
 from maker.storage import get_icon_file_path_for_app, get_graphic_asset_file_path
 from maker.utils import clean
 from .category import Category
-from .repository import Repository, RemoteRepository
+from .remoterepository import RemoteRepository
+from .repository import Repository
 
 APK = 'apk'
 BOOK = 'book'

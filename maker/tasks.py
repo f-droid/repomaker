@@ -35,7 +35,7 @@ def update_repo(repo_id):
 @background(schedule=timezone.now())
 def update_remote_repo(remote_repo_id):
     try:
-        remote_repo = maker.models.repository.RemoteRepository.objects.get(pk=remote_repo_id)
+        remote_repo = maker.models.remoterepository.RemoteRepository.objects.get(pk=remote_repo_id)
     except ObjectDoesNotExist as e:
         logging.warning('Remote Repository does not exist anymore, dropping task. (%s)', e)
         # TODO cancel repeating task
@@ -110,6 +110,6 @@ def task_failed_receiver(**kwargs):
         remote_repo_id = params[0]
 
         # fetch and disable remote repository
-        remote_repo = maker.models.repository.RemoteRepository.objects.get(pk=remote_repo_id)
+        remote_repo = maker.models.remoterepository.RemoteRepository.objects.get(pk=remote_repo_id)
         remote_repo.disabled = True
         remote_repo.save()

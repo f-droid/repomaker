@@ -51,7 +51,7 @@ class TasksTest(TestCase):
         self.assertFalse(update.called)
         self.assertFalse(publish.called)
 
-    @patch('maker.models.repository.RemoteRepository.update_index')
+    @patch('maker.models.remoterepository.RemoteRepository.update_index')
     def test_update_remote_repo(self, update_index):
         # get an actual (pre-installed) remote repository and update its scheduling state
         repo = RemoteRepository.objects.get(pk=1)
@@ -67,14 +67,14 @@ class TasksTest(TestCase):
         self.assertFalse(repo.update_scheduled)
         self.assertFalse(repo.is_updating)
 
-    @patch('maker.models.repository.RemoteRepository.update_index')
+    @patch('maker.models.remoterepository.RemoteRepository.update_index')
     def test_update_remote_repo_gone(self, update_index):
         tasks.update_remote_repo.now(1337)  # this repo ID doesn't exist (anymore?)
 
         # assert that nothing was updated and published
         self.assertFalse(update_index.called)
 
-    @patch('maker.models.repository.RemoteRepository.update_index')
+    @patch('maker.models.remoterepository.RemoteRepository.update_index')
     def test_update_remote_repo_already_running(self, update_index):
         # get an actual (pre-installed) remote repository and set it to updating
         repo = RemoteRepository.objects.get(pk=1)
