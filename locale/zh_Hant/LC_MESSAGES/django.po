@@ -8,134 +8,134 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-05 19:04+0000\n"
-"PO-Revision-Date: 2017-07-04 21:36+0000\n"
-"Last-Translator: Mo <press.hosseini@gmail.com>\n"
-"Language-Team: Persian <https://hosted.weblate.org/projects/f-droid/repomaker/fa/>\n"
-"Language: fa\n"
+"PO-Revision-Date: 2017-07-05 05:03+0000\n"
+"Last-Translator: ezjerry liao <ezjerry@gmail.com>\n"
+"Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/f-droid/repomaker/zh_Hant/>\n"
+"Language: zh_Hant\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 2.16-dev\n"
 
 msgid "This APK already exists in the current repo."
-msgstr "این APK از قبل در مخزن بوده است."
+msgstr "此 APK 已經存在於目前的軟倉庫。"
 
 #, fuzzy
 #| msgid "Invalid APK."
 msgid "Invalid APK signature"
-msgstr "APK نادرست است."
+msgstr "無效的 APK。"
 
 msgid "Invalid APK."
-msgstr "APK نادرست است."
+msgstr "無效的 APK。"
 
 msgid "Unsupported File Type"
-msgstr "از این فایل پشتیبانی نمی‌شود"
+msgstr "不支援的檔案類型"
 
 msgid "This file is of a different type than the other versions of this app."
-msgstr "این فایل با نسخه دیگر اپلیشکن تفاوت دارد."
+msgstr "此檔案與該應用程式的其他版本不同類型。"
 
 msgid "APK"
 msgstr "APK"
 
 msgid "Book"
-msgstr "رزرو کردن"
+msgstr "書籍"
 
 msgid "Document"
-msgstr "اسناد"
+msgstr "文書檔"
 
 msgid "Image"
-msgstr "تصویر"
+msgstr "圖片"
 
 msgid "Audio"
-msgstr "صوتی"
+msgstr "音訊"
 
 msgid "Video"
-msgstr "ویدئو"
+msgstr "視訊"
 
 msgid "Other"
-msgstr "سایر"
+msgstr "其他"
 
 msgid "Summary"
-msgstr "خلاصه"
+msgstr "概要"
 
 msgid "Description"
-msgstr "توضیحات"
+msgstr "敘述"
 
 msgid "This app does already exist in your repository."
-msgstr "این برنامه از قبل در مخزن شما موجود است."
+msgstr "此應用程式已存在於您的軟體倉庫中。"
 
 msgid "This app does not have any working versions available."
-msgstr "این اپلیکشن دارای هیچ گونه نمونه‌ای که کار کند نمی‌باشد."
+msgstr "此應用程式沒有任何實用的版本。"
 
 msgid "Phone"
-msgstr "تلفن"
+msgstr "電話"
 
 msgid "7'' Tablet"
-msgstr "تبلت ۷ اینچ"
+msgstr "7'' 平板"
 
 msgid "10'' Tablet"
-msgstr "تبلت ۱۰ اینچ"
+msgstr "10'' 平板"
 
 msgid "TV"
-msgstr "تلوزیون"
+msgstr "電視"
 
 msgid "Wearable"
-msgstr "پوشیدنی"
+msgstr "可穿戴式"
 
 msgid "US Standard"
-msgstr "استاندارد آمریکا"
+msgstr "美國標準"
 
 msgid "Amazon S3 Storage"
-msgstr "حافظه آمازون S3"
+msgstr "Amazon S3 雲端儲存"
 
 msgid "Enter a valid user name consisting of letters, numbers, underscores or hyphens."
-msgstr "یک نام‌ کاربری معتبر با ترکیبی از حروف٬اعداد و نشان اتصال وارد کنید."
+msgstr "輸入由字母、數字、底線或連字號組成的有效使用者名稱。"
 
 msgid "Enter a valid hostname."
-msgstr "یک نام هاست معتبر را وارد کنید."
+msgstr "輸入一個有效的主機名稱。"
 
 msgid "Enter a valid path."
-msgstr "یک مسیر معتبر را وارد کنید."
+msgstr "輸入一個有效的路徑。"
 
 msgid "SSH Storage"
-msgstr "حافظه SSH"
+msgstr "SSH 儲存"
 
 msgid "Git Storage"
-msgstr "حافظه گیت"
+msgstr "Git 儲存"
 
 msgid "Default Storage"
-msgstr "حافظه پیش‌فرض"
+msgstr "預設儲存"
 
 msgid "Change E-mail"
-msgstr "تغییر ایمیل"
+msgstr "變更電子郵件"
 
 msgid "Sign Out"
-msgstr "خروج"
+msgstr "登出"
 
 msgid "Sign In"
-msgstr "ورود"
+msgstr "登入"
 
 msgid "Sign Up"
-msgstr "ثبت نام"
+msgstr "註冊"
 
 msgid "Distribute apps."
-msgstr "توزیع اپلیکیشن‌ها."
+msgstr "分發應用程式。"
 
 msgid "Spread the love."
-msgstr "عشق را گشترش بده."
+msgstr "傳播愛心。"
 
 msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
-msgstr ""
+msgstr "Repomaker 是一個免費的網路應用程式製作，用於建立收集應用程式、音樂、書籍、視訊和圖片與同行分享。 它使用F-Droid 作為行動分發平台。只可用在 Android 上。"
 
 msgid "Login"
-msgstr "ورود به سیستم"
+msgstr "登入"
 
 msgid "Forgot Password"
-msgstr "رمز عبور را فراموش کردم"
+msgstr "忘記密碼"
 
 msgid "Or login with"
-msgstr "یا وارد شوید با"
+msgstr "或以其它登入"
 
 msgid "Logout"
 msgstr ""
@@ -156,7 +156,7 @@ msgid "We have sent you an email with a link to reset your password."
 msgstr ""
 
 msgid "Signup"
-msgstr "ثبت نام"
+msgstr "註冊"
 
 msgid "Browse Gallery"
 msgstr ""
@@ -167,144 +167,144 @@ msgstr ""
 #, fuzzy, python-format
 #| msgid "Language (%(count)s)"
 msgid "Category (%(count)s)"
-msgstr "زبان (%(count)s 1)"
+msgstr "語言 (%(count)s)"
 
 msgid "All"
-msgstr "همه"
+msgstr "全部"
 
 #, fuzzy, python-format
 #| msgid "Language (%(count)s)"
 msgid "Source (%(count)s)"
-msgstr "زبان (%(count)s 1)"
+msgstr "語言 (%(count)s)"
 
 #, fuzzy
-#| msgid "Add App to %(repo)s"
+#| msgid "add from repos"
 msgid "Add a repo"
-msgstr "افزون کردن اپلیکیشن تا %(repo)s 1"
+msgstr "從軟體倉庫中增加"
 
 msgid "Add"
-msgstr "افزودن"
+msgstr "新增"
 
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
-msgstr "هیچ گونه اپلیکیشنی که با  '%(search_term)s 1' برابر باشد پیدا نشد. لطفا چیز دیگری را جستجو کنید یا فیلتر‌های دیگر را حذف کنید."
+msgstr "未找到符合 '%(search_term)s' 的應用程式。請嘗試不同的搜尋或移除其他篩選條件。"
 
 msgid "There are no apps in this repo."
-msgstr "در این مخزن هیچ‌ گونه اپلیکشنی وجود ندارد."
+msgstr "在此軟體倉庫中沒有應用程式。"
 
 msgid "There are no apps available in the repos."
-msgstr "در مخزن ها هیچ اپلیکیشنی موجود نیست."
+msgstr "在軟體倉庫中沒有可用的應用程式。"
 
 msgid "If you just added a repo, wait for the apps to download and try again later."
-msgstr "اگر مخزنی را اضافه کرده‌اید٫ لطفا منتظر دانلود شدن آن بمانید و کمی بعدتر امتحان کنید."
+msgstr "如果您剛加入軟體倉庫，請等待應用程式下載完並且稍後再重試。"
 
 msgid "This repo has no apps in the selected category. Try clearing it or select a different repo."
-msgstr "این مخزن دارای هیچ‌ گونه اپلیکیشنی در دسته‌بندی انتخاب شده نیست. سعی کنید مخزن را پاک کنید یا مخزن دیگری را انتخاب کنید."
+msgstr "此軟體倉庫在所選取的類別中沒有應用程式。嘗試清除它或選擇不同的軟體倉庫。"
 
 msgid "There are no apps available in the selected category. Try clearing it."
-msgstr "در دسته‌بندی انتخاب شده هیچ گونه اپلیکیشنی موجود نیست. لطفا آن را پاک کنید."
+msgstr "所選取的類別中沒有可用的應用程式。嘗試清除它。"
 
 msgid "Delete App Version"
-msgstr "نسخه اپلیکیشن را حذف کن"
+msgstr "刪除應用程式版本"
 
 #, python-format
 msgid "Are you sure you want to delete this version <strong>%(version)s</strong> (%(code)s) from your app <strong>%(app)s</strong>?"
-msgstr ""
+msgstr "您確定要從您的應用程式 <strong>%(app)s</strong>刪除此版本 <strong>%(version)s</strong>(%(code)s) ？"
 
 msgid "Confirm"
-msgstr "تایید"
+msgstr "確認"
 
 msgid "Delete App"
-msgstr "حذف اپلیکیشن"
+msgstr "刪除應用程式"
 
 #, python-format
 msgid "Are you sure you want to delete your app <strong>%(object)s</strong>?"
-msgstr "آیا از حذف این اپلیکیشن اطمینان دارید  <strong> 1%(object)s 2</strong> 3 ؟"
+msgstr "您確定要刪除應用程式 <strong>%(object)s</strong>？"
 
 #, python-format
 msgid "Edit %(app)s"
-msgstr "ویرایش %(app)s 1"
+msgstr "編輯 %(app)s"
 
 msgid "Remove App"
-msgstr "حذف اپلیکیشن"
+msgstr "移除應用程式"
 
 msgid "Done"
-msgstr "تمام"
+msgstr "完成"
 
 msgid "By"
 msgstr ""
 
 msgid "Short Summary (40 characters)"
-msgstr "خلاصه‌ای کوتاه (۴۰ کاراکتر)"
+msgstr "簡短摘要（40 個字元）"
 
 msgid "Category"
-msgstr "دسته"
+msgstr "類別"
 
 msgid "Choose Category"
-msgstr "انتخاب دسته"
+msgstr "選擇類別"
 
 msgid "Screenshots"
-msgstr "تصاویر پرده"
+msgstr "螢幕快照"
 
 msgid "Add files"
-msgstr "افزون کردن فایل"
+msgstr "增加檔案"
 
 msgid "Drag and drop screenshots"
-msgstr "کشیدن و انداختن تصاویر پرده"
+msgstr "拖放式螢幕快照"
 
 msgid "or"
-msgstr "یا"
+msgstr "或"
 
 msgid "browse to upload"
-msgstr "مرور کردن برای بارگزاری"
+msgstr "瀏覽上傳"
 
 msgid "Drag and drop .apk files"
-msgstr "کشیدن و انداختن فایل‌های .apk"
+msgstr "拖放 .apk 檔案"
 
 #, python-format
 msgid "Language (%(count)s)"
-msgstr "زبان (%(count)s 1)"
+msgstr "語言 (%(count)s)"
 
 msgid "None"
-msgstr "هیچ"
+msgstr "無"
 
 msgid "Edit"
-msgstr "ویرایش"
+msgstr "編輯"
 
 #, fuzzy, python-format
 #| msgid "Developed by %(author)s"
 msgid "By %(author)s"
-msgstr "طراحی شده توسط %(author)s 1"
+msgstr "開發者為 %(author)s"
 
 #, python-format
 msgid "Updated %(time)s ago"
-msgstr "به روز رسانی شده %(time)s 1 قبل"
+msgstr "%(time)s 前已更新"
 
 msgid "version history"
-msgstr "تاریخچه‌ نسخه‌ها"
+msgstr "版本歷程"
 
 #, python-format
 msgid "Version %(version)s (%(code)s)"
-msgstr "نسخه %(version)s 1 (%(code)s 2)"
+msgstr "版本 %(version)s (%(code)s)"
 
 #, python-format
 msgid "Released %(date)s"
-msgstr "آزاد شده %(date)s 1"
+msgstr "%(date)s 已釋出"
 
 msgid "APK is still downloading..."
-msgstr "APK همچنان بارگزاری می‌شود..."
+msgstr "APK 還在下載..."
 
 msgid "This app has no APK files."
-msgstr "این اپلیکیشن فایل APK ندارد."
+msgstr "此軟體程式有沒有 APK 檔。"
 
 msgid "If you added this app from a remote repo, try deleting it and adding it again."
-msgstr ""
+msgstr "如果您從遠端軟體倉庫加入了這個應用程式，請嘗試刪除它並重新加入。"
 
 msgid "Previous"
-msgstr "قبلی"
+msgstr "上一步"
 
 msgid "Next"
-msgstr "بعدی"
+msgstr "下一步"
 
 msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
 msgstr ""
@@ -312,97 +312,99 @@ msgstr ""
 #, fuzzy
 #| msgid "Screenshots"
 msgid "show screenshots"
-msgstr "تصاویر پرده"
+msgstr "螢幕快照"
 
 msgid "Add Screenshot"
-msgstr "افزون کردن تصویر پرده"
+msgstr "增加螢幕快照"
 
 msgid "Upload Screenshot"
-msgstr "بارگزاری تصویر پرده"
+msgstr "上傳螢幕快照"
 
 msgid "Delete Screenshot"
-msgstr "حذف تصویر پرده"
+msgstr "刪除螢幕快照"
 
 #, python-format
 msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
-msgstr ""
+msgstr "您確定要從<strong>%(app)s</strong>應用程式中刪除這個螢幕快照？"
 
 msgid "Translate App"
-msgstr "اپلیکیشن ترجمه"
+msgstr "翻譯應用程式"
 
 #, python-format
 msgid "Translate %(app)s"
-msgstr "ترجمه %(app)s 1"
+msgstr "翻譯 %(app)s"
 
 msgid "Save Translation"
-msgstr "ذخیره کردن ترجمه"
+msgstr "儲存翻譯"
 
 #, python-format
 msgid "Hello, %(user)s"
-msgstr ""
+msgstr "哈囉，%(user)s"
 
 msgid "Error"
-msgstr ""
+msgstr "錯誤"
 
 msgid "My Repos"
-msgstr ""
+msgstr "我的軟體倉庫"
 
 #, python-format
 msgid "Published %(time_ago)s"
-msgstr ""
+msgstr "發佈於 %(time_ago)s"
 
 #, python-format
 msgid "Created %(time_ago)s"
-msgstr ""
+msgstr "建立於 %(time_ago)s"
 
 msgid "Make a collection of apps to share"
-msgstr ""
+msgstr "製作一批應用程式來分享"
 
 msgid "Create Repo"
-msgstr ""
+msgstr "建立軟體倉庫"
 
 msgid "New Repo"
-msgstr ""
+msgstr "新軟體倉庫"
 
 msgid "Create"
-msgstr ""
+msgstr "建立"
 
 msgid "Delete Repo"
-msgstr ""
+msgstr "刪除軟體倉庫"
 
 #, python-format
 msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
-msgstr ""
+msgstr "您確定要刪除軟體倉庫 <strong>%(repo)s</strong>？"
 
 msgid "This will also delete all apps and other files from your repo. You will not be able to get them back, users of your repo will not be able to use it anymore and not receive updates for the apps they received from you. There is no way to recover this repo!"
 msgstr ""
 
 msgid "Please only proceed if you know what you are doing!"
-msgstr ""
+msgstr "如果您知道您在做什麼，請繼續！"
 
 msgid "Yes, I want to delete the repo"
-msgstr ""
+msgstr "是的，我確定要刪除軟體倉庫"
 
 msgid "Edit Repo"
-msgstr ""
+msgstr "編輯軟體倉庫"
 
 msgid "Save Changes"
-msgstr ""
+msgstr "儲存變更"
 
 msgid "Content"
 msgstr ""
 
 msgid "Share"
-msgstr ""
+msgstr "分享"
 
 msgid "Info"
-msgstr ""
+msgstr "資訊"
 
 msgid "Search for apps in your repository"
-msgstr ""
+msgstr "在您的軟體倉庫搜尋應用程式"
 
+#, fuzzy
+#| msgid "add from repos"
 msgid "add from gallery"
-msgstr ""
+msgstr "從軟體倉庫中增加"
 
 #, python-format
 msgid "Alternatively, drag and drop or %(label_start)schoose files%(label_end)s"
@@ -412,22 +414,24 @@ msgid "Accepted files include Android apps, documents, eBooks, audio and video."
 msgstr ""
 
 msgid "Your search did not return any results."
-msgstr ""
+msgstr "您的搜尋沒有返回任何結果。"
 
 msgid "Name"
-msgstr ""
+msgstr "名稱"
 
 msgid "Storage"
-msgstr ""
+msgstr "存儲"
 
+#, fuzzy
+#| msgid "Add SSH Storage"
 msgid "Add Storage"
-msgstr ""
+msgstr "增加 SSH 存儲"
 
 msgid "Fingerprint"
-msgstr ""
+msgstr "指紋"
 
 msgid "Remove Repo"
-msgstr ""
+msgstr "移除軟體倉庫"
 
 msgid "Add storage to publish"
 msgstr ""
@@ -435,61 +439,63 @@ msgstr ""
 msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
 msgstr ""
 
+#, fuzzy
+#| msgid "Edit Storage"
 msgid "add storage"
-msgstr "مخزن شما هنوز منتشر نشده است. آیا یک محل ذخیره سازی برای آن ایجاد و فعال کرده اید؟"
+msgstr "編輯存儲"
 
 #, python-format
 msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
 msgid_plural "You have  <span>%(app_count)s apps</span> in your repo. Share it!"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "在您的軟體倉庫有 <span>%(app_count)s 個應用程式</span>。分享它！"
 
 msgid "view repo"
-msgstr ""
+msgstr "檢視軟體倉庫"
 
 msgid "share public link"
-msgstr ""
+msgstr "分享公用連結"
 
 msgid "copy link"
-msgstr ""
+msgstr "複製連結"
 
 msgid "add to an android phone"
-msgstr ""
+msgstr "增加到 android 手機"
 
 msgid "To install these apps on your Android phone, add them to F-Droid."
-msgstr ""
+msgstr "要在 Android 手機上安裝這些應用程式，增加它們到 F-Droid。"
 
 msgid "F-Droid ensures access to secure app updates."
-msgstr ""
+msgstr "F-Droid 保證應用程式更新的存取安全。"
 
 msgid "Scan QR"
-msgstr ""
+msgstr "掃描 QR 碼"
 
 #, python-format
 msgid "Check out this F-Droid repo: %(name)s"
-msgstr ""
+msgstr "檢驗這個 F-Droid 軟體倉庫： %(name)s"
 
 msgid "Delete Storage"
-msgstr ""
+msgstr "刪除存儲"
 
-#, python-format
+#, fuzzy, python-format
+#| msgid "Are you sure you want to delete your app <strong>%(object)s</strong>?"
 msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong> from your repo?"
-msgstr ""
+msgstr "您確定要刪除應用程式 <strong>%(object)s</strong>？"
 
 msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
 msgstr ""
 
 msgid "Enable Storage"
-msgstr ""
+msgstr "啟用存儲"
 
 msgid "Disable Storage"
-msgstr ""
+msgstr "停用存儲"
 
 msgid "Repo Address"
-msgstr ""
+msgstr "軟體倉庫位址"
 
 msgid "Edit Storage"
-msgstr ""
+msgstr "編輯存儲"
 
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
 msgstr ""
@@ -498,16 +504,16 @@ msgid "Also, please make sure that the master branch of your repository is <b>no
 msgstr ""
 
 msgid "Git Repository SSH Address"
-msgstr ""
+msgstr "Git 軟體倉庫 SSH 位址"
 
 msgid "Region"
-msgstr "منطقه"
+msgstr "地區"
 
 msgid "Bucket"
-msgstr "باکت"
+msgstr "儲存桶"
 
 msgid "Access Key ID"
-msgstr ""
+msgstr "存取鍵 ID"
 
 msgid "Please make sure to add this public SSH key to your SSH server's <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> file,\tif you have not done so already."
 msgstr ""
@@ -516,34 +522,34 @@ msgid "Security Warning: This gives repomaker write access to that storage. Plea
 msgstr ""
 
 msgid "Username"
-msgstr ""
+msgstr "使用者名稱"
 
 msgid "Host"
-msgstr "میزبان"
+msgstr "主機"
 
 msgid "Path"
-msgstr "مسیر"
+msgstr "路徑"
 
 msgid "Your local default SSH key will be used to connect to the storage."
-msgstr "کلید محلی SSH برای ارتباط با حافظه استفاده می‌شود."
+msgstr "您本地預設的 SSH 金鑰將使用於連接到存儲。"
 
 msgid "Please make sure to authorize this public SSH key for your remote storage, if you have not done so already."
-msgstr "لطفا این کلید عمومی SSH را برای حافظه سیار تأیید کنید٬ اگر تا به الان این کار را انجام نداده‌اید."
+msgstr ""
 
 msgid "Activate this storage only once you have added the SSH key."
-msgstr "این حافظه را وقتی فعال مت که کلید SSH را افزون کردید."
+msgstr "要啟動此存儲只有在您之前已增加了 SSH 金鑰。"
 
 msgid "If this storage is experiencing problems, please check that the SSH key works properly."
-msgstr "اگر  حافظه دچار مشکل ش٬ از درست کار کردن کلید SSH مطمئن شوید."
+msgstr "如果這個存儲遇到問題，請檢查 SSH 金鑰能否正常工作。"
 
 #, python-format
 msgid "Update %(storage_name)s"
-msgstr "به روز رسانی %(storage_name)s 1"
+msgstr "更新 %(storage_name)s"
 
 #, fuzzy, python-format
 #| msgid "Add %(storage_name)s"
 msgid "Setup %(storage_name)s"
-msgstr "افزودن %(storage_name)s 1"
+msgstr "增加 %(storage_name)s"
 
 msgid "cancel"
 msgstr ""
@@ -551,10 +557,8 @@ msgstr ""
 msgid "save"
 msgstr ""
 
-#, fuzzy
-#| msgid "Here's how to find and copy the Git Repository SSH Address in your %(gitlab)s repository:"
 msgid "Here's how to copy the SSH Address from GitLab:"
-msgstr "نحوه پیدا کردن و کپی کردن آدرس SSH مخزن گیت در  %(gitlab)s 1:"
+msgstr ""
 
 msgid "Setup a place to store your repo"
 msgstr ""
@@ -589,7 +593,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Amazon S3 Storage"
 msgid "Amazon S3"
-msgstr "حافظه آمازون S3"
+msgstr "Amazon S3 雲端儲存"
 
 msgid "Requires an Amazon account, Pricing varies"
 msgstr ""
@@ -598,7 +602,7 @@ msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 prov
 msgstr ""
 
 msgid "Added"
-msgstr "افزوده شد"
+msgstr "已增加"
 
 msgid "Enter email"
 msgstr ""
@@ -610,68 +614,68 @@ msgid "Enter SSH URL"
 msgstr ""
 
 msgid "Raw Git URL"
-msgstr "نشانه‌وب خام Git"
+msgstr "Raw Git 網址"
 
 msgid "This is the location where the uploaded files can be accessed from in raw form. Leave empty for GitHub or GitLab.com repositories."
-msgstr "از اینجا به فایل‌های که به طور خام بارگزاری شده‌، می‌توانید دسترسی پیدا کنید. برای مخزن GitHub یا GitLab.com آن را خالی بگذارید."
+msgstr ""
 
 msgid "This URL must start with 'git@'."
-msgstr "نشانه‌وب باید با 'git@' شروع شود."
+msgstr "該網址必須以'git@'開頭。"
 
 msgid "This URL must end with '.git'."
-msgstr "نشانه‌وب باید با '.git' تمام شود."
+msgstr "該網址必須以'.git'為結尾。"
 
 msgid "This URL is invalid. Please copy the exact SSH URL of your git repository."
-msgstr "این نشانه‌وب نادرست است. لطفا دقیقا نشانه‌وب ‌SSH مخزن git خود را کپی کنید."
+msgstr "此網址是無效的。請複製您 git 軟體倉庫的正確 SSH 網址。"
 
 msgid "Please add a valid URLfor the raw content of this git repository."
-msgstr "لطفا نشانه‌وب معتبر برای محتوای خام مخزن git اضافه کنید."
+msgstr "請為這個 git 軟體倉庫的 raw 內容增加有效的網址。"
 
 msgid "Repository URL"
-msgstr "نشانه‌وب مخزن"
+msgstr "軟體倉庫網址"
 
 msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
-msgstr "لطفا از نشانه‌وب با اثر انگشت در پایان استفاده کنید تا ما بتوانیم صحت مخزن را تایید کنیم."
+msgstr ""
 
 msgid "Please don't add one of your own repositories here."
-msgstr "لطفا مخزن خود را اینجا اضافه نکنید."
+msgstr "請不要在這裡增加一個您自己的軟體倉庫。"
 
 #, python-format
 msgid "Could not validate repository: %s"
-msgstr "مخزن را نمی‌توان تایید کرد: %s 1"
+msgstr "無法驗證軟體倉庫：%s"
 
 msgid "Describe the repo"
-msgstr "مخزن را توصیف کنید"
+msgstr "描述軟體倉庫"
 
 msgid "Bucket Name"
-msgstr "نام باکت"
+msgstr "儲存桶名稱"
 
 msgid "Secret Access Key"
-msgstr "کلید دسترسی مخفی"
+msgstr "秘密存取金鑰"
 
 msgid "Other regions are currently not supported."
-msgstr "در حال حاضر از دیگر کشورها پشتیبانی نمی‌شود."
+msgstr "目前不支援其它的區域。"
 
 msgid "Language"
-msgstr "زبان"
+msgstr "語言"
 
 msgid "Select Screenshot for upload"
-msgstr "اسکرین شات را برای بارگزاری انتخاب کنید"
+msgstr "選擇要上傳的螢幕快照"
 
 msgid "Use local default SSH Key"
-msgstr "از کلید  پیش‌فرض SSH محلی استفاده کنید"
+msgstr "使用本地預設 SSH 金鑰"
 
 msgid "User Name"
-msgstr "نام کاربری"
+msgstr "使用者名稱"
 
 msgid "URL"
-msgstr "نشانی وب"
+msgstr "網址"
 
 msgid "This is the location where the uploaded files can be accessed from."
-msgstr "از اینجا می‌توانید به فایل‌های بارگزاری شده دسترسی پیدا کنید."
+msgstr "可以從這個位置存取已上傳的檔案。"
 
 msgid "Primary Storage"
-msgstr "حافظه اصلی"
+msgstr "主存儲"
 
 msgid "Make this storage the primary storage of the repository."
-msgstr "این حافظه را، حافظه اصلی مخزن قرار بده."
+msgstr "使此存儲作為軟體倉庫的主存儲。"

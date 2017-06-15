@@ -8,134 +8,134 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-05 19:04+0000\n"
-"PO-Revision-Date: 2017-07-04 21:36+0000\n"
-"Last-Translator: Mo <press.hosseini@gmail.com>\n"
-"Language-Team: Persian <https://hosted.weblate.org/projects/f-droid/repomaker/fa/>\n"
-"Language: fa\n"
+"PO-Revision-Date: 2017-06-15 21:35+0000\n"
+"Last-Translator: Ajeje Brazorf <lmelonimamo@yahoo.it>\n"
+"Language-Team: Sardinian <https://hosted.weblate.org/projects/f-droid/repomaker/sc/>\n"
+"Language: sc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.16-dev\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.15-dev\n"
 
 msgid "This APK already exists in the current repo."
-msgstr "این APK از قبل در مخزن بوده است."
+msgstr "Custu APK esistit giai in su depòsitu atuale."
 
 #, fuzzy
 #| msgid "Invalid APK."
 msgid "Invalid APK signature"
-msgstr "APK نادرست است."
+msgstr "APK non vàlidu."
 
 msgid "Invalid APK."
-msgstr "APK نادرست است."
+msgstr "APK non vàlidu."
 
 msgid "Unsupported File Type"
-msgstr "از این فایل پشتیبانی نمی‌شود"
+msgstr "Casta de documentu non suportada"
 
 msgid "This file is of a different type than the other versions of this app."
-msgstr "این فایل با نسخه دیگر اپلیشکن تفاوت دارد."
+msgstr "Custu documentu est de una casta diferente dae sas àteras versiones de custa aplicatzione."
 
 msgid "APK"
 msgstr "APK"
 
 msgid "Book"
-msgstr "رزرو کردن"
+msgstr "Libru"
 
 msgid "Document"
-msgstr "اسناد"
+msgstr "Documentu"
 
 msgid "Image"
-msgstr "تصویر"
+msgstr "Immàgine"
 
 msgid "Audio"
-msgstr "صوتی"
+msgstr "Àudio"
 
 msgid "Video"
-msgstr "ویدئو"
+msgstr "Vìdeu"
 
 msgid "Other"
-msgstr "سایر"
+msgstr "Àteru"
 
 msgid "Summary"
-msgstr "خلاصه"
+msgstr "Summàriu"
 
 msgid "Description"
-msgstr "توضیحات"
+msgstr "Descritzione"
 
 msgid "This app does already exist in your repository."
-msgstr "این برنامه از قبل در مخزن شما موجود است."
+msgstr "Custa aplicatzione no esistit in custu depòsitu."
 
 msgid "This app does not have any working versions available."
-msgstr "این اپلیکشن دارای هیچ گونه نمونه‌ای که کار کند نمی‌باشد."
+msgstr "Custa aplicatzione non tenet versiones funtzionantes disponìbiles."
 
 msgid "Phone"
-msgstr "تلفن"
+msgstr "Telèfono"
 
 msgid "7'' Tablet"
-msgstr "تبلت ۷ اینچ"
+msgstr "Tauledda (tablet) a 7''"
 
 msgid "10'' Tablet"
-msgstr "تبلت ۱۰ اینچ"
+msgstr "Tauledda (tablet) a 10''"
 
 msgid "TV"
-msgstr "تلوزیون"
+msgstr "TV"
 
 msgid "Wearable"
-msgstr "پوشیدنی"
+msgstr "Bestìbile"
 
 msgid "US Standard"
-msgstr "استاندارد آمریکا"
+msgstr "Istandard US"
 
 msgid "Amazon S3 Storage"
-msgstr "حافظه آمازون S3"
+msgstr ""
 
 msgid "Enter a valid user name consisting of letters, numbers, underscores or hyphens."
-msgstr "یک نام‌ کاربری معتبر با ترکیبی از حروف٬اعداد و نشان اتصال وارد کنید."
+msgstr ""
 
 msgid "Enter a valid hostname."
-msgstr "یک نام هاست معتبر را وارد کنید."
+msgstr ""
 
 msgid "Enter a valid path."
-msgstr "یک مسیر معتبر را وارد کنید."
+msgstr ""
 
 msgid "SSH Storage"
-msgstr "حافظه SSH"
+msgstr ""
 
 msgid "Git Storage"
-msgstr "حافظه گیت"
+msgstr ""
 
 msgid "Default Storage"
-msgstr "حافظه پیش‌فرض"
+msgstr ""
 
 msgid "Change E-mail"
-msgstr "تغییر ایمیل"
+msgstr ""
 
 msgid "Sign Out"
-msgstr "خروج"
+msgstr ""
 
 msgid "Sign In"
-msgstr "ورود"
+msgstr ""
 
 msgid "Sign Up"
-msgstr "ثبت نام"
+msgstr ""
 
 msgid "Distribute apps."
-msgstr "توزیع اپلیکیشن‌ها."
+msgstr ""
 
 msgid "Spread the love."
-msgstr "عشق را گشترش بده."
+msgstr ""
 
 msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
 msgstr ""
 
 msgid "Login"
-msgstr "ورود به سیستم"
+msgstr ""
 
 msgid "Forgot Password"
-msgstr "رمز عبور را فراموش کردم"
+msgstr ""
 
 msgid "Or login with"
-msgstr "یا وارد شوید با"
+msgstr ""
 
 msgid "Logout"
 msgstr ""
@@ -156,7 +156,7 @@ msgid "We have sent you an email with a link to reset your password."
 msgstr ""
 
 msgid "Signup"
-msgstr "ثبت نام"
+msgstr ""
 
 msgid "Browse Gallery"
 msgstr ""
@@ -164,178 +164,171 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Category (%(count)s)"
-msgstr "زبان (%(count)s 1)"
+msgstr ""
 
 msgid "All"
-msgstr "همه"
+msgstr ""
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Source (%(count)s)"
-msgstr "زبان (%(count)s 1)"
+msgstr ""
 
-#, fuzzy
-#| msgid "Add App to %(repo)s"
 msgid "Add a repo"
-msgstr "افزون کردن اپلیکیشن تا %(repo)s 1"
+msgstr ""
 
 msgid "Add"
-msgstr "افزودن"
+msgstr ""
 
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
-msgstr "هیچ گونه اپلیکیشنی که با  '%(search_term)s 1' برابر باشد پیدا نشد. لطفا چیز دیگری را جستجو کنید یا فیلتر‌های دیگر را حذف کنید."
+msgstr ""
 
 msgid "There are no apps in this repo."
-msgstr "در این مخزن هیچ‌ گونه اپلیکشنی وجود ندارد."
+msgstr ""
 
 msgid "There are no apps available in the repos."
-msgstr "در مخزن ها هیچ اپلیکیشنی موجود نیست."
+msgstr ""
 
 msgid "If you just added a repo, wait for the apps to download and try again later."
-msgstr "اگر مخزنی را اضافه کرده‌اید٫ لطفا منتظر دانلود شدن آن بمانید و کمی بعدتر امتحان کنید."
+msgstr ""
 
 msgid "This repo has no apps in the selected category. Try clearing it or select a different repo."
-msgstr "این مخزن دارای هیچ‌ گونه اپلیکیشنی در دسته‌بندی انتخاب شده نیست. سعی کنید مخزن را پاک کنید یا مخزن دیگری را انتخاب کنید."
+msgstr ""
 
 msgid "There are no apps available in the selected category. Try clearing it."
-msgstr "در دسته‌بندی انتخاب شده هیچ گونه اپلیکیشنی موجود نیست. لطفا آن را پاک کنید."
+msgstr ""
 
 msgid "Delete App Version"
-msgstr "نسخه اپلیکیشن را حذف کن"
+msgstr ""
 
 #, python-format
 msgid "Are you sure you want to delete this version <strong>%(version)s</strong> (%(code)s) from your app <strong>%(app)s</strong>?"
 msgstr ""
 
 msgid "Confirm"
-msgstr "تایید"
+msgstr ""
 
 msgid "Delete App"
-msgstr "حذف اپلیکیشن"
+msgstr ""
 
 #, python-format
 msgid "Are you sure you want to delete your app <strong>%(object)s</strong>?"
-msgstr "آیا از حذف این اپلیکیشن اطمینان دارید  <strong> 1%(object)s 2</strong> 3 ؟"
+msgstr ""
 
 #, python-format
 msgid "Edit %(app)s"
-msgstr "ویرایش %(app)s 1"
+msgstr ""
 
 msgid "Remove App"
-msgstr "حذف اپلیکیشن"
+msgstr ""
 
 msgid "Done"
-msgstr "تمام"
+msgstr ""
 
 msgid "By"
 msgstr ""
 
 msgid "Short Summary (40 characters)"
-msgstr "خلاصه‌ای کوتاه (۴۰ کاراکتر)"
+msgstr ""
 
 msgid "Category"
-msgstr "دسته"
+msgstr ""
 
 msgid "Choose Category"
-msgstr "انتخاب دسته"
+msgstr ""
 
 msgid "Screenshots"
-msgstr "تصاویر پرده"
+msgstr ""
 
 msgid "Add files"
-msgstr "افزون کردن فایل"
+msgstr ""
 
 msgid "Drag and drop screenshots"
-msgstr "کشیدن و انداختن تصاویر پرده"
+msgstr ""
 
 msgid "or"
-msgstr "یا"
+msgstr ""
 
 msgid "browse to upload"
-msgstr "مرور کردن برای بارگزاری"
+msgstr ""
 
 msgid "Drag and drop .apk files"
-msgstr "کشیدن و انداختن فایل‌های .apk"
+msgstr ""
 
 #, python-format
 msgid "Language (%(count)s)"
-msgstr "زبان (%(count)s 1)"
+msgstr ""
 
 msgid "None"
-msgstr "هیچ"
+msgstr ""
 
 msgid "Edit"
-msgstr "ویرایش"
+msgstr ""
 
-#, fuzzy, python-format
-#| msgid "Developed by %(author)s"
+#, python-format
 msgid "By %(author)s"
-msgstr "طراحی شده توسط %(author)s 1"
+msgstr ""
 
 #, python-format
 msgid "Updated %(time)s ago"
-msgstr "به روز رسانی شده %(time)s 1 قبل"
+msgstr ""
 
 msgid "version history"
-msgstr "تاریخچه‌ نسخه‌ها"
+msgstr ""
 
 #, python-format
 msgid "Version %(version)s (%(code)s)"
-msgstr "نسخه %(version)s 1 (%(code)s 2)"
+msgstr ""
 
 #, python-format
 msgid "Released %(date)s"
-msgstr "آزاد شده %(date)s 1"
+msgstr ""
 
 msgid "APK is still downloading..."
-msgstr "APK همچنان بارگزاری می‌شود..."
+msgstr ""
 
 msgid "This app has no APK files."
-msgstr "این اپلیکیشن فایل APK ندارد."
+msgstr ""
 
 msgid "If you added this app from a remote repo, try deleting it and adding it again."
 msgstr ""
 
 msgid "Previous"
-msgstr "قبلی"
+msgstr ""
 
 msgid "Next"
-msgstr "بعدی"
+msgstr ""
 
 msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
 msgstr ""
 
-#, fuzzy
-#| msgid "Screenshots"
 msgid "show screenshots"
-msgstr "تصاویر پرده"
+msgstr ""
 
 msgid "Add Screenshot"
-msgstr "افزون کردن تصویر پرده"
+msgstr ""
 
 msgid "Upload Screenshot"
-msgstr "بارگزاری تصویر پرده"
+msgstr ""
 
 msgid "Delete Screenshot"
-msgstr "حذف تصویر پرده"
+msgstr ""
 
 #, python-format
 msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
 msgstr ""
 
 msgid "Translate App"
-msgstr "اپلیکیشن ترجمه"
+msgstr ""
 
 #, python-format
 msgid "Translate %(app)s"
-msgstr "ترجمه %(app)s 1"
+msgstr ""
 
 msgid "Save Translation"
-msgstr "ذخیره کردن ترجمه"
+msgstr ""
 
 #, python-format
 msgid "Hello, %(user)s"
@@ -436,7 +429,7 @@ msgid "Your repo will be automatically published when you add storage. Repomaker
 msgstr ""
 
 msgid "add storage"
-msgstr "مخزن شما هنوز منتشر نشده است. آیا یک محل ذخیره سازی برای آن ایجاد و فعال کرده اید؟"
+msgstr ""
 
 #, python-format
 msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
@@ -501,10 +494,10 @@ msgid "Git Repository SSH Address"
 msgstr ""
 
 msgid "Region"
-msgstr "منطقه"
+msgstr ""
 
 msgid "Bucket"
-msgstr "باکت"
+msgstr ""
 
 msgid "Access Key ID"
 msgstr ""
@@ -519,31 +512,30 @@ msgid "Username"
 msgstr ""
 
 msgid "Host"
-msgstr "میزبان"
+msgstr ""
 
 msgid "Path"
-msgstr "مسیر"
+msgstr ""
 
 msgid "Your local default SSH key will be used to connect to the storage."
-msgstr "کلید محلی SSH برای ارتباط با حافظه استفاده می‌شود."
+msgstr ""
 
 msgid "Please make sure to authorize this public SSH key for your remote storage, if you have not done so already."
-msgstr "لطفا این کلید عمومی SSH را برای حافظه سیار تأیید کنید٬ اگر تا به الان این کار را انجام نداده‌اید."
+msgstr ""
 
 msgid "Activate this storage only once you have added the SSH key."
-msgstr "این حافظه را وقتی فعال مت که کلید SSH را افزون کردید."
+msgstr ""
 
 msgid "If this storage is experiencing problems, please check that the SSH key works properly."
-msgstr "اگر  حافظه دچار مشکل ش٬ از درست کار کردن کلید SSH مطمئن شوید."
+msgstr ""
 
 #, python-format
 msgid "Update %(storage_name)s"
-msgstr "به روز رسانی %(storage_name)s 1"
+msgstr ""
 
-#, fuzzy, python-format
-#| msgid "Add %(storage_name)s"
+#, python-format
 msgid "Setup %(storage_name)s"
-msgstr "افزودن %(storage_name)s 1"
+msgstr ""
 
 msgid "cancel"
 msgstr ""
@@ -551,10 +543,8 @@ msgstr ""
 msgid "save"
 msgstr ""
 
-#, fuzzy
-#| msgid "Here's how to find and copy the Git Repository SSH Address in your %(gitlab)s repository:"
 msgid "Here's how to copy the SSH Address from GitLab:"
-msgstr "نحوه پیدا کردن و کپی کردن آدرس SSH مخزن گیت در  %(gitlab)s 1:"
+msgstr ""
 
 msgid "Setup a place to store your repo"
 msgstr ""
@@ -586,10 +576,8 @@ msgstr ""
 msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
 msgstr ""
 
-#, fuzzy
-#| msgid "Amazon S3 Storage"
 msgid "Amazon S3"
-msgstr "حافظه آمازون S3"
+msgstr ""
 
 msgid "Requires an Amazon account, Pricing varies"
 msgstr ""
@@ -598,7 +586,7 @@ msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 prov
 msgstr ""
 
 msgid "Added"
-msgstr "افزوده شد"
+msgstr ""
 
 msgid "Enter email"
 msgstr ""
@@ -610,68 +598,68 @@ msgid "Enter SSH URL"
 msgstr ""
 
 msgid "Raw Git URL"
-msgstr "نشانه‌وب خام Git"
+msgstr ""
 
 msgid "This is the location where the uploaded files can be accessed from in raw form. Leave empty for GitHub or GitLab.com repositories."
-msgstr "از اینجا به فایل‌های که به طور خام بارگزاری شده‌، می‌توانید دسترسی پیدا کنید. برای مخزن GitHub یا GitLab.com آن را خالی بگذارید."
+msgstr ""
 
 msgid "This URL must start with 'git@'."
-msgstr "نشانه‌وب باید با 'git@' شروع شود."
+msgstr ""
 
 msgid "This URL must end with '.git'."
-msgstr "نشانه‌وب باید با '.git' تمام شود."
+msgstr ""
 
 msgid "This URL is invalid. Please copy the exact SSH URL of your git repository."
-msgstr "این نشانه‌وب نادرست است. لطفا دقیقا نشانه‌وب ‌SSH مخزن git خود را کپی کنید."
+msgstr ""
 
 msgid "Please add a valid URLfor the raw content of this git repository."
-msgstr "لطفا نشانه‌وب معتبر برای محتوای خام مخزن git اضافه کنید."
+msgstr ""
 
 msgid "Repository URL"
-msgstr "نشانه‌وب مخزن"
+msgstr ""
 
 msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
-msgstr "لطفا از نشانه‌وب با اثر انگشت در پایان استفاده کنید تا ما بتوانیم صحت مخزن را تایید کنیم."
+msgstr ""
 
 msgid "Please don't add one of your own repositories here."
-msgstr "لطفا مخزن خود را اینجا اضافه نکنید."
+msgstr ""
 
 #, python-format
 msgid "Could not validate repository: %s"
-msgstr "مخزن را نمی‌توان تایید کرد: %s 1"
+msgstr ""
 
 msgid "Describe the repo"
-msgstr "مخزن را توصیف کنید"
+msgstr ""
 
 msgid "Bucket Name"
-msgstr "نام باکت"
+msgstr ""
 
 msgid "Secret Access Key"
-msgstr "کلید دسترسی مخفی"
+msgstr ""
 
 msgid "Other regions are currently not supported."
-msgstr "در حال حاضر از دیگر کشورها پشتیبانی نمی‌شود."
+msgstr ""
 
 msgid "Language"
-msgstr "زبان"
+msgstr ""
 
 msgid "Select Screenshot for upload"
-msgstr "اسکرین شات را برای بارگزاری انتخاب کنید"
+msgstr ""
 
 msgid "Use local default SSH Key"
-msgstr "از کلید  پیش‌فرض SSH محلی استفاده کنید"
+msgstr ""
 
 msgid "User Name"
-msgstr "نام کاربری"
+msgstr ""
 
 msgid "URL"
-msgstr "نشانی وب"
+msgstr ""
 
 msgid "This is the location where the uploaded files can be accessed from."
-msgstr "از اینجا می‌توانید به فایل‌های بارگزاری شده دسترسی پیدا کنید."
+msgstr ""
 
 msgid "Primary Storage"
-msgstr "حافظه اصلی"
+msgstr ""
 
 msgid "Make this storage the primary storage of the repository."
-msgstr "این حافظه را، حافظه اصلی مخزن قرار بده."
+msgstr ""
