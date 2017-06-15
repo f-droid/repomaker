@@ -116,7 +116,7 @@ class RemoteRepository(AbstractRepository):
         self.icon.save(icon_name, BytesIO(icon), save=False)
 
     def _update_apps(self, apps, packages):
-        from maker.models.app import RemoteApp
+        from maker.models.remoteapp import RemoteApp
         # update the apps from this repo and remember all package names we have seen
         package_names = []
         for app in apps:
@@ -170,7 +170,7 @@ class RemoteRepository(AbstractRepository):
 
         :param packages: A list of package names that should not be removed
         """
-        from maker.models.app import RemoteApp
+        from maker.models.remoteapp import RemoteApp
         old_apps = RemoteApp.objects.filter(repo=self)
         for app in old_apps.all():
             if app.package_id not in packages:

@@ -10,7 +10,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from maker import tasks
 from maker.storage import get_screenshot_file_path, RepoStorage
-from .app import RemoteApp, App
+from .app import App
+from .remoteapp import RemoteApp
 
 PHONE = 'phoneScreenshots'
 SEVEN_INCH = 'sevenInchScreenshots'

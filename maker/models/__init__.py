@@ -1,6 +1,7 @@
 from .apk import Apk, ApkPointer, RemoteApkPointer
-from .app import App, RemoteApp
+from .app import App
 from .category import Category
+from .remoteapp import RemoteApp
 from .remoterepository import RemoteRepository
 from .repository import Repository
 from .screenshot import Screenshot, RemoteScreenshot

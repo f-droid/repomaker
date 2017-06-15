@@ -133,7 +133,7 @@ class RemoteRepositoryTestCase(TestCase):
         # assert that an attempt was made to update the apps
         self.assertTrue(_update_apps.called)
 
-    @patch('maker.models.app.RemoteApp.update_from_json')
+    @patch('maker.models.remoteapp.RemoteApp.update_from_json')
     @patch('fdroidserver.index.download_repo_index')
     def test_update_index_retry_when_failed(self, download_repo_index, update_from_json):
         """

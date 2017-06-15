@@ -82,7 +82,7 @@ def download_remote_graphic_assets(app_id, remote_app_id):
         logging.warning('App does not exist anymore, dropping task. (%s)', e)
         return
     try:
-        remote_app = maker.models.app.RemoteApp.objects.get(pk=remote_app_id)
+        remote_app = maker.models.remoteapp.RemoteApp.objects.get(pk=remote_app_id)
     except ObjectDoesNotExist as e:
         logging.warning('Remote App does not exist anymore, dropping task. (%s)', e)
         return

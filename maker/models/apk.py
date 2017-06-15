@@ -18,7 +18,9 @@ from fdroidserver.update import get_all_icon_dirs
 from maker import tasks
 from maker.models.repository import AbstractRepository
 from maker.storage import get_apk_file_path, RepoStorage
-from .app import Repository, RemoteApp, App, OTHER, IMAGE, VIDEO, AUDIO, DOCUMENT, BOOK, APK
+from .app import App, OTHER, IMAGE, VIDEO, AUDIO, DOCUMENT, BOOK, APK
+from .remoteapp import RemoteApp
+from .repository import Repository
 
 
 class Apk(models.Model):
