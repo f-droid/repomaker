@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load static %}
 <div class="rm-grid--center mdl-grid mdl-cell--9-col">
 	{% if request.GET.search or is_paginated %}
 	<div class="rm-repo-apps-header mdl-cell mdl-cell--12-col">
@@ -104,19 +105,6 @@
 	{% endif %}
 </div>
 
-<script type="text/javascript">
-	var rmRepoAppsHeaderSearch = document.getElementById('id_search');
-	var rmRepoAppsHeaderSearchInput = document.getElementById('rm-repo-apps-header-search-input');
-	if (rmRepoAppsHeaderSearch !== null && rmRepoAppsHeaderSearch.value == '') {
-		rmRepoAppsHeaderSearchInput.style.display = 'none';
-	}
-	function toggleSearch() {
-		if (rmRepoAppsHeaderSearchInput.style.display == 'none') {
-			rmRepoAppsHeaderSearchInput.style.display = 'block';
-			return;
-		}
-		rmRepoAppsHeaderSearchInput.style.display = 'none';
-	}
-</script>
+<script src="{% static 'maker/js/repo/apps.js' %}"></script>
 
 {% include "maker/widgets/pagination.html" %}
