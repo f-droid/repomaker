@@ -100,13 +100,13 @@ function appsAdded(request) {
         window.location = '/repo/' + window.repoId
     }
     else if (request.status === 400 && request.responseText === EXCEPTION_ALREADY_ADDED){
-        showError('One of the apps already exists in your repo.')
+        showError(gettext('One of the apps already exists in your repo.'))
     }
     else if (request.status === 500 && request.responseText === EXCEPTION_DATABASE_LOCKED) {
-        showError('Please wait a moment, there is currently some background activity ongoing.')
+        showError(gettext('Please wait a moment, there is currently some background activity ongoing.'))
     }
     else {
-        showError('There was a problem with adding the app.')
+        showError(gettext('There was a problem with adding the app.'))
     }
 }
 
@@ -122,11 +122,8 @@ function updateAppsToAddCount() {
     var countContainer = document.querySelector('.rm-repo-add-toolbar-count')
     countContainer.hidden = false
     var countText = document.getElementById('rm-repo-add-toolbar-count-text')
-    if (count === 1) {
-        countText.textContent = '1 app to be added'
-    }
-    else if (count > 1) {
-        countText.textContent = count + ' apps to be added'
+    if (count > 0) {
+        countText.textContent = ngettext('%s app to add', '%s apps to add', count)
     }
     else {
         countContainer.hidden = true
@@ -147,7 +144,7 @@ function buttonSetAdded(element) {
 
 function buttonSetNormal(element) {
     setClassOfElement(element, 'rm-app-card-footer-action')
-    setContentOfElement(element + '-button', 'Add')
+    setContentOfElement(element + '-button', gettext('Add'))
 }
 
 function showError(text) {
