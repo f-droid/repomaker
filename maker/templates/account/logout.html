@@ -1,25 +1,23 @@
 {% extends "maker/base_modal.html" %}
-
 {% load i18n %}
-{% load sass_tags %}
 
-{% block title %}{% trans "Sign Out" %}{% endblock %}
+{% block title %}{% trans 'Logout' %}{% endblock title %}
+
 
 {% block rm-content %}
-<div class="mdl-grid rm-grid--center">
+<div class="rm-grid--center mdl-grid">
+	<div class="rm-grid--center mdl-cell mdl-cell--5-col center">
+		<i class="material-icons--header">exit_to_app</i>
+		<h4>{% trans 'See you later' %}</h4>
+		<p>{% trans 'Your security is important to us. Please confirm that you want to logout.' %}</p>
 
-	<div class="mdl-cell mdl-cell--4-col rm-form">
-	<h1>{% trans "Sign Out" %}</h1>
-
-	<p>{% trans 'Are you sure you want to sign out?' %}</p>
-
-	<form method="post" action="{% url 'account_logout' %}" class="rm-form">
-		{% csrf_token %}
-		{% if redirect_field_value %}
-		<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-		{% endif %}
-		<input type="submit" value="{% trans 'Sign Out' %}" class="rm-button--blue"/>
-	</form>
+		<form class="rm-form mdl-grid" action="" enctype="multipart/form-data" method="post">
+			{% csrf_token %}
+			{% if redirect_field_value %}
+			<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+			{% endif %}
+			<input type="submit" value="{% trans 'logout' %}" class="rm-button--blue"/>
+		</form>
 	</div>
 </div>
-{% endblock %}
+{% endblock rm-content %}

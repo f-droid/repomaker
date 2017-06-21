@@ -149,6 +149,11 @@ a.rm-no-underline {
 	color: unset;
 }
 
+.material-icons--header {
+    @extend .material-icons;
+    @include font-size(40px);
+}
+
 .rm-icon {
     height: $rm-icon-size;
     width: $rm-icon-size;
