@@ -32,11 +32,11 @@
 				{% csrf_token %}
 				<div class="rm-repo-apps-add-locally-description-second">
 					<span class="rm-dng-text" hidden>{% trans 'or' %}</span>
-					<label for="id_file" class="rm-repo-apps-add-locally-upload-browse">
+					<label for="id_apks" class="rm-repo-apps-add-locally-upload-browse">
 						{% trans 'browse to upload' %}
 					</label>
 				</div>
-				<p>{{ form.file }}</p>
+				<p>{{ form.apks }}</p>
 				<button type="submit" class="rm-button--blue mdl-js-button">
 					{% trans 'Add' %}
 				</button>
@@ -71,11 +71,11 @@
 				{% csrf_token %}
 				<div class="rm-repo-apps-empty-add-description-second">
 					<span class="rm-dng-text" hidden>{% trans 'or' %}</span>
-					<label for="id_file" class="rm-repo-apps-empty-add-upload-browse">
+					<label for="id_apks" class="rm-repo-apps-empty-add-upload-browse">
 						{% trans 'browse to upload' %}
 					</label>
 				</div>
-				<p>{{ form.file }}</p>
+				<p>{{ form.apks }}</p>
 				<button type="submit" class="rm-button--blue mdl-button mdl-js-button">
 					{% trans 'Add' %}
 				</button>
