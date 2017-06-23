@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-21 16:22+0000\n"
+"POT-Creation-Date: 2017-06-15 13:18+0000\n"
 "PO-Revision-Date: 2017-05-22 22:21+0000\n"
 "Last-Translator: monolifed <monolifed@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/f-droid/repomaker/tr/>\n"
@@ -32,72 +32,72 @@ msgstr ""
 msgid "Unsupported File Type"
 msgstr ""
 
-#: maker/models/apkpointer.py:67
+#: maker/models/apk.py:264
 msgid "This file is of a different type than the other versions of this app."
 msgstr ""
 
-#: maker/models/app.py:28
+#: maker/models/app.py:32
 msgid "APK"
 msgstr ""
 
-#: maker/models/app.py:29
+#: maker/models/app.py:33
 msgid "Book"
 msgstr ""
 
-#: maker/models/app.py:30
+#: maker/models/app.py:34
 msgid "Document"
 msgstr ""
 
-#: maker/models/app.py:31
+#: maker/models/app.py:35
 msgid "Image"
 msgstr ""
 
-#: maker/models/app.py:32
+#: maker/models/app.py:36
 msgid "Audio"
 msgstr ""
 
-#: maker/models/app.py:33
+#: maker/models/app.py:37
 msgid "Video"
 msgstr ""
 
-#: maker/models/app.py:34
+#: maker/models/app.py:38
 msgid "Other"
 msgstr ""
 
-#: maker/models/app.py:51
+#: maker/models/app.py:55
 msgid "Summary"
 msgstr "Özet"
 
-#: maker/models/app.py:52 maker/templates/maker/app/edit.html:110
+#: maker/models/app.py:56 maker/templates/maker/app/edit.html:110
 #: maker/templates/maker/repo/index_info.html:16
 msgid "Description"
 msgstr "Açıklama"
 
-#: maker/models/remoteapp.py:176
+#: maker/models/app.py:392
 msgid "This app does already exist in your repository."
 msgstr "Bu uygulama zaten deponuzda var."
 
-#: maker/models/remoteapp.py:181
+#: maker/models/app.py:397
 msgid "This app does not have any working versions available."
 msgstr "Bu uygulamanın mevcut çalışan bir sürümü yok."
 
-#: maker/models/screenshot.py:22
+#: maker/models/screenshot.py:21
 msgid "Phone"
 msgstr ""
 
-#: maker/models/screenshot.py:23
+#: maker/models/screenshot.py:22
 msgid "7'' Tablet"
 msgstr ""
 
-#: maker/models/screenshot.py:24
+#: maker/models/screenshot.py:23
 msgid "10'' Tablet"
 msgstr ""
 
-#: maker/models/screenshot.py:25
+#: maker/models/screenshot.py:24
 msgid "TV"
 msgstr ""
 
-#: maker/models/screenshot.py:26
+#: maker/models/screenshot.py:25
 msgid "Wearable"
 msgstr ""
 
@@ -193,8 +193,7 @@ msgstr "Kaydol"
 msgid "Choose from Repos"
 msgstr ""
 
-#: maker/templates/maker/app/add.html:22
-#: maker/templates/maker/app/edit.html:21
+#: maker/templates/maker/app/add.html:22 maker/templates/maker/app/edit.html:21
 msgid "Done"
 msgstr ""
 
@@ -498,8 +497,7 @@ msgstr ""
 msgid "Create Repo"
 msgstr "Oluştur"
 
-#: maker/templates/maker/repo/add.html:4
-#: maker/templates/maker/repo/add.html:10
+#: maker/templates/maker/repo/add.html:4 maker/templates/maker/repo/add.html:10
 msgid "New Repo"
 msgstr "Yeni Depo"
 
@@ -828,8 +826,6 @@ msgid "Please add a valid URLfor the raw content of this git repository."
 msgstr "Lütfen bu git deposunun ham içeriği için geçerli bir URL ekleyin."
 
 #: maker/views/remoterepository.py:19
-#, fuzzy
-#| msgid "Repository URL"
 msgid "Repository URL"
 msgstr "Depo URL'si"
 

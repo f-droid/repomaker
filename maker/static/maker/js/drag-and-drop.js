@@ -15,7 +15,7 @@ function uploadFiles(element, files) {
     var formData = new FormData()
     for (var i = 0; i < files.length; i++) {
         if (type == 'screenshots' && !isImage(files[i])) {
-            showError(element, gettext('You can only upload images here.'))
+            showError(element, 'You can only upload images here.')
             return
         }
         formData.append(type, files[i])
@@ -79,8 +79,12 @@ function uploadStarted(element, files) {
     element.hidden = true
     loadingElement.hidden = false
     var loadingElementTitle = document.getElementById(loadingElement.id + '-title')
-    loadingElementTitle.innerHTML =
-        ngettext('Uploading %s file...', 'Uploading %s files...', files.length)
+    if (files.length == 1) {
+        loadingElementTitle.innerHTML = 'Uploading 1 file...'
+    }
+    else {
+        loadingElementTitle.innerHTML = 'Uploading ' + files.length + ' files...'
+    }
 }
 
 function updateProgress(element, event) {
@@ -96,21 +100,21 @@ function uploadFinished(request, element, type, files) {
         location.reload()
     }
     else if (request.status === 500 && request.responseText === EXCEPTION_DATABASE_LOCKED) {
-        showError(element, gettext('Please wait a moment, there is currently some background activity ongoing.'))
+        showError(element, 'Please wait a moment, there is currently some background activity ongoing.')
     }
     else if (request.status === 400 && request.responseText === EXCEPTION_APK_ALREADY_EXIST) {
         if (files.length === 1) {
-            showError(element, gettext('You already added this apk.'))
+            showError(element, 'You already added this apk.')
         }
         else {
-            showError(element, gettext('You already added one of the apks.'))
+            showError(element, 'You already added one of the apks.')
         }
     }
     else if (request.status === 400 && request.responseText === EXCEPTION_FILE_INVALID) {
-        showError(element, gettext('You can only upload apks here.'))
+        showError(element, 'You can only upload apks here.')
     }
     else {
-        showError(element, gettext('There was an error while uploading the files.'))
+        showError(element, 'There was an error while uploading the files.')
     }
 }
 
@@ -125,7 +129,7 @@ function showError(element, text) {
     element.hidden = false
     document.getElementById(element.id + '--loading').hidden = true
     element.innerHTML = '<p class="error">' + text + '</p>'
-    element.innerHTML += '<p>' + gettext('Try to drag and drop again!') + '</p>'
+    element.innerHTML += '<p>Try to drag and drop again!</p>'
 }
 
 function isImage(file) {

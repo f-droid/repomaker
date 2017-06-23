@@ -1,5 +1,4 @@
 from django.conf.urls import url
-from django.views.i18n import javascript_catalog
 
 from maker.models import S3Storage, SshStorage, GitStorage
 from maker.views.app import AppAddView, AppDetailView, AppUpdateView, AppDeleteView, \
@@ -16,10 +15,8 @@ from maker.views.sshstorage import SshStorageCreate, SshStorageUpdate, SshStorag
 from maker.views.apk import ApkUploadView, ApkPointerDeleteView
 from . import views
 
-urlpatterns = [
-    # JavaScript Internationalisation
-    url(r'^jsi18n/$', javascript_catalog, name='javascript-catalog'),
 
+urlpatterns = [
     # Repo
     url(r'^$', RepositoryListView.as_view(), name='index'),
     url(r'^add$', RepositoryCreateView.as_view(), name='add_repo'),
