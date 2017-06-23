@@ -1,9 +1,15 @@
 .rm-form {
 
 	input[type="submit"] {
+		@extend .mdl-button;
 		display: block;
 		margin-left: auto;
 		margin-right: auto;
+		background: none;
+		color: #5583b6;
+		border: thin solid #5583b6;
+		border-radius: 25px;
+		@include font-size(11px);
 		padding: 0 60px;
 	}
 
