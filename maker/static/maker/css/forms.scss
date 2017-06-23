@@ -11,6 +11,10 @@
 		display: none;
 	}
 
+	.mdl-spinner--single-color .mdl-spinner__layer {
+	    border-color: $rm-blue;
+	}
+
 	select {
 	    // TODO: There is no "mdc-multi-select"
 	    @extend .mdl-list;

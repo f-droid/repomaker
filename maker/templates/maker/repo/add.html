@@ -1,5 +1,6 @@
 {% extends "maker/base_modal.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}{% trans 'New Repo' %}{% endblock title %}
 
@@ -9,11 +10,13 @@
 	<div class="rm-grid--center mdl-cell mdl-cell--4-col">
 		<h4 style="text-align: center">{% trans 'New Repo' %}</h4>
 
-		<form class="rm-form mdl-grid" action="" enctype="multipart/form-data" method="post">
+		<form class="rm-form mdl-grid rm-grid--center" action="" enctype="multipart/form-data" method="post">
 			{% csrf_token %}
 			{% include '../form.html' %}
 			<input type="submit" value="{% trans 'Create' %}"/>
+			<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" hidden></div>
 		</form>
 	</div>
 </div>
+<script src="{% static 'maker/js/repo/add.js' %}"></script>
 {% endblock rm-content %}
