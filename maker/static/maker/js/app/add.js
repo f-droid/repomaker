@@ -1,3 +1,6 @@
+/**
+ * Add
+ */
 var buttonAdd = document.getElementById('rm-app-card-footer-action')
 
 // Exceptions that can occur
@@ -66,7 +69,7 @@ function addRemoteApp(event, repoId, appRepoId, appId) {
     }
 }
 
-function done(event) {
+function back(event) {
     if (appsToAdd.length === 0) {
         return
     }
@@ -156,6 +159,9 @@ function showError(text) {
     setHiddenOfElement(element, false)
 }
 
+/**
+ * Miscellaneous
+ */
 function setClassOfElement(element, myClass) {
     element = document.getElementById(element)
     if (element !== null) {
@@ -171,8 +177,24 @@ function setContentOfElement(element, content) {
 }
 
 function setHiddenOfElement(element, hidden) {
-    element = document.getElementById(element)
+    if (typeof element === 'string') {
+        element = document.getElementById(element)
+    }
     if (element !== null) {
         element.hidden = hidden
     }
 }
+
+/**
+ * Search
+ */
+var searchInput = document.querySelector('.rm-app-add-filters-search-input')
+var searchClear = document.querySelector('.rm-app-add-filters-search-clear')
+
+// Set hidden or not at page load
+setHiddenOfElement(searchClear, (searchInput.value.length === 0))
+
+// Set hidden or not on input
+searchInput.addEventListener("input", function() {
+    setHiddenOfElement(searchClear, (searchInput.value.length === 0))
+})

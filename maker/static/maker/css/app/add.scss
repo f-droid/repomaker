@@ -2,9 +2,8 @@
  * Repomaker Add App Styles
  */
 .rm-repo-add-toolbar-title {
-    @extend .rm-toolbar-action-left;
-    font-weight: 500;
-    @include font-size(18px);
+    color: black;
+    @include font-size(20px);
 }
 
 .rm-repo-add-toolbar-count {
@@ -32,154 +31,137 @@
 }
 
 .rm-repo-add-toolbar-done {
-    button {
-        @extend .rm-button, .mdl-button;
-        border-color: $rm-blue;
-        color: $rm-blue;
-    }
-}
-
-.rm-app-add-container {
-    @extend .mdl-grid, .rm-grid--full-width, .rm-grid--center;
+    color: black !important;
+    text-decoration: none;
+    align-items: flex-start;
+    display: flex;
+    flex-flow: column;
+    padding-right: 8px;
 }
 
 .rm-app-add {
-    @extend .mdl-cell, .mdl-cell--8-col, .mdl-grid;
+    @extend .mdl-grid, .rm-grid--full-width, .rm-grid--center;
 }
 
 .rm-app-add-filters {
-    @extend .mdl-cell, .mdl-cell--4-col;
+    @extend .mdl-cell, .mdl-cell--8-col;
 }
 
-.rm-app-add-filters-field {
+.rm-app-add-filters-search {
     @extend .mdl-textfield;
     align-items: center;
-    border: thin solid #ECECEC;
-    border-radius: 25px;
     display: flex;
     justify-content: center;
     padding: 0 6px;
+    width: 100%;
 
-    input {
-        border: none;
+    i {
+        padding-right: 3px;
     }
 }
 
-.rm-app-add-filters-field-input {
+.rm-app-add-filters-search-input {
     @extend .mdl-textfield__input;
+    border: none;
+    color: black;
 }
 
-.rm-app-add-filters-title {
-    color: #000000;
-    font-weight: 500;
-    @include font-size(15px);
-    margin-top: 12px;
+.rm-app-add-filters-search-clear {
+    color: black;
 }
 
-.rm-app-add-divider, .rm-app-add-remote-repository-information-divider {
+.rm-app-add-divider {
     border-color: #ECECEC;
+    margin: 0;
 }
 
-.rm-app-filter-section span {
+.rm-app-add-filters-second-row {
+    @extend .mdl-grid, .rm-grid--full-width, .rm-grid--center;
+}
+
+.rm-app-add-filters-category-container,
+.rm-app-add-filters-source-container {
+    @extend .mdl-cell, .mdl-cell--6-col, .center;
+}
+
+.rm-app-add-filters-category,
+.rm-app-add-filters-source {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.rm-app-add-filters-category-title,
+.rm-app-add-filters-source-title {
+    color: #828282;
     font-weight: 500;
     @include font-size(13px);
     text-transform: uppercase;
-    color: #9c9c9c;
+
 }
 
-.rm-app-add-repositories-list {
-    padding-left: 0;
+.rm-app-add-filters-category-chip,
+.rm-app-add-filters-category-chip--all,
+.rm-app-add-filters-source-chip,
+.rm-app-add-filters-source-chip--all {
+    @extend .mdl-chip, .mdl-chip--deletable;
+    background: #f4f4f4;
+    margin-left: 12px;
+
+    .material-icons {
+        @include font-size(16px);
+        line-height: 24px;
+    }
 }
 
-.rm-app-add-repositories-list-item {
-    display: flex;
-    list-style: none;
+.rm-app-add-filters-category-chip--all,
+.rm-app-add-filters-source-chip--all {
+    padding: 0 50px;
+}
+
+.rm-app-add-filters-category-chip-title,
+.rm-app-add-filters-source-chip-title {
+    @extend .mdl-chip__text;
+    color: black;
+    @include font-size(13px);
+}
+
+.rm-app-add-filters-source-menu,
+.rm-app-add-filters-category-menu {
+    @extend .mdl-menu;
+    padding: 8px;
+    min-width: 175px;
+    max-height: 500px;
+    overflow: auto;
 
     a {
-        color: #000000;
-        font-weight: 400;
-        @include font-size(15px);
-        text-decoration: none;
-        width: 100%;
-        padding: 3px;
+        @extend .rm-no-underline;
     }
-}
 
-.rm-app-add-repositories-list-item:before {
-   content: '';
-   display: inline-flex;
-   height: 16px;
-   width: 16px;
-   margin-top: 8px;
-   margin-right: 12px;
-   background-size: contain;
-   background-repeat: no-repeat;
-   background-image: url(unquote(get-setting(STATIC_URL) + 'maker/images/list_item.png'));
-}
+    button {
+        display: block;
+        background-color: Transparent;
+        background-repeat:no-repeat;
+        border: none;
+        outline:none;
+        width: 100%;
+        @include font-size(14px);
+        text-align: left;
+        padding: 5px;
+    }
 
-.rm-app-add-repositories-list .active:before {
-   background-image: url(unquote(get-setting(STATIC_URL) + 'maker/images/list_item_active.png'));
-}
+    button:hover:enabled {
+        background-color: #f4f4f4;
+    }
 
-.rm-app-add-categories-clear {
-    color: #0368cd;
-    float: right;
-    @include font-size(12px);
-    padding: 6px;
-    text-decoration: none;
-    text-transform: uppercase;
-}
-
-.rm-app-add-categories-clear:hover, .rm-app-add-repositories-list-item a:hover,
-.rm-app-add-categories-list-item:hover {
-    background-color: #ececec;
-}
-
-.rm-app-add-categories-list {
-    @extend .mdl-grid;
-    clear: both;
-    padding: 0;
-    align-items: flex-start;
-    justify-content: space-around;
-}
-
-.rm-app-add-categories-list-item {
-    @extend .rm-no-underline;
-    // TODO: Handle selection
-    background: none;
-    border: none;
-    padding: 6px;
-    text-align: center;
-    width: 90px;
-    flex-grow: 1;
-}
-
-.rm-app-add-categories-list-item-circle {
-    background-color: #ececec;
-    border-radius: 50%;
-    display: inline-block;
-    height: 35px;
-    width: 35px;
-}
-
-a:hover .rm-app-add-categories-list-item-circle {
-    background-color: #ffecec;
-}
-
-.active .rm-app-add-categories-list-item-circle,
-a.active:hover .rm-app-add-categories-list-item-circle {
-    background-color: #4a4a4a;
-}
-
-.rm-app-add-categories-list-item-title {
-    font-family: "Roboto-Regular";
-    @include font-size(13px);
-    text-overflow: ellipsis;
-    overflow: hidden;
+    hr {
+        border-color: #ECECEC;
+        margin: 3px;
+    }
 }
 
 .rm-app-add-apps {
-    @extend .mdl-cell, .mdl-cell--8-col, .mdl-grid;
+    @extend .mdl-cell, .mdl-cell--6-col, .mdl-grid, .rm-grid--center;
     align-items: flex-start;
     align-content: flex-start;
 }
@@ -199,6 +181,10 @@ a.active:hover .rm-app-add-categories-list-item-circle {
 .rm-app-add-remote-repository-information-description {
     color: #000000;
     @include font-size(17px);
+}
+
+.rm-app-add-remote-repository-information-divider {
+    border-color: #ECECEC;
 }
 
 .rm-app-add-no-results {
