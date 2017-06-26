@@ -1,6 +1,6 @@
 import pathlib
 
-from allauth.account.forms import LoginForm, SignupForm
+from allauth.account.forms import LoginForm, SignupForm, ResetPasswordForm
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext_lazy as _
 from django.views.static import serve
 
 from maker import DEFAULT_USER_NAME
@@ -103,6 +104,20 @@ class RmLoginForm(LoginForm):
         for field in fields:
             if 'placeholder' in self.fields[field].widget.attrs:
                 del self.fields[field].widget.attrs['placeholder']
+
+
+class RmResetPasswordForm(ResetPasswordForm):
+
+    def __init__(self, *args, **kwargs):
+        super(RmResetPasswordForm, self).__init__(*args, **kwargs)
+        # Replace email placeholder
+        self.fields['email'].label = _('Enter email')
+        self.fields['email'].help_text = \
+            _("Enter your email address and we'll send a link to reset it. "
+              "If you did not sign up with an email, "
+              "we cannot help you securely reset your password.")
+        if 'placeholder' in self.fields['email'].widget.attrs:
+            del self.fields['email'].widget.attrs['placeholder']
 
 
 class RmSignupForm(SignupForm):

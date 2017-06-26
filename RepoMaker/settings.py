@@ -111,6 +111,7 @@ if not SINGLE_USER_MODE:
     )
     ACCOUNT_FORMS = {
         'login': 'maker.views.RmLoginForm',
+        'reset_password': 'maker.views.RmResetPasswordForm',
         'signup': 'maker.views.RmSignupForm',
     }
     ACCOUNT_EMAIL_VERIFICATION = "none"
