@@ -180,12 +180,13 @@ select#id_category {
 }
 
 .rm-app-screenshot-drop {
-    @extend .rm-repo-apps-add-locally;
-    border-bottom: 1px dashed #d7d7d7;
+    background: #fafafa;
+    border: 1px dashed #d7d7d7;
     height: auto;
     padding: 130px 15px;
     margin: 10px 0px 10px 10px;
     min-width: 250px;
+    padding: 20px;
     text-align: center;
 
     .errorlist {
@@ -194,6 +195,33 @@ select#id_category {
         font-weight: bold;
         padding-left: 0;
     }
+}
+
+.rm-app-screenshot-drop-icon,
+.rm-app-versions-drop-icon {
+    @extend .material-icons;
+}
+
+.rm-app-screenshot-drop-title,
+.rm-app-versions-drop-title {
+    @include font-size(15px);
+}
+
+.rm-app-screenshot-drop-description-first,
+.rm-app-screenshot-drop-description-second,
+.rm-app-versions-drop-description-first,
+.rm-app-versions-drop-description-second {
+    color: #575757;
+    @include font-size(14px);
+}
+
+.rm-app-screenshot-drop-upload-browse,
+.rm-app-versions-drop-upload-browse {
+    color: $rm-blue;
+    @include font-size(13px);
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
 .rm-app-screenshot-delete {
@@ -219,12 +247,13 @@ select#id_category {
 }
 
 .rm-app-versions-drop {
-    @extend .rm-repo-apps-add-locally;
-    border-bottom: 1px dashed #d7d7d7;
+    background: #fafafa;
+    border: 1px dashed #d7d7d7;
     height: auto;
     margin-top: 10px;
     margin-bottom: 25px;
     min-width: 250px;
+    padding: 20px;
     text-align: center;
 }
 

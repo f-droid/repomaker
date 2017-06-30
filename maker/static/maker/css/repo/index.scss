@@ -51,7 +51,7 @@
 
     button {
         @extend .rm-button--blue;
-        font-size: 14px;
+        @include font-size(14px);
         height: 52px;
         padding: 0 52px;
         white-space: nowrap;

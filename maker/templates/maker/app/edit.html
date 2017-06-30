@@ -76,15 +76,15 @@
 
 {% block screenshot-drop %}
 <div id="rm-dnd-holder--screenshots"  class="rm-app-screenshot-drop rm-form">
-	<i class="rm-repo-apps-empty-add-icon material-icons">file_upload</i>
-	<div class="rm-repo-apps-empty-add-title">{% trans 'Add files' %}</div>
+	<i class="rm-app-screenshot-drop-icon">file_upload</i>
+	<div class="rm-app-screenshot-drop-title">{% trans 'Add files' %}</div>
 	<!-- TODO: Make this translatable properly -->
-	<div class="rm-repo-apps-empty-add-description-first">
+	<div class="rm-app-screenshot-drop-description-first">
 		<span class="rm-dng-text" hidden>{% trans 'Drag and drop screenshots' %}</span>
 	</div>
-	<div class="rm-repo-apps-empty-add-description-second">
+	<div class="rm-app-screenshot-drop-description-second">
 		<span class="rm-dng-text" hidden>{% trans 'or' %}</span>
-		<label for="id_screenshots" class="rm-repo-apps-empty-add-upload-browse">{% trans 'browse to upload' %}</label>
+		<label for="id_screenshots" class="rm-app-screenshot-drop-upload-browse">{% trans 'browse to upload' %}</label>
 		{{ form.screenshots }}
 	</div>
 	{{ form.screenshots.errors }}
@@ -115,15 +115,15 @@
 {% block apk-drop %}
 <span class="error">{{ form.apks.errors }}</span>
 <div id="rm-dnd-holder--apks" class="rm-app-versions-drop rm-form">
-	<i class="rm-repo-apps-empty-add-icon material-icons">file_upload</i>
-	<div class="rm-repo-apps-empty-add-title">{% trans 'Add files' %}</div>
+	<i class="rm-app-versions-drop-icon">file_upload</i>
+	<div class="rm-app-versions-drop-title">{% trans 'Add files' %}</div>
 	<!-- TODO: Make this translatable properly -->
-	<div class="rm-repo-apps-empty-add-description-first">
+	<div class="rm-app-versions-drop-description-first">
 		<span class="rm-dng-text" hidden>{% trans 'Drag and drop .apk files' %}</span>
 	</div>
-	<div class="rm-repo-apps-empty-add-description-second">
+	<div class="rm-app-versions-drop-description-second">
 		<span class="rm-dng-text" hidden>{% trans 'or' %}</span>
-		<label for="id_apks" class="rm-repo-apps-empty-add-upload-browse">{% trans 'browse to upload' %}</label>
+		<label for="id_apks" class="rm-app-versions-drop-upload-browse">{% trans 'browse to upload' %}</label>
 		{{ form.apks }}
 	</div>
 </div>

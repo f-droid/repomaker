@@ -49,103 +49,57 @@
  * Add apps
  */
 
-.rm-repo-apps-add, .rm-repo-apps-empty-add, .rm-repo-apps-empty-discover {
-    @extend .mdl-cell, .mdl-cell--6-col, .center;
-    padding: 90px;
+.rm-repo-apps-add-container {
+    @extend .mdl-cell, .mdl-cell--10-col, .center, .rm-form;
+    padding: 20px;
+}
+
+.rm-repo-apps-add-remote {
+    @extend .rm-no-underline;
+
+    button {
+        @extend .rm-button--blue;
+        @include font-size(14px);
+        height: 42px;
+        padding: 0 42px;
+        white-space: nowrap;
+    }
 }
 
 .rm-repo-apps-add {
-    @extend .rm-form;
-    padding: 0;
-}
-
-.rm-repo-apps-add-locally {
     background: #fafafa;
-    border-left: 1px dashed #d7d7d7;
-    border-right: 1px dashed #d7d7d7;
-    border-top: 1px dashed #d7d7d7;
-    height: calc(70% - 2 * 15px);
-    padding: 15px;
+    background: linear-gradient(#ffffff, #fafafa);
+    margin: 15px;
+    padding: 20px;
 }
 
-.rm-repo-apps-add-remotely {
-    align-items: center;
-    background: white;
-    border: 1px solid #d7d7d7;
-    color: unset;
-    display: flex;
-    height: calc(30%);
-    justify-content: center;
-    text-decoration: none;
-    transition: background-color 0.2s ease;
-}
-
-.rm-repo-apps-add-remotely:hover {
-    background: #f2f2f2;
-}
-
-.rm-repo-apps-empty-add {
-    background: #fafafa;
-    border: 1px dashed #d7d7d7;
-}
-
-.rm-repo-apps-empty-discover {
-    border-bottom: 1px solid #d7d7d7;
-    border-right: 1px solid #d7d7d7;
-    border-top: 1px solid #d7d7d7;
-}
-
-.rm-repo-apps-add-locally-icon,
-.rm-repo-apps-empty-add-icon,
-.rm-repo-apps-add-remotely-icon,
-.rm-repo-apps-empty-discover-icon {
-    @extend .material-icons;
-}
-
-.rm-repo-apps-add-locally-title,
-.rm-repo-apps-empty-add-title,
-.rm-repo-apps-empty-discover-title {
+.rm-repo-apps-add-title {
+    font-weight: 600;
     @include font-size(15px);
 }
 
-.rm-repo-apps-add-locally-description-first,
-.rm-repo-apps-add-locally-description-second,
-.rm-repo-apps-empty-add-description-first,
-.rm-repo-apps-empty-add-description-second {
+.rm-repo-apps-add-description {
     color: #575757;
     @include font-size(14px);
 }
 
-.rm-repo-apps-add-remotely-title {
-    color: #575757;
-    @include font-size(11px);
-    margin-left: 6px;
-    text-decoration: none;
-    text-transform: uppercase;
+.rm-repo-apps-add-choose {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
-.rm-repo-apps-add-locally-upload-browse,
-.rm-repo-apps-empty-add-upload-browse {
-    color: $rm-blue;
-    @include font-size(13px);
-    text-decoration: none;
-    text-transform: uppercase;
-    cursor: pointer;
+.rm-repo-apps-add-button {
+    @extend .rm-button--blue;
 }
 
 /*
  * Add apps - loading
  */
-.rm-repo-apps-add-locally--loading {
-    @extend .rm-repo-apps-add-locally, .rm-dnd--loading;
+.rm-repo-apps-add--loading {
+    @extend .rm-repo-apps-add, .rm-dnd--loading;
     height: calc(70%);
 }
 
-.rm-repo-apps-empty-add--loading {
-    @extend .rm-repo-apps-empty-add, .rm-dnd--loading;
-}
-
-.rm-repo-apps-add-locally--loading-title,
-.rm-repo-apps-empty-add--loading-title {
+.rm-repo-apps-add--loading-title {
     @extend .rm-dnd--loading-title;
 }
