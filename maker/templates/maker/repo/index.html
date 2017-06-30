@@ -30,16 +30,14 @@
 
 	{% include 'maker/site_notice.html' %}
 
-	<div class="rm-repo-tabs__panels">
-		<div class="mdl-tabs__panel is-active" id="rm-repo-panel-apps">
-			{% include "maker/repo/index_apps.html" %}
-		</div>
-		<div class="mdl-tabs__panel" id="rm-repo-panel-share">
-			{% include "maker/repo/index_share.html" %}
-		</div>
-		<div class="mdl-tabs__panel" id="rm-repo-panel-info">
-			{% include "maker/repo/index_info.html" %}
-		</div>
+	<div class="mdl-tabs__panel is-active" id="rm-repo-panel-apps">
+		{% include "maker/repo/index_apps.html" %}
+	</div>
+	<div class="mdl-tabs__panel" id="rm-repo-panel-share">
+		{% include "maker/repo/index_share.html" %}
+	</div>
+	<div class="mdl-tabs__panel" id="rm-repo-panel-info">
+		{% include "maker/repo/index_info.html" %}
 	</div>
 </div>
 
