@@ -15,7 +15,7 @@
 			Add to F-Droid
 		</button>
 	</div>
-	<a href="qr_code.html" class="rm-no-underline only-desktop">
+	<a href="assets/qr_code.html" class="rm-no-underline only-desktop">
 		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
 			Add to F-Droid
 		</button>
@@ -40,12 +40,12 @@
 	{% with text='Check out this F-Droid repo: '|add:repo.name url=repo.get_fingerprint_url %}
 	<a href="https://twitter.com/intent/tweet?text={{ text|urlencode }}&url={{ url|urlencode }}"
 	   target="_blank">
-		<img src="twitter.png"/>
+		<img src="assets/twitter.png"/>
 	</a>
 	{% endwith %}
 	<a href="https://www.facebook.com/sharer/sharer.php?u={{ repo.get_fingerprint_url|urlencode }}"
 	   target="_blank">
-		<img src="facebook.png"/>
+		<img src="assets/facebook.png"/>
 	</a>
 </nav>
 {% endblock header %}
@@ -62,7 +62,7 @@
 		</section>
 		<footer class="mdl-mega-footer" id="f-droid">
 			<div class="mdl-mega-footer__top-section mdl-grid">
-				{% include 'maker/repo_page/fdroid.html' %}
+				{% include 'maker/repo_page/fdroid.html' with assets='assets/' %}
 			</div>
 			<div class="mdl-mega-footer__bottom-section">
 				<span class="repo-made-with">Made with ❤ using repomaker.</span>

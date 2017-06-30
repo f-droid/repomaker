@@ -65,7 +65,7 @@ class RepositoryTestCase(TestCase):
         self.assertIsNone(repo.last_publication_date)
 
         # assert that the QR code has been created
-        qr_rel_path = get_repo_file_path(repo, 'qrcode.png')
+        qr_rel_path = get_repo_file_path(repo, 'assets/qrcode.png')
         qr_abs_path = os.path.join(settings.MEDIA_ROOT, qr_rel_path)
         self.assertEqual(qr_rel_path, repo.qrcode.name)
         self.assertTrue(os.path.isfile(qr_abs_path))
@@ -196,24 +196,26 @@ class RepositoryTestCase(TestCase):
         # copy page assets to repo
         self.repo._copy_page_assets()  # pylint: disable=protected-access
 
+        repo_page_assets = os.path.join(self.repo.get_repo_path(), 'assets')
+
         # assert that the MDL JavaScript library has been copied
-        mdl_js_abs_path = os.path.join(self.repo.get_repo_path(), 'material.min.js')
+        mdl_js_abs_path = os.path.join(repo_page_assets, 'material.min.js')
         self.assertTrue(os.path.isfile(mdl_js_abs_path))
         self.assertTrue(os.path.getsize(mdl_js_abs_path) > 200)
 
         # assert that the repo homepage's stylesheet has been created
-        style_abs_path = os.path.join(self.repo.get_repo_path(), 'page.css')
+        style_abs_path = os.path.join(repo_page_assets, 'page.css')
         self.assertTrue(os.path.isfile(style_abs_path))
 
         # assert that the Roboto fonts has been copied
-        font_path = os.path.join(self.repo.get_repo_path(), 'roboto-fonts', 'Roboto')
+        font_path = os.path.join(repo_page_assets, 'roboto-fonts', 'Roboto')
         self.assertTrue(os.path.isdir(font_path))
         self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Bold.woff2')))
         self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Medium.woff2')))
         self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Regular.woff2')))
 
         # assert that the icons has been copied
-        icon_path = self.repo.get_repo_path()
+        icon_path = repo_page_assets
         self.assertTrue(os.path.isdir(icon_path))
         self.assertTrue(os.path.isfile(os.path.join(icon_path, 'f-droid.png')))
         self.assertTrue(os.path.isfile(os.path.join(icon_path, 'twitter.png')))

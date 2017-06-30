@@ -173,7 +173,7 @@ class Repository(AbstractRepository):
             if self.qrcode:
                 self.qrcode.delete(save=False)
             img.save(f, format='png')
-            self.qrcode.save('qrcode.png', ContentFile(f.getvalue()), False)
+            self.qrcode.save('assets/qrcode.png', ContentFile(f.getvalue()), False)
         finally:
             f.close()
 
@@ -183,7 +183,7 @@ class Repository(AbstractRepository):
 
         # Render page to string
         repo_page_string = render_to_string('maker/repo_page/index.html', {'repo': self})
-        repo_page_string = repo_page_string.replace('/static/maker/css/repo/', '')
+        repo_page_string = repo_page_string.replace('/static/maker/css/repo/', 'assets/')
 
         # Render qr_code page to string
         qr_page_string = render_to_string('maker/repo_page/qr_code.html', {'repo': self})
@@ -192,7 +192,11 @@ class Repository(AbstractRepository):
         with open(os.path.join(self.get_repo_path(), 'index.html'), 'w', encoding='utf8') as f:
             f.write(repo_page_string)  # Write repo page to file
 
-        with open(os.path.join(self.get_repo_path(), 'qr_code.html'), 'w', encoding='utf8') as f:
+        repo_page_assets = os.path.join(self.get_repo_path(), 'assets')
+        if not os.path.exists(repo_page_assets):
+            os.makedirs(repo_page_assets)
+
+        with open(os.path.join(repo_page_assets, 'qr_code.html'), 'w', encoding='utf8') as f:
             f.write(qr_page_string)  # Write repo qr page to file
 
         # copy page assets
@@ -202,17 +206,18 @@ class Repository(AbstractRepository):
         """
         Copies various assets required for the repo page.
         """
+        repo_page_assets = os.path.join(self.get_repo_path(), 'assets')
         files = [
             # MDL JavaScript dependency
             (os.path.join(settings.NODE_MODULES_ROOT, 'material-design-lite', 'material.min.js'),
-             os.path.join(self.get_repo_path(), 'material.min.js')),
+             os.path.join(repo_page_assets, 'material.min.js')),
             # Stylesheet
             (os.path.join(settings.STATIC_ROOT, 'maker', 'css', 'repo', 'page.css'),
-             os.path.join(self.get_repo_path(), 'page.css')),
+             os.path.join(repo_page_assets, 'page.css')),
         ]
 
         # Ensure Roboto fonts path exists
-        roboto_font_path = os.path.join(self.get_repo_path(), 'roboto-fonts', 'Roboto')
+        roboto_font_path = os.path.join(repo_page_assets, 'roboto-fonts', 'Roboto')
         if not os.path.exists(roboto_font_path):
             os.makedirs(roboto_font_path)
 
@@ -230,7 +235,7 @@ class Repository(AbstractRepository):
                                  'repo_page')
         for icon in icons:
             source = os.path.join(icon_path, icon)
-            target = os.path.join(self.get_repo_path(), icon)
+            target = os.path.join(repo_page_assets, icon)
             files.append((source, target))
 
         # Copy all files
