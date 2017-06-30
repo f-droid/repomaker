@@ -1,64 +1,80 @@
-{% extends "maker/base.html" %}
+{% extends "maker/base_modal.html" %}
 {% load i18n %}
+{% load static %}
 
-{% block title %}{{ storage.get_name }}{% endblock %}
+{% block title %}{{ storage.get_name }}{% endblock title %}
 
-{% block toolbar-title %}
-<a href="{% url 'repo' storage.repo.id %}">{{ storage.repo.name }}</a> - {{ storage.get_name }}
-{% endblock toolbar-title%}
+{% block toolbar %}
+<div class="rm-grid--full-width rm-grid--center mdl-grid">
+	<div class="rm-app-toolbar mdl-cell mdl-cell--8-col">
+		<a href="{% url 'repo' storage.repo.id %}#rm-repo-panel-info" class="rm-storage-toolbar-back">
+			<i class="material-icons">arrow_back</i>
+		</a>
+		<span class="rm-storage-toolbar-title">
+			{% trans 'Storage' %}
+		</span>
+	</div>
+</div>
+{% endblock toolbar %}
 
 {% block rm-content %}
+<div class="rm-storage-detail-container">
+	<div class="rm-storage-detail">
+		<div class="rm-storage-detail-header">
+			<img src="{% static 'maker/images/storage.png' %}"/>
+			<h4>{{ storage.get_name }}</h4>
+		</div>
 
-<h3>{{ storage.get_name }}</h3>
+		<div class="rm-storage-detail-help">
+			{% block help_text %}{% endblock help_text %}
+		</div>
 
-{% block help_text %}
-{% endblock help_text %}
+		<form action="" method="post" class="rm-storage-detail-form">
+			{% csrf_token %}
+			{% if storage.disabled %}
+			<input type="hidden" name="disabled" value="false">
+			<a href="{{ storage.get_edit_url }}" class="rm-storage-detail-form-enable">
+				<button class="mdl-js-button">
+					{% trans 'Enable Storage' %}
+				</button>
+			</a>
+			{% else %}
+			<input type="hidden" name="disabled" value="true">
+			<a href="{{ storage.get_edit_url }}" class="rm-storage-detail-form-disable">
+				<button class="mdl-js-button">
+					{% trans 'Disable Storage' %}
+				</button>
+			</a>
+			{% endif %}
+		</form>
 
-<form action="" method="post">
-	{% csrf_token %}
-	{% if storage.disabled %}
-	<input type="hidden" name="disabled" value="false">
-	<a href="{{ storage.get_edit_url }}" class="rm-no-underline" style="margin-right:1em;">
-		<button class="mdl-button mdl-js-button mdl-button--raised" style="background: #33CC33;">
-			{% trans 'Enable Storage' %}
-		</button>
-	</a>
-	{% else %}
-	<input type="hidden" name="disabled" value="true">
-	<a href="{{ storage.get_edit_url }}" class="rm-no-underline" style="margin-right:1em;">
-		<button class="mdl-button mdl-js-button mdl-button--raised" style="background: #FF3333;">
-			{% trans 'Disable Storage' %}
-		</button>
-	</a>
-	{% endif %}
-</form>
+		<ul class="rm-storage-detail-info">
+			<li class="rm-storage-detail-info-item-container">
+				<span class="rm-storage-detail-info-item">
+					<i class="rm-storage-detail-info-item-icon">insert_link</i>
+					<span class="rm-storage-detail-info-item-title">{% trans 'Repo Address' %}</span>
+					<span class="rm-storage-detail-info-item-subtitle">
+						<a href="{{ storage.repo.get_fingerprint_url }}">{{ storage.get_repo_url }}</a>
+					</span>
+				</span>
+			</li>
+			{% block storage_details %}{% endblock storage_details %}
+		</ul>
 
-<ul class="mdl-list">
-	<li class="mdl-list__item mdl-list__item--two-line">
-		<span class="mdl-list__item-primary-content">
-			<i class="material-icons mdl-list__item-icon">insert_link</i>
-			<span>{% trans 'Repo Address' %}</span>
-			<span class="mdl-list__item-sub-title">
-				<a href="{{ storage.get_repo_url }}">{{ storage.get_repo_url }}</a>
-			</span>
-		</span>
-	</li>
-	{% block storage_details %}{% endblock storage_details %}
-</ul>
+		<!-- TODO say whether primary storage or not and allow to make it primary if not -->
 
-<!-- TODO say whether primary storage or not and allow to make it primary if not -->
-
-<p>
-	<a href="{{ storage.get_edit_url }}" class="rm-no-underline" style="margin-right:1em;">
-		<button class="mdl-button mdl-js-button mdl-button--raised">
-			{% trans 'Edit Storage' %}
-		</button>
-	</a>
-	<a href="{{ storage.get_delete_url }}" class="rm-no-underline" style="margin-right:1em;">
-		<button class="mdl-button mdl-js-button mdl-button--raised">
-			{% trans 'Delete Storage' %}
-		</button>
-	</a>
-</p>
-
+		<div class="rm-storage-detail-action">
+			<a href="{{ storage.get_edit_url }}">
+				<button class="mdl-js-button">
+					{% trans 'Edit Storage' %}
+				</button>
+			</a>
+			<a href="{{ storage.get_delete_url }}">
+				<button class="mdl-js-button">
+					{% trans 'Delete Storage' %}
+				</button>
+			</a>
+		</div>
+	</div>
+</div>
 {% endblock rm-content %}

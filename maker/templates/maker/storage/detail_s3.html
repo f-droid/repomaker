@@ -2,31 +2,31 @@
 {% load i18n %}
 
 {% block storage_details %}
-<li class="mdl-list__item mdl-list__item--two-line">
-		<span class="mdl-list__item-primary-content">
-			<i class="material-icons mdl-list__item-icon">public</i>
-			<span>{% trans 'Region' %}</span>
-			<span class="mdl-list__item-sub-title">
-				{{ storage.get_region_display }}
-			</span>
+<li class="rm-storage-detail-info-item-container">
+	<span class="rm-storage-detail-info-item">
+		<i class="rm-storage-detail-info-item-icon">public</i>
+		<span class="rm-storage-detail-info-item-title">{% trans 'Region' %}</span>
+		<span class="rm-storage-detail-info-item-subtitle">
+			{{ storage.get_region_display }}
 		</span>
+	</span>
 </li>
-<li class="mdl-list__item mdl-list__item--two-line">
-		<span class="mdl-list__item-primary-content">
-			<i class="material-icons mdl-list__item-icon">dns</i>
-			<span>{% trans 'Bucket' %}</span>
-			<span class="mdl-list__item-sub-title">
-				{{ storage.bucket }}
-			</span>
+<li class="rm-storage-detail-info-item-container">
+	<span class="rm-storage-detail-info-item">
+		<i class="rm-storage-detail-info-item-icon">dns</i>
+		<span class="rm-storage-detail-info-item-title">{% trans 'Bucket' %}</span>
+		<span class="rm-storage-detail-info-item-subtitle">
+			{{ storage.bucket }}
 		</span>
+	</span>
 </li>
-<li class="mdl-list__item mdl-list__item--two-line">
-		<span class="mdl-list__item-primary-content">
-			<i class="material-icons mdl-list__item-icon">vpn_key</i>
-			<span>{% trans 'Access Key ID' %}</span>
-			<span class="mdl-list__item-sub-title">
-				{{ storage.accesskeyid }}
-			</span>
+<li class="rm-storage-detail-info-item-container">
+	<span class="rm-storage-detail-info-item">
+		<i class="rm-storage-detail-info-item-icon">vpn_key</i>
+		<span class="rm-storage-detail-info-item-title">{% trans 'Access Key ID' %}</span>
+		<span class="rm-storage-detail-info-item-subtitle">
+			{{ storage.accesskeyid }}
 		</span>
+	</span>
 </li>
 {% endblock storage_details %}

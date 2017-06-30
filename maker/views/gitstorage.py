@@ -1,7 +1,7 @@
 import fdroidserver.index
 from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
-from django.forms import CharField, URLField
+from django.forms import CharField, URLField, TextInput
 from django.utils.translation import ugettext_lazy as _
 
 from maker.models.storage import GitStorage, HostnameValidator, PathValidator
@@ -10,7 +10,8 @@ from .storage import StorageCreateView, StorageUpdateView, StorageDeleteView, St
 
 
 class GitStorageForm(SshStorageForm):
-    ssh_url = CharField(required=True, label=_('Git Repository SSH Address'))
+    ssh_url = CharField(required=True, label=_('SSH'),
+                        widget=TextInput(attrs={'placeholder': _('Enter SSH URL')}))
     url = URLField(required=False, label=_('Raw Git URL'), help_text=_(
         'This is the location where the uploaded files can be accessed from' +
         ' in raw form.' +

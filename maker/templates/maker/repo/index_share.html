@@ -4,7 +4,23 @@
 	<div class="rm-repo-share">
 		{% if not repo.last_publication_date %}
 		<div class="rm-repo-share-empty">
-			{% trans 'Your repo did not get published yet. Do you already have added and enabled a storage?' %}
+			<div class="rm-storage-header-icon"><i>cloud_upload</i></div>
+			<h4 class="rm-storage-header-title">
+				{% trans 'Add storage to publish' %}
+			</h4>
+			<p>
+				{% blocktrans trimmed %}
+				Your repo will be automatically published when you add storage.
+				Repomaker does not publically promote your stuff.
+				Only people who receive the direct link to your repo
+				will be able to see it.
+				{% endblocktrans %}
+			</p>
+			<a href="{% url 'storage_add' repo.id %}" class="rm-no-underline">
+				<button class="rm-button--blue mdl-button mdl-js-button">
+					{% trans 'add storage' %}
+				</button>
+			</a>
 		</div>
 		{% else %}
 		<div class="rm-repo-share-general">

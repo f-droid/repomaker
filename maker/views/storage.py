@@ -1,7 +1,7 @@
 from django.forms import BooleanField
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import DetailView
+from django.views.generic import DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin
 
 from maker.models.storage import StorageManager
@@ -36,11 +36,21 @@ class MainStorageMixin(FormMixin):
         return super(MainStorageMixin, self).form_valid(form)
 
 
+class StorageAddView(RepositoryAuthorizationMixin, TemplateView):
+    template_name = 'maker/storage/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(StorageAddView, self).get_context_data(**kwargs)
+        context['repo'] = self.get_repo()
+        return context
+
+
 class StorageCreateView(RepositoryAuthorizationMixin, MainStorageMixin, CreateView):
     template_name = 'maker/storage/form.html'
 
     def get_context_data(self, **kwargs):
         context = super(StorageCreateView, self).get_context_data(**kwargs)
+        context['repo'] = self.get_repo()
         context['storage_name'] = self.model.get_name()
         return context
 
@@ -78,6 +88,7 @@ class StorageUpdateView(RepositoryAuthorizationMixin, MainStorageMixin, UpdateVi
 
     def get_context_data(self, **kwargs):
         context = super(StorageUpdateView, self).get_context_data(**kwargs)
+        context['repo'] = self.get_repo()
         context['storage_name'] = self.model.get_name()
         return context
 

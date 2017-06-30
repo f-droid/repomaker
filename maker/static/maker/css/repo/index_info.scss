@@ -10,6 +10,24 @@
     flex-grow: 1;
 }
 
+.rm-repo-info-storage-header {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+}
+
+.rm-repo-info-storage-header-title {
+    flex-grow: 1;
+}
+
+.rm-repo-info-storage-header-add {
+    align-items: center;
+    color: $rm-blue;
+    display: inline-flex;
+    text-decoration: none;
+    vertical-align: middle;
+}
+
 .rm-repo-info-name-header, .rm-repo-info-description-header,
 .rm-repo-info-storage-header, .rm-repo-info-fingerprint-header {
     color: #575757;
@@ -22,8 +40,7 @@
     @include font-size(18px);
 }
 
-.rm-repo-info-edit, .rm-repo-info-storage-add-ssh,
-.rm-repo-info-storage-add-git, .rm-repo-info-storage-add-as3 {
+.rm-repo-info-edit {
     @extend .rm-no-underline;
     button {
         @extend .rm-button, .mdl-button;
@@ -59,6 +76,10 @@
 
 .rm-repo-info-storages-item:hover {
     background: #f2f2f2;
+}
+
+.rm-repo-info-storages-item--default {
+    @extend .mdl-list__item, .mdl-list__item--two-line;
 }
 
 .rm-repo-info-storage-add-ssh, .rm-repo-info-storage-add-git, .rm-repo-info-storage-add-as3 {

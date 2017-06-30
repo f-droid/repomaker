@@ -21,6 +21,15 @@
 		{% if storage %}
 		<ul class="rm-repo-info-storages">
 			{% for storage in storage %}
+			{% if storage.is_default %}
+			<li class="rm-repo-info-storages-item--default">
+				<div class="mdl-list__item-primary-content">
+					<i class="material-icons mdl-list__item-icon ">cloud</i>
+					<span>{{ storage.get_name }}</span>
+					<span class="mdl-list__item-sub-title">{{ storage }}</span>
+				</div>
+			</li>
+			{% else %}
 			<li class="rm-repo-info-storages-item">
 				<a href="{{ storage.get_absolute_url }}" class="mdl-list__item-primary-content">
 					{% if storage.disabled %}
@@ -28,30 +37,19 @@
 					{% else %}
 					<i class="material-icons mdl-list__item-icon ">cloud</i>
 					{% endif %}
-					<span>{{ storage.get_name }}</span>
-					<span class="mdl-list__item-sub-title">{{ storage }}</span>
+					<span>{{ storage }}</span>
+					<span class="mdl-list__item-sub-title">{{ storage.get_name }}</span>
 				</a>
 			</li>
+			{% endif %}
 			{% endfor %}
 		</ul>
-		{% else %}
-		<p>
-			<b>{% trans 'Attention:' %}</b>
-			{% trans 'This repository has no remote storage. Add one to get your repository published.' %}
-		</p>
 		{% endif %}
+		<a href="{% url 'storage_add' repo.id %}" class="rm-repo-info-storage-header-add">
+			<i class="material-icons">add</i>
+			{% trans 'Add Storage' %}
+		</a>
 
-		<p>
-			<a href="{% url 'storage_ssh_add' repo.id %}" class="rm-repo-info-storage-add-ssh">
-				<button class="mdl-js-button">{% trans 'Add SSH Storage' %}</button>
-			</a>
-			<a href="{% url 'storage_git_add' repo.id %}" class="rm-repo-info-storage-add-git">
-				<button class="mdl-js-button">{% trans 'Add Git Storage' %}</button>
-			</a>
-			<a href="{% url 'storage_s3_add' repo.id %}" class="rm-repo-info-storage-add-as3">
-				<button class="mdl-js-button">{% trans 'Add Amazon S3 Storage' %}</button>
-			</a>
-		</p>
 		<hr class="rm-repo-info-divider"/>
 
 		<div class="rm-repo-info-fingerprint-header">{% trans 'Fingerprint' %}</div>
