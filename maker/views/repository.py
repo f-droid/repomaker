@@ -108,13 +108,13 @@ class RepositoryView(RepositoryAuthorizationMixin, ListView):
                     self.add_apks()
                 except OperationalError as e:
                     logging.error(e)
-                    return HttpResponse(1, status=500)
+                    return HttpResponse(e, status=500)
                 except IntegrityError as e:
                     logging.error(e)
-                    return HttpResponse(2, status=400)
+                    return HttpResponse(e.message, status=400)
                 except ValidationError as e:
                     logging.error(e)
-                    return HttpResponse(3, status=400)
+                    return HttpResponse(e.message, status=400)
                 self.get_repo().update_async()  # schedule repository update
                 return HttpResponse(status=204)
         return Http404()

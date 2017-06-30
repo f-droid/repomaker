@@ -3,12 +3,6 @@
  */
 var buttonAdd = document.getElementById('rm-app-card-footer-action')
 
-// Exceptions that can occur
-var EXCEPTION_DATABASE_LOCKED = '1'
-
-// TODO: Remove with https://gitlab.com/fdroid/repomaker/issues/93
-var EXCEPTION_ALREADY_ADDED = '2'
-
 // Apps to be added when user click "Done"
 var appsToAdd = []
 
@@ -102,14 +96,8 @@ function appsAdded(request) {
 
         window.location = '/repo/' + window.repoId
     }
-    else if (request.status === 400 && request.responseText === EXCEPTION_ALREADY_ADDED){
-        showError('One of the apps already exists in your repo.')
-    }
-    else if (request.status === 500 && request.responseText === EXCEPTION_DATABASE_LOCKED) {
-        showError('Please wait a moment, there is currently some background activity ongoing.')
-    }
     else {
-        showError('There was a problem with adding the app.')
+        showError(request.responseText)
     }
 }
 
@@ -125,11 +113,9 @@ function updateAppsToAddCount() {
     var countContainer = document.querySelector('.rm-repo-add-toolbar-count')
     countContainer.hidden = false
     var countText = document.getElementById('rm-repo-add-toolbar-count-text')
-    if (count === 1) {
-        countText.textContent = '1 app to be added'
-    }
-    else if (count > 1) {
-        countText.textContent = count + ' apps to be added'
+    if (count > 0) {
+        countText.textContent =
+            interpolate(ngettext('%s app added', '%s apps added', count), [count])
     }
     else {
         countContainer.hidden = true
@@ -150,7 +136,7 @@ function buttonSetAdded(element) {
 
 function buttonSetNormal(element) {
     setClassOfElement(element, 'rm-app-card-footer-action')
-    setContentOfElement(element + '-button', 'Add')
+    setContentOfElement(element + '-button', gettext('Add'))
 }
 
 function showError(text) {

@@ -74,13 +74,12 @@ class AppAddView(RepositoryAuthorizationMixin, ListView):
                                                    repo__users__id=request.user.id)
                 try:
                     remote_app.add_to_repo(self.get_repo())
-                except OperationalError:
-                    return HttpResponse(1, status=500)
+                except OperationalError as e:
+                    logging.error(e)
+                    return HttpResponse(e, status=500)
                 except ValidationError as e:
-                    # TODO: Remove with https://gitlab.com/fdroid/repomaker/issues/93
-                    if "This app does already exist in your repository." == e.message:
-                        return HttpResponse(2, status=400)
-                    return HttpResponse(status=400)
+                    logging.error(e)
+                    return HttpResponse(e.message, status=400)
             self.get_repo().update_async()  # schedule repository update
             return HttpResponse(status=204)
         return Http404()
@@ -159,20 +158,21 @@ class AppUpdateView(RepositoryAuthorizationMixin, UpdateView):
                     self.add_apks()
                 except OperationalError as e:
                     logging.error(e)
-                    return HttpResponse(1, status=500)
+                    return HttpResponse(e, status=500)
                 except IntegrityError as e:
                     logging.error(e)
-                    return HttpResponse(2, status=400)
+                    return HttpResponse(e.message, status=400)
                 except ValidationError as e:
                     logging.error(e)
-                    return HttpResponse(3, status=400)
+                    return HttpResponse(e.message, status=400)
                 self.get_repo().update_async()  # schedule repository update
                 return HttpResponse(status=204)
             if request.META['HTTP_RM_BACKGROUND_TYPE'] == 'screenshots':
                 try:
                     self.add_screenshots()
-                except OperationalError:
-                    return HttpResponse(1, status=500)
+                except OperationalError as e:
+                    logging.error(e)
+                    return HttpResponse(e, status=500)
                 self.get_repo().update_async()  # schedule repository update
                 return HttpResponse(status=204)
         return super(AppUpdateView, self).post(request, *args, **kwargs)
