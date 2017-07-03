@@ -304,3 +304,21 @@ a.rm-app-navigation-previous:hover {
     @include font-size(19px);
     margin: 10px;
 }
+
+/**
+ * Remote app
+ */
+$rm-privacy-grey: #ababab;
+.rm-remote-app-privacy {
+    @extend .mdl-cell, .mdl-cell--12-col, .center;
+    color: $rm-privacy-grey;
+}
+
+.rm-remote-app-privacy-button {
+    @extend .mdl-cell, .mdl-cell--12-col, .center;
+    a button {
+        @extend .rm-button;
+        border-color: $rm-privacy-grey;
+        color: $rm-privacy-grey;
+    }
+}

@@ -2,14 +2,18 @@
  * App card
  */
 
-.rm-app-card {
+.rm-app-card,
+.rm-app-card--no-hover {
     border-radius: 8px;
     margin: 8px auto 8px auto;
     flex-direction: row;
+}
+
+.rm-app-card {
     transition: background-color 0.2s ease;
 }
 
-a.rm-app-card:hover {
+.rm-app-card:hover {
     background: #f2f2f2;
 }
 

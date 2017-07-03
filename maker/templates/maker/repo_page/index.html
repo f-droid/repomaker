@@ -57,7 +57,7 @@
 				<p>{{ repo.description }}</p>
 			</div>
 			{% for app in repo.app_set.all %}
-			{% include "maker/widgets/app.html" with repo_page=True width=6 %}
+			{% include "maker/widgets/app.html" with repo_page=True width=6 no_hover=True %}
 			{% endfor %}
 		</section>
 		<footer class="mdl-mega-footer" id="f-droid">

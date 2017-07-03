@@ -48,8 +48,11 @@ urlpatterns = [
     url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/' +
         r'category/(?P<category_id>[0-9]+)/$',
         AppAddView.as_view(), name='add_app_with_category'),
-    url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/(?P<app_id>[0-9]+)$',
+    url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/(?P<app_id>[0-9]+)/$',
         RemoteAppCreateView.as_view(), name='add_remote_app'),
+    url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/(?P<app_id>[0-9]+)/' +
+        r'(?P<screenshots>[screenshots]+)$',
+        RemoteAppCreateView.as_view(), name='add_remote_app_screenshots'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/$', AppDetailView.as_view(), name='app'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/edit/$', AppUpdateView.as_view(),
         name='edit_app'),

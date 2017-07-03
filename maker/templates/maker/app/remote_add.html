@@ -1,35 +1,65 @@
-{% extends "maker/base.html" %}
+{% extends "maker/app/index.html" %}
 {% load i18n %}
+{% load static %}
 
-{% block title %}{% trans 'Add App' %}{% endblock %}
+{% block back-button %}
+<a href="{% url 'add_app' repo.id %}" class="rm-toolbar-action-left"
+   {% if screenshots %}
+   onclick="window.history.go(-2)"
+   {% else %}
+   onclick="history.back()"
+   {% endif %}
+>
+	<i class="material-icons">arrow_back</i>
+</a>
+{% endblock back-button %}
 
+{% block top-buttons %}
+<form action="" enctype="multipart/form-data" method="post">
+	{% csrf_token %}
+	<span class="rm-toolbar-item">
+		{% blocktrans with count=app.get_available_languages.count trimmed %}
+		Language ({{ count }})
+		{% endblocktrans %}
+	</span>
+	<input type="submit" value="{% trans 'Add' %}" class="rm-button--blue mdl-js-button"
+		   onclick="addRemoteApp(event, {{ repo.id }}, {{ app.repo.id }}, {{ app.id }},
+		   {% if screenshots %}
+		   2
+		   {% else %}
+		   1
+		   {% endif %})"/>
+</form>
+{% endblock top-buttons %}
 
-{% block rm-content %}
-<div class="mdl-grid rm-grid--full-width rm-grid--center">
-	<div class="mdl-cell mdl-cell--8-col" style="text-align:center">
-		<h2>
-			{% blocktrans with app=app.name repo=repo.name trimmed %}
-			Add {{ app }} to {{ repo }}
-			{% endblocktrans %}
-		</h2>
+{% block screenshots %}
 
-		{% if app.summary %}
-		<p>{{ app.summary }}</p>
-		{% endif %}
-
-		<p>{{ app.description|safe }}</p>
+{% if app.remotescreenshot_set.exists %}
+<div class="rm-grid--center mdl-grid">
+	{% if screenshots %}
+	<div class="rm-app-screenshots mdl-cell mdl-cell--8-col">
+		{% for screenshot in app.remotescreenshot_set.all %}
+		<div class="rm-app-screenshot">
+			<img src="{{ screenshot.get_url }}"/>
+		</div>
+		{% endfor %}
 	</div>
+	{% else %}
+	<div class="rm-remote-app-privacy">
+		{% trans 'There are currently no screenshots shown because this gives the repo owner the ability to track you.' %}
+	</div>
+	<div class="rm-remote-app-privacy-button">
+		<a href="screenshots" onclick="storeReferrer()">
+			<button class="rm-button">{% trans 'show screenshots' %}</button>
+		</a>
+	</div>
+	{% endif %}
 </div>
+{% endif %}
+{% endblock screenshots %}
 
-<p></p>
+{% block apks %}{% endblock apks %}
 
-<div class="rm-form">
-	<form action="" enctype="multipart/form-data" method="post">
-		{% csrf_token %}
-		{% include '../form.html' %}
-		<input type="submit" value="{% blocktrans with repo=repo.name %}Add App to {{ repo }}{% endblocktrans %}"/>
-	</form>
-</div>
-
-<p></p>
-{% endblock rm-content %}
+{% block page-footer %}
+<script src="{% static 'maker/js/app/add.js' %}"></script>
+{% endblock page-footer %}

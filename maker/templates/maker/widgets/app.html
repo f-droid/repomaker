@@ -1,5 +1,7 @@
 {% if not clickable or repo_page %}
-<div class="rm-app-card mdl-cell mdl-cell--{{ width }}-col mdl-card mdl-shadow--2dp mdl-color--white">
+<div class="rm-app-card{% if no_hover or app.added %}--no-hover{% endif %} mdl-cell mdl-cell--{{ width }}-col
+			mdl-card mdl-shadow--2dp mdl-color--white"
+	 {% block rm-app-card-attributes %}{% endblock rm-app-card-attributes %}>
 {% else %}
 <a href="{{ url }}"
    class="rm-app-card mdl-cell mdl-cell--{{ width }}-col mdl-card mdl-shadow--2dp mdl-color--white rm-no-underline">

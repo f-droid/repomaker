@@ -88,6 +88,8 @@ class RemoteAppCreateView(RepositoryAuthorizationMixin, CreateView):
         context = super(RemoteAppCreateView, self).get_context_data(**kwargs)
         context['app'] = self.get_queryset().get()
         context['repo'] = self.get_repo()
+        if 'screenshots' in self.kwargs:
+            context['screenshots'] = True
         return context
 
     def form_valid(self, form):

@@ -1,6 +1,12 @@
 {% extends "maker/widgets/app.html" %}
 {% load i18n %}
 
+{% block rm-app-card-attributes %}
+{% if not app.added %}
+onclick="window.location.href = '{% url 'add_remote_app' repo.id app.repo.id app.id %}'"
+{% endif %}
+{% endblock rm-app-card-attributes %}
+
 {% block rm-app-card-right %}
 <div class="rm-app-card-footer">
 	<div class="rm-app-card-categories">

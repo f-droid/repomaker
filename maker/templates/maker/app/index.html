@@ -86,6 +86,7 @@
 		</div>
 	</div>
 </div>
+{% block screenshots %}
 {% if form or app.screenshot_set.exists %}
 <div class="rm-grid--center mdl-grid">
 	{% block screenshot-header %}{% endblock screenshot-header %}
@@ -100,6 +101,7 @@
 	</div>
 </div>
 {% endif %}
+{% endblock screenshots %}
 <div class="rm-grid--center mdl-grid">
 	<div class="rm-app-description mdl-cell mdl-cell--6-col">
 		{% block description %}
@@ -107,6 +109,7 @@
 		{% endblock description %}
 	</div>
 </div>
+{% block apks %}
 <div class="rm-grid--center mdl-grid">
 	<div class="rm-app-versions mdl-cell mdl-cell--6-col">
 		<h4 class="rm-app-section">
@@ -146,6 +149,7 @@
 		{% endif %}
 	</div>
 </div>
+{% endblock apks %}
 <div class="rm-app-navigation mdl-grid">
 	<div class="mdl-cell mdl-cell--6-col">
 	{% if app.get_previous %}

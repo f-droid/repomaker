@@ -9,6 +9,7 @@ var appsToAdd = []
 // Keys for HTML5 session storage
 var sessionStorageKeyApps = 'rmAppsToAdd'
 var sessionStorageKeyRepo = 'rmRepo'
+var sessionStorageKeyReferrer = 'rmReferrer'
 
 // Repo ID
 window.repoId = '0'
@@ -21,11 +22,18 @@ if (typeof(Storage) !== "undefined") {
         markAppsToAdd()
         updateAppsToAddCount()
     }
+    var sessionStorageRepo = JSON.parse(sessionStorage.getItem(sessionStorageKeyRepo))
+    if (sessionStorageRepo !== null && sessionStorageRepo.length !== 0 && window.repoId === 0) {
+        window.repoId = sessionStorageRepo
+    }
 }
 
-function addRemoteApp(event, repoId, appRepoId, appId) {
+function addRemoteApp(event, repoId, appRepoId, appId, remoteAdd) {
     // Prevent opening new page
     event.preventDefault()
+
+    // Prevent opening app details
+    event.stopPropagation()
 
     if (window.repoId === '0') {
         window.repoId = repoId
@@ -46,7 +54,9 @@ function addRemoteApp(event, repoId, appRepoId, appId) {
     for(var i = 0; i < appsToAdd.length; i++) {
         if (appsToAdd[i].appRepoId == appRepoId && appsToAdd[i].appId == appId) {
             appAlreadyAdded = true
-            appsToAdd.splice(i, 1)
+            if (!remoteAdd) {
+                appsToAdd.splice(i, 1)
+            }
             buttonSetNormal(element)
             break
         }
@@ -60,6 +70,19 @@ function addRemoteApp(event, repoId, appRepoId, appId) {
     if (typeof(Storage) !== "undefined") {
         sessionStorage.setItem(sessionStorageKeyApps, JSON.stringify(appsToAdd))
         updateAppsToAddCount()
+    }
+
+    if (remoteAdd === 1) {
+        location.href = document.referrer
+    }
+    else if (remoteAdd === 2) {
+        var referrer = sessionStorage.getItem(sessionStorageKeyReferrer)
+        if (referrer !== null && referrer.length !== 0) {
+            location.href = referrer
+        }
+        else {
+            window.history.go(-2)
+        }
     }
 }
 
@@ -111,6 +134,9 @@ function markAppsToAdd() {
 function updateAppsToAddCount() {
     var count = appsToAdd.length
     var countContainer = document.querySelector('.rm-repo-add-toolbar-count')
+    if (countContainer === null) {
+        return
+    }
     countContainer.hidden = false
     var countText = document.getElementById('rm-repo-add-toolbar-count-text')
     if (count > 0) {
@@ -171,6 +197,10 @@ function setHiddenOfElement(element, hidden) {
     }
 }
 
+function storeReferrer() {
+    sessionStorage.setItem(sessionStorageKeyReferrer, document.referrer)
+}
+
 /**
  * Search
  */
@@ -178,9 +208,11 @@ var searchInput = document.querySelector('.rm-app-add-filters-search-input')
 var searchClear = document.querySelector('.rm-app-add-filters-search-clear')
 
 // Set hidden or not at page load
-setHiddenOfElement(searchClear, (searchInput.value.length === 0))
-
-// Set hidden or not on input
-searchInput.addEventListener("input", function() {
+if (searchInput !== null) {
     setHiddenOfElement(searchClear, (searchInput.value.length === 0))
-})
+
+    // Set hidden or not on input
+    searchInput.addEventListener("input", function() {
+        setHiddenOfElement(searchClear, (searchInput.value.length === 0))
+    })
+}
