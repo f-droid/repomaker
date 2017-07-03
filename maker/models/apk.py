@@ -133,6 +133,10 @@ class Apk(models.Model):
         """
         AbstractRepository().get_config()
 
+        # Verify that the signature is correct
+        if not common.verify_apk_signature(self.file.path):
+            raise ValidationError(_('Invalid APK signature'))
+
         # scan APK and extract information about it
         try:
             repo_file = update.scan_apk(self.file.path)

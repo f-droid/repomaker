@@ -380,3 +380,4 @@ class Options:
     identity_file = None
     delete_unknown = False
     rename_apks = False
+    allow_disabled_algorithms = False
