@@ -1,12 +1,11 @@
-from django.core.exceptions import ValidationError
 from django.forms import FileField, ClearableFileInput
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import UpdateView, DeleteView
 
 from maker.models import Apk, ApkPointer
 from . import BaseModelForm
-from .repository import RepositoryAuthorizationMixin
+from .repository import RepositoryAuthorizationMixin, ApkUploadMixin
 
 
 class ApkForm(BaseModelForm):
@@ -20,8 +19,7 @@ class ApkForm(BaseModelForm):
         js = ('maker/js/drag-and-drop.js',)
 
 
-class ApkUploadView(RepositoryAuthorizationMixin, CreateView):
-    model = ApkPointer
+class ApkUploadView(ApkUploadMixin, UpdateView):
     form_class = ApkForm
     template_name = "maker/error.html"
 
@@ -29,37 +27,22 @@ class ApkUploadView(RepositoryAuthorizationMixin, CreateView):
         # don't answer GET requests
         return HttpResponseNotFound()
 
-    def form_valid(self, form):
-        result = super(ApkUploadView, self).form_valid(form)
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if not form.is_valid():
+            return self.form_invalid(form)
 
-        try:
-            self.add_apks()
-        except ValidationError as e:
-            form.add_error('apks', e)
+        # add posted APKs
+        failed = self.add_apks()
+        if len(failed) > 0:
+            form.add_error('apks', self.get_error_msg(failed))
             return super(ApkUploadView, self).form_invalid(form)
 
-        self.get_repo().update_async()  # schedule repository update
-        return result
+        # don't let the View create anything as we already did
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        self.get_repo().update_async()
         return reverse_lazy('repo', args=[self.get_repo().pk])
-
-    def add_apks(self):
-        """
-        :raise IntegrityError: APK is already added
-        :raise ValidationError: APK file is invalid
-        """
-        repo = self.get_repo()
-        for apk_file in self.request.FILES.getlist('apks'):
-            apk = Apk.objects.create(file=apk_file)
-            try:
-                # TODO could this be part of an ApkUploadMixin that also extends RepositoryView?
-                apk.initialize(repo)  # this also creates a pointer and attaches the app
-            except Exception as e:
-                if apk.pk:
-                    apk.delete()
-                raise e
 
 
 class ApkPointerDeleteView(RepositoryAuthorizationMixin, DeleteView):

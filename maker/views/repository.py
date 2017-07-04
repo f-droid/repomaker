@@ -1,11 +1,10 @@
+import collections
 import logging
 
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.core.exceptions import ValidationError
 from django.db.models import Q
-from django.db.utils import OperationalError, IntegrityError
 from django.forms import Textarea
-from django.http import HttpResponse, Http404
+from django.http import HttpResponseServerError, HttpResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
@@ -28,6 +27,58 @@ class RepositoryAuthorizationMixin(LoginOrSingleUserRequiredMixin, UserPassesTes
 
     def test_func(self):
         return self.get_repo().user == self.request.user
+
+
+class ApkUploadMixin(RepositoryAuthorizationMixin):
+    apks_added = False
+
+    def post(self, request, *args, **kwargs):
+        if not self.apks_added and 'apks' in self.request.FILES:
+            failed = self.add_apks()
+            if len(failed) > 0:
+                # TODO return list, so JavaScript can handle the individual error properly
+                return HttpResponseServerError(self.get_error_msg(failed))
+            return HttpResponse(status=204)
+        # noinspection PyUnresolvedReferences
+        return super().post(request, args, kwargs)
+
+    def add_apks(self, app=None):
+        """
+        Adds uploaded APKs from the request object to the database and initializes them
+
+        :return: A list of tuples, one for each failed APK file
+                 where the first element is the name of the APK file and the second an error message
+        """
+        files = self.request.FILES.getlist('apks')
+        repo = self.get_repo()
+
+        failed = []
+        for apk_file in files:
+            apk = Apk.objects.create(file=apk_file)
+            try:
+                apk.initialize(repo, app)  # this also creates a pointer and attaches the app
+            except Exception as e:
+                logging.warning(e)
+                if apk.pk:
+                    apk.delete()
+                if isinstance(e, collections.Iterable):
+                    tup = (apk_file, ' '.join(e))
+                else:
+                    tup = (apk_file, str(e))
+                failed.append(tup)
+
+        if len(files) > len(failed):
+            self.get_repo().update_async()  # schedule repository update
+
+        self.apks_added = True
+        return failed
+
+    @staticmethod
+    def get_error_msg(failed):
+        error_msg = ''
+        for file, error in failed:
+            error_msg += str(file) + ': ' + error + '\n'
+        return error_msg
 
 
 class RepositoryListView(LoginOrSingleUserRequiredMixin, ListView):
@@ -67,13 +118,11 @@ class RepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
         if len(storage) > 0:
             form.instance.url = storage[0].get_repo_url()
 
-        # TODO show loading screen
-
         form.instance.create()  # generate repo, QR Code, etc. on disk
         return result
 
 
-class RepositoryView(RepositoryAuthorizationMixin, ListView):
+class RepositoryView(ApkUploadMixin, ListView):
     model = App
     paginate_by = 15
     context_object_name = 'apps'
@@ -102,37 +151,10 @@ class RepositoryView(RepositoryAuthorizationMixin, ListView):
         return context
 
     def post(self, request, *args, **kwargs):
-        if 'HTTP_RM_BACKGROUND_TYPE' in request.META:
-            if request.META['HTTP_RM_BACKGROUND_TYPE'] == 'apks':
-                try:
-                    self.add_apks()
-                except OperationalError as e:
-                    logging.error(e)
-                    return HttpResponse(e, status=500)
-                except IntegrityError as e:
-                    logging.error(e)
-                    return HttpResponse(e.message, status=400)
-                except ValidationError as e:
-                    logging.error(e)
-                    return HttpResponse(e.message, status=400)
-                self.get_repo().update_async()  # schedule repository update
-                return HttpResponse(status=204)
+        if 'HTTP_RM_BACKGROUND_TYPE' in request.META and \
+                        request.META['HTTP_RM_BACKGROUND_TYPE'] == 'apks':
+            return super(RepositoryView, self).post(request, *args, **kwargs)
         return Http404()
-
-    def add_apks(self):
-        """
-        :raise IntegrityError: APK is already added
-        :raise ValidationError: APK file is invalid
-        """
-        repo = self.get_repo()
-        for apk_file in self.request.FILES.getlist('apks'):
-            apk = Apk.objects.create(file=apk_file)
-            try:
-                apk.initialize(repo)  # this also creates a pointer and attaches the app
-            except Exception as e:
-                if apk.pk:
-                    apk.delete()
-                raise e
 
 
 class RepositoryUpdateView(RepositoryAuthorizationMixin, UpdateView):

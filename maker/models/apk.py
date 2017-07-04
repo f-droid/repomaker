@@ -77,12 +77,14 @@ class Apk(models.Model):
             pointer.link_file_from_apk()
             pointer.repo.update_async()
 
-    def initialize(self, repo=None):
+    def initialize(self, repo=None, app=None):
         """
         Initializes this object based on information retrieved from self.file.
 
         :param repo: If a Repository is passed here, an ApkPointer (and if needed an App)
                      are created as well.
+        :param app: If an App is passed here, the Apk needs to be an update for this app,
+                    otherwise a ValidationError will be raised.
         :raises: ValidationError if Apk can not be initialized. Delete it, if you get this error!
         :return: An instance of this Apk objects or a different one if it existed already
         """
@@ -99,6 +101,9 @@ class Apk(models.Model):
                 raise ValidationError(e)
         else:
             repo_file = self._get_info_from_file()
+
+        if app is not None and app.package_id != repo_file['packageName']:
+            raise ValidationError(_('This file is not an update for %s' % str(app)))
 
         apk_set = Apk.objects.filter(package_id=repo_file['packageName'], hash=repo_file['hash'])
         if not apk_set.exists():

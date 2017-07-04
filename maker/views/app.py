@@ -3,19 +3,19 @@ import logging
 
 from django.core.exceptions import ValidationError
 from django.db.models import Q
-from django.db.utils import OperationalError, IntegrityError
+from django.db.utils import OperationalError
 from django.forms import FileField, ImageField, ClearableFileInput
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseServerError
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import UpdateView, DeleteView
 from hvad.forms import translationformset_factory
 from tinymce.widgets import TinyMCE
 
-from maker.models import RemoteRepository, App, RemoteApp, Apk, ApkPointer, Screenshot
+from maker.models import RemoteRepository, App, RemoteApp, ApkPointer, Screenshot
 from maker.models.category import Category
 from . import BaseModelForm
-from .repository import RepositoryAuthorizationMixin
+from .repository import RepositoryAuthorizationMixin, ApkUploadMixin
 
 
 class MDLTinyMCE(TinyMCE):
@@ -76,7 +76,7 @@ class AppAddView(RepositoryAuthorizationMixin, ListView):
                     remote_app.add_to_repo(self.get_repo())
                 except OperationalError as e:
                     logging.error(e)
-                    return HttpResponse(e, status=500)
+                    return HttpResponseServerError(e)
                 except ValidationError as e:
                     logging.error(e)
                     return HttpResponse(e.message, status=400)
@@ -124,8 +124,9 @@ class AppForm(BaseModelForm):
         js = ('maker/js/drag-and-drop.js',)
 
 
-class AppUpdateView(RepositoryAuthorizationMixin, UpdateView):
+class AppUpdateView(ApkUploadMixin, UpdateView):
     model = App
+    object = None
     form_class = AppForm
     pk_url_kwarg = 'app_id'
     template_name = 'maker/app/edit.html'
@@ -138,61 +139,37 @@ class AppUpdateView(RepositoryAuthorizationMixin, UpdateView):
         context['apks'] = ApkPointer.objects.filter(app=self.object).order_by('-apk__version_code')
         return context
 
-    def form_valid(self, form):
-        result = super(AppUpdateView, self).form_valid(form)
-
-        self.add_screenshots()
-        try:
-            self.add_apks()
-        except ValidationError as e:
-            form.add_error('apks', e)
-            return super(AppUpdateView, self).form_invalid(form)
-
-        form.instance.repo.update_async()  # schedule repository update
-        return result
-
     def post(self, request, *args, **kwargs):
-        if 'HTTP_RM_BACKGROUND_TYPE' in request.META:
-            if request.META['HTTP_RM_BACKGROUND_TYPE'] == 'apks':
-                try:
-                    self.add_apks()
-                except OperationalError as e:
-                    logging.error(e)
-                    return HttpResponse(e, status=500)
-                except IntegrityError as e:
-                    logging.error(e)
-                    return HttpResponse(e.message, status=400)
-                except ValidationError as e:
-                    logging.error(e)
-                    return HttpResponse(e.message, status=400)
-                self.get_repo().update_async()  # schedule repository update
+        if 'apks' in self.request.FILES:
+            failed = self.add_apks(self.get_object())
+            if len(failed) > 0:
+                if self.request.is_ajax():
+                    return HttpResponseServerError(self.get_error_msg(failed))
+                self.object = self.get_object()
+                form = self.get_form()
+                form.add_error('apks', self.get_error_msg(failed))
+                return self.form_invalid(form)
+            if self.request.is_ajax():
                 return HttpResponse(status=204)
+            return super().post(request, args, kwargs)
+
+        if 'HTTP_RM_BACKGROUND_TYPE' in request.META:
             if request.META['HTTP_RM_BACKGROUND_TYPE'] == 'screenshots':
                 try:
                     self.add_screenshots()
-                except OperationalError as e:
+                except Exception as e:
                     logging.error(e)
-                    return HttpResponse(e, status=500)
+                    return HttpResponseServerError(e)
                 self.get_repo().update_async()  # schedule repository update
                 return HttpResponse(status=204)
         return super(AppUpdateView, self).post(request, *args, **kwargs)
 
-    def add_apks(self):
-        """
-        :raise IntegrityError: APK is already added
-        :raise ValidationError: APK file is invalid
-        """
-        repo = self.get_repo()
-        for apk_file in self.request.FILES.getlist('apks'):
-            apk = Apk.objects.create(file=apk_file)
-            try:
-                # TODO check that the APK belongs to this app and that signature matches
-                # TODO could this be part of an ApkUploadMixin that also extends RepositoryView?
-                apk.initialize(repo)  # this also creates a pointer and attaches the app
-            except Exception as e:
-                if apk.pk:
-                    apk.delete()
-                raise e
+    def form_valid(self, form):
+        result = super(AppUpdateView, self).form_valid(form)  # this saves the App
+
+        self.add_screenshots()
+        form.instance.repo.update_async()  # schedule repository update
+        return result
 
     def add_screenshots(self):
         for screenshot in self.request.FILES.getlist('screenshots'):

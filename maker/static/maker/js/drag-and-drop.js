@@ -1,8 +1,3 @@
-// Exceptions that can occur
-var EXCEPTION_DATABASE_LOCKED = '1'
-var EXCEPTION_APK_ALREADY_EXIST = '2'
-var EXCEPTION_FILE_INVALID = '3'
-
 // Source: http://html5demos.com/dnd-upload
 var holders = [
     document.getElementById('rm-dnd-holder--screenshots'),
@@ -23,6 +18,7 @@ function uploadFiles(element, files) {
     var request = new XMLHttpRequest()
     request.open('POST', '', true) // true for asynchronous
     request.setRequestHeader('X-CSRFToken', document.getElementsByName('csrfmiddlewaretoken')[0].value)
+    request.setRequestHeader('X-REQUESTED-WITH', 'XMLHttpRequest') // For Django's request.is_ajax()
     request.setRequestHeader('RM-Background-Type', type) // Needed to distinguish
     request.onloadstart = uploadStarted(element, files)
     request.upload.onprogress = function (event) {

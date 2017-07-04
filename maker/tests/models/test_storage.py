@@ -21,6 +21,7 @@ class GitStorageTestCase(TestCase):
                                                  host="example.org",
                                                  path="user/repo",
                                                  url="https://raw.example.org/user/repo")
+        self.repo.chdir()
 
     def tearDown(self):
         if os.path.isdir(TEST_DIR):
@@ -74,7 +75,6 @@ class GitStorageTestCase(TestCase):
     @patch('git.remote.Remote.push')
     def test_publish(self, push, bar):
         # create an empty fake repo
-        os.makedirs(TEST_MEDIA_DIR)
         os.chdir(TEST_MEDIA_DIR)
         os.mkdir(REPO_DIR)
 

@@ -11,10 +11,9 @@ from django.test import TestCase, override_settings, modify_settings
 from django.urls import reverse
 
 from maker import DEFAULT_USER_NAME
-
-from maker.models import App, Repository
+from maker.models import App, Apk, ApkPointer, Repository
 from maker.views.repository import RepositoryCreateView, RepositoryForm, RepositoryView
-from .. import TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR
+from .. import TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_FILES_DIR, fake_repo_create
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
@@ -153,6 +152,82 @@ class RepositoryTestCase(TestCase):
         self.assertContains(response, self.app.description, 1)
 
         # TODO: Add tests for INFO and SHARE pages when design is implemented
+
+    def test_upload_apk_as_new_app(self):
+        fake_repo_create(self.repo)
+        self.repo.chdir()
+
+        App.objects.all().delete()
+        self.assertEqual(0, App.objects.all().count())
+        self.assertEqual(0, Apk.objects.all().count())
+        self.assertEqual(0, ApkPointer.objects.all().count())
+
+        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+            self.client.post(reverse('repo', kwargs={'repo_id': self.repo.id}), {'apks': f},
+                             HTTP_X_REQUESTED_WITH='XMLHttpRequest', HTTP_RM_BACKGROUND_TYPE='apks')
+
+        self.assertEqual(1, App.objects.all().count())
+        self.assertEqual(1, Apk.objects.all().count())
+        self.assertEqual(1, ApkPointer.objects.all().count())
+
+        self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
+
+    def test_upload_apk_as_update(self):
+        fake_repo_create(self.repo)
+        self.repo.chdir()
+
+        self.assertEqual(1, App.objects.all().count())
+        self.assertEqual(0, Apk.objects.all().count())
+        self.assertEqual(0, ApkPointer.objects.all().count())
+
+        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+            self.client.post(reverse('repo', kwargs={'repo_id': self.repo.id}), {'apks': f},
+                             HTTP_X_REQUESTED_WITH='XMLHttpRequest', HTTP_RM_BACKGROUND_TYPE='apks')
+
+        self.assertEqual(1, App.objects.all().count())
+        self.assertEqual(1, Apk.objects.all().count())
+        self.assertEqual(1, ApkPointer.objects.all().count())
+
+        self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
+
+    def test_upload_invalid_apk(self):
+        fake_repo_create(self.repo)
+        self.repo.chdir()
+
+        self.assertEqual(1, App.objects.all().count())
+        self.assertEqual(0, Apk.objects.all().count())
+        self.assertEqual(0, ApkPointer.objects.all().count())
+
+        with open(os.path.join(TEST_FILES_DIR, 'test_invalid_signature.apk'), 'rb') as f:
+            response = self.client.post(reverse('repo', kwargs={'repo_id': self.repo.id}),
+                                        {'apks': f}, HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                        HTTP_RM_BACKGROUND_TYPE='apks')
+        self.assertContains(response, 'test_invalid_signature.apk: Invalid APK signature',
+                            status_code=500)
+
+        self.assertEqual(1, App.objects.all().count())
+        self.assertEqual(0, Apk.objects.all().count())
+        self.assertEqual(0, ApkPointer.objects.all().count())
+
+        self.assertFalse(Repository.objects.get(pk=self.repo.pk).update_scheduled)
+
+    def test_upload_non_apk(self):
+        fake_repo_create(self.repo)
+        self.repo.chdir()
+
+        self.assertEqual(1, App.objects.all().count())
+        self.assertEqual(0, Apk.objects.all().count())
+        self.assertEqual(0, ApkPointer.objects.all().count())
+
+        with open(os.path.join(TEST_FILES_DIR, 'test.avi'), 'rb') as f:
+            self.client.post(reverse('repo', kwargs={'repo_id': self.repo.id}), {'apks': f},
+                             HTTP_X_REQUESTED_WITH='XMLHttpRequest', HTTP_RM_BACKGROUND_TYPE='apks')
+
+        self.assertEqual(2, App.objects.all().count())
+        self.assertEqual(1, Apk.objects.all().count())
+        self.assertEqual(1, ApkPointer.objects.all().count())
+
+        self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
 
     def test_delete(self):
         response = self.client.post(reverse('delete_repo', kwargs={'repo_id': self.repo.id}))
