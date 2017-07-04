@@ -93,10 +93,9 @@ def download_remote_graphic_assets(app_id, remote_app_id):
 def download_remote_screenshot(screenshot_id, app_id):
     try:
         screenshot = maker.models.screenshot.RemoteScreenshot.objects.get(pk=screenshot_id)
+        screenshot.download(app_id)
     except ObjectDoesNotExist as e:
         logging.warning('Remote Screenshot does not exist anymore, dropping task. (%s)', e)
-        return
-    screenshot.download(app_id)
 
 
 @receiver(task_failed)

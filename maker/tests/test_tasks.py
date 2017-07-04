@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 from unittest.mock import patch
 
+import requests
 from background_task.tasks import Task
 from django.contrib.auth.models import User
 from django.test import TestCase
@@ -169,6 +170,22 @@ class TasksTest(TestCase):
 
         # assert that screenshot was not downloaded
         self.assertFalse(download.called)
+
+    @patch('requests.get')
+    def test_download_remote_screenshot_app_gone(self, get):
+        date = datetime.fromtimestamp(0, timezone.utc)
+        remote_repo = RemoteRepository.objects.create(last_change_date=date)
+        remote_app = RemoteApp.objects.create(repo=remote_repo, last_updated_date=date)
+        screenshot = RemoteScreenshot.objects.create(app=remote_app, url='test')
+
+        # fake return values of GET request
+        get.return_value.status_code = requests.codes.ok
+        get.return_value.content = b'foo'
+
+        tasks.download_remote_screenshot.now(screenshot.id, 1337)
+
+        # assert that screenshot was downloaded
+        get.assert_called_once_with(screenshot.url)
 
     def test_priorities(self):
         # create an actual repository and an APK
