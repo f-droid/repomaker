@@ -9,6 +9,9 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-05 19:04+0000\n"
 "PO-Revision-Date: 2017-07-04 21:36+0000\n"
+"Report-Msgid-Bugs-To: team@f-droid.org\n"
+"POT-Creation-Date: 2017-06-15 13:18+0000\n"
+"PO-Revision-Date: 2017-07-05 19:24+0000\n"
 "Last-Translator: Mo <press.hosseini@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/f-droid/repomaker/fa/>\n"
 "Language: fa\n"
@@ -339,40 +342,40 @@ msgstr "ذخیره کردن ترجمه"
 
 #, python-format
 msgid "Hello, %(user)s"
-msgstr ""
+msgstr "سلام٫ %(user)s 1"
 
 msgid "Error"
-msgstr ""
+msgstr "اخطار"
 
 msgid "My Repos"
-msgstr ""
+msgstr "مخازن من"
 
 #, python-format
 msgid "Published %(time_ago)s"
-msgstr ""
+msgstr "منتشر شده %(time_ago)s 1"
 
 #, python-format
 msgid "Created %(time_ago)s"
-msgstr ""
+msgstr "ساخته شده %(time_ago)s 1"
 
 msgid "Make a collection of apps to share"
-msgstr ""
+msgstr "گروهی از اپلیکشن‌ها برای به اشتراک گذاشتن تهیه کن"
 
 msgid "Create Repo"
-msgstr ""
+msgstr "ساخت مخزن"
 
 msgid "New Repo"
-msgstr ""
+msgstr "مخزن جدید"
 
 msgid "Create"
-msgstr ""
+msgstr "ايجاد كردن"
 
 msgid "Delete Repo"
-msgstr ""
+msgstr "حذف مخزن"
 
 #, python-format
 msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
-msgstr ""
+msgstr "آیا از حذف این مخزن اطمینان دارید؟ <strong> 1%(repo)s 2</strong> 3?"
 
 msgid "This will also delete all apps and other files from your repo. You will not be able to get them back, users of your repo will not be able to use it anymore and not receive updates for the apps they received from you. There is no way to recover this repo!"
 msgstr ""
