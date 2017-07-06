@@ -55,21 +55,22 @@ class AbstractApp(TranslatableModel):
     def __str__(self):
         return self.name
 
-    def get_available_language_names(self):
+    def get_available_languages_as_dicts(self):
         """
-        Returns a list of language names and uses the language code, if no name is available.
+        Returns a list of dictionaries that include the language name and code
+        If no name is available, it uses the language code as the name
         """
-        language_names = []
+        languages = []
         for lang in self.get_available_languages():
             found_name = False
             for code, name in settings.LANGUAGES:
                 if code == lang:
-                    language_names.append(name)
+                    languages.append({'code': code, 'name': name})
                     found_name = True
                     break
             if not found_name:
-                language_names.append(lang)
-        return language_names
+                languages.append({'code': lang, 'name': lang})
+        return languages
 
     def get_icon_basename(self):
         return os.path.basename(self.icon.path)

@@ -24,6 +24,65 @@
     margin-left: 16px;
 }
 
+.rm-app-language-button {
+    background-color: white;
+    background-repeat:no-repeat;
+    color: #767777;
+    @include font-size(14px);
+    border: none;
+    outline:none;
+    align-items: center;
+}
+
+.rm-app-language-button:hover {
+    background-color: #f4f4f4;
+}
+
+.rm-app-language-menu-container {
+
+    .mdl-menu__container.is-upgraded {
+        top: 0 !important;
+    }
+
+    .rm-app-language-menu {
+        @extend .mdl-menu;
+        padding: 10px;
+
+        .rm-app-language-add, .rm-app-language {
+            @extend .rm-no-underline;
+            @include font-size(14px);
+            display: flex;
+            align-items: center;
+            padding: 5px;
+        }
+
+        .rm-app-language-add:hover, .rm-app-language:hover {
+            background-color: #f4f4f4;
+        }
+
+        .rm-app-language-add {
+            color: $rm-blue !important;
+            margin-bottom: 5px;
+            white-space: nowrap;
+        }
+    }
+
+    .rm-app-language-menu-no-script {
+        @extend .mdl-cell, .mdl-cell--6-col;
+
+        a {
+            @extend .rm-no-underline;
+            color: $rm-blue !important;
+            padding: 8px;
+        }
+    }
+
+}
+
+.mdl-menu__outline {
+    border-radius: 8px;
+}
+
 .rm-app-title {
     color: #000;
     font-weight: 500;
@@ -136,10 +195,6 @@
         button:hover:enabled {
             background-color: #f4f4f4;
         }
-    }
-
-    .mdl-menu__outline {
-        border-radius: 8px;
     }
 }
 

@@ -40,6 +40,8 @@ urlpatterns = [
     url(r'^remote/(?P<remote_repo_id>[0-9]+)/update/$', views.remote_update, name='remote_update'),
 
     # App
+    # TODO localize app_detail and app_edit URLs
+    # https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#module-django.conf.urls.i18n
     url(r'^(?P<repo_id>[0-9]+)/app/add/$', AppAddView.as_view(), name='add_app'),
     url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/$',
         AppAddView.as_view(), name='add_app'),
@@ -58,8 +60,10 @@ urlpatterns = [
         name='edit_app'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/delete/$', AppDeleteView.as_view(),
         name='delete_app'),
-    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/translate/$',
-        AppTranslationUpdateView.as_view(), name='app_translate'),
+    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/lang/add$',
+        AppTranslationUpdateView.as_view(), name='app_lang_add'),
+    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/lang/(?P<lang>[a-zA-Z_-]+)/$',
+        AppTranslationUpdateView.as_view(), name='app_lang'),
 
     # App Screenshots
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/screenshot/add/$',
