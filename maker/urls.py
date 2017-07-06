@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django.views.i18n import javascript_catalog
 
 from maker.models import S3Storage, SshStorage, GitStorage
+from maker.views.apk import ApkUploadView, ApkPointerDeleteView
 from maker.views.app import AppAddView, AppDetailView, AppUpdateView, AppDeleteView, \
     AppTranslationUpdateView
 from maker.views.gitstorage import GitStorageCreate, GitStorageUpdate, GitStorageDetail, \
@@ -13,7 +14,6 @@ from maker.views.s3storage import S3StorageCreate, S3StorageDetail, S3StorageUpd
 from maker.views.screenshot import ScreenshotCreateView, ScreenshotDeleteView
 from maker.views.sshstorage import SshStorageCreate, SshStorageUpdate, SshStorageDetail, \
     SshStorageDelete
-from maker.views.apk import ApkUploadView, ApkPointerDeleteView
 from maker.views.storage import StorageAddView
 from . import views
 

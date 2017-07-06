@@ -213,6 +213,8 @@ select#id_category {
     color: #999999;
     @include font-size(13px);
     text-transform: uppercase;
+    margin: 0;
+    font-weight: 500
 }
 
 .rm-app-screenshots {

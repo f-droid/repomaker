@@ -68,6 +68,12 @@
 {% endblock categories %}
 
 
+{% block description %}
+<h4 class="rm-app-section">{% trans 'Description' %}</h4>
+{{ form.description }}
+{% endblock description %}
+
+
 {% block screenshot-header %}
 <div class="rm-app-section mdl-cell mdl-cell--8-col">
 	{% trans 'Screenshots' %}
@@ -104,12 +110,6 @@
 	</button>
 </a>
 {% endblock screenshot-delete %}
-
-
-{% block description %}
-<h4 class="rm-app-section">{% trans 'Description' %}</h4>
-{{ form.description }}
-{% endblock description %}
 
 
 {% block apk-drop %}

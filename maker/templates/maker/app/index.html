@@ -61,6 +61,7 @@
 				{% endif %}
 				{% endblock author %}
 			</div>
+			{% block info %}
 			<div class="rm-app-secondary-content">
 				{% if app.get_latest_version %}
 				<div class="rm-app-version">
@@ -74,6 +75,7 @@
 					{% endblocktrans %}
 				</div>
 			</div>
+			{% endblock info %}
 		</div>
 		<div class="rm-app-summary-category">
 			{% block summary %}<div class="rm-app-summary">{{ app.summary }}</div>{% endblock summary %}
@@ -89,13 +91,22 @@
 		</div>
 	</div>
 </div>
+
+<div class="rm-grid--center mdl-grid">
+	<div class="rm-app-description mdl-cell mdl-cell--6-col">
+		{% block description %}
+		{{ app.description|safe }}
+		{% endblock description %}
+	</div>
+</div>
+
 {% block screenshots %}
-{% if form or app.screenshot_set.exists %}
+{% if form or screenshots.exists %}
 <div class="rm-grid--center mdl-grid">
 	{% block screenshot-header %}{% endblock screenshot-header %}
 	<div class="rm-app-screenshots mdl-cell mdl-cell--8-col">
 		{% block screenshot-drop %}{% endblock screenshot-drop %}
-		{% for screenshot in app.screenshot_set.all %}
+		{% for screenshot in screenshots %}
 		<div class="rm-app-screenshot">
 			{% block screenshot-delete %}{% endblock screenshot-delete %}
 			<img src="{{ screenshot.get_url }}"/>
@@ -105,13 +116,10 @@
 </div>
 {% endif %}
 {% endblock screenshots %}
-<div class="rm-grid--center mdl-grid">
-	<div class="rm-app-description mdl-cell mdl-cell--6-col">
-		{% block description %}
-		{{ app.description|safe }}
-		{% endblock description %}
-	</div>
-</div>
+
+{% block feature-graphic %}
+{% endblock feature-graphic %}
+
 {% block apks %}
 <div class="rm-grid--center mdl-grid">
 	<div class="rm-app-versions mdl-cell mdl-cell--6-col">
@@ -153,6 +161,8 @@
 	</div>
 </div>
 {% endblock apks %}
+
+{% block bottom-navigation %}
 <div class="rm-app-navigation mdl-grid">
 	<div class="mdl-cell mdl-cell--6-col">
 	{% if app.get_previous %}
@@ -173,6 +183,7 @@
 	{% endif %}
 	</div>
 </div>
+{% endblock bottom-navigation %}
 
 <script type="text/javascript">
 	var langMenu = document.getElementById('lang-menu');
