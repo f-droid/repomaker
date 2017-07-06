@@ -106,21 +106,9 @@
 }
 
 .rm-app-card-footer-action--successful {
-    @extend .rm-app-card-footer-action;
     button, button:focus:not(:active) {
         background: #0062cf;
         border-color: #0062cf;
-        color: white;
-        display: inline-flex;
-        vertical-align: middle;
-    }
-}
-
-.rm-app-card-footer-action--failed {
-    @extend .rm-app-card-footer-action;
-    button, button:focus:not(:active) {
-        background: #f25050;
-        border-color: #f25050;
         color: white;
         display: inline-flex;
         vertical-align: middle;

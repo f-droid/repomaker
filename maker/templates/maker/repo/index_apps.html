@@ -1,6 +1,6 @@
 {% load i18n %}
 {% load static %}
-<div class="rm-grid--center mdl-grid mdl-cell--9-col">
+<div class="rm-repo-apps">
 	{% if request.GET.search or is_paginated %}
 	<div class="rm-repo-apps-header mdl-cell mdl-cell--12-col">
 		<div class="rm-repo-apps-header-search">
@@ -60,6 +60,7 @@
 	{% endfor %}
 </div>
 
+<script src="{% static 'maker/js/endless-app-scroll.js' %}"></script>
 <script src="{% static 'maker/js/repo/apps.js' %}"></script>
 
 {% include "maker/widgets/pagination.html" %}

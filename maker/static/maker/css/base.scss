@@ -193,7 +193,17 @@ a.rm-no-underline {
          background-color: $rm-blue;
          color: white;
      }
- }
+}
+
+.rm-pagination--loading {
+    @extend .center;
+    padding: 30px 0;
+
+    .mdl-js-spinner {
+        @extend .mdl-spinner, .mdl-spinner--single-color, .is-active;
+        border-color: $rm-blue;
+    }
+}
 
 .error {
     color: rgb(213,0,0);

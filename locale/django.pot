@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-05 19:04+0000\n"
+"POT-Creation-Date: 2017-07-06 09:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#, python-format
+msgid "This file is not an update for %s"
+msgstr ""
 
 msgid "This APK already exists in the current repo."
 msgstr ""
@@ -581,6 +585,10 @@ msgid "Requires an Amazon account, Pricing varies"
 msgstr ""
 
 msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
+msgstr ""
+
+#, python-format
+msgid "Version %(version)s (%(date)s)"
 msgstr ""
 
 msgid "Added"

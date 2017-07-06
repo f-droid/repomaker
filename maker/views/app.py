@@ -7,7 +7,7 @@ from django.db.utils import OperationalError
 from django.forms import FileField, ImageField, ClearableFileInput
 from django.http import Http404, HttpResponse, HttpResponseServerError
 from django.urls import reverse, reverse_lazy
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
 from hvad.forms import translationformset_factory
 from tinymce.widgets import TinyMCE
@@ -15,7 +15,7 @@ from tinymce.widgets import TinyMCE
 from maker.models import RemoteRepository, App, RemoteApp, ApkPointer, Screenshot
 from maker.models.category import Category
 from . import BaseModelForm
-from .repository import RepositoryAuthorizationMixin, ApkUploadMixin
+from .repository import RepositoryAuthorizationMixin, ApkUploadMixin, AppScrollListView
 
 
 class MDLTinyMCE(TinyMCE):
@@ -32,7 +32,7 @@ class MDLTinyMCE(TinyMCE):
     media = property(_media)
 
 
-class AppAddView(RepositoryAuthorizationMixin, ListView):
+class AppAddView(RepositoryAuthorizationMixin, AppScrollListView):
     model = RemoteApp
     context_object_name = 'apps'
     paginate_by = 15

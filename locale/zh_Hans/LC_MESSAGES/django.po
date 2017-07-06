@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-05 19:04+0000\n"
+"POT-Creation-Date: 2017-07-06 09:55+0000\n"
 "PO-Revision-Date: 2017-06-24 11:41+0000\n"
 "Last-Translator: Chi-Hsun Tsai <chihsun.tsai@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/f-droid/repomaker/zh_Hans/>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 2.15-dev\n"
+
+#, python-format
+msgid "This file is not an update for %s"
+msgstr ""
 
 msgid "This APK already exists in the current repo."
 msgstr "当前资源库中已存在该 APK。"
@@ -602,6 +606,11 @@ msgstr ""
 
 msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
 msgstr ""
+
+#, fuzzy, python-format
+#| msgid "Version %(version)s (%(code)s)"
+msgid "Version %(version)s (%(date)s)"
+msgstr "版本 %(version)s (%(code)s)"
 
 msgid "Added"
 msgstr "已添加"

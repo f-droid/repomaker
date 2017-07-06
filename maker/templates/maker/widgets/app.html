@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if not clickable or repo_page %}
 <div class="rm-app-card{% if no_hover or app.added %}--no-hover{% endif %} mdl-cell mdl-cell--{{ width }}-col
 			mdl-card mdl-shadow--2dp mdl-color--white"
@@ -16,8 +17,9 @@
 		{% block rm-app-card-right %}{% endblock rm-app-card-right %}
 		{% if app.get_latest_version %}
 		<div class="rm-app-card-updated">
-			Version {{ app.get_latest_version.version_name }}
-			{{ app.get_latest_version.added_date|date:"DATE_FORMAT" }}
+			{% blocktrans with version=app.get_latest_version.version_name date=app.get_latest_version.added_date|date:"DATE_FORMAT" trimmed %}
+			Version {{ version }} ({{ date }})
+			{% endblocktrans %}
 		</div>
 		{% endif %}
 	</div>

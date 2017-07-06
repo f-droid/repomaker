@@ -2,6 +2,10 @@
  * Styles for Apps section
  */
 
+.rm-repo-apps {
+    @extend .rm-grid--center, .mdl-grid, .mdl-cell--9-col;
+}
+
 /*
  * Search
  */

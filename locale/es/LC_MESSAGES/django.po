@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-05 19:04+0000\n"
+"POT-Creation-Date: 2017-07-06 09:55+0000\n"
 "PO-Revision-Date: 2017-07-03 15:22+0000\n"
 "Last-Translator: José Rodrigo Baires Quezada <rbaires@irex.org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/f-droid/repomaker/es/>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.16-dev\n"
+
+#, python-format
+msgid "This file is not an update for %s"
+msgstr ""
 
 msgid "This APK already exists in the current repo."
 msgstr "Esta aplicación APK  ya existe en su repositorio."
@@ -601,6 +605,11 @@ msgstr ""
 
 msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
 msgstr "Aquí le indicamos cómo encontrar y copiar la dirección SSH del repositorio de Git en su%(gitlab)s repositorio:"
+
+#, fuzzy, python-format
+#| msgid "Version %(version)s (%(code)s)"
+msgid "Version %(version)s (%(date)s)"
+msgstr "Vesrión %(version)s%(code)s"
 
 msgid "Added"
 msgstr "Añadir"

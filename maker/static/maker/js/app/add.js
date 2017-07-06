@@ -156,7 +156,7 @@ function clearAppsToAdd(event) {
 }
 
 function buttonSetAdded(element) {
-    setClassOfElement(element, 'rm-app-card-footer-action--successful')
+    addClassToElement(element, 'rm-app-card-footer-action--successful')
     setContentOfElement(element + '-button', '<i class="material-icons">done</i>')
 }
 
@@ -180,6 +180,18 @@ function setClassOfElement(element, myClass) {
         element.className = myClass
     }
 }
+function addClassToElement(element, myClass) {
+    element = document.getElementById(element)
+    if (element !== null) {
+        element.classList.add(myClass)
+    }
+}
+function removeClassFromElement(element, myClass) {
+    element = document.getElementById(element)
+    if (element !== null) {
+        element.classList.remove(myClass)
+    }
+}
 
 function setContentOfElement(element, content) {
     element = document.getElementById(element)
@@ -199,6 +211,39 @@ function setHiddenOfElement(element, hidden) {
 
 function storeReferrer() {
     sessionStorage.setItem(sessionStorageKeyReferrer, document.referrer)
+}
+
+/**
+ * Pagination
+ */
+var mdlBody = document.querySelector('.mdl-layout__content')
+var pagination = document.querySelector('.rm-pagination')
+
+mdlBody.addEventListener("scroll", function () {
+    if (mdlBody.scrollHeight - window.innerHeight -
+            mdlBody.scrollTop <= 800) {
+        if (pagination !== null) {
+            handlePagination(jsonHtmlRelation, '.rm-app-add-apps', markAppsToAdd)
+        }
+    }
+}, false)
+
+window.onload = function () {
+    // Check if pagination is already visible at first page load
+    if (pagination !== null && isVisible(pagination)) {
+        handlePagination(jsonHtmlRelation, '.rm-app-add-apps', markAppsToAdd)
+    }
+}
+
+var jsonHtmlRelation = {
+    'rm-app-card-categories': 'categories',
+    'rm-app-card-description': 'description',
+    'rm-app-card-footer-action': 'id',
+    'rm-app-card-left': 'icon',
+    'rm-app-card-summary': 'summary',
+    'rm-app-card-title': 'name',
+    'rm-app-card-updated': 'updated',
+    'rm-app-card--apps-add': 'id',
 }
 
 /**
