@@ -7,16 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 09:55+0000\n"
-"PO-Revision-Date: 2017-06-24 11:41+0000\n"
-"Last-Translator: Chi-Hsun Tsai <chihsun.tsai@gmail.com>\n"
+"PO-Revision-Date: 2017-07-09 14:25+0000\n"
+"Last-Translator: jxt <chihsun.tsai@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/f-droid/repomaker/zh_Hans/>\n"
 "Language: zh_Hans\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.15-dev\n"
+"X-Generator: Weblate 2.16-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -25,10 +24,8 @@ msgstr ""
 msgid "This APK already exists in the current repo."
 msgstr "当前资源库中已存在该 APK。"
 
-#, fuzzy
-#| msgid "Invalid APK."
 msgid "Invalid APK signature"
-msgstr "无效 APK。"
+msgstr "无效 APK 签名。"
 
 msgid "Invalid APK."
 msgstr "无效 APK。"
@@ -142,49 +139,45 @@ msgid "Or login with"
 msgstr "或使用其方式登录"
 
 msgid "Logout"
-msgstr ""
+msgstr "注销"
 
 msgid "See you later"
-msgstr ""
+msgstr "再见"
 
 msgid "Your security is important to us. Please confirm that you want to logout."
-msgstr ""
+msgstr "您的安全对我们至关重要。请确认是否注销。"
 
 msgid "logout"
-msgstr ""
+msgstr "注销"
 
 msgid "submit"
-msgstr ""
+msgstr "提交"
 
 msgid "We have sent you an email with a link to reset your password."
-msgstr ""
+msgstr "带有链接的密码重置电子邮件已发送。"
 
 msgid "Signup"
 msgstr "注册"
 
 msgid "Browse Gallery"
-msgstr ""
+msgstr "浏览库"
 
 msgid "Search"
-msgstr ""
+msgstr "搜索"
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Category (%(count)s)"
-msgstr "语言 (%(count)s)"
+msgstr "类别 (%(count)s)"
 
 msgid "All"
 msgstr "全部"
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Source (%(count)s)"
-msgstr "语言 (%(count)s)"
+msgstr "来源 (%(count)s)"
 
-#, fuzzy
-#| msgid "add from repos"
 msgid "Add a repo"
-msgstr "从资源库添加"
+msgstr "添加资源库"
 
 msgid "Add"
 msgstr "添加"
@@ -236,7 +229,7 @@ msgid "Done"
 msgstr "完成"
 
 msgid "By"
-msgstr ""
+msgstr "发布者"
 
 msgid "Short Summary (40 characters)"
 msgstr "简述（40字）"
@@ -275,10 +268,9 @@ msgstr "无"
 msgid "Edit"
 msgstr "编辑"
 
-#, fuzzy, python-format
-#| msgid "Developed by %(author)s"
+#, python-format
 msgid "By %(author)s"
-msgstr "开发者： %(author)s"
+msgstr "作者 %(author)s"
 
 #, python-format
 msgid "Updated %(time)s ago"
@@ -311,12 +303,10 @@ msgid "Next"
 msgstr "下一步"
 
 msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
-msgstr ""
+msgstr "当前没有屏幕截图显示，因为这样资源库所有者可利用该功能跟踪用户。"
 
-#, fuzzy
-#| msgid "Screenshots"
 msgid "show screenshots"
-msgstr "屏幕截图"
+msgstr "显示屏幕截图"
 
 msgid "Add Screenshot"
 msgstr "添加屏幕截图"
@@ -394,7 +384,7 @@ msgid "Save Changes"
 msgstr "保存更改"
 
 msgid "Content"
-msgstr ""
+msgstr "内容"
 
 msgid "Share"
 msgstr "分享"
@@ -405,17 +395,15 @@ msgstr "信息"
 msgid "Search for apps in your repository"
 msgstr "搜索该资源库中应用"
 
-#, fuzzy
-#| msgid "add from repos"
 msgid "add from gallery"
-msgstr "从资源库添加"
+msgstr "从库中添加"
 
 #, python-format
 msgid "Alternatively, drag and drop or %(label_start)schoose files%(label_end)s"
-msgstr ""
+msgstr "另外，可拖放添加或 %(label_start)s选择文件%(label_end)s"
 
 msgid "Accepted files include Android apps, documents, eBooks, audio and video."
-msgstr ""
+msgstr "可接收文件包括 Android 应用、文档、电子书、音频和视频。"
 
 msgid "Your search did not return any results."
 msgstr "搜索未返回任何结果。"
@@ -426,10 +414,8 @@ msgstr "名称"
 msgid "Storage"
 msgstr "存储"
 
-#, fuzzy
-#| msgid "Add SSH Storage"
 msgid "Add Storage"
-msgstr "添加 SSH 存储"
+msgstr "添加存储"
 
 msgid "Fingerprint"
 msgstr "指纹"
@@ -438,15 +424,13 @@ msgid "Remove Repo"
 msgstr "移除资源库"
 
 msgid "Add storage to publish"
-msgstr ""
+msgstr "添加存储以发布"
 
 msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
-msgstr ""
+msgstr "添加存储之后，将自动发布资源库。Repomaker 不会公开推广您的内容。只有收到资源库链接的人可以查看。"
 
-#, fuzzy
-#| msgid "Edit Storage"
 msgid "add storage"
-msgstr "编辑存储"
+msgstr "添加存储"
 
 #, python-format
 msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
@@ -481,13 +465,12 @@ msgstr "试试这个 F-Droid 资源库： %(name)s"
 msgid "Delete Storage"
 msgstr "删除存储"
 
-#, fuzzy, python-format
-#| msgid "Are you sure you want to delete your app <strong>%(object)s</strong>?"
+#, python-format
 msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong> from your repo?"
-msgstr "是否确定删除应用 <strong>%(object)s</strong>？"
+msgstr "是否从资源库删除<strong>%(object)s</strong>存储？"
 
 msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
-msgstr ""
+msgstr "该操作不会从存储中删除内容，并且将停止发布新版本资源库至该存储。"
 
 msgid "Enable Storage"
 msgstr "启用存储"
@@ -550,62 +533,57 @@ msgstr "如果该存储出现问题，请检查 SSH 公钥是否正常工作。"
 msgid "Update %(storage_name)s"
 msgstr "更新 %(storage_name)s"
 
-#, fuzzy, python-format
-#| msgid "Add %(storage_name)s"
+#, python-format
 msgid "Setup %(storage_name)s"
-msgstr "添加 %(storage_name)s"
+msgstr "设置 %(storage_name)s"
 
 msgid "cancel"
-msgstr ""
+msgstr "取消"
 
 msgid "save"
-msgstr ""
+msgstr "保存"
 
-#, fuzzy
-#| msgid "Here's how to find and copy the Git Repository SSH Address in your %(gitlab)s repository:"
 msgid "Here's how to copy the SSH Address from GitLab:"
-msgstr "如何查找和复制 %(gitlab)s 资料库中的 Git 资料库 SSH 地址，请参阅："
+msgstr "如何从 GitLab 复制 SSH 地址："
 
 msgid "Setup a place to store your repo"
-msgstr ""
+msgstr "设置资源库的保存位置"
 
 msgid "Git"
-msgstr ""
+msgstr "Git"
 
 msgid "Easy, free, requires an account"
-msgstr ""
+msgstr "简易，免费，需注册账号"
 
 msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
-msgstr ""
+msgstr "Git 是一款广为使用的版本控制工具，可用于安全地将资源库发布至 GitLab、GitHub 或其他 Git 服务。Git 服务使用 SSH 以安全地将本地文件复制至远程计算机。"
 
 msgid "Setup"
-msgstr ""
+msgstr "设置"
 
 msgid "GitLab"
-msgstr ""
+msgstr "GitLab"
 
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 msgid "SSH"
-msgstr ""
+msgstr "SSH"
 
 msgid "Requires a personal web server or host that supports SSH"
-msgstr ""
+msgstr "需支持 SSH 的个人 web 服务器或主机"
 
 msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
-msgstr ""
+msgstr "SSH 可用于安全地将文件复制至远程计算机。如果使用 Git 作为存储，可使用 SSH 复制文件。SSH 选项可无需其他工具而直接复制文件。"
 
-#, fuzzy
-#| msgid "Amazon S3 Storage"
 msgid "Amazon S3"
-msgstr "Amazon S3 存储"
+msgstr "Amazon S3"
 
 msgid "Requires an Amazon account, Pricing varies"
-msgstr ""
+msgstr "需亚马逊账号，价格随需求而变"
 
 msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
-msgstr ""
+msgstr "Amazon S3 是 Amazon Web Services 提供的一款 web 服务。Amazon S3 通过 web 服务介面提供存储 。价格随需求而变。具体信息，请访问 Amazon S3 网站。"
 
 #, fuzzy, python-format
 #| msgid "Version %(version)s (%(code)s)"
@@ -616,16 +594,16 @@ msgid "Added"
 msgstr "已添加"
 
 msgid "Enter email"
-msgstr ""
+msgstr "输入电子邮箱"
 
 msgid "Enter your email address and we'll send a link to reset it. If you did not sign up with an email, we cannot help you securely reset your password."
-msgstr ""
+msgstr "请输入您的电子邮箱地址，然后将会收到我们发送的重置链接。如果注册时未使用电子邮箱，我们将无法帮助您安全地重置密码。"
 
 msgid "Enter SSH URL"
-msgstr ""
+msgstr "输入 SSH 网址"
 
 msgid "Raw Git URL"
-msgstr ""
+msgstr "Raw Git 网址"
 
 msgid "This is the location where the uploaded files can be accessed from in raw form. Leave empty for GitHub or GitLab.com repositories."
 msgstr "通过该地址能够以 raw 格式访问所上传的文件。对于 Github 或 GitLab 资源库，请留空。"

@@ -7,8 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 09:55+0000\n"
-"PO-Revision-Date: 2017-06-23 14:58+0000\n"
+"PO-Revision-Date: 2017-07-07 16:53+0000\n"
 "Last-Translator: monolifed <monolifed@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/f-droid/repomaker/tr/>\n"
 "Language: tr\n"
@@ -16,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.15-dev\n"
+"X-Generator: Weblate 2.16-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -25,10 +24,8 @@ msgstr ""
 msgid "This APK already exists in the current repo."
 msgstr "Bu APK zaten şu anki depoda var."
 
-#, fuzzy
-#| msgid "Invalid APK."
 msgid "Invalid APK signature"
-msgstr "Geçersiz APK."
+msgstr "Geçersiz APK imzası"
 
 msgid "Invalid APK."
 msgstr "Geçersiz APK."
@@ -142,49 +139,45 @@ msgid "Or login with"
 msgstr "Veya birlikte giriş yap"
 
 msgid "Logout"
-msgstr ""
+msgstr "Oturumu Kapat"
 
 msgid "See you later"
-msgstr ""
+msgstr "Sonra görüşürüz"
 
 msgid "Your security is important to us. Please confirm that you want to logout."
-msgstr ""
+msgstr "Güvenliğiniz bizim için önemlidir. Lütfen oturumu kapatmak istediğinizi onaylayın."
 
 msgid "logout"
-msgstr ""
+msgstr "oturumu kapat"
 
 msgid "submit"
-msgstr ""
+msgstr "gönder"
 
 msgid "We have sent you an email with a link to reset your password."
-msgstr ""
+msgstr "Şifrenizi sıfırlamanız için size bir bağlantı içeren bir e-posta gönderdik."
 
 msgid "Signup"
 msgstr "Kaydol"
 
 msgid "Browse Gallery"
-msgstr ""
+msgstr "Galeriye Gözat"
 
 msgid "Search"
-msgstr ""
+msgstr "Ara"
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Category (%(count)s)"
-msgstr "Dil (%(count)s)"
+msgstr "Kategori (%(count)s)"
 
 msgid "All"
 msgstr "Hepsi"
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Source (%(count)s)"
-msgstr "Dil (%(count)s)"
+msgstr "Kaynak (%(count)s)"
 
-#, fuzzy
-#| msgid "add from repos"
 msgid "Add a repo"
-msgstr "depolardan ekle"
+msgstr "Bir depo ekle"
 
 msgid "Add"
 msgstr "Ekle"
@@ -236,7 +229,7 @@ msgid "Done"
 msgstr "Bitti"
 
 msgid "By"
-msgstr ""
+msgstr "Tarafından"
 
 msgid "Short Summary (40 characters)"
 msgstr "Kısa Özet (40 karakter)"
@@ -275,10 +268,9 @@ msgstr "Hiçbiri"
 msgid "Edit"
 msgstr "Düzenle"
 
-#, fuzzy, python-format
-#| msgid "Developed by %(author)s"
+#, python-format
 msgid "By %(author)s"
-msgstr "%(author)s tarafından geliştirildi"
+msgstr "%(author)s tarafından"
 
 #, python-format
 msgid "Updated %(time)s ago"
@@ -311,12 +303,10 @@ msgid "Next"
 msgstr "Sonraki"
 
 msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
-msgstr ""
+msgstr "Şu anda hiçbir ekran görüntüsü gösterilmiyor çünkü bu repo sahibine sizi takip olanağı sağlar."
 
-#, fuzzy
-#| msgid "Screenshots"
 msgid "show screenshots"
-msgstr "Ekran Görüntüsü"
+msgstr "ekran görüntülerini göster"
 
 msgid "Add Screenshot"
 msgstr "Ekran Görüntüsü Ekle"
@@ -394,7 +384,7 @@ msgid "Save Changes"
 msgstr "Değişiklikleri Kaydet"
 
 msgid "Content"
-msgstr ""
+msgstr "İçerik"
 
 msgid "Share"
 msgstr "Paylaş"
@@ -405,17 +395,15 @@ msgstr "Bilgi"
 msgid "Search for apps in your repository"
 msgstr "Deponuzda uygulamaları arayın"
 
-#, fuzzy
-#| msgid "add from repos"
 msgid "add from gallery"
-msgstr "depolardan ekle"
+msgstr "galeriden ekle"
 
 #, python-format
 msgid "Alternatively, drag and drop or %(label_start)schoose files%(label_end)s"
 msgstr ""
 
 msgid "Accepted files include Android apps, documents, eBooks, audio and video."
-msgstr ""
+msgstr "Kabul edilen dosyalar Android uygulamalarını, belgeleri, e-kitapları, sesleri ve videoları içerir."
 
 msgid "Your search did not return any results."
 msgstr "Aramanız hiç sonuç döndürmedi."
@@ -426,10 +414,8 @@ msgstr "Ad"
 msgid "Storage"
 msgstr "Depolama"
 
-#, fuzzy
-#| msgid "Add SSH Storage"
 msgid "Add Storage"
-msgstr "SSH Depolama Ekle"
+msgstr "Depolama Ekle"
 
 msgid "Fingerprint"
 msgstr "Parmak izi"
@@ -438,15 +424,14 @@ msgid "Remove Repo"
 msgstr "Depo Sil"
 
 msgid "Add storage to publish"
-msgstr "Deponuz henüz yayımlanmadı. Bir depolamayı önceden eklendiniz ve etkinleştirdiniz mi?"
-
-msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
-msgstr ""
+msgstr "Yayımlama için depo ekle"
 
 #, fuzzy
-#| msgid "Git Storage"
+msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
+msgstr "Depolama eklediğinizde, deponuz kendiliğinden yayımlanacaktır. Repomaker deponuzun genel reklamını yapmaz. Sadece deponuza doğrudan bağlantıyı alan kişiler onu görebilecektir."
+
 msgid "add storage"
-msgstr "Git Depolama"
+msgstr "depolama ekle"
 
 #, python-format
 msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
@@ -482,10 +467,9 @@ msgstr "Bu F-Droid deposuna göz atın: %(name)s"
 msgid "Delete Storage"
 msgstr "Depolamayı Sil"
 
-#, fuzzy, python-format
-#| msgid "Are you sure you want to delete this screenshot from your app \"%(app)s\"?"
+#, python-format
 msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong> from your repo?"
-msgstr "Bu ekran görüntüsünü \"%(app)s\" uygulamanızdan silmek istediğinize emin misiniz?"
+msgstr "Deponuzdan <strong>%(object)s</strong> konumundaki depolamayı kaldırmak istediğinize emin misiniz?"
 
 msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
 msgstr ""
@@ -551,59 +535,54 @@ msgstr "Bu depolama sorunlar yaşıyorsa, lütfen SSH anahtarının düzgün ça
 msgid "Update %(storage_name)s"
 msgstr "%(storage_name)s güncelle"
 
-#, fuzzy, python-format
-#| msgid "Add %(storage_name)s"
+#, python-format
 msgid "Setup %(storage_name)s"
-msgstr "%(storage_name)s ekle"
+msgstr "%(storage_name)s kur"
 
 msgid "cancel"
-msgstr ""
+msgstr "iptal"
 
 msgid "save"
-msgstr ""
+msgstr "kaydet"
 
-#, fuzzy
-#| msgid "Here's how to find and copy the Git Repository SSH Address in your %(gitlab)s repository:"
 msgid "Here's how to copy the SSH Address from GitLab:"
-msgstr "İşte, %(gitlab)s deponuzdaki Git Deposu SSH Adresinin nasıl bulunacağı ve kopyalanacağı:"
+msgstr "GitLab'dan SSH Adresinin nasıl kopyalanacağı:"
 
 msgid "Setup a place to store your repo"
-msgstr ""
+msgstr "Deponuzu saklamak için bir yer ayarlayın"
 
 msgid "Git"
-msgstr ""
+msgstr "Gıt"
 
 msgid "Easy, free, requires an account"
-msgstr ""
+msgstr "Kolay, ücretsiz, bir hesap gerektirir"
 
 msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
 msgstr ""
 
 msgid "Setup"
-msgstr ""
+msgstr "Kur"
 
 msgid "GitLab"
-msgstr ""
+msgstr "GitLab"
 
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 msgid "SSH"
-msgstr ""
+msgstr "SSH"
 
 msgid "Requires a personal web server or host that supports SSH"
-msgstr ""
+msgstr "SSH destekleyen kişisel bir web sunucusu veya bir sunucu gerektirir"
 
 msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
 msgstr ""
 
-#, fuzzy
-#| msgid "Amazon S3 Storage"
 msgid "Amazon S3"
-msgstr "Amazon S3 Depolama"
+msgstr "Amazon S3"
 
 msgid "Requires an Amazon account, Pricing varies"
-msgstr ""
+msgstr "Bir Amazon hesabı gerekir. Ücretlendirme değişir"
 
 msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
 msgstr ""
@@ -617,13 +596,13 @@ msgid "Added"
 msgstr "Eklendi"
 
 msgid "Enter email"
-msgstr ""
+msgstr "E-posta girin"
 
 msgid "Enter your email address and we'll send a link to reset it. If you did not sign up with an email, we cannot help you securely reset your password."
 msgstr ""
 
 msgid "Enter SSH URL"
-msgstr ""
+msgstr "SSH URL'si girin"
 
 msgid "Raw Git URL"
 msgstr "Ham Git URL'si"
@@ -643,8 +622,6 @@ msgstr "Bu URL geçersiz. Lütfen git deponuzun tam SSH URL'sini kopyalayın."
 msgid "Please add a valid URLfor the raw content of this git repository."
 msgstr "Lütfen bu git deposunun ham içeriği için geçerli bir URL ekleyin."
 
-#, fuzzy
-#| msgid "Repository URL"
 msgid "Repository URL"
 msgstr "Depo URL'si"
 

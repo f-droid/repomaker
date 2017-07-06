@@ -7,8 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 09:55+0000\n"
-"PO-Revision-Date: 2017-07-05 05:03+0000\n"
+"PO-Revision-Date: 2017-07-13 09:59+0000\n"
 "Last-Translator: ezjerry liao <ezjerry@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/f-droid/repomaker/zh_Hant/>\n"
 "Language: zh_Hant\n"
@@ -25,10 +24,8 @@ msgstr ""
 msgid "This APK already exists in the current repo."
 msgstr "此 APK 已經存在於目前的軟倉庫。"
 
-#, fuzzy
-#| msgid "Invalid APK."
 msgid "Invalid APK signature"
-msgstr "無效的 APK。"
+msgstr "無效的 APK 簽名"
 
 msgid "Invalid APK."
 msgstr "無效的 APK。"
@@ -142,49 +139,45 @@ msgid "Or login with"
 msgstr "或以其它登入"
 
 msgid "Logout"
-msgstr ""
+msgstr "登出"
 
 msgid "See you later"
-msgstr ""
+msgstr "待會見"
 
 msgid "Your security is important to us. Please confirm that you want to logout."
-msgstr ""
+msgstr "您的安全對我們很重要。請確認您想登出。"
 
 msgid "logout"
-msgstr ""
+msgstr "登出"
 
 msgid "submit"
-msgstr ""
+msgstr "提交"
 
 msgid "We have sent you an email with a link to reset your password."
-msgstr ""
+msgstr "我們會向您發送一封附有連結的電子郵件，以重置您的密碼。"
 
 msgid "Signup"
 msgstr "註冊"
 
 msgid "Browse Gallery"
-msgstr ""
+msgstr "瀏覽陳列室"
 
 msgid "Search"
-msgstr ""
+msgstr "搜尋"
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Category (%(count)s)"
-msgstr "語言 (%(count)s)"
+msgstr "類別 (%(count)s)"
 
 msgid "All"
 msgstr "全部"
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Source (%(count)s)"
-msgstr "語言 (%(count)s)"
+msgstr "來源 (%(count)s)"
 
-#, fuzzy
-#| msgid "add from repos"
 msgid "Add a repo"
-msgstr "從軟體倉庫中增加"
+msgstr "增加軟體倉庫"
 
 msgid "Add"
 msgstr "新增"
@@ -236,7 +229,7 @@ msgid "Done"
 msgstr "完成"
 
 msgid "By"
-msgstr ""
+msgstr "由"
 
 msgid "Short Summary (40 characters)"
 msgstr "簡短摘要（40 個字元）"
@@ -275,10 +268,9 @@ msgstr "無"
 msgid "Edit"
 msgstr "編輯"
 
-#, fuzzy, python-format
-#| msgid "Developed by %(author)s"
+#, python-format
 msgid "By %(author)s"
-msgstr "開發者為 %(author)s"
+msgstr "為 %(author)s"
 
 #, python-format
 msgid "Updated %(time)s ago"
@@ -311,12 +303,10 @@ msgid "Next"
 msgstr "下一步"
 
 msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
-msgstr ""
+msgstr "目前沒有螢幕快照顯示，因為這樣會讓軟體倉庫所有者有跟踪您的能力。"
 
-#, fuzzy
-#| msgid "Screenshots"
 msgid "show screenshots"
-msgstr "螢幕快照"
+msgstr "顯示螢幕快照"
 
 msgid "Add Screenshot"
 msgstr "增加螢幕快照"
@@ -379,7 +369,7 @@ msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
 msgstr "您確定要刪除軟體倉庫 <strong>%(repo)s</strong>？"
 
 msgid "This will also delete all apps and other files from your repo. You will not be able to get them back, users of your repo will not be able to use it anymore and not receive updates for the apps they received from you. There is no way to recover this repo!"
-msgstr ""
+msgstr "這將會從您的軟體倉庫中刪除全部應用程式以及其它的檔案。您將無法讓他們返回，使用者將無法再使用您的軟體倉庫，也無法從您那收到應用程式的更新。沒有辦法可恢復此軟體倉庫！"
 
 msgid "Please only proceed if you know what you are doing!"
 msgstr "如果您知道您在做什麼，請繼續！"
@@ -394,7 +384,7 @@ msgid "Save Changes"
 msgstr "儲存變更"
 
 msgid "Content"
-msgstr ""
+msgstr "內容"
 
 msgid "Share"
 msgstr "分享"
@@ -405,17 +395,15 @@ msgstr "資訊"
 msgid "Search for apps in your repository"
 msgstr "在您的軟體倉庫搜尋應用程式"
 
-#, fuzzy
-#| msgid "add from repos"
 msgid "add from gallery"
-msgstr "從軟體倉庫中增加"
+msgstr "從陳列室中增加"
 
 #, python-format
 msgid "Alternatively, drag and drop or %(label_start)schoose files%(label_end)s"
-msgstr ""
+msgstr "二者擇一，拖放或 %(label_start)s 選取檔案 %(label_end)s"
 
 msgid "Accepted files include Android apps, documents, eBooks, audio and video."
-msgstr ""
+msgstr "接受的檔案包括 Android 應用程式、文件、電子書、音訊和視訊。"
 
 msgid "Your search did not return any results."
 msgstr "您的搜尋沒有返回任何結果。"
@@ -426,10 +414,8 @@ msgstr "名稱"
 msgid "Storage"
 msgstr "存儲"
 
-#, fuzzy
-#| msgid "Add SSH Storage"
 msgid "Add Storage"
-msgstr "增加 SSH 存儲"
+msgstr "增加存儲"
 
 msgid "Fingerprint"
 msgstr "指紋"
@@ -438,15 +424,13 @@ msgid "Remove Repo"
 msgstr "移除軟體倉庫"
 
 msgid "Add storage to publish"
-msgstr ""
+msgstr "增加存儲以發佈"
 
 msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
-msgstr ""
+msgstr "當您增加存儲時，您的軟體倉庫將會自動發佈。Repomaker 不會公開地推廣您的東西。只有接收到您的軟體倉庫直接鏈接的人才能看到它。"
 
-#, fuzzy
-#| msgid "Edit Storage"
 msgid "add storage"
-msgstr "編輯存儲"
+msgstr "增加存儲"
 
 #, python-format
 msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
@@ -481,13 +465,12 @@ msgstr "檢驗這個 F-Droid 軟體倉庫： %(name)s"
 msgid "Delete Storage"
 msgstr "刪除存儲"
 
-#, fuzzy, python-format
-#| msgid "Are you sure you want to delete your app <strong>%(object)s</strong>?"
+#, python-format
 msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong> from your repo?"
-msgstr "您確定要刪除應用程式 <strong>%(object)s</strong>？"
+msgstr "您確定要從您的軟體倉庫移除<strong>%(object)s</strong>存儲？"
 
 msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
-msgstr ""
+msgstr "這不會從存儲中刪除內容，但將會停止向其發佈您的軟體倉庫未來版本。"
 
 msgid "Enable Storage"
 msgstr "啟用存儲"
@@ -502,10 +485,10 @@ msgid "Edit Storage"
 msgstr "編輯存儲"
 
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
-msgstr ""
+msgstr "為使上傳工作正常，請務必將此公共 SSH 金鑰增加到您的 Git 帳戶。在<a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\"> Gitlab</a>和<a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\"> 3GitHub</a>有用法說明。"
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
-msgstr ""
+msgstr "此外，因爲強力推送請查明您的軟體倉庫主分支是<b>未受保護</b>的。"
 
 msgid "Git Repository SSH Address"
 msgstr "Git 軟體倉庫 SSH 位址"
@@ -520,10 +503,10 @@ msgid "Access Key ID"
 msgstr "存取鍵 ID"
 
 msgid "Please make sure to add this public SSH key to your SSH server's <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> file,\tif you have not done so already."
-msgstr ""
+msgstr "請務必將此公共 SSH 金鑰增加到您的 SSH 伺服器 <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> 檔案，\t如果您尚未這樣做的話。"
 
 msgid "Security Warning: This gives repomaker write access to that storage. Please limit this user's access as much as possible."
-msgstr ""
+msgstr "安全警告：這使得 repomaker 對該存儲有覆寫存取權限。請盡可能限制該使用者的存取權限。"
 
 msgid "Username"
 msgstr "使用者名稱"
@@ -538,7 +521,7 @@ msgid "Your local default SSH key will be used to connect to the storage."
 msgstr "您本地預設的 SSH 金鑰將使用於連接到存儲。"
 
 msgid "Please make sure to authorize this public SSH key for your remote storage, if you have not done so already."
-msgstr ""
+msgstr "如果您還沒有授權，請務必為您遠端存儲授權公共 SSH 金鑰。"
 
 msgid "Activate this storage only once you have added the SSH key."
 msgstr "要啟動此存儲只有在您之前已增加了 SSH 金鑰。"
@@ -550,60 +533,57 @@ msgstr "如果這個存儲遇到問題，請檢查 SSH 金鑰能否正常工作�
 msgid "Update %(storage_name)s"
 msgstr "更新 %(storage_name)s"
 
-#, fuzzy, python-format
-#| msgid "Add %(storage_name)s"
+#, python-format
 msgid "Setup %(storage_name)s"
-msgstr "增加 %(storage_name)s"
+msgstr "設置 %(storage_name)s"
 
 msgid "cancel"
-msgstr ""
+msgstr "取消"
 
 msgid "save"
-msgstr ""
+msgstr "儲存"
 
 msgid "Here's how to copy the SSH Address from GitLab:"
-msgstr ""
+msgstr "這裡是如何從 GitLab 複製 SSH 位址："
 
 msgid "Setup a place to store your repo"
-msgstr ""
+msgstr "設置一個處所去存儲您的軟體倉庫"
 
 msgid "Git"
-msgstr ""
+msgstr "Git"
 
 msgid "Easy, free, requires an account"
-msgstr ""
+msgstr "容易，免費，需要一個帳戶"
 
 msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
 msgstr ""
 
 msgid "Setup"
-msgstr ""
+msgstr "設置"
 
 msgid "GitLab"
-msgstr ""
+msgstr "GitLab"
 
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 msgid "SSH"
-msgstr ""
+msgstr "SSH"
 
 msgid "Requires a personal web server or host that supports SSH"
-msgstr ""
+msgstr "需要個人 Web 伺服器或支援 SSH 的主機"
 
 msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
 msgstr ""
 
-#, fuzzy
-#| msgid "Amazon S3 Storage"
 msgid "Amazon S3"
-msgstr "Amazon S3 雲端儲存"
+msgstr "Amazon S3"
 
 msgid "Requires an Amazon account, Pricing varies"
-msgstr ""
+msgstr "需要 Amazon 帳號，價格各有不同"
 
 msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
-msgstr ""
+msgstr "Amazon S3 是 Amazon 網路服務所提供的 Web 服務。Amazon S3 透過 Web 服務介面提供存儲。有多種訂價，相關詳細資訊，請造訪 Amazon S3 網站。"
 
 #, fuzzy, python-format
 #| msgid "Version %(version)s (%(code)s)"
@@ -614,19 +594,19 @@ msgid "Added"
 msgstr "已增加"
 
 msgid "Enter email"
-msgstr ""
+msgstr "輸入電子郵件"
 
 msgid "Enter your email address and we'll send a link to reset it. If you did not sign up with an email, we cannot help you securely reset your password."
-msgstr ""
+msgstr "輸入您的電子郵件地址，我們會發送一個連結將其重置。如果您沒有使用電子郵件註冊，我們無法幫您安全地重置您的密碼。"
 
 msgid "Enter SSH URL"
-msgstr ""
+msgstr "輸入 SSH 網址"
 
 msgid "Raw Git URL"
 msgstr "Raw Git 網址"
 
 msgid "This is the location where the uploaded files can be accessed from in raw form. Leave empty for GitHub or GitLab.com repositories."
-msgstr ""
+msgstr "這個位置可以 raw 格式存取已上載的檔案。為 GitHub 或 GitLab.com 軟體倉庫留空間。"
 
 msgid "This URL must start with 'git@'."
 msgstr "該網址必須以'git@'開頭。"

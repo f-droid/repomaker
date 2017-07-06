@@ -7,8 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 09:55+0000\n"
-"PO-Revision-Date: 2017-07-05 19:24+0000\n"
+"PO-Revision-Date: 2017-07-11 20:32+0000\n"
 "Last-Translator: Mo <press.hosseini@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/f-droid/repomaker/fa/>\n"
 "Language: fa\n"
@@ -25,10 +24,8 @@ msgstr ""
 msgid "This APK already exists in the current repo."
 msgstr "این APK از قبل در مخزن بوده است."
 
-#, fuzzy
-#| msgid "Invalid APK."
 msgid "Invalid APK signature"
-msgstr "APK نادرست است."
+msgstr "APK نادرست است  signature"
 
 msgid "Invalid APK."
 msgstr "APK نادرست است."
@@ -49,7 +46,7 @@ msgid "Document"
 msgstr "اسناد"
 
 msgid "Image"
-msgstr "تصویر"
+msgstr "عکس"
 
 msgid "Audio"
 msgstr "صوتی"
@@ -130,7 +127,7 @@ msgid "Spread the love."
 msgstr "عشق را گشترش بده."
 
 msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
-msgstr ""
+msgstr "ریپومیکر یک اپلیکشن تحت وب این که برای جمع‌آوری اپلیکشن‌٬ موزیک٬کتاب٬ ویدئو و عکس جهت اشتراک گذاشتن با دوستان خود. همچنین برای توزیع به عنوان شبکه پخش موبایل از F-Droid استفاده می‌کند. فقط برای اندروید موجود است."
 
 msgid "Login"
 msgstr "ورود به سیستم"
@@ -142,49 +139,45 @@ msgid "Or login with"
 msgstr "یا وارد شوید با"
 
 msgid "Logout"
-msgstr ""
+msgstr "خروج از سیستم"
 
 msgid "See you later"
-msgstr ""
+msgstr "به امید دیدار"
 
 msgid "Your security is important to us. Please confirm that you want to logout."
-msgstr ""
+msgstr "امنیت شما برای ما مهم است. لطفا خروج خود از سیستم را تایید کنید."
 
 msgid "logout"
-msgstr ""
+msgstr "خروج از سیستم"
 
 msgid "submit"
-msgstr ""
+msgstr "ثبت"
 
 msgid "We have sent you an email with a link to reset your password."
-msgstr ""
+msgstr "ما برای شما ایمیلی حاوی لینک برای ریست کردن رمز عبور ارسال کرده‌ایم."
 
 msgid "Signup"
 msgstr "ثبت نام"
 
 msgid "Browse Gallery"
-msgstr ""
+msgstr "گشتن در گالری"
 
 msgid "Search"
-msgstr ""
+msgstr "جستجو"
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Category (%(count)s)"
-msgstr "زبان (%(count)s 1)"
+msgstr "دسته بندی (%(count)s 1)"
 
 msgid "All"
 msgstr "همه"
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Source (%(count)s)"
-msgstr "زبان (%(count)s 1)"
+msgstr "منبع (%(count)s 1)"
 
-#, fuzzy
-#| msgid "Add App to %(repo)s"
 msgid "Add a repo"
-msgstr "افزون کردن اپلیکیشن تا %(repo)s 1"
+msgstr "یک مخزن اضافه کن"
 
 msgid "Add"
 msgstr "افزودن"
@@ -213,7 +206,7 @@ msgstr "نسخه اپلیکیشن را حذف کن"
 
 #, python-format
 msgid "Are you sure you want to delete this version <strong>%(version)s</strong> (%(code)s) from your app <strong>%(app)s</strong>?"
-msgstr ""
+msgstr "آیا از حذف این نسخه اطمینان دارید؟ <strong> 1%(version)s 2</strong> 3 (%(code)s 4) از اپلیکیشن شما  <strong> 5%(app)s 6</strong> 7?"
 
 msgid "Confirm"
 msgstr "تایید"
@@ -236,7 +229,7 @@ msgid "Done"
 msgstr "تمام"
 
 msgid "By"
-msgstr ""
+msgstr "توسط"
 
 msgid "Short Summary (40 characters)"
 msgstr "خلاصه‌ای کوتاه (۴۰ کاراکتر)"
@@ -275,10 +268,9 @@ msgstr "هیچ"
 msgid "Edit"
 msgstr "ویرایش"
 
-#, fuzzy, python-format
-#| msgid "Developed by %(author)s"
+#, python-format
 msgid "By %(author)s"
-msgstr "طراحی شده توسط %(author)s 1"
+msgstr "توسط %(author)s 1"
 
 #, python-format
 msgid "Updated %(time)s ago"
@@ -302,7 +294,7 @@ msgid "This app has no APK files."
 msgstr "این اپلیکیشن فایل APK ندارد."
 
 msgid "If you added this app from a remote repo, try deleting it and adding it again."
-msgstr ""
+msgstr "اگر این اپلیکشن را از مخزن متحرک اضافه کرده‌اید٫ آن را حذف کنید و دوباره اضافه کنید."
 
 msgid "Previous"
 msgstr "قبلی"
@@ -311,12 +303,10 @@ msgid "Next"
 msgstr "بعدی"
 
 msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
-msgstr ""
+msgstr "در حال حاضر هیچگونه تصاویر پیش زمینه‌ای نشان داده نمی‌شود چرا که این به صاحبان مخزن اجازه ردیابی شما را می‌دهد."
 
-#, fuzzy
-#| msgid "Screenshots"
 msgid "show screenshots"
-msgstr "تصاویر پرده"
+msgstr "تصاویر پیش‌زمینه را نمایش بده"
 
 msgid "Add Screenshot"
 msgstr "افزون کردن تصویر پرده"
@@ -329,7 +319,7 @@ msgstr "حذف تصویر پرده"
 
 #, python-format
 msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
-msgstr ""
+msgstr "آیا از حذف این تصویر پیش زمینه از اپلیکیشن‌ خود اطمینان دارید؟ pp <strong> 1%(app)s 2</strong> 3?"
 
 msgid "Translate App"
 msgstr "اپلیکیشن ترجمه"
@@ -379,130 +369,130 @@ msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
 msgstr "آیا از حذف این مخزن اطمینان دارید؟ <strong> 1%(repo)s 2</strong> 3?"
 
 msgid "This will also delete all apps and other files from your repo. You will not be able to get them back, users of your repo will not be able to use it anymore and not receive updates for the apps they received from you. There is no way to recover this repo!"
-msgstr ""
+msgstr "این باعث حذف اپلیکیشن‌ها و فایل‌های دیگر از مخزن شما می‌شود. شما امکان بازگشت آنها را نخواهید داشت. همچنین کاربران مخزن شما هم امکان استفاده از آنها را ندارند و هیچگونه به روز رسانی برای اپلیکیشن‌ها دریافت نمی‌کنند. راهی برای بازیابی این مخزن نخواهد بود!"
 
 msgid "Please only proceed if you know what you are doing!"
-msgstr ""
+msgstr "لطفا در صورتی ادامه دهید که بطور کامل از کاری که انجام می‌دهید اطلاع دارید!"
 
 msgid "Yes, I want to delete the repo"
-msgstr ""
+msgstr "بله٬ این مخزن را پاک کن"
 
 msgid "Edit Repo"
-msgstr ""
+msgstr "ویرایش مخزن"
 
 msgid "Save Changes"
-msgstr ""
+msgstr "ذخیره تغییرات"
 
 msgid "Content"
-msgstr ""
+msgstr "محتوا"
 
 msgid "Share"
-msgstr ""
+msgstr "اشتراک گذاری"
 
 msgid "Info"
-msgstr ""
+msgstr "اطلاعات"
 
 msgid "Search for apps in your repository"
-msgstr ""
+msgstr "به دنبال اپلیکیشن‌ها در مخزن بگرد"
 
 msgid "add from gallery"
-msgstr ""
+msgstr "از گالری اضافه کن"
 
 #, python-format
 msgid "Alternatively, drag and drop or %(label_start)schoose files%(label_end)s"
-msgstr ""
+msgstr "در غیر این صورت بگیر و بنداز یا %(label_start)s 1 فایل %(label_end)s 2 انتخاب کن"
 
 msgid "Accepted files include Android apps, documents, eBooks, audio and video."
-msgstr ""
+msgstr "فایل‌های تایید شده شامل اپلیکیشن‌های آندروید٫اسناد٫ کتاب دیجیتال٫ صوتی و تصویری."
 
 msgid "Your search did not return any results."
-msgstr ""
+msgstr "جستجوی شما هیچگونه نتیجه‌ای نداشت."
 
 msgid "Name"
-msgstr ""
+msgstr "نام"
 
 msgid "Storage"
-msgstr ""
+msgstr "فضا"
 
 msgid "Add Storage"
-msgstr ""
+msgstr "اضافه کردن فضا"
 
 msgid "Fingerprint"
-msgstr ""
+msgstr "اثر انگشت"
 
 msgid "Remove Repo"
-msgstr ""
+msgstr "حذف مخزن"
 
 msgid "Add storage to publish"
-msgstr ""
+msgstr "مخزن را برای انتشار اضافه کن"
 
 msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
-msgstr ""
+msgstr "مخزن شما بطور خودکار زمانی که فضایی را اضافه کنید منتشر می‌شود. ریپومیکر بصورت عمومی چیز‌های شما را نشان تبلیغ نمی‌کند. فقط کسانی که لینک مستقیم به مخزن شما دارند می‌توانند ببینند."
 
 msgid "add storage"
-msgstr "مخزن شما هنوز منتشر نشده است. آیا یک محل ذخیره سازی برای آن ایجاد و فعال کرده اید؟"
+msgstr "فضا را اضافه کن"
 
 #, python-format
 msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
 msgid_plural "You have  <span>%(app_count)s apps</span> in your repo. Share it!"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "شما دارای <span> 1%(app_count)s 2 اپلیکیشن </span> 3 در مخزن خود هستید. به اشتراک بگذارید."
+msgstr[1] "شما دارای <span> 4%(app_count)s 5  اپلیکیشن‌ها </span> 6 در مخزن خود هستید. به اشتراک بگذارید."
 
 msgid "view repo"
-msgstr ""
+msgstr "مشاهده مخزن"
 
 msgid "share public link"
-msgstr ""
+msgstr "لینک عمومی را به اشتراک بگذار"
 
 msgid "copy link"
-msgstr ""
+msgstr "لینک را کپی کن"
 
 msgid "add to an android phone"
-msgstr ""
+msgstr "به موبایل آندروید اضافه کن"
 
 msgid "To install these apps on your Android phone, add them to F-Droid."
-msgstr ""
+msgstr "برای نصب این اپلیکیشن‌ها بر روی موبایل آندروید آنها را به F-Droid اضافه کن."
 
 msgid "F-Droid ensures access to secure app updates."
-msgstr ""
+msgstr "F-Droid از ارتباط مطمئن برای به روز رسانی اپلیکیشن‌ها استفاده می‌کند."
 
 msgid "Scan QR"
-msgstr ""
+msgstr "اسکن QR"
 
 #, python-format
 msgid "Check out this F-Droid repo: %(name)s"
-msgstr ""
+msgstr "به این مخزن F-Droid توجه کن: %(name)s 1"
 
 msgid "Delete Storage"
-msgstr ""
+msgstr "فضا را حذف کن"
 
 #, python-format
 msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong> from your repo?"
-msgstr ""
+msgstr "آیا از حذف فضا اطمینان دارید در <strong> 1%(object)s 2</strong> 3 از مخزنان؟"
 
 msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
-msgstr ""
+msgstr "این محتوا را از فضا حذف نمی‌کند ولی باعث جلوگیری از انتشار آینده آن در مخزن شما جلوگیری می‌کند."
 
 msgid "Enable Storage"
-msgstr ""
+msgstr "فضا را فعال کن"
 
 msgid "Disable Storage"
-msgstr ""
+msgstr "فضا را غیر فعال کن"
 
 msgid "Repo Address"
-msgstr ""
+msgstr "آدرس مخزن"
 
 msgid "Edit Storage"
-msgstr ""
+msgstr "ویرایش فضا"
 
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
-msgstr ""
+msgstr "لطفا از اضافه کردن کلید عمومی SSH به حساب گیت خود برای بارگزاری کارهایتان اطمینان حاصل کنید. راهنمایی برای همین موضع موجود است<a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\"> 1Gitlab</a> 2 گیتب</a> </a> 2  و <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\"> گیت‌هاب </a> 4"
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
-msgstr ""
+msgstr "همچنین لطفا اطمینان حاصل کنید که شاخه اصلی مخزن شما <b> 1 محافظت نشده است </b> 2 از نیروی فشار دادن."
 
 msgid "Git Repository SSH Address"
-msgstr ""
+msgstr "آدرس گیت مخزن SSH"
 
 msgid "Region"
 msgstr "منطقه"
@@ -511,19 +501,19 @@ msgid "Bucket"
 msgstr "باکت"
 
 msgid "Access Key ID"
-msgstr ""
+msgstr "شناسه دسترسی"
 
 msgid "Please make sure to add this public SSH key to your SSH server's <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> file,\tif you have not done so already."
-msgstr ""
+msgstr "لطفا از اضافه کردن این کلید SSH به سرور SSH اطمینان حاصل کنید. <tt> 1 <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\"> 2 ~/.ssh/authorized_keys</a> 3 </tt> 4 فایل \tاگر هنوز آن را انجام نداده‌اید."
 
 msgid "Security Warning: This gives repomaker write access to that storage. Please limit this user's access as much as possible."
-msgstr ""
+msgstr "اخطار امنیتی: این به مخزن اجازه دسترسی به فضا را می‌دهید. لطفا دسترسی این کاربر را تا حد ممکن کم کنید."
 
 msgid "Username"
-msgstr ""
+msgstr "نام کاربری"
 
 msgid "Host"
-msgstr "میزبان"
+msgstr "هاست"
 
 msgid "Path"
 msgstr "مسیر"
@@ -544,62 +534,57 @@ msgstr "اگر  حافظه دچار مشکل ش٬ از درست کار کردن 
 msgid "Update %(storage_name)s"
 msgstr "به روز رسانی %(storage_name)s 1"
 
-#, fuzzy, python-format
-#| msgid "Add %(storage_name)s"
+#, python-format
 msgid "Setup %(storage_name)s"
-msgstr "افزودن %(storage_name)s 1"
+msgstr "نصب %(storage_name)s 1"
 
 msgid "cancel"
-msgstr ""
+msgstr "لغو"
 
 msgid "save"
-msgstr ""
+msgstr "ذخیره"
 
-#, fuzzy
-#| msgid "Here's how to find and copy the Git Repository SSH Address in your %(gitlab)s repository:"
 msgid "Here's how to copy the SSH Address from GitLab:"
-msgstr "نحوه پیدا کردن و کپی کردن آدرس SSH مخزن گیت در  %(gitlab)s 1:"
+msgstr "نحوه کپی کردن آدرس SSH به گیت‌لاب اینطور می‌باشد:"
 
 msgid "Setup a place to store your repo"
-msgstr ""
+msgstr "یک مکان را برای نگهدای مخزن نصب کن"
 
 msgid "Git"
-msgstr ""
+msgstr "گیت"
 
 msgid "Easy, free, requires an account"
-msgstr ""
+msgstr "ساده٫ مجانی٫‌ به حساب کاربری نیاز است"
 
 msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
-msgstr ""
+msgstr "گیت یک ابزار خوبه برای کنترل همه چیز. شما می‌توانید بصورت امن مخزن‌ها را در جیت‌لاب٬ جیت‌هاب و یا هر گونه سرویس جیت دیگر منتشر کنید. سرویس‌های جیت از SSH برای کپی کردن فایل‌ها بصورت امن از کامپیوتر شما به کامپیوتر‌های سیار استفاده می‌کنند."
 
 msgid "Setup"
-msgstr ""
+msgstr "نصب"
 
 msgid "GitLab"
-msgstr ""
+msgstr "جیت‌لب"
 
 msgid "GitHub"
-msgstr ""
+msgstr "جیت‌‌هاب"
 
 msgid "SSH"
-msgstr ""
+msgstr "SSH"
 
 msgid "Requires a personal web server or host that supports SSH"
-msgstr ""
+msgstr "به یک سرور وب شخصی یا یک هاست که SSH را ساپورت می‌کند نیاز است"
 
 msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
-msgstr ""
+msgstr "SSH یک تکنولوژی است که برای کپی کردن فایلها به صورت امن به کامپیوتر‌های سیار می‌تواند استفاده شود. زمانی که از فضای گیت استفاده می‌کنید فایل‌ها از طریق SSH کپی استفاده می‌کند. ولی گزینه اصلی SSH برای کپی کردن بصورت مستقیم فایل‌ها از هیچ تکنولوژی دیگری استفاده نمی‌کند."
 
-#, fuzzy
-#| msgid "Amazon S3 Storage"
 msgid "Amazon S3"
-msgstr "حافظه آمازون S3"
+msgstr "آمازون S3"
 
 msgid "Requires an Amazon account, Pricing varies"
-msgstr ""
+msgstr "به حساب آمازون نیاز است. قیمت‌ها متفاوت است"
 
 msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
-msgstr ""
+msgstr "آمازون S3 یک سرویس تحت وب است توسط سرویس وب آمازون ارائه می‌شود. آمازون S3 به شما فضا از طریق اینترفیس خدمات وب ارائه می‌دهد. قیمت‌ها متغیر است. برای اطلاعات بیشتر به وب‌سایت امازون S3 مراجعه کنید."
 
 #, fuzzy, python-format
 #| msgid "Version %(version)s (%(code)s)"
@@ -610,13 +595,13 @@ msgid "Added"
 msgstr "افزوده شد"
 
 msgid "Enter email"
-msgstr ""
+msgstr "ایمیل را وارد کن"
 
 msgid "Enter your email address and we'll send a link to reset it. If you did not sign up with an email, we cannot help you securely reset your password."
-msgstr ""
+msgstr "ایمیل خود را وارد کنید و ما یک لینک برای ریست آن ارسال می‌کنیم. اگر با ایمیل ثبت‌نام نکرده‌اید ما ‌نمی‌توانیم بصورت امن رمز عبور شما را ریست کنیم."
 
 msgid "Enter SSH URL"
-msgstr ""
+msgstr "URL SSH را وارد کن"
 
 msgid "Raw Git URL"
 msgstr "نشانه‌وب خام Git"
@@ -683,4 +668,4 @@ msgid "Primary Storage"
 msgstr "حافظه اصلی"
 
 msgid "Make this storage the primary storage of the repository."
-msgstr "این حافظه را، حافظه اصلی مخزن قرار بده."
+msgstr "این فضا را، فضای اصلی مخزن قرار بده."

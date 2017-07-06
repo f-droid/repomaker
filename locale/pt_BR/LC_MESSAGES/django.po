@@ -7,8 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 09:55+0000\n"
-"PO-Revision-Date: 2017-06-24 20:16+0000\n"
+"PO-Revision-Date: 2017-07-06 00:09+0000\n"
 "Last-Translator: José Victor <josevictor@riseup.net>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/f-droid/repomaker/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -16,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.15-dev\n"
+"X-Generator: Weblate 2.16-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -25,10 +24,8 @@ msgstr ""
 msgid "This APK already exists in the current repo."
 msgstr "Este APK já existe no repositório atual."
 
-#, fuzzy
-#| msgid "Invalid APK."
 msgid "Invalid APK signature"
-msgstr "APK inválido."
+msgstr "Assinatura do APK inválida"
 
 msgid "Invalid APK."
 msgstr "APK inválido."
@@ -67,10 +64,10 @@ msgid "Description"
 msgstr "Descrição"
 
 msgid "This app does already exist in your repository."
-msgstr "Este aplicativo já existe no seu repositório"
+msgstr "Este aplicativo já existe no seu repositório."
 
 msgid "This app does not have any working versions available."
-msgstr "Este aplicativo não tem nenhuma versão disponível funcionando"
+msgstr "Este aplicativo não tem nenhuma versão disponível funcionando."
 
 msgid "Phone"
 msgstr "Telefone"
@@ -142,49 +139,45 @@ msgid "Or login with"
 msgstr "Ou logue com"
 
 msgid "Logout"
-msgstr ""
+msgstr "Sair"
 
 msgid "See you later"
-msgstr ""
+msgstr "Nos vemos depois"
 
 msgid "Your security is important to us. Please confirm that you want to logout."
-msgstr ""
+msgstr "Sua segurança é importante para nós. Por favor, confirme que deseja sair."
 
 msgid "logout"
-msgstr ""
+msgstr "sair"
 
 msgid "submit"
-msgstr ""
+msgstr "submeter"
 
 msgid "We have sent you an email with a link to reset your password."
-msgstr ""
+msgstr "Nós te enviamos um email com um link para mudar sua senha."
 
 msgid "Signup"
 msgstr "Cadastrar"
 
 msgid "Browse Gallery"
-msgstr ""
+msgstr "Navegar pela Galeria"
 
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Category (%(count)s)"
-msgstr "Língua (%(count)s)"
+msgstr "Categoria ((%(count)s)"
 
 msgid "All"
 msgstr "Todos"
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Source (%(count)s)"
-msgstr "Língua (%(count)s)"
+msgstr "Fonte (%(count)s)"
 
-#, fuzzy
-#| msgid "add from repos"
 msgid "Add a repo"
-msgstr "adicionar dos repositórios"
+msgstr "Adicionar um repositório"
 
 msgid "Add"
 msgstr "Adicionar"
@@ -236,7 +229,7 @@ msgid "Done"
 msgstr "Pronto"
 
 msgid "By"
-msgstr ""
+msgstr "Por"
 
 msgid "Short Summary (40 characters)"
 msgstr "Resumo curto (40 caracteres)"
@@ -275,10 +268,9 @@ msgstr "Nenhum"
 msgid "Edit"
 msgstr "Editar"
 
-#, fuzzy, python-format
-#| msgid "Developed by %(author)s"
+#, python-format
 msgid "By %(author)s"
-msgstr "Desenvolvido por %(author)s"
+msgstr "Por %(author)s"
 
 #, python-format
 msgid "Updated %(time)s ago"
@@ -311,12 +303,10 @@ msgid "Next"
 msgstr "Próximo"
 
 msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
-msgstr ""
+msgstr "No momento não existem capturas de tela sendo exibidas porque isso dá à dona do repositório a capacidade de te rastrear."
 
-#, fuzzy
-#| msgid "Screenshots"
 msgid "show screenshots"
-msgstr "Capturas de tela"
+msgstr "mostrar capturas de tela"
 
 msgid "Add Screenshot"
 msgstr "Adicionar captura de tela"
@@ -394,7 +384,7 @@ msgid "Save Changes"
 msgstr "Salvar mudanças"
 
 msgid "Content"
-msgstr ""
+msgstr "Conteúdo"
 
 msgid "Share"
 msgstr "Compartilhar"
@@ -405,17 +395,15 @@ msgstr "Informações"
 msgid "Search for apps in your repository"
 msgstr "Procurar por aplicativos no seu repositório"
 
-#, fuzzy
-#| msgid "add from repos"
 msgid "add from gallery"
-msgstr "adicionar dos repositórios"
+msgstr "adicionar da galeria"
 
 #, python-format
 msgid "Alternatively, drag and drop or %(label_start)schoose files%(label_end)s"
-msgstr ""
+msgstr "Ao invés disso, arraste e soltae ou %(label_start)s escolha arquivos%(label_end)s"
 
 msgid "Accepted files include Android apps, documents, eBooks, audio and video."
-msgstr ""
+msgstr "Arquivos aceitos incluem aplicativos Android, documentos, eBooks, áudios e vídeos."
 
 msgid "Your search did not return any results."
 msgstr "Sua busca não retornou nenhum resultado."
@@ -426,10 +414,8 @@ msgstr "Nome"
 msgid "Storage"
 msgstr "Armazenamento"
 
-#, fuzzy
-#| msgid "Add SSH Storage"
 msgid "Add Storage"
-msgstr "Adicionar armazenamento SSH"
+msgstr "Adicionar armazenamento"
 
 msgid "Fingerprint"
 msgstr "Impressão digital"
@@ -438,15 +424,13 @@ msgid "Remove Repo"
 msgstr "Remover repositório"
 
 msgid "Add storage to publish"
-msgstr ""
+msgstr "Adicione um armazenamento para publicar"
 
 msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
-msgstr ""
+msgstr "Seu repositório será publicado automaticamente quando você adicionar um armazanamento. O Repomaker não promove publicamente suas coisas, apenas as pessoas que receberam o link do seu repositório poderão vê-lo."
 
-#, fuzzy
-#| msgid "Edit Storage"
 msgid "add storage"
-msgstr "Editar armazenamento"
+msgstr "adicionar armazenamento"
 
 #, python-format
 msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
@@ -482,13 +466,12 @@ msgstr "Confira este repositório da F-Droid: %(name)s"
 msgid "Delete Storage"
 msgstr "Apagar armazenamento"
 
-#, fuzzy, python-format
-#| msgid "Are you sure you want to delete your app <strong>%(object)s</strong>?"
+#, python-format
 msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong> from your repo?"
-msgstr "Você tem certeza que quer apagar o aplicativo <strong>%(object)s</strong>?"
+msgstr "Você tem certeza que quer remover o armazenamento em <strong>%(object)s</strong> do seu repositário?"
 
 msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
-msgstr ""
+msgstr "Isso não removerá o conteúdo daquele armazenamento mas fará com que futuras versões do seu repositório deixem de ser publicadas lá."
 
 msgid "Enable Storage"
 msgstr "Ativar armazenamento"
@@ -505,9 +488,8 @@ msgstr "Editar armazenamento"
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
 msgstr "Por favor, garanta que adicionou esta chave pública SSH para sua conta Git para enviar o trabalho. Aqui estão instruções pro <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\"> Gitlab</a> e pro <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\"> Gitlab</a>."
 
-#, fuzzy
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
-msgstr "Também, garanta que o branch principal do seu repositório <b>não está protegido</b> de \"force pushing\"."
+msgstr "Por favor também assegure-se que a árvore principal do seu repositório <b>não está protegida</b> contra atualização forçada."
 
 msgid "Git Repository SSH Address"
 msgstr "Endereço da chave SSH do repositório Git"
@@ -553,62 +535,57 @@ msgstr "Se este armazenamento está dando problemas, por favor confira se as cha
 msgid "Update %(storage_name)s"
 msgstr "Atualizar %(storage_name)s"
 
-#, fuzzy, python-format
-#| msgid "Add %(storage_name)s"
+#, python-format
 msgid "Setup %(storage_name)s"
-msgstr "Adicionar %(storage_name)s"
+msgstr "Configurar %(storage_name)s"
 
 msgid "cancel"
-msgstr ""
+msgstr "cancelar"
 
 msgid "save"
-msgstr ""
+msgstr "salvar"
 
-#, fuzzy
-#| msgid "Here's how to find and copy the Git Repository SSH Address in your %(gitlab)s repository:"
 msgid "Here's how to copy the SSH Address from GitLab:"
-msgstr "Aqui está como adicionar e copiar o endereço SSH do repositório Git no seu repositório %(gitlab)s:"
+msgstr "Aqui está como copiar o endereço SSH do GitLab:"
 
 msgid "Setup a place to store your repo"
-msgstr ""
+msgstr "Configure um local para armazenar seu repositório"
 
 msgid "Git"
-msgstr ""
+msgstr "Git"
 
 msgid "Easy, free, requires an account"
-msgstr ""
+msgstr "Fácil, grátis, requer uma conta"
 
 msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
-msgstr ""
+msgstr "Git é uma ferramenta popular para controle de versões. Você pode publicar de modo seguro repositórios no GitLab, GitHub ou qualquer outro serviço Git. Serviços Git usam SSH para copiar arquivos do seu computador para computadores remotos de forma segura."
 
 msgid "Setup"
-msgstr ""
+msgstr "Configurar"
 
 msgid "GitLab"
-msgstr ""
+msgstr "GitLab"
 
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 msgid "SSH"
-msgstr ""
+msgstr "SSH"
 
 msgid "Requires a personal web server or host that supports SSH"
-msgstr ""
+msgstr "Requer um servidor web próprio ou um host que suporte SSH"
 
 msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
-msgstr ""
+msgstr "SSH é uma tecnologia que pode ser usada para copiar de modo seguro arquivos de outros computadores. Usando o Git como armazenamento, seu sarquivos também serão copiados por SSH. Porém, a opção de só usar SSH irá copiar os arquivos diretamente sem usar nenhuma outra tecnologia."
 
-#, fuzzy
-#| msgid "Amazon S3 Storage"
 msgid "Amazon S3"
-msgstr "Armazenamento Amazon S3"
+msgstr "Amazon S3"
 
 msgid "Requires an Amazon account, Pricing varies"
-msgstr ""
+msgstr "Requer uma conta da Amazon, o preço pode variar"
 
 msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
-msgstr ""
+msgstr "O Amazon S3 é um serviço web oferecido pela Amazon Web Services. O Amazon S3 fornece armazenamento através de interfaces de serviços web. Os preços podem variar. Consulte o site do Amazon S3 para detalhes."
 
 #, fuzzy, python-format
 #| msgid "Version %(version)s (%(code)s)"
@@ -619,13 +596,13 @@ msgid "Added"
 msgstr "Adicionado"
 
 msgid "Enter email"
-msgstr ""
+msgstr "Insira seu email"
 
 msgid "Enter your email address and we'll send a link to reset it. If you did not sign up with an email, we cannot help you securely reset your password."
-msgstr ""
+msgstr "Insira seu endereço de email e nós que mandaremos um link para recuperar sua senha. Se você não se cadastrou com um email nós não podemos te ajudar a recuperar sua senha de modo seguro."
 
 msgid "Enter SSH URL"
-msgstr ""
+msgstr "Insira o URL SSH"
 
 msgid "Raw Git URL"
 msgstr "URL Git bruto"
