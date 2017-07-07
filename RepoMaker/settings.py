@@ -180,7 +180,7 @@ MAX_ATTEMPTS = 23  # the number of attempts for marking a task as permanently fa
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 

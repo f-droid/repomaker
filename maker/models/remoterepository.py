@@ -157,12 +157,8 @@ class RemoteRepository(AbstractRepository):
 
         pointers = RemoteApkPointer.objects.filter(apk=apk, app=app)
         if not pointers.exists():
-            pointer = RemoteApkPointer(
-                apk=apk,
-                app=app,
-                url=self.url + "/" + package_info['apkName'],
-            )
-            pointer.save()
+            RemoteApkPointer.objects.create(apk=apk, app=app,
+                                            url=self.url + "/" + package_info['apkName'])
 
     def _remove_old_apps(self, packages):
         """

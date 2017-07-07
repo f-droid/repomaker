@@ -48,6 +48,9 @@ class RemoteAppTestCase(TestCase):
         self.assertEqual(last_update, self.app.last_updated_date)
         self.assertEqual(json['authorName'], self.app.author_name)
 
+        # assert that a default translation was created
+        self.assertEqual([settings.LANGUAGE_CODE], list(self.app.get_available_languages()))
+
     @patch('fdroidserver.net.http_get')
     def test_update_icon(self, http_get):
         # set initial etag and icon for app
@@ -98,22 +101,22 @@ class RemoteAppTestCase(TestCase):
         # apply new translation
         translation = {'summary': 'test1', 'description': 'test2', 'featureGraphic': 'feature.png',
                        'icon': 'icon.png', 'tvBanner': 'tv.png'}
-        self.app.translate('en')
-        self.app.apply_translation('en', translation)
+        self.app.translate('de')
+        self.app.apply_translation('de', translation)
 
         # assert that translation has been saved
-        app = RemoteApp.objects.language('en').get(pk=self.app.pk)
+        app = RemoteApp.objects.language('de').get(pk=self.app.pk)
         self.assertEqual(translation['summary'], app.l_summary)
         self.assertEqual(translation['description'], app.l_description)
-        self.assertEqual('http://repo_url/org.example/en/feature.png', app.feature_graphic_url)
-        self.assertEqual('http://repo_url/org.example/en/icon.png', app.high_res_icon_url)
-        self.assertEqual('http://repo_url/org.example/en/tv.png', app.tv_banner_url)
+        self.assertEqual('http://repo_url/org.example/de/feature.png', app.feature_graphic_url)
+        self.assertEqual('http://repo_url/org.example/de/icon.png', app.high_res_icon_url)
+        self.assertEqual('http://repo_url/org.example/de/tv.png', app.tv_banner_url)
 
     def test_apply_translation_sanitation(self):
         # apply new translation
         translation = {'summary': 'foo', 'description': 'test2<script>'}
-        self.app.translate('en')
-        self.app.apply_translation('en', translation)
+        self.app.translate('de')
+        self.app.apply_translation('de', translation)
 
         # assert that translation has no <script> tag
         self.assertEqual(translation['summary'], self.app.l_summary)

@@ -57,6 +57,7 @@ class ApkPointer(AbstractApkPointer):
                 package_id=self.apk.package_id,
                 type=apk_info['type'],
             )
+            app.default_translate()
             app.save()
             self.app = app
         elif apps.count() == 1:

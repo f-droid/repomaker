@@ -33,7 +33,7 @@ class RemoteApp(AbstractApp):
 
     def update_from_json(self, app):
         """
-        Updates the data for this app.
+        Updates the data for this app and ensures that at least one translation exists.
         :param app: A JSON app object from the repository v1 index.
         :return: True if app changed, False otherwise
         """
@@ -67,6 +67,10 @@ class RemoteApp(AbstractApp):
         if 'localized' in app:
             self._update_translations(app['localized'])
             self._update_screenshots(app['localized'])
+        if len(self.get_available_languages()) == 0:
+            # no localization available, translate in default language
+            self.default_translate()
+            self.save()
         return True
 
     def _update_icon(self, icon_name):

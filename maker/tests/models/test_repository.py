@@ -331,7 +331,7 @@ class RepositoryTestCase(TestCase):
         apk_pointer.link_file_from_apk()
 
         # add localized graphic assets
-        app.translate('en')
+        app.translate('de')
         app.save()  # needs to be saved for ForeignKey App to be available when saving file
         app.feature_graphic.save('feature.png', io.BytesIO(b'foo'), save=False)
         app.high_res_icon.save('icon.png', io.BytesIO(b'foo'), save=False)
@@ -346,7 +346,6 @@ class RepositoryTestCase(TestCase):
             apk2.file.save('test.webm', File(f), save=True)
         apk_pointer2 = ApkPointer.objects.create(repo=repo, app=app2, apk=apk2)
         apk_pointer2.link_file_from_apk()
-        print(apk_pointer2.file.path)
 
         # update repo
         repo.update()
@@ -406,18 +405,16 @@ class RepositoryTestCase(TestCase):
         self.assertEqual(2, len(remote_apk_pointers))
         remote_apk_pointer = remote_apk_pointers[0]
         self.assertEqual(remote_app, remote_apk_pointer.app)
-        self.assertEqual(remote_app, remote_apk_pointer.app)
         self.assertEqual(apk, remote_apk_pointer.apk)
         # non-apk pointer
         remote_apk_pointer2 = remote_apk_pointers[1]
         self.assertEqual(remote_app2, remote_apk_pointer2.app)
-        self.assertEqual(remote_app2, remote_apk_pointer2.app)
         self.assertEqual(apk2, remote_apk_pointer2.apk)
 
         # assert that all graphic assets are pointing to right location
-        self.assertTrue('en' in remote_app.get_available_languages())
-        remote_app = RemoteApp.objects.language('en').get(pk=remote_app.pk)
-        url = 'test_url/org.bitbucket.tickytacky.mirrormirror/en/'
+        self.assertTrue('de' in remote_app.get_available_languages())
+        remote_app = RemoteApp.objects.language('de').get(pk=remote_app.pk)
+        url = 'test_url/org.bitbucket.tickytacky.mirrormirror/de/'
         self.assertEqual(url + 'feature.png', remote_app.feature_graphic_url)
         self.assertEqual(url + 'icon.png', remote_app.high_res_icon_url)
         self.assertEqual(url + 'tv.png', remote_app.tv_banner_url)

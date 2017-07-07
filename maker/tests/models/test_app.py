@@ -64,7 +64,7 @@ class AppTestCase(TestCase):
         remote_app = self.remote_app
 
         # add two translations to RemoteApp
-        remote_app.translate('en')
+        remote_app.translate(settings.LANGUAGE_CODE)
         remote_app.l_summary = 'dog'
         remote_app.l_description = 'cat'
         remote_app.save()
@@ -77,18 +77,26 @@ class AppTestCase(TestCase):
         app.copy_translations_from_remote_app(remote_app)
 
         # assert that English translation was copied
-        app = RemoteApp.objects.language('en').get(pk=self.app.pk)
+        app = App.objects.language(settings.LANGUAGE_CODE).get(pk=app.pk)
         self.assertEqual('dog', app.l_summary)
         self.assertEqual('cat', app.l_description)
 
         # assert that German translation was copied
-        app = RemoteApp.objects.language('de').get(pk=self.app.pk)
+        app = App.objects.language('de').get(pk=app.pk)
         self.assertEqual('hund', app.l_summary)
         self.assertEqual('katze', app.l_description)
 
+    def test_copy_translations_from_remote_app_default_translation(self):
+        # copy the non-existent translations to the App
+        self.assertEqual(0, len(self.remote_app.get_available_languages()))
+        self.app.copy_translations_from_remote_app(self.remote_app)
+
+        # assert that default translation was created
+        self.assertEqual([settings.LANGUAGE_CODE], list(self.app.get_available_languages()))
+
     def test_copy_translations_sanitation(self):
         # add a malicious translation to RemoteApp
-        self.remote_app.translate('en')
+        self.remote_app.translate(settings.LANGUAGE_CODE)
         self.remote_app.l_description = '<p>test<script>'
         self.remote_app.save()
 
@@ -102,7 +110,7 @@ class AppTestCase(TestCase):
     def test_get_translations_dict(self):
         # load two translations from other test
         self.test_copy_translations_from_remote_app()
-        self.assertEqual({'en', 'de'}, set(self.app.get_available_languages()))
+        self.assertEqual({settings.LANGUAGE_CODE, 'de'}, set(self.app.get_available_languages()))
 
         # add also graphic assets
         app = App.objects.language('de').get(pk=self.app.pk)
@@ -116,7 +124,7 @@ class AppTestCase(TestCase):
         app._add_translations_to_localized(localized)  # pylint: disable=protected-access
 
         # assert that dict was created properly
-        self.assertEqual({'en', 'de'}, set(localized.keys()))
+        self.assertEqual({settings.LANGUAGE_CODE, 'de'}, set(localized.keys()))
         self.assertEqual('dog', localized['en']['summary'])
         self.assertEqual('cat', localized['en']['description'])
         self.assertEqual('hund', localized['de']['summary'])
@@ -129,6 +137,14 @@ class AppTestCase(TestCase):
 
         # assert that existing content is not deleted
         self.assertEqual('test', localized['en']['otherKey'])
+
+    def test_get_translations_dict_not_empty(self):
+        # get localized dict
+        localized = {}
+        self.app._add_translations_to_localized(localized)  # pylint: disable=protected-access
+
+        # default translation should not be included since it is empty
+        self.assertFalse(settings.LANGUAGE_CODE in localized)
 
     @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
     @patch('fdroidserver.net.http_get')

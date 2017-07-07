@@ -8,9 +8,10 @@ from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, get_language
 from fdroidserver import metadata, net
 from hvad.models import TranslatableModel, TranslatedFields
+from hvad.utils import load_translation
 
 from maker.storage import get_icon_file_path_for_app, get_graphic_asset_file_path
 from maker.utils import clean
@@ -54,6 +55,24 @@ class AbstractApp(TranslatableModel):
 
     def __str__(self):
         return self.name
+
+    def default_translate(self):
+        """Creates a new default translation"""
+        language = get_language()
+        if language is None:
+            self.translate(settings.LANGUAGE_CODE)
+        else:
+            self.translate(language)
+
+    def get_translation(self, language_code=get_language()):
+        """
+        Returns a translation of this instance for the given language_code
+
+        A valid translation instance is always returned.
+        It will be loaded from the database as required.
+        If this fails, a new, empty, ready-to-use translation will be returned.
+        """
+        return load_translation(self, language_code, enforce=True)
 
     def get_available_languages_as_dicts(self):
         """
@@ -146,7 +165,7 @@ class App(AbstractApp):
         for language_code in self.get_available_languages():
             if language_code not in localized:
                 localized[language_code] = dict()
-            app = App.objects.language(language_code).get(pk=self.pk)
+            app = self.get_translation(language_code)
             if app.l_summary:
                 localized[language_code]['summary'] = app.l_summary
             if app.l_description:
@@ -158,6 +177,9 @@ class App(AbstractApp):
                 localized[language_code]['icon'] = os.path.basename(app.high_res_icon.name)
             if app.tv_banner:
                 localized[language_code]['tvBanner'] = os.path.basename(app.tv_banner.name)
+            if localized[language_code] == {}:
+                # remove empty translation
+                del localized[language_code]
 
     def _get_screenshot_dict(self):
         from . import Screenshot
@@ -174,7 +196,8 @@ class App(AbstractApp):
     # pylint: disable=attribute-defined-outside-init
     def copy_translations_from_remote_app(self, remote_app):
         """
-        Copies metadata translations from given RemoteApp.
+        Copies metadata translations from given RemoteApp
+        and ensures that at least one translation exists at the end.
 
         Attention: This requires that no translations exist so far.
         """
@@ -187,6 +210,10 @@ class App(AbstractApp):
             self.l_summary = remote_app.l_summary
             self.l_description = clean(remote_app.l_description)
             self.save()
+        # ensure that at least one translation exists
+        if len(self.get_available_languages()) == 0:
+            self.default_translate()
+            self.save()
 
     def download_graphic_assets_from_remote_app(self, remote_app):
         """
@@ -194,11 +221,10 @@ class App(AbstractApp):
 
         Attention: This assumes that all translations exist already.
         """
-        from .remoteapp import RemoteApp
         for language_code in remote_app.get_available_languages():
             # get the translation for current language_code
-            app = App.objects.language(language_code).get(pk=self.pk)
-            remote_app = RemoteApp.objects.language(language_code).get(pk=remote_app.pk)
+            app = self.get_translation(language_code)
+            remote_app = remote_app.get_translation(language_code)
             if remote_app.feature_graphic_url:
                 graphic, etag = net.http_get(remote_app.feature_graphic_url,
                                              remote_app.feature_graphic_etag)

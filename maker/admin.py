@@ -7,8 +7,8 @@ from .models.storage import StorageManager
 
 admin.site.register(Repository)
 admin.site.register(RemoteRepository)
-admin.site.register(App, TranslatableAdmin)  # FIXME hides untranslated apps
-admin.site.register(RemoteApp, TranslatableAdmin)  # FIXME hides untranslated remote apps
+admin.site.register(App, TranslatableAdmin)  # hides untranslated apps which should not exist
+admin.site.register(RemoteApp, TranslatableAdmin)  # hides untranslated apps which should not exist
 admin.site.register(Apk)
 admin.site.register(ApkPointer)
 admin.site.register(RemoteApkPointer)
