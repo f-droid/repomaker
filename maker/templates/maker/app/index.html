@@ -20,7 +20,7 @@
 			<i class="material-icons">expand_more</i>
 		</button>
 		{% block top-buttons %}
-		<a href="{% url 'edit_app' app.repo.id app.id %}" class="rm-no-underline">
+		<a href="{{ app.get_edit_url }}" class="rm-no-underline">
 			<button class="rm-button mdl-button mdl-js-button">
 				{% trans 'Edit' %}
 			</button>

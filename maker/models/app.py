@@ -122,11 +122,20 @@ class App(AbstractApp):
     )
 
     def get_absolute_url(self):
-        return reverse('app', kwargs={'repo_id': self.repo.pk, 'app_id': self.pk,
-                                      'lang': self.language_code})
+        kwargs = {'repo_id': self.repo.pk, 'app_id': self.pk}
+        try:
+            kwargs['lang'] = self.language_code
+        except AttributeError:
+            kwargs['lang'] = self.get_available_languages()[0]
+        return reverse('app', kwargs=kwargs)
 
     def get_edit_url(self):
-        return reverse('edit_app', kwargs={'repo_id': self.repo.pk, 'app_id': self.pk})
+        kwargs = {'repo_id': self.repo.pk, 'app_id': self.pk}
+        try:
+            kwargs['lang'] = self.language_code
+        except AttributeError:
+            kwargs['lang'] = self.get_available_languages()[0]
+        return reverse('app_edit', kwargs=kwargs)
 
     def get_previous(self):
         return self.get_previous_by_added_date(repo=self.repo)
@@ -222,10 +231,11 @@ class App(AbstractApp):
 
         Attention: This assumes that all translations exist already.
         """
+        from .remoteapp import RemoteApp
         for language_code in remote_app.get_available_languages():
             # get the translation for current language_code
             app = self.get_translation(language_code)
-            remote_app = remote_app.get_translation(language_code)
+            remote_app = RemoteApp.objects.language(language_code).get(pk=remote_app.pk)
             if remote_app.feature_graphic_url:
                 graphic, etag = net.http_get(remote_app.feature_graphic_url,
                                              remote_app.feature_graphic_etag)

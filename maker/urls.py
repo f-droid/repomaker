@@ -3,8 +3,7 @@ from django.views.i18n import javascript_catalog
 
 from maker.models import S3Storage, SshStorage, GitStorage
 from maker.views.apk import ApkUploadView, ApkPointerDeleteView
-from maker.views.app import AppAddView, AppDetailView, AppUpdateView, AppDeleteView, \
-    AppTranslationUpdateView
+from maker.views.app import AppAddView, AppDetailView, AppDeleteView, AppEditView
 from maker.views.gitstorage import GitStorageCreate, GitStorageUpdate, GitStorageDetail, \
     GitStorageDelete
 from maker.views.remoterepository import RemoteRepositoryCreateView, RemoteAppCreateView
@@ -57,13 +56,11 @@ urlpatterns = [
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/$', AppDetailView.as_view(), name='app'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/lang/(?P<lang>[a-zA-Z_-]+)/$',
         AppDetailView.as_view(), name='app'),
+    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/lang/(?P<lang>[a-zA-Z_-]+)/edit/$',
+        AppEditView.as_view(), name='app_edit'),
 
-    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/edit/$', AppUpdateView.as_view(),
-        name='edit_app'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/lang/add$',
-        AppTranslationUpdateView.as_view(), name='app_lang_add'),
-    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/edit/lang/(?P<lang>[a-zA-Z_-]+)/$',
-        AppTranslationUpdateView.as_view(), name='app_lang'),
+        AppEditView.as_view(), name='app_lang_add'),  # TODO
 
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/delete/$', AppDeleteView.as_view(),
         name='delete_app'),

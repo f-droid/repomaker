@@ -127,17 +127,27 @@
     justify-content: flex-end;
 }
 
+.rm-app-summaries {
+    flex-grow: 1;
+}
+
 .rm-app-summary, .rm-app-summary-override {
     align-items: flex-start;
     display: flex;
     flex-grow: 2;
     flex-flow: column;
+    width: 100%;
     padding: 5px;
     margin-right: 16px;
     margin-bottom: 8px;
     font-style: italic;
     @include font-size(17px);
     color: #000;
+}
+
+.rm-app-summary-edit {
+    @extend .mdl-textfield, .mdl-textfield--floating-label;
+    width: 100%;
 }
 
 .rm-app-summary-override {
@@ -153,6 +163,7 @@
 
 #rm-app-categories {
     display: none;
+    align-self: flex-start;
 
     .rm-app-category-chip {
         padding-right: 4px;
@@ -311,6 +322,12 @@ select#id_category {
 
     button {
         color: white;
+    }
+}
+
+.rm-app-feature-graphic {
+    img {
+        max-width: 100%;
     }
 }
 

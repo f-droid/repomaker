@@ -9,7 +9,7 @@ from django.http import Http404, HttpResponse, HttpResponseServerError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
-from django.views.generic.edit import UpdateView, DeleteView
+from django.views.generic.edit import DeleteView
 from hvad.forms import translatable_modelform_factory, \
     TranslatableModelForm
 from hvad.views import TranslatableUpdateView
@@ -18,7 +18,6 @@ from tinymce.widgets import TinyMCE
 from maker.models import RemoteRepository, App, RemoteApp, ApkPointer, Screenshot
 from maker.models.category import Category
 from maker.models.screenshot import PHONE
-from . import BaseModelForm
 from .repository import RepositoryAuthorizationMixin, ApkUploadMixin, AppScrollListView
 
 
@@ -129,7 +128,7 @@ class AppDetailView(RepositoryAuthorizationMixin, DetailView):
         return super().get(request, *args, **kwargs)
 
 
-class AppForm(BaseModelForm):
+class AppForm(TranslatableModelForm):
     screenshots = ImageField(required=False, widget=ClearableFileInput(attrs={'multiple': True}))
     apks = FileField(required=False, widget=ClearableFileInput(attrs={'multiple': True}))
 
@@ -142,28 +141,41 @@ class AppForm(BaseModelForm):
 
     class Meta:
         model = App
-        fields = ['summary', 'description', 'author_name', 'website', 'category', 'screenshots',
-                  'apks']
-        widgets = {'description': MDLTinyMCE()}
+        fields = ['l_summary', 'l_description', 'summary', 'description', 'author_name', 'website',
+                  'category', 'screenshots', 'feature_graphic', 'apks']
+        widgets = {'l_description': MDLTinyMCE(), 'description': MDLTinyMCE()}
 
     class Media:
         js = ('maker/js/drag-and-drop.js',)
 
 
-class AppUpdateView(ApkUploadMixin, UpdateView):
+class AppEditView(ApkUploadMixin, TranslatableUpdateView):
     model = App
     object = None
-    form_class = AppForm
     pk_url_kwarg = 'app_id'
+    context_object_name = 'app'
     template_name = 'maker/app/edit.html'
+
+    def get_language(self):
+        if 'lang' in self.kwargs:
+            return self.kwargs['lang']
+        return None
 
     def get_repo(self):
         return self.get_object().repo
 
+    def get_form_class(self):
+        return translatable_modelform_factory(self.get_language(), self.model, AppForm)
+
+    def get_queryset(self):
+        # no fallbacks here, returns 404 if language does not exist
+        return self.model.objects.language(self.get_language()).all()
+
     def get_context_data(self, **kwargs):
-        context = super(AppUpdateView, self).get_context_data(**kwargs)
-        # TODO filter screenshots by current language
-        context['screenshots'] = Screenshot.objects.filter(app=self.get_object(), type=PHONE)
+        context = super().get_context_data(**kwargs)
+        context['screenshots'] = Screenshot.objects.filter(app=self.get_object(),
+                                                           type=PHONE,
+                                                           language_code=self.get_language())
         context['apks'] = ApkPointer.objects.filter(app=self.object).order_by('-apk__version_code')
         return context
 
@@ -180,80 +192,6 @@ class AppUpdateView(ApkUploadMixin, UpdateView):
             if self.request.is_ajax():
                 return HttpResponse(status=204)
             return super().post(request, args, kwargs)
-
-        if 'HTTP_RM_BACKGROUND_TYPE' in request.META:
-            if request.META['HTTP_RM_BACKGROUND_TYPE'] == 'screenshots':
-                try:
-                    self.add_screenshots()
-                except Exception as e:
-                    logging.error(e)
-                    return HttpResponseServerError(e)
-                self.get_repo().update_async()  # schedule repository update
-                return HttpResponse(status=204)
-        return super(AppUpdateView, self).post(request, *args, **kwargs)
-
-    def form_valid(self, form):
-        result = super(AppUpdateView, self).form_valid(form)  # this saves the App
-
-        self.add_screenshots()
-        form.instance.repo.update_async()  # schedule repository update
-        return result
-
-    def add_screenshots(self):
-        for screenshot in self.request.FILES.getlist('screenshots'):
-            Screenshot.objects.create(app=self.get_object(), file=screenshot)
-
-
-class AppDeleteView(RepositoryAuthorizationMixin, DeleteView):
-    model = App
-    pk_url_kwarg = 'app_id'
-    template_name = 'maker/app/delete.html'
-
-    def get_repo(self):
-        return self.get_object().repo
-
-    def get_success_url(self):
-        self.get_repo().update_async()  # schedule repository update
-        return reverse_lazy('repo', kwargs={'repo_id': self.kwargs['repo_id']})
-
-
-class AppTranslationForm(TranslatableModelForm):
-    screenshots = ImageField(required=False,
-                             widget=ClearableFileInput(attrs={'multiple': True}))
-
-    class Meta:
-        model = App
-        fields = ['l_summary', 'l_description', 'feature_graphic', 'screenshots']
-        widgets = {'l_description': MDLTinyMCE()}
-
-    class Media:
-        js = ('maker/js/drag-and-drop.js',)
-
-
-class AppTranslationUpdateView(RepositoryAuthorizationMixin, TranslatableUpdateView):
-    model = App
-    pk_url_kwarg = 'app_id'
-    context_object_name = 'app'
-    template_name = "maker/app/translate.html"
-
-    def get_language(self):
-        return self.kwargs['lang']
-
-    def get_form_class(self):
-        return translatable_modelform_factory(self.get_language(), self.model, AppTranslationForm)
-
-    def get_queryset(self):
-        # TODO check if still needed when translation overhaul is finished
-        return App.objects.language(self.get_language()).all()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['screenshots'] = Screenshot.objects.filter(app=self.get_object(),
-                                                           language_code=self.get_language(),
-                                                           type=PHONE)
-        return context
-
-    def post(self, request, *args, **kwargs):
         if 'HTTP_RM_BACKGROUND_TYPE' in request.META:
             if request.META['HTTP_RM_BACKGROUND_TYPE'] == 'screenshots':
                 try:
@@ -276,3 +214,16 @@ class AppTranslationUpdateView(RepositoryAuthorizationMixin, TranslatableUpdateV
         for screenshot in self.request.FILES.getlist('screenshots'):
             Screenshot.objects.create(app=self.get_object(), file=screenshot,
                                       language_code=self.get_language())
+
+
+class AppDeleteView(RepositoryAuthorizationMixin, DeleteView):
+    model = App
+    pk_url_kwarg = 'app_id'
+    template_name = 'maker/app/delete.html'
+
+    def get_repo(self):
+        return self.get_object().repo
+
+    def get_success_url(self):
+        self.get_repo().update_async()  # schedule repository update
+        return reverse_lazy('repo', kwargs={'repo_id': self.kwargs['repo_id']})
