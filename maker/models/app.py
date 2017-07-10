@@ -122,7 +122,8 @@ class App(AbstractApp):
     )
 
     def get_absolute_url(self):
-        return reverse('app', kwargs={'repo_id': self.repo.pk, 'app_id': self.pk})
+        return reverse('app', kwargs={'repo_id': self.repo.pk, 'app_id': self.pk,
+                                      'lang': self.language_code})
 
     def get_edit_url(self):
         return reverse('edit_app', kwargs={'repo_id': self.repo.pk, 'app_id': self.pk})

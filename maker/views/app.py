@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.db.utils import OperationalError
 from django.forms import FileField, ImageField, ClearableFileInput
 from django.http import Http404, HttpResponse, HttpResponseServerError
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
@@ -24,7 +25,15 @@ from .repository import RepositoryAuthorizationMixin, ApkUploadMixin, AppScrollL
 class MDLTinyMCE(TinyMCE):
     """
     Ugly hack to work around a conflict between MDL and TinyMCE. See #31 for more details.
+    Also removes the requirement for language packs.
     """
+
+    def get_mce_config(self, attrs):
+        mce_config = super().get_mce_config(attrs)
+        if 'language' in mce_config:
+            # remove language, so no language pack will be loaded
+            del mce_config['language']
+        return mce_config
 
     def _media(self):
         media = super()._media()
@@ -94,18 +103,30 @@ class AppDetailView(RepositoryAuthorizationMixin, DetailView):
     context_object_name = 'app'
     template_name = 'maker/app/index.html'
 
+    def get_language(self):
+        if 'lang' in self.kwargs:
+            return self.kwargs['lang']
+        return None
+
     def get_repo(self):
         return self.get_object().repo
+
+    def get_queryset(self):
+        return self.model.objects.language(self.get_language()).fallbacks().all()
 
     def get_context_data(self, **kwargs):
         context = super(AppDetailView, self).get_context_data(**kwargs)
         app = context['app']
-        if app.name is None or app.name == '':
-            raise RuntimeError("App has not been created properly.")
-        # TODO filter screenshots by current language
-        context['screenshots'] = Screenshot.objects.filter(app=app, type=PHONE)
+        context['screenshots'] = Screenshot.objects.filter(app=app, type=PHONE,
+                                                           language_code=self.get_language())
         context['apks'] = ApkPointer.objects.filter(app=app).order_by('-apk__version_code')
         return context
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.language_code != self.get_language():
+            return redirect(obj)
+        return super().get(request, *args, **kwargs)
 
 
 class AppForm(BaseModelForm):

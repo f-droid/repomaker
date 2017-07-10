@@ -12,22 +12,20 @@
 			<i class="material-icons">arrow_back</i>
 		</a>
 		{% endblock back-button %}
-		<div>
-			{% block top-buttons %}
-			<button type="button" id="rm-app-language-button" class="rm-toolbar-item rm-app-language-button mdl-js-button">
-				{% blocktrans with count=app.get_available_languages.count trimmed %}
-				Languages ({{ count }})
-				{% endblocktrans %}
-				<i class="material-icons">expand_more</i>
+		<div class="mdl-layout-spacer"></div>
+		<button type="button" id="rm-app-language-button" class="rm-toolbar-item rm-app-language-button mdl-js-button">
+			{% blocktrans with count=app.get_available_languages.count trimmed %}
+			Languages ({{ count }})
+			{% endblocktrans %}
+			<i class="material-icons">expand_more</i>
+		</button>
+		{% block top-buttons %}
+		<a href="{% url 'edit_app' app.repo.id app.id %}" class="rm-no-underline">
+			<button class="rm-button mdl-button mdl-js-button">
+				{% trans 'Edit' %}
 			</button>
-
-			<a href="{% url 'edit_app' app.repo.id app.id %}" class="rm-no-underline">
-				<button class="rm-button mdl-button mdl-js-button">
-					{% trans 'Edit' %}
-				</button>
-			</a>
-			{% endblock top-buttons %}
-		</div>
+		</a>
+		{% endblock top-buttons %}
 	</div>
 </div>
 {% endblock toolbar %}
@@ -40,7 +38,10 @@
 			<i class="material-icons">add</i> {% trans 'Add Translation' %}
 		</a>
 		{% for lang in app.get_available_languages_as_dicts %}
-		<a href="{% url 'app_lang' app.repo.id app.id lang.code %}" class="rm-app-language">{{ lang.name }}</a>
+		<a href="{% block app-lang-url %}{% url 'app' app.repo.id app.id lang.code %}{% endblock %}"
+		   class="rm-app-language{% if app.language_code == lang.code %} active{% endif%}">
+			{{ lang.name }}
+		</a>
 		{% endfor %}
 	</div>
 </div>
@@ -78,7 +79,12 @@
 			{% endblock info %}
 		</div>
 		<div class="rm-app-summary-category">
-			{% block summary %}<div class="rm-app-summary">{{ app.summary }}</div>{% endblock summary %}
+			{% block summary %}
+			{% if app.summary %}
+			<div class="rm-app-summary-override">{{ app.summary }}</div>
+			{% endif %}
+			<div class="rm-app-summary">{{ app.l_summary }}</div>
+			{% endblock summary %}
 			{% block categories %}
 			{% if app.category.exists %}
 			{% for category in app.category.all %}
@@ -95,7 +101,12 @@
 <div class="rm-grid--center mdl-grid">
 	<div class="rm-app-description mdl-cell mdl-cell--6-col">
 		{% block description %}
-		{{ app.description|safe }}
+		{% if app.description %}
+		<div class="rm-app-description-override">
+			{{ app.description|safe }}
+		</div>
+		{% endif %}
+		{{ app.l_description|safe }}
 		{% endblock description %}
 	</div>
 </div>

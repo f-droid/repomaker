@@ -20,6 +20,7 @@ from django.contrib import admin
 from maker.views import media_serve
 from maker.views.repository import RepositoryListView
 
+
 urlpatterns = [
     url(r'^$', RepositoryListView.as_view(), name="index"),
     url(r'^repo/', include('maker.urls')),

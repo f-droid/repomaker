@@ -1,6 +1,7 @@
 import os
 import shutil
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 from django.urls import reverse
@@ -26,8 +27,12 @@ class AppViewTestCase(TestCase):
         # create app in repo
         self.app = App.objects.create(repo=self.repo,
                                       package_id='org.bitbucket.tickytacky.mirrormirror',
-                                      name='TestApp', summary='TestSummary', description='TestDesc',
-                                      website='TestSite', author_name='author')
+                                      name='TestApp', website='TestSite', author_name='author')
+        # translate app in default language
+        self.app.translate(settings.LANGUAGE_CODE)
+        self.app.l_summary = 'Test Summary'
+        self.app.l_description = 'Test Description'
+        self.app.save()
 
         self.edit_app_url = reverse('edit_app',
                                     kwargs={'repo_id': self.repo.id, 'app_id': self.app.id})
@@ -35,6 +40,37 @@ class AppViewTestCase(TestCase):
     def tearDown(self):
         if os.path.isdir(TEST_DIR):
             shutil.rmtree(TEST_DIR)
+
+    def test_app_detail_default_lang_redirect(self):
+        kwargs = {'repo_id': self.app.repo.pk, 'app_id': self.app.pk}
+        response = self.client.get(reverse('app', kwargs=kwargs))
+        self.assertRedirects(response, self.app.get_absolute_url())
+
+    def test_app_detail_default_lang(self):
+        response = self.client.get(self.app.get_absolute_url())
+        self.assertEqual(200, response.status_code)
+        self.assertContains(response, self.app.name)
+        self.assertContains(response, self.app.author_name)
+        self.assertContains(response, self.app.l_summary)
+        self.assertContains(response, self.app.l_description)
+
+    def test_app_detail_other_lang(self):
+        self.app.translate('de')
+        self.app.l_summary = 'Test-Zusammenfassung'
+        self.app.l_description = 'Test-Beschreibung'
+        self.app.save()
+
+        self.assertTrue('/de/' in self.app.get_absolute_url())
+
+        response = self.client.get(self.app.get_absolute_url())
+        self.assertContains(response, 'Test-Zusammenfassung')
+        self.assertContains(response, 'Test-Beschreibung')
+
+        # ensure that there is a link to the default language
+        app = App.objects.language(settings.LANGUAGE_CODE).get(pk=self.app.pk)
+        self.assertFalse('/de/' in app.get_absolute_url())
+        self.assertTrue('/' + settings.LANGUAGE_CODE + '/' in app.get_absolute_url())
+        self.assertContains(response, app.get_absolute_url())
 
     def test_upload_apk_and_update(self):
         self.assertEqual(1, App.objects.all().count())

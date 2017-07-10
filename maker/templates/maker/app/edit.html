@@ -8,7 +8,6 @@
 
 
 {% block top-buttons %}
-<div class="mdl-layout-spacer"></div>
 <form action="" enctype="multipart/form-data" method="post">
 {% csrf_token %}
 <a href="{% url 'delete_app' app.repo.id app.id %}" class="rm-no-underline">
@@ -22,6 +21,7 @@
 </button>
 {% endblock top-buttons %}
 
+{% block app-lang-url %}{% url 'app_lang' app.repo.id app.id lang.code %}{% endblock app-lang-url %}
 
 {% block author %}
 <div class="rm-app-author mdl-textfield mdl-js-textfield mdl-textfield--floating-label">

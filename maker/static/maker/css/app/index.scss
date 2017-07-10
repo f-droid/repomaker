@@ -51,9 +51,14 @@
         .rm-app-language-add, .rm-app-language {
             @extend .rm-no-underline;
             @include font-size(14px);
+            font-weight: 400;
             display: flex;
             align-items: center;
             padding: 5px;
+        }
+
+        .rm-app-language.active {
+            font-weight: 700;
         }
 
         .rm-app-language-add:hover, .rm-app-language:hover {
@@ -122,16 +127,21 @@
     justify-content: flex-end;
 }
 
-.rm-app-summary {
+.rm-app-summary, .rm-app-summary-override {
     align-items: flex-start;
     display: flex;
     flex-grow: 2;
     flex-flow: column;
+    padding: 5px;
     margin-right: 16px;
     margin-bottom: 8px;
     font-style: italic;
     @include font-size(17px);
     color: #000;
+}
+
+.rm-app-summary-override {
+    background-color: #FFCCCC;
 }
 
 .rm-app-category-chip {
@@ -217,6 +227,17 @@ select#id_category {
     font-weight: 500
 }
 
+.rm-app-description, .rm-app-description-override {
+    color: #000;
+    @include font-size(15px);
+    overflow-wrap: break-word;
+}
+
+.rm-app-description-override {
+    background-color: #FFCCCC;
+    padding: 5px;
+}
+
 .rm-app-screenshots {
     display: flex;
     flex-direction: row;
@@ -291,12 +312,6 @@ select#id_category {
     button {
         color: white;
     }
-}
-
-.rm-app-description {
-    color: #000;
-    @include font-size(15px);
-    overflow-wrap: break-word;
 }
 
 .rm-app-versions {
