@@ -3,7 +3,8 @@ from django.views.i18n import javascript_catalog
 
 from maker.models import S3Storage, SshStorage, GitStorage
 from maker.views.apk import ApkUploadView, ApkPointerDeleteView
-from maker.views.app import AppAddView, AppDetailView, AppDeleteView, AppEditView
+from maker.views.app import AppAddView, AppDetailView, AppDeleteView, AppEditView, \
+    AppTranslationCreateView
 from maker.views.gitstorage import GitStorageCreate, GitStorageUpdate, GitStorageDetail, \
     GitStorageDelete
 from maker.views.remoterepository import RemoteRepositoryCreateView, RemoteAppCreateView
@@ -47,21 +48,21 @@ urlpatterns = [
     url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/' +
         r'category/(?P<category_id>[0-9]+)/$',
         AppAddView.as_view(), name='add_app_with_category'),
+    # Remote App Details
     url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/(?P<app_id>[0-9]+)/$',
         RemoteAppCreateView.as_view(), name='add_remote_app'),
     url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/(?P<app_id>[0-9]+)/' +
         r'(?P<screenshots>[screenshots]+)$',
         RemoteAppCreateView.as_view(), name='add_remote_app_screenshots'),
-
+    # App Detail and Edit
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/$', AppDetailView.as_view(), name='app'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/lang/(?P<lang>[a-zA-Z_-]+)/$',
         AppDetailView.as_view(), name='app'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/lang/(?P<lang>[a-zA-Z_-]+)/edit/$',
         AppEditView.as_view(), name='app_edit'),
-
-    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/lang/add$',
-        AppEditView.as_view(), name='app_lang_add'),  # TODO
-
+    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/add/lang/$',
+        AppTranslationCreateView.as_view(), name='app_add_lang'),
+    # App Delete
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/delete/$', AppDeleteView.as_view(),
         name='delete_app'),
 

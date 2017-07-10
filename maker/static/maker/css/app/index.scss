@@ -26,11 +26,11 @@
 
 .rm-app-language-button {
     background-color: white;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     color: #767777;
     @include font-size(14px);
     border: none;
-    outline:none;
+    outline: none;
     align-items: center;
 }
 
@@ -125,6 +125,10 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
+
+    .error {
+        width: 100%;
+    }
 }
 
 .rm-app-summaries {
@@ -204,9 +208,9 @@
         button {
             display: block;
             background-color: Transparent;
-            background-repeat:no-repeat;
+            background-repeat: no-repeat;
             border: none;
-            outline:none;
+            outline: none;
             width: 100%;
             @include font-size(14px);
             text-align: left;

@@ -220,6 +220,42 @@ class AppViewTestCase(TestCase):
         self.assertEqual(1, Screenshot.objects.all().count())
         self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
 
+    def test_add_lang(self):
+        self.assertFalse('de' in self.app.get_available_languages())
+        kwargs = {'repo_id': self.repo.pk, 'app_id': self.app.pk}
+        data = {
+            'lang': 'de',
+            'l_summary': 'Test-Zusammenfassung',
+            'l_description': 'Test-Beschreibung',
+        }
+        response = self.client.post(reverse('app_add_lang', kwargs=kwargs), data)
+        kwargs['lang'] = 'de'
+        self.assertRedirects(response, reverse('app', kwargs=kwargs))
+        self.assertTrue('de' in self.app.get_available_languages())
+
+        # assert data was saved properly
+        self.app = App.objects.language('de').get(pk=self.app.pk)
+        self.assertEqual(data['l_summary'], self.app.l_summary)
+        self.assertEqual(data['l_description'], self.app.l_description)
+        self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
+
+    def test_add_lang_exists(self):
+        self.translate_to_de()
+        kwargs = {'repo_id': self.repo.pk, 'app_id': self.app.pk}
+        response = self.client.post(reverse('app_add_lang', kwargs=kwargs), {'lang': 'de'})
+        self.assertEqual(200, response.status_code)
+        self.assertEqual('This language already exists. Please choose another one!',
+                         response.context['form'].errors['lang'])
+        self.assertContains(response, response.context['form'].errors['lang'])
+
+    def test_add_lang_invalid(self):
+        kwargs = {'repo_id': self.repo.pk, 'app_id': self.app.pk}
+        response = self.client.post(reverse('app_add_lang', kwargs=kwargs), {'lang': '123'})
+        self.assertEqual(200, response.status_code)
+        self.assertEqual('This is not a valid language code.',
+                         response.context['form'].errors['lang'])
+        self.assertContains(response, response.context['form'].errors['lang'])
+
     def translate_to_de(self):
         self.app.translate('de')
         self.app.l_summary = 'Test-Zusammenfassung'

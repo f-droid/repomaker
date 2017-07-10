@@ -1,9 +1,10 @@
 var categories = document.getElementById('rm-app-categories');
 var categoryFormField = document.getElementById('id_category');
 var categoryAddButton = document.getElementById('rm-app-category-add');
-var categoryAddButtonLabel = categoryAddButton.getElementsByClassName('rm-app-category-text')[0];
-
-init();
+if (categoryAddButton !== null) {
+    var categoryAddButtonLabel = categoryAddButton.getElementsByClassName('rm-app-category-text')[0];
+    init();
+}
 
 function init() {
     // hide category form field, so it is only visible without JavaScript

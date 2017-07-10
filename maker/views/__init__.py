@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.forms import ModelForm
+from django.forms import TextInput, ModelForm
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
@@ -134,6 +134,22 @@ class RmSignupForm(SignupForm):
 class BaseModelForm(ModelForm):
 
     pass
+
+
+class DataListTextInput(TextInput):
+
+    def __init__(self, data_list, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._list = data_list
+
+    def render(self, name, value, attrs=None, renderer=None):
+        self.attrs.update({'list': 'list__%s' % name})
+        text_html = super().render(name, value, attrs, renderer)
+        data_list = '<datalist id="list__%s">' % name
+        for item in self._list:
+            data_list += '<option value="%s">%s</option>' % (item[0], item[1])
+        data_list += '</datalist>'
+        return text_html + data_list
 
 
 class LoginOrSingleUserRequiredMixin(LoginRequiredMixin):

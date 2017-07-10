@@ -34,7 +34,7 @@
 <div class="rm-app-language-menu-container rm-grid--center mdl-grid">
 	<div class="rm-app-language-menu-no-script mdl-js-menu mdl-js-ripple-effect" id="lang-menu"
 		 data-mdl-for="rm-app-language-button">
-		<a href="{% url 'app_lang_add' app.repo.id app.id %}" class="rm-app-language-add">
+		<a href="{% url 'app_add_lang' app.repo.id app.id %}" class="rm-app-language-add">
 			<i class="material-icons">add</i> {% trans 'Add Translation' %}
 		</a>
 		{% for lang in app.get_available_languages_as_dicts %}

@@ -1,13 +1,16 @@
 import json
 import logging
+import re
 
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.db.utils import OperationalError
-from django.forms import FileField, ImageField, ClearableFileInput
+from django.forms import FileField, ImageField, ClearableFileInput, CharField
 from django.http import Http404, HttpResponse, HttpResponseServerError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 from django.views.generic.edit import DeleteView
 from hvad.forms import translatable_modelform_factory, \
@@ -18,6 +21,7 @@ from tinymce.widgets import TinyMCE
 from maker.models import RemoteRepository, App, RemoteApp, ApkPointer, Screenshot
 from maker.models.category import Category
 from maker.models.screenshot import PHONE
+from . import DataListTextInput
 from .repository import RepositoryAuthorizationMixin, ApkUploadMixin, AppScrollListView
 
 
@@ -214,6 +218,36 @@ class AppEditView(ApkUploadMixin, TranslatableUpdateView):
         for screenshot in self.request.FILES.getlist('screenshots'):
             Screenshot.objects.create(app=self.get_object(), file=screenshot,
                                       language_code=self.get_language())
+
+
+class AppTranslationCreateForm(AppForm):
+
+    def __init__(self, *args, **kwargs):
+        super(AppTranslationCreateForm, self).__init__(*args, **kwargs)
+        self.fields['lang'] = CharField(required=True, min_length=2,
+                                        widget=DataListTextInput(settings.LANGUAGES))
+
+    def clean_lang(self):
+        lang = self.cleaned_data['lang']
+        if not re.match(r'[a-zA-Z_-]+', lang):
+            self._errors['lang'] = _('This is not a valid language code.')
+        if lang in self.instance.get_available_languages():
+            self._errors['lang'] = _('This language already exists. Please choose another one!')
+        return lang
+
+
+class AppTranslationCreateView(AppEditView):
+    template_name = 'maker/app/translation_add.html'
+
+    def get_queryset(self):
+        return self.model.objects.all()
+
+    def get_form_class(self):
+        return AppTranslationCreateForm
+
+    def form_valid(self, form):
+        self.object.translate(form.cleaned_data['lang'])
+        return super().form_valid(form)
 
 
 class AppDeleteView(RepositoryAuthorizationMixin, DeleteView):
