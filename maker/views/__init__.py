@@ -6,13 +6,15 @@ from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.forms import TextInput, ModelForm
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
+from django.utils import formats
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import ListView
 from django.views.static import serve
 
 from maker import DEFAULT_USER_NAME
-from maker.models import RemoteRepository, Repository
+from maker.models import RemoteRepository, Repository, RemoteApp
 from maker.storage import USER_RE, REMOTE_REPO_RE
 
 
@@ -93,6 +95,39 @@ def remote_repo_media_access(user_id, path):
     if repo.pre_installed or repo.users.filter(pk=user_id).exists:
         return True  # repo is pre-installed or user added it
     return False  # user is not allowed to access this repo's files
+
+
+class AppScrollListView(ListView):
+    paginate_by = 15
+    object_list = None
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            self.object_list = self.get_queryset()
+            apps = self.get_context_data(**kwargs)['apps']
+            apps_json = []
+            for app in apps:
+                app_json = {'id': app.id, 'name': app.name, 'icon': app.icon.url,
+                            'summary': app.l_summary, 'description': app.l_description}
+
+                app_latest_version = app.get_latest_version()
+                if app_latest_version is not None:
+                    version = app_latest_version.version_name
+                    date = formats.date_format(app_latest_version.added_date, 'DATE_FORMAT')
+                    app_json['updated'] = \
+                        _('Version %(version)s (%(date)s)') % {'version': version, 'date': date}
+
+                if self.model == RemoteApp:
+                    app_json['repo_id'] = app.repo.pk
+                    app_json['added'] = app.is_in_repo(self.get_repo())
+                app_json['categories'] = list(app.category.all().values('name'))
+
+                apps_json.append(app_json)
+            return JsonResponse(apps_json, safe=False)
+        return super().get(request, *args, **kwargs)
+
+    def get_repo(self):
+        raise NotImplementedError()
 
 
 class RmLoginForm(LoginForm):

@@ -1,16 +1,14 @@
-import json
 import logging
 import re
 
 from django.conf import settings
-from django.core.exceptions import ValidationError
 from django.db.models import Q
-from django.db.utils import OperationalError
 from django.forms import FileField, ImageField, ClearableFileInput, CharField
-from django.http import Http404, HttpResponse, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation.trans_real import language_code_re
 from django.views.generic import DetailView
 from django.views.generic.edit import DeleteView
 from hvad.forms import translatable_modelform_factory, \
@@ -18,11 +16,11 @@ from hvad.forms import translatable_modelform_factory, \
 from hvad.views import TranslatableUpdateView
 from tinymce.widgets import TinyMCE
 
-from maker.models import RemoteRepository, App, RemoteApp, ApkPointer, Screenshot
+from maker.models import App, ApkPointer, Screenshot
 from maker.models.category import Category
 from maker.models.screenshot import PHONE
 from . import DataListTextInput
-from .repository import RepositoryAuthorizationMixin, ApkUploadMixin, AppScrollListView
+from .repository import RepositoryAuthorizationMixin, ApkUploadMixin
 
 
 class MDLTinyMCE(TinyMCE):
@@ -45,59 +43,6 @@ class MDLTinyMCE(TinyMCE):
         return media
 
     media = property(_media)
-
-
-class AppAddView(RepositoryAuthorizationMixin, AppScrollListView):
-    model = RemoteApp
-    context_object_name = 'apps'
-    paginate_by = 15
-    template_name = "maker/app/add.html"
-
-    def get_queryset(self):
-        qs = RemoteApp.objects.filter(repo__users__id=self.request.user.id)
-        if 'remote_repo_id' in self.kwargs:
-            qs = qs.filter(repo__pk=self.kwargs['remote_repo_id'])
-        if 'search' in self.request.GET:
-            query = self.request.GET['search']
-            qs = qs.filter(Q(name__icontains=query) | Q(summary__icontains=query))
-        if 'category_id' in self.kwargs:
-            qs = qs.filter(category__id=self.kwargs['category_id'])
-        return qs
-
-    def get_context_data(self, **kwargs):
-        context = super(AppAddView, self).get_context_data(**kwargs)
-        context['repo'] = self.get_repo()
-        context['remote_repos'] = RemoteRepository.objects.filter(users__id=self.request.user.id)
-        context['categories'] = Category.objects.filter(Q(user=None) | Q(user=self.request.user))
-        if 'remote_repo_id' in self.kwargs:
-            context['remote_repo'] = RemoteRepository.objects.get(pk=self.kwargs['remote_repo_id'])
-        if 'category_id' in self.kwargs:
-            context['category'] = context['categories'].get(pk=self.kwargs['category_id'])
-        if 'search' in self.request.GET and self.request.GET['search'] != '':
-            context['search_params'] = 'search=%s' % self.request.GET['search']
-        for app in context['apps']:
-            app.added = app.is_in_repo(context['repo'])
-        return context
-
-    def post(self, request, *args, **kwargs):
-        if request.is_ajax():
-            apps_to_add = json.loads(request.body.decode("utf-8"))
-            for app in apps_to_add:
-                app_id = app['appId']
-                remote_repo_id = app['appRepoId']
-                remote_app = RemoteApp.objects.get(repo__id=remote_repo_id, pk=app_id,
-                                                   repo__users__id=request.user.id)
-                try:
-                    remote_app.add_to_repo(self.get_repo())
-                except OperationalError as e:
-                    logging.error(e)
-                    return HttpResponseServerError(e)
-                except ValidationError as e:
-                    logging.error(e)
-                    return HttpResponse(e.message, status=400)
-            self.get_repo().update_async()  # schedule repository update
-            return HttpResponse(status=204)
-        return Http404()
 
 
 class AppDetailView(RepositoryAuthorizationMixin, DetailView):
@@ -229,7 +174,7 @@ class AppTranslationCreateForm(AppForm):
 
     def clean_lang(self):
         lang = self.cleaned_data['lang']
-        if not re.match(r'[a-zA-Z_-]+', lang):
+        if not re.match(language_code_re, lang):
             self._errors['lang'] = _('This is not a valid language code.')
         if lang in self.instance.get_available_languages():
             self._errors['lang'] = _('This language already exists. Please choose another one!')

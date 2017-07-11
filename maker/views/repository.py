@@ -4,16 +4,15 @@ import logging
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db.models import Q
 from django.forms import Textarea
-from django.http import HttpResponseServerError, HttpResponse, Http404, JsonResponse
+from django.http import HttpResponseServerError, HttpResponse, Http404
 from django.shortcuts import get_object_or_404
-from django.utils import formats
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from maker.models import Repository, App, Apk, RemoteApp
+from maker.models import Repository, App, Apk
 from maker.models.storage import StorageManager
-from . import BaseModelForm, LoginOrSingleUserRequiredMixin
+from . import BaseModelForm, AppScrollListView, LoginOrSingleUserRequiredMixin
 
 
 class RepositoryAuthorizationMixin(LoginOrSingleUserRequiredMixin, UserPassesTestMixin):
@@ -82,42 +81,6 @@ class ApkUploadMixin(RepositoryAuthorizationMixin):
         return error_msg
 
 
-class AppScrollListView(ListView):
-    object_list = None
-
-    def get(self, request, *args, **kwargs):
-        if request.is_ajax():
-            self.object_list = self.get_queryset()
-            apps = self.get_context_data(**kwargs)['apps']
-            apps_json = []
-            for app in apps:
-                app_json = {}
-
-                app_json['description'] = app.description
-                app_json['icon'] = app.icon.url
-                app_json['summary'] = app.summary
-                app_json['name'] = app.name
-                app_json['id'] = app.id
-
-                app_latest_version = app.get_latest_version()
-                if app_latest_version is not None:
-                    version = app_latest_version.version_name
-                    date = formats.date_format(app_latest_version.added_date, 'DATE_FORMAT')
-                    app_json['updated'] = \
-                        _('Version %(version)s (%(date)s)') % {'version': version, 'date': date}
-
-                if self.model == RemoteApp:
-                    app_json['repo_id'] = app.repo.pk
-                    app_json['added'] = app.is_in_repo(self.get_repo())
-                app_json['categories'] = list(app.category.all().values('name'))
-                apps_json.append(app_json)
-            return JsonResponse(apps_json, safe=False)
-        return super().get(request, *args, **kwargs)
-
-    def get_repo(self):
-        raise NotImplementedError()
-
-
 class RepositoryListView(LoginOrSingleUserRequiredMixin, ListView):
     model = Repository
     context_object_name = 'repositories'
@@ -161,12 +124,11 @@ class RepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
 
 class RepositoryView(ApkUploadMixin, AppScrollListView):
     model = App
-    paginate_by = 15
     context_object_name = 'apps'
     template_name = 'maker/repo/index.html'
 
     def get_queryset(self):
-        qs = App.objects.filter(repo=self.get_repo())
+        qs = App.objects.language().fallbacks().filter(repo=self.get_repo()).order_by('added_date')
         if 'search' in self.request.GET:
             query = self.request.GET['search']
             # TODO do a better weighted search query that takes description into account

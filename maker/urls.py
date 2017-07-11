@@ -3,11 +3,12 @@ from django.views.i18n import javascript_catalog
 
 from maker.models import S3Storage, SshStorage, GitStorage
 from maker.views.apk import ApkUploadView, ApkPointerDeleteView
-from maker.views.app import AppAddView, AppDetailView, AppDeleteView, AppEditView, \
+from maker.views.app import AppDetailView, AppDeleteView, AppEditView, \
     AppTranslationCreateView
 from maker.views.gitstorage import GitStorageCreate, GitStorageUpdate, GitStorageDetail, \
     GitStorageDelete
-from maker.views.remoterepository import RemoteRepositoryCreateView, RemoteAppCreateView
+from maker.views.remoterepository import RemoteRepositoryCreateView, AppRemoteAddView, \
+    RemoteAppCreateView
 from maker.views.repository import RepositoryListView, RepositoryCreateView, RepositoryView, \
     RepositoryUpdateView, RepositoryDeleteView
 from maker.views.s3storage import S3StorageCreate, S3StorageDetail, S3StorageUpdate, S3StorageDelete
@@ -40,14 +41,14 @@ urlpatterns = [
     url(r'^remote/(?P<remote_repo_id>[0-9]+)/update/$', views.remote_update, name='remote_update'),
 
     # App
-    url(r'^(?P<repo_id>[0-9]+)/app/add/$', AppAddView.as_view(), name='add_app'),
+    url(r'^(?P<repo_id>[0-9]+)/app/add/$', AppRemoteAddView.as_view(), name='add_app'),
     url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/$',
-        AppAddView.as_view(), name='add_app'),
+        AppRemoteAddView.as_view(), name='add_app'),
     url(r'^(?P<repo_id>[0-9]+)/app/add/category/(?P<category_id>[0-9]+)/$',
-        AppAddView.as_view(), name='add_app_with_category'),
+        AppRemoteAddView.as_view(), name='add_app_with_category'),
     url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/' +
         r'category/(?P<category_id>[0-9]+)/$',
-        AppAddView.as_view(), name='add_app_with_category'),
+        AppRemoteAddView.as_view(), name='add_app_with_category'),
     # Remote App Details
     url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/(?P<app_id>[0-9]+)/$',
         RemoteAppCreateView.as_view(), name='add_remote_app'),

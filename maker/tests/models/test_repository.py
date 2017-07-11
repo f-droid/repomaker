@@ -470,11 +470,17 @@ class RepositoryPageTestCase(TestCase):
         # creating repository directory is necessary because neither create nor update was called
         os.makedirs(repo.get_repo_path())
 
-        # add two apps
-        App.objects.create(repo=repo, package_id='first', name='TestApp', summary='TestSummary',
-                           description='TestDesc')
-        App.objects.create(repo=repo, package_id='second', name='AnotherTestApp',
-                           summary='AnotherTestSummary', description='AnotherTestDesc')
+        # add two apps in two different languages
+        app1 = App.objects.create(repo=repo, package_id='first', name='TestApp')
+        app1.translate('es')
+        app1.l_summary = 'TestSummary'
+        app1.l_description = 'TestDesc'
+        app1.save()
+        app2 = App.objects.create(repo=repo, package_id='second', name='AnotherTestApp')
+        app2.translate('de')
+        app2.l_summary = 'AnotherTestSummary'
+        app2.l_description = 'AnotherTestDesc'
+        app2.save()
 
         repo._generate_page()  # pylint: disable=protected-access
         _copy_page_assets.assert_called_once_with()
@@ -488,12 +494,12 @@ class RepositoryPageTestCase(TestCase):
         self.assertTrue(os.path.getsize(page_abs_path) > 200)
         with open(page_abs_path, 'r') as repo_page:
             repo_page_string = repo_page.read()
-            self.assertTrue('TestApp' in repo_page_string)
-            self.assertTrue('TestSummary' in repo_page_string)
-            self.assertTrue('TestDesc' in repo_page_string)
-            self.assertTrue('AnotherTestApp' in repo_page_string)
-            self.assertTrue('AnotherTestSummary' in repo_page_string)
-            self.assertTrue('AnotherTestDesc' in repo_page_string)
+            self.assertTrue(app1.name in repo_page_string)
+            self.assertTrue(app1.l_summary in repo_page_string)
+            self.assertTrue(app1.l_description in repo_page_string)
+            self.assertTrue(app2.name in repo_page_string)
+            self.assertTrue(app2.l_summary in repo_page_string)
+            self.assertTrue(app2.l_description in repo_page_string)
 
         # assert that the repo homepage's stylesheet has been created
         style_abs_path = os.path.join(settings.STATIC_ROOT, 'maker', 'css', 'repo', 'page.css')

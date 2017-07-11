@@ -33,8 +33,11 @@ class RepositoryTestCase(TestCase):
         # create app in repo
         self.app = App.objects.create(repo=self.repo,
                                       package_id='org.bitbucket.tickytacky.mirrormirror',
-                                      name='TestApp', summary='TestSummary', description='TestDesc',
-                                      website='TestSite', author_name='author')
+                                      name='TestApp', website='TestSite', author_name='author')
+        self.app.translate(settings.LANGUAGE_CODE)
+        self.app.l_summary = 'TestSummary'
+        self.app.l_description = 'TestDesc'
+        self.app.save()
 
     def tearDown(self):
         if os.path.isdir(TEST_DIR):
@@ -113,7 +116,7 @@ class RepositoryTestCase(TestCase):
 
     @override_settings(SINGLE_USER_MODE=False)
     @modify_settings(INSTALLED_APPS={'append': ['allauth', 'allauth.socialaccount']})
-    def test_details_multi(self):
+    def test_details_multi_user(self):
         # Update URL conf with overridden settings
         reload(sys.modules[settings.ROOT_URLCONF])
         django.urls.clear_url_caches()
@@ -148,10 +151,29 @@ class RepositoryTestCase(TestCase):
         # Assert that all contents exist
         self.assertContains(response, self.repo.name, 3)
         self.assertContains(response, self.app.name, 1)
-        self.assertContains(response, self.app.summary, 1)
-        self.assertContains(response, self.app.description, 1)
+        self.assertContains(response, self.app.l_summary, 1)
+        self.assertContains(response, self.app.l_description, 1)
 
         # TODO: Add tests for INFO and SHARE pages when design is implemented
+
+    def test_details_app_translation(self):
+        # Add fake fingerprint to repo for view to work
+        self.repo.fingerprint = '28e14fb3b280bce8ff1e0f8e82726ff46923662cecff2a0689108ce19e8b347c'
+        self.repo.save()
+
+        # Add second app only available in German
+        app2 = App.objects.create(repo=self.repo, package_id='org.example', name='App2')
+        app2.translate('de')
+        app2.l_summary = 'Test Zusammenfassung'
+        app2.l_description = 'Test Beschreibung'
+        app2.save()
+
+        # Request repo app list page and ensure all localized descriptions are shown
+        response = self.client.get(reverse('repo', kwargs={'repo_id': self.repo.id}))
+        self.assertContains(response, self.app.l_summary)
+        self.assertContains(response, self.app.l_description)
+        self.assertContains(response, app2.l_description)
+        self.assertContains(response, app2.l_description)
 
     def test_upload_apk_as_new_app(self):
         fake_repo_create(self.repo)
