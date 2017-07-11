@@ -1,5 +1,6 @@
 import os
 import shutil
+from unittest.mock import patch
 
 import django.http
 import django.urls
@@ -7,7 +8,8 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-from maker.models import Repository, RemoteRepository, RemoteApp
+from maker.models import Repository, RemoteRepository, RemoteApp, RemoteScreenshot, \
+    RemoteApkPointer
 from .. import TEST_DIR
 
 
@@ -25,7 +27,7 @@ class RemoteRepositoryViewTest(TestCase):
         self.app = RemoteApp.objects.create(repo=self.remote_repo, package_id='org.example',
                                             last_updated_date=self.remote_repo.last_updated_date,
                                             name='App')
-        self.app.translate('de')
+        self.app.translate('en')
         self.app.l_summary = 'Test Summary'
         self.app.l_description = 'Test Description'
         self.app.save()
@@ -38,6 +40,10 @@ class RemoteRepositoryViewTest(TestCase):
         self.app2.l_summary = 'Test Zusammenfassung'
         self.app2.l_description = 'Test Beschreibung'
         self.app2.save()
+
+        # add a remote screenshot
+        self.screenshot = RemoteScreenshot.objects.create(app=self.app, url='test-url',
+                                                          language_code=self.app.language_code)
 
     def tearDown(self):
         if os.path.isdir(TEST_DIR):
@@ -56,7 +62,83 @@ class RemoteRepositoryViewTest(TestCase):
         response = self.client.get(reverse('add_app', kwargs={'repo_id': self.repo.id}),
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertTrue(isinstance(response, django.http.JsonResponse))
+        json = '[' \
+               '{ "categories": [], "description": "Test Description", "repo_id": 1,' \
+               '  "lang": "en", "id": 1, "summary": "Test Summary",' \
+               '  "icon": "/media/default-app-icon.png", "added": false, "name": "App"},' \
+               '{ "categories": [], "description": "Test Beschreibung", "repo_id": 1,' \
+               '  "lang": "de", "id": 2, "summary": "Test Zusammenfassung",' \
+               '  "icon": "/media/default-app-icon.png", "added": false, "name": "App2"}' \
+               ']'
+        self.assertJSONEqual(response.content.decode(), json)
+
+    def test_remote_app_details(self):
+        # request remote app detail page
+        kwargs = {'repo_id': self.repo.id, 'remote_repo_id': self.remote_repo.id,
+                  'app_id': self.app.id, 'lang': self.app.language_code}
+        response = self.client.get(reverse('add_remote_app', kwargs=kwargs))
+
+        # assert that localized metadata is shown on the page
         self.assertContains(response, self.app.l_summary)
         self.assertContains(response, self.app.l_description)
-        self.assertContains(response, self.app2.l_description)
-        self.assertContains(response, self.app2.l_description)
+
+        # assert that screenshot is not, but link is shown
+        self.assertNotContains(response, self.screenshot.url)
+        self.assertContains(response, reverse('add_remote_app_screenshots', kwargs=kwargs))
+
+    def test_remote_app_details_screenshot(self):
+        # request remote app detail page
+        kwargs = {'repo_id': self.repo.id, 'remote_repo_id': self.remote_repo.id,
+                  'app_id': self.app.id, 'lang': self.app.language_code}
+        response = self.client.get(reverse('add_remote_app_screenshots', kwargs=kwargs))
+
+        # assert that localized metadata is shown on the page
+        self.assertContains(response, self.app.l_summary)
+        self.assertContains(response, self.app.l_description)
+
+        # assert that screenshot is shown
+        self.assertContains(response, 'src="'+self.screenshot.url)
+
+    def test_remote_app_details_unknown_lang(self):
+        kwargs = {'repo_id': self.repo.id, 'remote_repo_id': self.remote_repo.id,
+                  'app_id': self.app.id, 'lang': 'xxx'}
+        response = self.client.get(reverse('add_remote_app', kwargs=kwargs))
+        self.assertEqual(404, response.status_code)
+
+    def test_remote_app_details_lang_switch(self):
+        # translate app to German
+        self.app.translate('de')
+        self.app.save()
+
+        # request remote app detail page
+        kwargs = {'repo_id': self.repo.id, 'remote_repo_id': self.remote_repo.id,
+                  'app_id': self.app.id, 'lang': self.app.language_code}
+        response = self.client.get(reverse('add_remote_app', kwargs=kwargs))
+
+        # assert that link to both languages is shown on the page
+        kwargs['lang'] = 'en'
+        self.assertContains(response, 'href="' + reverse('add_remote_app', kwargs=kwargs))
+        kwargs['lang'] = 'de'
+        self.assertContains(response, 'href="' + reverse('add_remote_app', kwargs=kwargs))
+
+        # request German page and assert that localized metadata is shown on the page
+        response = self.client.get(reverse('add_remote_app', kwargs=kwargs))
+        self.assertContains(response, self.app.l_summary)
+        self.assertContains(response, self.app.l_description)
+
+    @patch('maker.models.remoteapp.RemoteApp.add_to_repo')
+    def test_remote_app_details_add_no_js(self, add_to_repo):
+        # one remote APK pointer is required for apps to be added
+        RemoteApkPointer.objects.create(app=self.app)
+
+        add_to_repo.return_value.get_absolute_url = lambda: 'test-url'
+
+        # request remote app detail page
+        kwargs = {'repo_id': self.repo.id, 'remote_repo_id': self.remote_repo.id,
+                  'app_id': self.app.id, 'lang': self.app.language_code}
+        response = self.client.post(reverse('add_remote_app', kwargs=kwargs))
+
+        # ensure that app was added and we are redirected to proper page
+        add_to_repo.assert_called_once_with(self.repo)
+        self.assertTrue(isinstance(response, django.http.HttpResponseRedirect))
+        self.assertEqual('test-url', response.url)

@@ -174,6 +174,7 @@ function putAppInformation(jsonHtmlRelation, app, appCard) {
         if (rel === 'rm-app-card--repo-apps') {
             var repoId = appCard.pathname.split('/')[2]
             var appId = app[jsonHtmlRelation[rel]]
+            /* FIXME: DO NOT hardcode URLs!!! */
             var url = '/repo/' + repoId + '/app/' + appId
             appCard.href = url
             continue
@@ -196,7 +197,9 @@ function putAppInformation(jsonHtmlRelation, app, appCard) {
             var repoId = window.location.href.split('/')[4]
             var remoteRepoId = app['repo_id']
             var appId = app[jsonHtmlRelation[rel]]
-            var url = '/repo/' + repoId + '/app/remote/' + remoteRepoId + '/add/' + appId
+            var lang = app['lang']
+            /* FIXME: DO NOT hardcode URLs!!! */
+            var url = '/repo/' + repoId + '/remote-app/' + remoteRepoId + '/' + appId + '/lang/' + lang
 
             // Add on-click listener and remove HTML attribute
             appCard.addEventListener('click', function(event) {

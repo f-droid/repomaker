@@ -3,7 +3,7 @@
 
 {% block rm-app-card-attributes %}
 {% if not app.added %}
-onclick="window.location.href = '{% url 'add_remote_app' repo.id app.repo.id app.id %}'"
+onclick="window.location.href = '{{ url }}'"
 {% endif %}
 {% endblock rm-app-card-attributes %}
 

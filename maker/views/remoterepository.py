@@ -8,12 +8,14 @@ from django.db.utils import OperationalError
 from django.http import HttpResponseRedirect, Http404, HttpResponse, HttpResponseServerError
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import DetailView
 from django.views.generic.edit import CreateView
 from fdroidserver import index
 
 from maker.models import Repository, RemoteRepository, RemoteApp
 from maker.models.category import Category
-from . import BaseModelForm, AppScrollListView, LoginOrSingleUserRequiredMixin
+from maker.models.screenshot import PHONE, RemoteScreenshot
+from . import BaseModelForm, AppScrollListView, LoginOrSingleUserRequiredMixin, LanguageMixin
 from .repository import RepositoryAuthorizationMixin
 
 
@@ -132,37 +134,40 @@ class AppRemoteAddView(RepositoryAuthorizationMixin, AppScrollListView):
         return Http404()
 
 
-class RemoteAppCreateView(RepositoryAuthorizationMixin, CreateView):
+class RemoteAppImportView(RepositoryAuthorizationMixin, LanguageMixin, DetailView):
+    model = RemoteApp
+    pk_url_kwarg = 'app_id'
+    context_object_name = 'app'
     template_name = "maker/app/remote_add.html"
-    fields = []
-    object = None
 
     def get_queryset(self):
+        # restricting query set for security and to add language selector
         remote_repo_id = self.kwargs['remote_repo_id']
-        app_id = self.kwargs['app_id']
-        return RemoteApp.objects.filter(repo__id=remote_repo_id,
-                                        repo__users__id=self.request.user.id, pk=app_id)
+        qs = RemoteApp.objects.language(self.get_language())
+        return qs.filter(repo__id=remote_repo_id, repo__users__id=self.request.user.id)
 
     def get_context_data(self, **kwargs):
-        context = super(RemoteAppCreateView, self).get_context_data(**kwargs)
-        context['app'] = self.get_queryset().get()
+        context = super().get_context_data(**kwargs)
         context['repo'] = self.get_repo()
-        if 'screenshots' in self.kwargs:
-            context['screenshots'] = True
+        context['screenshots'] = RemoteScreenshot.objects.filter(app=self.get_object(), type=PHONE,
+                                                                 language_code=self.get_language())
         return context
 
-    def form_valid(self, form):
-        # ignore the form
+    def post(self, request, *args, **kwargs):
         if not self.get_queryset().exists():
             return Http404()
 
-        remote_app = self.get_queryset().get()
+        remote_app = self.get_object()
         # TODO catch ValidationError and display proper error message on a page
-        self.object = remote_app.add_to_repo(self.get_repo())
+        app = remote_app.add_to_repo(self.get_repo())
 
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(app.get_absolute_url())
 
-    def get_success_url(self):
-        # edit new app
-        return reverse_lazy('app', kwargs={'repo_id': self.object.repo.pk,
-                                           'app_id': self.object.pk})
+
+class RemoteAppImportViewScreenshots(RemoteAppImportView):
+
+    # TODO load the screenshots with AJAX if JavaScript is available
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_screenshots'] = True
+        return context

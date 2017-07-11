@@ -96,6 +96,7 @@ function back(event) {
     // Prevent opening new page
     event.preventDefault()
 
+    /* FIXME: DO NOT hardcode URLs!!! */
     var url = '/repo/' + window.repoId + '/app/add/'
     var request = new XMLHttpRequest()
     request.onreadystatechange = function() {
@@ -117,6 +118,7 @@ function appsAdded(request) {
             sessionStorage.removeItem(sessionStorageKeyRepo)
         }
 
+        /* FIXME: DO NOT hardcode URLs!!! */
         window.location = '/repo/' + window.repoId
     }
     else {

@@ -8,7 +8,7 @@ from maker.views.app import AppDetailView, AppDeleteView, AppEditView, \
 from maker.views.gitstorage import GitStorageCreate, GitStorageUpdate, GitStorageDetail, \
     GitStorageDelete
 from maker.views.remoterepository import RemoteRepositoryCreateView, AppRemoteAddView, \
-    RemoteAppCreateView
+    RemoteAppImportView, RemoteAppImportViewScreenshots
 from maker.views.repository import RepositoryListView, RepositoryCreateView, RepositoryView, \
     RepositoryUpdateView, RepositoryDeleteView
 from maker.views.s3storage import S3StorageCreate, S3StorageDetail, S3StorageUpdate, S3StorageDelete
@@ -42,19 +42,20 @@ urlpatterns = [
 
     # App
     url(r'^(?P<repo_id>[0-9]+)/app/add/$', AppRemoteAddView.as_view(), name='add_app'),
-    url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/$',
+    url(r'^(?P<repo_id>[0-9]+)/remote-app/(?P<remote_repo_id>[0-9]+)/add/$',
         AppRemoteAddView.as_view(), name='add_app'),
-    url(r'^(?P<repo_id>[0-9]+)/app/add/category/(?P<category_id>[0-9]+)/$',
+    url(r'^(?P<repo_id>[0-9]+)/remote-app/add/category/(?P<category_id>[0-9]+)/$',
         AppRemoteAddView.as_view(), name='add_app_with_category'),
-    url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/' +
+    url(r'^(?P<repo_id>[0-9]+)/remote-app/(?P<remote_repo_id>[0-9]+)/add/' +
         r'category/(?P<category_id>[0-9]+)/$',
         AppRemoteAddView.as_view(), name='add_app_with_category'),
     # Remote App Details
-    url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/(?P<app_id>[0-9]+)/$',
-        RemoteAppCreateView.as_view(), name='add_remote_app'),
-    url(r'^(?P<repo_id>[0-9]+)/app/remote/(?P<remote_repo_id>[0-9]+)/add/(?P<app_id>[0-9]+)/' +
-        r'(?P<screenshots>[screenshots]+)$',
-        RemoteAppCreateView.as_view(), name='add_remote_app_screenshots'),
+    url(r'^(?P<repo_id>[0-9]+)/remote-app/(?P<remote_repo_id>[0-9]+)/(?P<app_id>[0-9]+)' +
+        r'/lang/(?P<lang>[a-zA-Z_-]+)/$',
+        RemoteAppImportView.as_view(), name='add_remote_app'),
+    url(r'^(?P<repo_id>[0-9]+)/remote-app/(?P<remote_repo_id>[0-9]+)/(?P<app_id>[0-9]+)' +
+        r'/lang/(?P<lang>[a-zA-Z_-]+)/screenshots/$',
+        RemoteAppImportViewScreenshots.as_view(), name='add_remote_app_screenshots'),
     # App Detail and Edit
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/$', AppDetailView.as_view(), name='app'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/lang/(?P<lang>[a-zA-Z_-]+)/$',

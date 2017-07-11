@@ -108,7 +108,8 @@ class AppScrollListView(ListView):
             apps_json = []
             for app in apps:
                 app_json = {'id': app.id, 'name': app.name, 'icon': app.icon.url,
-                            'summary': app.l_summary, 'description': app.l_description}
+                            'summary': app.l_summary, 'description': app.l_description,
+                            'lang': app.language_code}
 
                 app_latest_version = app.get_latest_version()
                 if app_latest_version is not None:
@@ -201,3 +202,12 @@ class LoginOrSingleUserRequiredMixin(LoginRequiredMixin):
             user = User.objects.get(username=DEFAULT_USER_NAME)
             login(request, user)
         return super().dispatch(request, *args, **kwargs)
+
+
+class LanguageMixin:
+    kwargs = None
+
+    def get_language(self):
+        if 'lang' in self.kwargs:
+            return self.kwargs['lang']
+        return None

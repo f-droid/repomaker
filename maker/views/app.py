@@ -19,7 +19,7 @@ from tinymce.widgets import TinyMCE
 from maker.models import App, ApkPointer, Screenshot
 from maker.models.category import Category
 from maker.models.screenshot import PHONE
-from . import DataListTextInput
+from . import DataListTextInput, LanguageMixin
 from .repository import RepositoryAuthorizationMixin, ApkUploadMixin
 
 
@@ -45,16 +45,11 @@ class MDLTinyMCE(TinyMCE):
     media = property(_media)
 
 
-class AppDetailView(RepositoryAuthorizationMixin, DetailView):
+class AppDetailView(RepositoryAuthorizationMixin, LanguageMixin, DetailView):
     model = App
     pk_url_kwarg = 'app_id'
     context_object_name = 'app'
     template_name = 'maker/app/index.html'
-
-    def get_language(self):
-        if 'lang' in self.kwargs:
-            return self.kwargs['lang']
-        return None
 
     def get_repo(self):
         return self.get_object().repo
@@ -98,17 +93,12 @@ class AppForm(TranslatableModelForm):
         js = ('maker/js/drag-and-drop.js',)
 
 
-class AppEditView(ApkUploadMixin, TranslatableUpdateView):
+class AppEditView(ApkUploadMixin, LanguageMixin, TranslatableUpdateView):
     model = App
     object = None
     pk_url_kwarg = 'app_id'
     context_object_name = 'app'
     template_name = 'maker/app/edit.html'
-
-    def get_language(self):
-        if 'lang' in self.kwargs:
-            return self.kwargs['lang']
-        return None
 
     def get_repo(self):
         return self.get_object().repo

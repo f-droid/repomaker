@@ -174,7 +174,7 @@
 		{% endif %}
 		{% csrf_token %}
 		{% for app in apps %}
-			{% url 'add_remote_app' repo.id app.repo.id app.id as url %}
+			{% url 'add_remote_app' repo.id app.repo.id app.id app.language_code as url %}
 			{% trans 'Add' as action_title %}
 			{% include "maker/widgets/app_with_action.html" with url=url width=12 action_title=action_title %}
 		{% empty %}
