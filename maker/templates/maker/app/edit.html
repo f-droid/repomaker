@@ -34,15 +34,15 @@
 {% block summary %}
 {% block before-summary %}{% endblock before-summary %}
 <div class="rm-app-summaries">
-	{% if not form.lang %}
+	{% if app.summary_override and not form.lang %}
 	<div class="rm-app-summary-edit mdl-js-textfield">
-		<label for="id_summary" class="mdl-textfield__label">{% trans 'Summary Override (40 characters)' %}</label>
-		{{ form.summary }}
+		<label for="id_summary_override" class="mdl-textfield__label">{% trans 'Summary Override (40 characters)' %}</label>
+		{{ form.summary_override }}
 	</div>
 	{% endif %}
 	<div class="rm-app-summary-edit mdl-js-textfield">
-		<label for="id_l_summary" class="mdl-textfield__label">{% trans 'Short Summary (40 characters)' %}</label>
-		{{ form.l_summary }}
+		<label for="id_summary" class="mdl-textfield__label">{% trans 'Short Summary (40 characters)' %}</label>
+		{{ form.summary }}
 	</div>
 </div>
 {% endblock summary %}
@@ -79,13 +79,13 @@
 
 
 {% block description %}
-{% if not form.lang %}
+{% if app.description_override and not form.lang %}
 <h4 class="rm-app-section">{% trans 'Description Override' %}</h4>
-{{ form.description }}
+{{ form.description_override }}
 {% endif %}
 
 <h4 class="rm-app-section">{% trans 'Description' %}</h4>
-{{ form.l_description }}
+{{ form.description }}
 {% endblock description %}
 
 

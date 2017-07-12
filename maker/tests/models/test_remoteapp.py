@@ -38,18 +38,46 @@ class RemoteAppTestCase(TestCase):
                 'added': 9999999900000, 'lastUpdated': 9999999900000, 'authorName': 'author'}
         self.assertTrue(self.app.update_from_json(json))  # app changed
 
+        # assert that a default translation was created
+        self.assertEqual([settings.LANGUAGE_CODE], list(self.app.get_available_languages()))
+
         # assert app was updated properly
         self.assertEqual(json['name'], self.app.name)
-        self.assertEqual(json['summary'], self.app.summary)
+        self.assertEqual('foo', self.app.summary)
+        self.assertEqual('', self.app.summary_override)  # override is not used
         self.assertEqual('bar', self.app.description)  # <script> tag was removed
+        self.assertEqual('', self.app.description_override)  # override is not used
         self.assertEqual(json['webSite'], self.app.website)
         self.assertTrue(datetime_is_recent(self.app.added_date))
         last_update = datetime.fromtimestamp(json['lastUpdated'] / 1000, timezone.utc)
         self.assertEqual(last_update, self.app.last_updated_date)
         self.assertEqual(json['authorName'], self.app.author_name)
 
-        # assert that a default translation was created
-        self.assertEqual([settings.LANGUAGE_CODE], list(self.app.get_available_languages()))
+    def test_update_from_json_moves_overrides(self):
+        json = {'name': 'app', 'summary': 'foo', 'description': 'bar<script>',
+                'localized': {settings.LANGUAGE_CODE: {'foo': 'bar'}},
+                'lastUpdated': 9999999900000}
+        self.assertTrue(self.app.update_from_json(json))  # app changed
+
+        # assert app was updated properly
+        self.assertEqual('foo', self.app.summary)
+        self.assertEqual('', self.app.summary_override)  # override is not used
+        self.assertEqual('bar', self.app.description)  # <script> tag was removed
+        self.assertEqual('', self.app.description_override)  # override is not used
+
+    def test_update_from_json_moves_override_no_data_loss(self):
+        json = {'name': 'app', 'summary': 'foo', 'description': 'bar<script>',
+                'localized': {
+                    settings.LANGUAGE_CODE: {'summary': 'foo2', 'description': 'bar2<script>'}
+                },
+                'lastUpdated': 9999999900000}
+        self.assertTrue(self.app.update_from_json(json))  # app changed
+
+        # assert app was updated properly
+        self.assertEqual('foo2', self.app.summary)
+        self.assertEqual('foo', self.app.summary_override)
+        self.assertEqual('bar2', self.app.description)  # <script> tag was removed
+        self.assertEqual('bar', self.app.description_override)  # <script> tag was removed
 
     @patch('fdroidserver.net.http_get')
     def test_update_icon(self, http_get):
@@ -80,8 +108,8 @@ class RemoteAppTestCase(TestCase):
 
         # assert that translation has been saved
         app = RemoteApp.objects.language('en').get(pk=self.app.pk)
-        self.assertEqual(localized['en']['summary'], app.l_summary)
-        self.assertEqual(localized['en']['description'], app.l_description)
+        self.assertEqual(localized['en']['summary'], app.summary)
+        self.assertEqual(localized['en']['description'], app.description)
 
     def test_update_translations_existing(self):
         # add a new translation
@@ -94,8 +122,8 @@ class RemoteAppTestCase(TestCase):
 
         # assert that translation has been updated
         app = RemoteApp.objects.language('en').get(pk=self.app.pk)
-        self.assertEqual(localized['en']['summary'], app.l_summary)
-        self.assertEqual(localized['en']['description'], app.l_description)
+        self.assertEqual(localized['en']['summary'], app.summary)
+        self.assertEqual(localized['en']['description'], app.description)
 
     def test_apply_translation(self):
         # apply new translation
@@ -106,8 +134,8 @@ class RemoteAppTestCase(TestCase):
 
         # assert that translation has been saved
         app = RemoteApp.objects.language('de').get(pk=self.app.pk)
-        self.assertEqual(translation['summary'], app.l_summary)
-        self.assertEqual(translation['description'], app.l_description)
+        self.assertEqual(translation['summary'], app.summary)
+        self.assertEqual(translation['description'], app.description)
         self.assertEqual('http://repo_url/org.example/de/feature.png', app.feature_graphic_url)
         self.assertEqual('http://repo_url/org.example/de/icon.png', app.high_res_icon_url)
         self.assertEqual('http://repo_url/org.example/de/tv.png', app.tv_banner_url)
@@ -119,8 +147,8 @@ class RemoteAppTestCase(TestCase):
         self.app.apply_translation('de', translation)
 
         # assert that translation has no <script> tag
-        self.assertEqual(translation['summary'], self.app.l_summary)
-        self.assertEqual('test2', self.app.l_description)
+        self.assertEqual(translation['summary'], self.app.summary)
+        self.assertEqual('test2', self.app.description)
 
     @patch('maker.tasks.download_remote_screenshot')
     @patch('maker.tasks.download_remote_graphic_assets')

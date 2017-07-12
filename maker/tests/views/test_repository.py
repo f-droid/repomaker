@@ -35,8 +35,8 @@ class RepositoryTestCase(TestCase):
                                       package_id='org.bitbucket.tickytacky.mirrormirror',
                                       name='TestApp', website='TestSite', author_name='author')
         self.app.translate(settings.LANGUAGE_CODE)
-        self.app.l_summary = 'TestSummary'
-        self.app.l_description = 'TestDesc'
+        self.app.summary = 'TestSummary'
+        self.app.description = 'TestDesc'
         self.app.save()
 
     def tearDown(self):
@@ -151,8 +151,8 @@ class RepositoryTestCase(TestCase):
         # Assert that all contents exist
         self.assertContains(response, self.repo.name, 3)
         self.assertContains(response, self.app.name, 1)
-        self.assertContains(response, self.app.l_summary, 1)
-        self.assertContains(response, self.app.l_description, 1)
+        self.assertContains(response, self.app.summary, 1)
+        self.assertContains(response, self.app.description, 1)
 
         # TODO: Add tests for INFO and SHARE pages when design is implemented
 
@@ -164,16 +164,16 @@ class RepositoryTestCase(TestCase):
         # Add second app only available in German
         app2 = App.objects.create(repo=self.repo, package_id='org.example', name='App2')
         app2.translate('de')
-        app2.l_summary = 'Test Zusammenfassung'
-        app2.l_description = 'Test Beschreibung'
+        app2.summary = 'Test Zusammenfassung'
+        app2.description = 'Test Beschreibung'
         app2.save()
 
         # Request repo app list page and ensure all localized descriptions are shown
         response = self.client.get(reverse('repo', kwargs={'repo_id': self.repo.id}))
-        self.assertContains(response, self.app.l_summary)
-        self.assertContains(response, self.app.l_description)
-        self.assertContains(response, app2.l_description)
-        self.assertContains(response, app2.l_description)
+        self.assertContains(response, self.app.summary)
+        self.assertContains(response, self.app.description)
+        self.assertContains(response, app2.description)
+        self.assertContains(response, app2.description)
 
     def test_upload_apk_as_new_app(self):
         fake_repo_create(self.repo)

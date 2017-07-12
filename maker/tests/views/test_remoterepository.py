@@ -28,8 +28,8 @@ class RemoteRepositoryViewTest(TestCase):
                                             last_updated_date=self.remote_repo.last_updated_date,
                                             name='App')
         self.app.translate('en')
-        self.app.l_summary = 'Test Summary'
-        self.app.l_description = 'Test Description'
+        self.app.summary = 'Test Summary'
+        self.app.description = 'Test Description'
         self.app.save()
 
         # Add second app only available in German
@@ -37,8 +37,8 @@ class RemoteRepositoryViewTest(TestCase):
                                              last_updated_date=self.remote_repo.last_updated_date,
                                              name='App2')
         self.app2.translate('de')
-        self.app2.l_summary = 'Test Zusammenfassung'
-        self.app2.l_description = 'Test Beschreibung'
+        self.app2.summary = 'Test Zusammenfassung'
+        self.app2.description = 'Test Beschreibung'
         self.app2.save()
 
         # add a remote screenshot
@@ -52,10 +52,10 @@ class RemoteRepositoryViewTest(TestCase):
     def test_list_app_translation(self):
         # Request repo app list page and ensure all localized descriptions are shown
         response = self.client.get(reverse('add_app', kwargs={'repo_id': self.repo.id}))
-        self.assertContains(response, self.app.l_summary)
-        self.assertContains(response, self.app.l_description)
-        self.assertContains(response, self.app2.l_description)
-        self.assertContains(response, self.app2.l_description)
+        self.assertContains(response, self.app.summary)
+        self.assertContains(response, self.app.description)
+        self.assertContains(response, self.app2.description)
+        self.assertContains(response, self.app2.description)
 
     def test_list_app_ajax_translation(self):
         # Request repo app list page via json and ensure all localized descriptions are included
@@ -79,8 +79,8 @@ class RemoteRepositoryViewTest(TestCase):
         response = self.client.get(reverse('add_remote_app', kwargs=kwargs))
 
         # assert that localized metadata is shown on the page
-        self.assertContains(response, self.app.l_summary)
-        self.assertContains(response, self.app.l_description)
+        self.assertContains(response, self.app.summary)
+        self.assertContains(response, self.app.description)
 
         # assert that screenshot is not, but link is shown
         self.assertNotContains(response, self.screenshot.url)
@@ -93,8 +93,8 @@ class RemoteRepositoryViewTest(TestCase):
         response = self.client.get(reverse('add_remote_app_screenshots', kwargs=kwargs))
 
         # assert that localized metadata is shown on the page
-        self.assertContains(response, self.app.l_summary)
-        self.assertContains(response, self.app.l_description)
+        self.assertContains(response, self.app.summary)
+        self.assertContains(response, self.app.description)
 
         # assert that screenshot is shown
         self.assertContains(response, 'src="'+self.screenshot.url)
@@ -123,8 +123,8 @@ class RemoteRepositoryViewTest(TestCase):
 
         # request German page and assert that localized metadata is shown on the page
         response = self.client.get(reverse('add_remote_app', kwargs=kwargs))
-        self.assertContains(response, self.app.l_summary)
-        self.assertContains(response, self.app.l_description)
+        self.assertContains(response, self.app.summary)
+        self.assertContains(response, self.app.description)
 
     @patch('maker.models.remoteapp.RemoteApp.add_to_repo')
     def test_remote_app_details_add_no_js(self, add_to_repo):

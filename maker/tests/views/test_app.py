@@ -30,8 +30,8 @@ class AppViewTestCase(TestCase):
                                       name='TestApp', website='TestSite', author_name='author')
         # translate app in default language
         self.app.translate(settings.LANGUAGE_CODE)
-        self.app.l_summary = 'Test Summary'
-        self.app.l_description = 'Test Description'
+        self.app.summary = 'Test Summary'
+        self.app.description = 'Test Description'
         self.app.save()
 
     def tearDown(self):
@@ -48,8 +48,8 @@ class AppViewTestCase(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertContains(response, self.app.name)
         self.assertContains(response, self.app.author_name)
-        self.assertContains(response, self.app.l_summary)
-        self.assertContains(response, self.app.l_description)
+        self.assertContains(response, self.app.summary)
+        self.assertContains(response, self.app.description)
 
     def test_app_detail_other_lang(self):
         self.translate_to_de()
@@ -90,8 +90,8 @@ class AppViewTestCase(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertContains(response, self.app.name)
         self.assertContains(response, self.app.author_name)
-        self.assertContains(response, self.app.l_summary)
-        self.assertContains(response, self.app.l_description)
+        self.assertContains(response, self.app.summary)
+        self.assertContains(response, self.app.description)
 
     def test_app_edit_other_lang(self):
         self.translate_to_de()
@@ -225,8 +225,8 @@ class AppViewTestCase(TestCase):
         kwargs = {'repo_id': self.repo.pk, 'app_id': self.app.pk}
         data = {
             'lang': 'de',
-            'l_summary': 'Test-Zusammenfassung',
-            'l_description': 'Test-Beschreibung',
+            'summary': 'Test-Zusammenfassung',
+            'description': 'Test-Beschreibung',
         }
         response = self.client.post(reverse('app_add_lang', kwargs=kwargs), data)
         kwargs['lang'] = 'de'
@@ -235,8 +235,8 @@ class AppViewTestCase(TestCase):
 
         # assert data was saved properly
         self.app = App.objects.language('de').get(pk=self.app.pk)
-        self.assertEqual(data['l_summary'], self.app.l_summary)
-        self.assertEqual(data['l_description'], self.app.l_description)
+        self.assertEqual(data['summary'], self.app.summary)
+        self.assertEqual(data['description'], self.app.description)
         self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
 
     def test_add_lang_exists(self):
@@ -258,6 +258,6 @@ class AppViewTestCase(TestCase):
 
     def translate_to_de(self):
         self.app.translate('de')
-        self.app.l_summary = 'Test-Zusammenfassung'
-        self.app.l_description = 'Test-Beschreibung'
+        self.app.summary = 'Test-Zusammenfassung'
+        self.app.description = 'Test-Beschreibung'
         self.app.save()

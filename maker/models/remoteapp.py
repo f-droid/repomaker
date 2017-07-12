@@ -2,6 +2,7 @@ import datetime
 import logging
 from io import BytesIO
 
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
 from django.db.models.signals import post_delete
@@ -37,6 +38,9 @@ class RemoteApp(AbstractApp):
         :param app: A JSON app object from the repository v1 index.
         :return: True if app changed, False otherwise
         """
+        if 'lastUpdated' not in app:
+            logging.warning("App %s is missing 'lastUpdated' in index")
+            return False
 
         # don't update if app hasn't changed since last update
         last_update = datetime.datetime.fromtimestamp(app['lastUpdated'] / 1000, timezone.utc)
@@ -46,11 +50,14 @@ class RemoteApp(AbstractApp):
         else:
             self.last_updated_date = last_update
 
+        if 'name' not in app:
+            logging.warning("App %s is missing 'name' in index")
+            return False
         self.name = app['name']
-        if 'summary' in app:
-            self.summary = app['summary']
-        if 'description' in app:
-            self.description = clean(app['description'])
+        if 'summary' in app and not self._move_to_localized(app, 'summary'):
+            self.summary_override = app['summary']
+        if 'description' in app and not self._move_to_localized(app, 'description'):
+            self.description_override = clean(app['description'])
         if 'authorName' in app:
             self.author_name = app['authorName']
         if 'webSite' in app:
@@ -72,6 +79,24 @@ class RemoteApp(AbstractApp):
             self.default_translate()
             self.save()
         return True
+
+    @staticmethod
+    def _move_to_localized(app, key):
+        """
+        Moves :param key into JSON localized object if possible.
+        :param app: A JSON app object from the repository v1 index.
+        :return: True if key could be moved, False otherwise.
+        """
+        if 'localized' not in app:
+            app['localized'] = dict()
+        if settings.LANGUAGE_CODE not in app['localized']:
+            app['localized'][settings.LANGUAGE_CODE] = dict()
+        if key not in app['localized'][settings.LANGUAGE_CODE]:
+            # cleaning not required here, because it will be done when importing localized
+            app['localized'][settings.LANGUAGE_CODE][key] = app[key]
+            del app[key]
+            return True
+        return False
 
     def _update_icon(self, icon_name):
         url = self.repo.url + '/icons-640/' + icon_name
@@ -117,9 +142,9 @@ class RemoteApp(AbstractApp):
     def apply_translation(self, language_code, translation):
         # textual metadata
         if 'summary' in translation:
-            self.l_summary = translation['summary']
+            self.summary = translation['summary']
         if 'description' in translation:
-            self.l_description = clean(translation['description'])
+            self.description = clean(translation['description'])
         # graphic assets
         url = self._get_base_url(language_code)
         if 'featureGraphic' in translation:

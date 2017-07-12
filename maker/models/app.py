@@ -39,8 +39,8 @@ TYPE_CHOICES = (
 class AbstractApp(TranslatableModel):
     package_id = models.CharField(max_length=255, blank=True)
     name = models.CharField(max_length=255, blank=True)
-    summary = models.CharField(max_length=255, blank=True)
-    description = models.TextField(blank=True)  # always clean and then consider safe
+    summary_override = models.CharField(max_length=255, blank=True)
+    description_override = models.TextField(blank=True)  # always clean and then consider safe
     author_name = models.CharField(max_length=255, blank=True)
     website = models.URLField(max_length=2048, blank=True)
     icon = models.ImageField(upload_to=get_icon_file_path_for_app,
@@ -49,8 +49,8 @@ class AbstractApp(TranslatableModel):
     added_date = models.DateTimeField(default=timezone.now)
     translations = TranslatedFields(
         # for historic reasons summary and description are also included non-localized in the index
-        l_summary=models.CharField(max_length=255, blank=True, verbose_name=_("Summary")),
-        l_description=models.TextField(blank=True, verbose_name=_("Description")),
+        summary=models.CharField(max_length=255, blank=True),
+        description=models.TextField(blank=True),  # always clean and then consider safe
     )
 
     def __str__(self):
@@ -153,17 +153,18 @@ class App(AbstractApp):
         # TODO check how the icon extracted to repo/icons-640 could be used instead
         icon = ContentFile(app.icon.read())
         icon.name = os.path.basename(app.icon.name)
-        return App(repo=repo, package_id=app.package_id, name=app.name, summary=app.summary,
-                   description=clean(app.description), website=app.website, icon=icon,
-                   author_name=app.author_name)
+        return App(repo=repo, package_id=app.package_id, name=app.name,
+                   summary_override=app.summary_override,
+                   description_override=clean(app.description_override), website=app.website,
+                   icon=icon, author_name=app.author_name)
 
     def to_metadata_app(self):
         meta = metadata.App()
         meta.id = self.package_id
         meta.Name = self.name
         meta.WebSite = self.website
-        meta.Summary = self.summary
-        meta.Description = self.description
+        meta.Summary = self.summary_override
+        meta.Description = self.description_override
         meta.AuthorName = self.author_name
         meta.added = timezone.make_naive(self.added_date)
         meta.Categories = [category.name for category in self.category.all()]
@@ -176,10 +177,10 @@ class App(AbstractApp):
             if language_code not in localized:
                 localized[language_code] = dict()
             app = self.get_translation(language_code)
-            if app.l_summary:
-                localized[language_code]['summary'] = app.l_summary
-            if app.l_description:
-                localized[language_code]['description'] = app.l_description
+            if app.summary:
+                localized[language_code]['summary'] = app.summary
+            if app.description:
+                localized[language_code]['description'] = app.description
             if app.feature_graphic:
                 localized[language_code]['featureGraphic'] = os.path.basename(
                     app.feature_graphic.name)
@@ -217,8 +218,8 @@ class App(AbstractApp):
             remote_app = RemoteApp.objects.language(language_code).get(pk=remote_app.pk)
             # copy the translation to this App instance
             self.translate(language_code)
-            self.l_summary = remote_app.l_summary
-            self.l_description = clean(remote_app.l_description)
+            self.summary = remote_app.summary
+            self.description = clean(remote_app.description)
             self.save()
         # ensure that at least one translation exists
         if len(self.get_available_languages()) == 0:

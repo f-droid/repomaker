@@ -82,10 +82,10 @@
 		</div>
 		<div class="rm-app-summary-category">
 			{% block summary %}
-			{% if app.summary %}
-			<div class="rm-app-summary-override">{{ app.summary }}</div>
+			{% if app.summary_override %}
+			<div class="rm-app-summary-override">{{ app.summary_override }}</div>
 			{% endif %}
-			<div class="rm-app-summary">{{ app.l_summary }}</div>
+			<div class="rm-app-summary">{{ app.summary }}</div>
 			{% endblock summary %}
 			{% block categories %}
 			{% if app.category.exists %}
@@ -103,12 +103,12 @@
 <div class="rm-grid--center mdl-grid">
 	<div class="rm-app-description mdl-cell mdl-cell--6-col">
 		{% block description %}
-		{% if app.description %}
+		{% if app.description_override %}
 		<div class="rm-app-description-override">
-			{{ app.description|safe }}
+			{{ app.description_override|safe }}
 		</div>
 		{% endif %}
-		{{ app.l_description|safe }}
+		{{ app.description|safe }}
 		{% endblock description %}
 	</div>
 </div>

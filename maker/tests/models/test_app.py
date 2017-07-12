@@ -42,8 +42,8 @@ class AppTestCase(TestCase):
         content = {'name': 'app', 'summary': 'foo', 'description': 'bar', 'website': 'site',
                    'author_name': 'author'}
         remote_app.name = content['name']
-        remote_app.summary = content['summary']
-        remote_app.description = content['description']
+        remote_app.summary_override = content['summary']
+        remote_app.description_override = content['description']
         remote_app.website = content['website']
         remote_app.author_name = content['author_name']
 
@@ -52,8 +52,8 @@ class AppTestCase(TestCase):
 
         # assert app was updated properly
         self.assertEqual(content['name'], app.name)
-        self.assertEqual(content['summary'], app.summary)
-        self.assertEqual(content['description'], app.description)
+        self.assertEqual(content['summary'], app.summary_override)
+        self.assertEqual(content['description'], app.description_override)
         self.assertEqual(content['website'], app.website)
         self.assertEqual(content['author_name'], app.author_name)
         self.assertTrue(datetime_is_recent(app.added_date))
@@ -65,12 +65,12 @@ class AppTestCase(TestCase):
 
         # add two translations to RemoteApp
         remote_app.translate(settings.LANGUAGE_CODE)
-        remote_app.l_summary = 'dog'
-        remote_app.l_description = 'cat'
+        remote_app.summary = 'dog'
+        remote_app.description = 'cat'
         remote_app.save()
         remote_app.translate('de')
-        remote_app.l_summary = 'hund'
-        remote_app.l_description = 'katze'
+        remote_app.summary = 'hund'
+        remote_app.description = 'katze'
         remote_app.save()
 
         # copy the translations to the App
@@ -78,13 +78,13 @@ class AppTestCase(TestCase):
 
         # assert that English translation was copied
         app = App.objects.language(settings.LANGUAGE_CODE).get(pk=app.pk)
-        self.assertEqual('dog', app.l_summary)
-        self.assertEqual('cat', app.l_description)
+        self.assertEqual('dog', app.summary)
+        self.assertEqual('cat', app.description)
 
         # assert that German translation was copied
         app = App.objects.language('de').get(pk=app.pk)
-        self.assertEqual('hund', app.l_summary)
-        self.assertEqual('katze', app.l_description)
+        self.assertEqual('hund', app.summary)
+        self.assertEqual('katze', app.description)
 
     def test_copy_translations_from_remote_app_default_translation(self):
         # copy the non-existent translations to the App
@@ -97,14 +97,14 @@ class AppTestCase(TestCase):
     def test_copy_translations_sanitation(self):
         # add a malicious translation to RemoteApp
         self.remote_app.translate(settings.LANGUAGE_CODE)
-        self.remote_app.l_description = '<p>test<script>'
+        self.remote_app.description = '<p>test<script>'
         self.remote_app.save()
 
         # copy the translations to the App
         self.app.copy_translations_from_remote_app(self.remote_app)
 
         # assert that malicious content was removed
-        self.assertEqual('<p>test</p>', self.app.l_description)
+        self.assertEqual('<p>test</p>', self.app.description)
 
     @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
     def test_get_translations_dict(self):

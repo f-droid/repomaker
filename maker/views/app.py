@@ -85,9 +85,9 @@ class AppForm(TranslatableModelForm):
 
     class Meta:
         model = App
-        fields = ['l_summary', 'l_description', 'summary', 'description', 'author_name', 'website',
-                  'category', 'screenshots', 'feature_graphic', 'apks']
-        widgets = {'l_description': MDLTinyMCE(), 'description': MDLTinyMCE()}
+        fields = ['summary', 'summary_override', 'description', 'description_override',
+                  'author_name', 'website', 'category', 'screenshots', 'feature_graphic', 'apks']
+        widgets = {'description': MDLTinyMCE(), 'description_override': MDLTinyMCE()}
 
     class Media:
         js = ('maker/js/drag-and-drop.js',)

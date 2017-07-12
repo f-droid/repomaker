@@ -108,7 +108,7 @@ class AppScrollListView(ListView):
             apps_json = []
             for app in apps:
                 app_json = {'id': app.id, 'name': app.name, 'icon': app.icon.url,
-                            'summary': app.l_summary, 'description': app.l_description,
+                            'summary': app.summary, 'description': app.description,
                             'lang': app.language_code}
 
                 app_latest_version = app.get_latest_version()

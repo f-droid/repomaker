@@ -320,8 +320,9 @@ class RepositoryTestCase(TestCase):
         # add an app with APK
         apk_hash = '64021f6d632eb5ba55bdeb5c4a78ed612bd3facc25d9a8a5d1c9d5d7a6bcc047'
         app = App.objects.create(repo=repo, package_id='org.bitbucket.tickytacky.mirrormirror',
-                                 name='TestApp', summary='TestSummary', description='TestDesc',
-                                 website='TestSite', author_name='author', type=APK)
+                                 name='TestApp', summary_override='TestSummary',
+                                 description_override='TestDesc', website='TestSite',
+                                 author_name='author', type=APK)
         apk = Apk.objects.create(package_id='org.bitbucket.tickytacky.mirrormirror', version_code=2,
                                  hash=apk_hash)
         file_path = os.path.join(TEST_FILES_DIR, 'test_1.apk')
@@ -333,6 +334,8 @@ class RepositoryTestCase(TestCase):
         # add localized graphic assets
         app.translate('de')
         app.save()  # needs to be saved for ForeignKey App to be available when saving file
+        app.summary = 'Zusammenfassung'
+        app.description = 'Beschreibung'
         app.feature_graphic.save('feature.png', io.BytesIO(b'foo'), save=False)
         app.high_res_icon.save('icon.png', io.BytesIO(b'foo'), save=False)
         app.tv_banner.save('tv.png', io.BytesIO(b'foo'), save=False)
@@ -383,8 +386,8 @@ class RepositoryTestCase(TestCase):
         remote_app = remote_apps[0]
         self.assertEqual(app.name, remote_app.name)
         self.assertEqual(app.package_id, remote_app.package_id)
-        self.assertEqual(app.summary, remote_app.summary)
-        self.assertEqual('<p>'+app.description+'</p>', remote_app.description)
+        self.assertEqual(app.summary_override, remote_app.summary)
+        self.assertEqual('<p>'+app.description_override+'</p>', remote_app.description)
         self.assertEqual(app.website, remote_app.website)
         self.assertEqual(app.author_name, remote_app.author_name)
         self.assertTrue(remote_app.icon)
@@ -411,9 +414,11 @@ class RepositoryTestCase(TestCase):
         self.assertEqual(remote_app2, remote_apk_pointer2.app)
         self.assertEqual(apk2, remote_apk_pointer2.apk)
 
-        # assert that all graphic assets are pointing to right location
+        # assert that all localized metadata exists & graphic assets are pointing to right location
         self.assertTrue('de' in remote_app.get_available_languages())
         remote_app = RemoteApp.objects.language('de').get(pk=remote_app.pk)
+        self.assertEqual(app.summary, remote_app.summary)
+        self.assertEqual(app.description, remote_app.description)
         url = 'test_url/org.bitbucket.tickytacky.mirrormirror/de/'
         self.assertEqual(url + 'feature.png', remote_app.feature_graphic_url)
         self.assertEqual(url + 'icon.png', remote_app.high_res_icon_url)
@@ -473,13 +478,13 @@ class RepositoryPageTestCase(TestCase):
         # add two apps in two different languages
         app1 = App.objects.create(repo=repo, package_id='first', name='TestApp')
         app1.translate('es')
-        app1.l_summary = 'TestSummary'
-        app1.l_description = 'TestDesc'
+        app1.summary = 'TestSummary'
+        app1.description = 'TestDesc'
         app1.save()
         app2 = App.objects.create(repo=repo, package_id='second', name='AnotherTestApp')
         app2.translate('de')
-        app2.l_summary = 'AnotherTestSummary'
-        app2.l_description = 'AnotherTestDesc'
+        app2.summary = 'AnotherTestSummary'
+        app2.description = 'AnotherTestDesc'
         app2.save()
 
         repo._generate_page()  # pylint: disable=protected-access
@@ -495,11 +500,11 @@ class RepositoryPageTestCase(TestCase):
         with open(page_abs_path, 'r') as repo_page:
             repo_page_string = repo_page.read()
             self.assertTrue(app1.name in repo_page_string)
-            self.assertTrue(app1.l_summary in repo_page_string)
-            self.assertTrue(app1.l_description in repo_page_string)
+            self.assertTrue(app1.summary in repo_page_string)
+            self.assertTrue(app1.description in repo_page_string)
             self.assertTrue(app2.name in repo_page_string)
-            self.assertTrue(app2.l_summary in repo_page_string)
-            self.assertTrue(app2.l_description in repo_page_string)
+            self.assertTrue(app2.summary in repo_page_string)
+            self.assertTrue(app2.description in repo_page_string)
 
         # assert that the repo homepage's stylesheet has been created
         style_abs_path = os.path.join(settings.STATIC_ROOT, 'maker', 'css', 'repo', 'page.css')
