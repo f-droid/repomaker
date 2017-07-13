@@ -5,12 +5,13 @@ from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.db.utils import OperationalError
 from django.forms import TextInput, ModelForm
 from django.http import HttpResponseForbidden, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils import formats
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import ListView
+from django.views.generic import TemplateView, ListView
 from django.views.static import serve
 
 from maker import DEFAULT_USER_NAME
@@ -131,6 +132,21 @@ class AppScrollListView(ListView):
         raise NotImplementedError()
 
 
+class DatabaseLockedView(TemplateView):
+    request = None
+    template_name = 'maker/db_locked.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.get(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context, status=408)
+
+
 class RmLoginForm(LoginForm):
 
     def __init__(self, *args, **kwargs):
@@ -201,7 +217,12 @@ class LoginOrSingleUserRequiredMixin(LoginRequiredMixin):
         if settings.SINGLE_USER_MODE and not request.user.is_authenticated:
             user = User.objects.get(username=DEFAULT_USER_NAME)
             login(request, user)
-        return super().dispatch(request, *args, **kwargs)
+        try:
+            return super().dispatch(request, *args, **kwargs)
+        except OperationalError as e:
+            if str(e) == 'database is locked':
+                return DatabaseLockedView().dispatch(request, *args, **kwargs)
+            raise e
 
 
 class LanguageMixin:
