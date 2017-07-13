@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from maker import tasks
 from maker.storage import get_screenshot_file_path, RepoStorage
+from maker.utils import to_universal_language_code
 from .app import App
 from .remoteapp import RemoteApp
 
@@ -51,7 +52,8 @@ class Screenshot(AbstractScreenshot):
         return super(Screenshot, self).__str__() + " " + self.file.name
 
     def get_relative_path(self):
-        return os.path.join(self.app.package_id, self.language_code, self.type)
+        language_code = to_universal_language_code(self.language_code)
+        return os.path.join(self.app.package_id, language_code, self.type)
 
     def get_url(self):
         return self.file.url
@@ -68,7 +70,7 @@ class RemoteScreenshot(AbstractScreenshot):
         return self.url
 
     @staticmethod
-    def add(locale, s_type, app, base_url, files):
+    def add(language_code, s_type, app, base_url, files):
         """
         Creates and saves one or more new RemoteScreenshots if the given s_type is supported.
         """
@@ -76,9 +78,10 @@ class RemoteScreenshot(AbstractScreenshot):
             return
         for file in files:
             url = base_url + file
-            if not RemoteScreenshot.objects.filter(language_code=locale, type=s_type, app=app,
-                                                   url=url).exists():
-                screenshot = RemoteScreenshot(language_code=locale, type=s_type, app=app, url=url)
+            if not RemoteScreenshot.objects.filter(language_code=language_code, type=s_type,
+                                                   app=app, url=url).exists():
+                screenshot = RemoteScreenshot(language_code=language_code, type=s_type, app=app,
+                                              url=url)
                 screenshot.save()
 
     def download_async(self, app):

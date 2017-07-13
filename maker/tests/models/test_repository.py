@@ -336,10 +336,21 @@ class RepositoryTestCase(TestCase):
         app.save()  # needs to be saved for ForeignKey App to be available when saving file
         app.summary = 'Zusammenfassung'
         app.description = 'Beschreibung'
-        app.feature_graphic.save('feature.png', io.BytesIO(b'foo'), save=False)
+        app.feature_graphic.save('feature-de.png', io.BytesIO(b'foo'), save=False)
         app.high_res_icon.save('icon.png', io.BytesIO(b'foo'), save=False)
         app.tv_banner.save('tv.png', io.BytesIO(b'foo'), save=False)
         app.save()
+
+        # add second translations
+        app.translate('en-us')
+        app.summary = 'Test Summary'
+        app.description = 'Test Description'
+        app.save()
+        app.feature_graphic.save('feature-en-us.png', io.BytesIO(b'foo'), save=True)
+        self.assertTrue(app.feature_graphic.name.endswith('/en-US/feature-en-us.png'))
+
+        # assert there's only two available languages
+        self.assertEqual({'de', 'en-us'}, set(app.get_available_languages()))
 
         # add non-apk app
         apk_hash = '5ec4b30df6a98cc58628e763f35a560e1b333712f1d1f3c9f95f8a1ece54b254'
@@ -386,16 +397,19 @@ class RepositoryTestCase(TestCase):
         remote_app = remote_apps[0]
         self.assertEqual(app.name, remote_app.name)
         self.assertEqual(app.package_id, remote_app.package_id)
-        self.assertEqual(app.summary_override, remote_app.summary)
-        self.assertEqual('<p>'+app.description_override+'</p>', remote_app.description)
+        self.assertEqual('', remote_app.summary_override)
+        self.assertEqual('', remote_app.description_override)
         self.assertEqual(app.website, remote_app.website)
         self.assertEqual(app.author_name, remote_app.author_name)
         self.assertTrue(remote_app.icon)
+        self.assertEqual({settings.LANGUAGE_CODE, 'de', 'en-us'},
+                         set(remote_app.get_available_languages()))
         # non-apk app
         remote_app2 = remote_apps[1]
         self.assertEqual(app2.name, remote_app2.name)
         self.assertEqual(app2.package_id, remote_app2.package_id)
-        self.assertTrue(remote_app.icon)
+        self.assertTrue(remote_app2.icon)
+        self.assertEqual({settings.LANGUAGE_CODE}, set(remote_app2.get_available_languages()))
 
         # assert that the existing Apks got re-used (based on package_id and hash)
         apks = Apk.objects.all()
@@ -415,14 +429,25 @@ class RepositoryTestCase(TestCase):
         self.assertEqual(apk2, remote_apk_pointer2.apk)
 
         # assert that all localized metadata exists & graphic assets are pointing to right location
-        self.assertTrue('de' in remote_app.get_available_languages())
         remote_app = RemoteApp.objects.language('de').get(pk=remote_app.pk)
-        self.assertEqual(app.summary, remote_app.summary)
-        self.assertEqual(app.description, remote_app.description)
+        self.assertEqual('Zusammenfassung', remote_app.summary)
+        self.assertEqual('Beschreibung', remote_app.description)
         url = 'test_url/org.bitbucket.tickytacky.mirrormirror/de/'
-        self.assertEqual(url + 'feature.png', remote_app.feature_graphic_url)
+        self.assertEqual(url + 'feature-de.png', remote_app.feature_graphic_url)
         self.assertEqual(url + 'icon.png', remote_app.high_res_icon_url)
         self.assertEqual(url + 'tv.png', remote_app.tv_banner_url)
+
+        # assert second translation got saved properly
+        remote_app = RemoteApp.objects.language('en-us').get(pk=remote_app.pk)
+        self.assertEqual('Test Summary', remote_app.summary)
+        self.assertEqual('Test Description', remote_app.description)
+        url = 'test_url/org.bitbucket.tickytacky.mirrormirror/en-US/'
+        self.assertEqual(url + 'feature-en-us.png', remote_app.feature_graphic_url)
+
+        # assert that overrides were moved to default language
+        remote_app = RemoteApp.objects.language(settings.LANGUAGE_CODE).get(pk=remote_app.pk)
+        self.assertEqual('TestSummary', remote_app.summary)
+        self.assertEqual('<p>TestDesc</p>', remote_app.description)
 
     def test_delete(self):
         # Check that repo exists

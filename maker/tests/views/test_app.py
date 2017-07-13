@@ -256,6 +256,13 @@ class AppViewTestCase(TestCase):
                          response.context['form'].errors['lang'])
         self.assertContains(response, response.context['form'].errors['lang'])
 
+    def test_add_lang_converted_to_lower_case(self):
+        kwargs = {'repo_id': self.repo.pk, 'app_id': self.app.pk}
+        response = self.client.post(reverse('app_add_lang', kwargs=kwargs), {'lang': 'de-DE'})
+        kwargs['lang'] = 'de-de'
+        self.assertRedirects(response, reverse('app', kwargs=kwargs))
+        self.assertEqual({settings.LANGUAGE_CODE, 'de-de'}, set(self.app.get_available_languages()))
+
     def translate_to_de(self):
         self.app.translate('de')
         self.app.summary = 'Test-Zusammenfassung'

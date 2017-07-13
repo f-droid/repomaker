@@ -4,6 +4,8 @@ import re
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
+from maker.utils import to_universal_language_code
+
 REPO_DIR = 'repo'
 
 USER_RE = re.compile('^user_([0-9]+)$')
@@ -38,7 +40,8 @@ def get_apk_file_path(apk, filename):
 
 def get_graphic_asset_file_path(app_translation, filename):
     app = app_translation.master
-    path = os.path.join(get_repo_path(app.repo), app.package_id, app_translation.language_code)
+    language_code = to_universal_language_code(app_translation.language_code)
+    path = os.path.join(get_repo_path(app.repo), app.package_id, language_code)
     return os.path.join(path, filename)
 
 

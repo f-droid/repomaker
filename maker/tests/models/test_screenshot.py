@@ -27,7 +27,7 @@ class ScreenshotTestCase(TestCase):
         self.user = User.objects.create(username='user2')
         self.repo = Repository.objects.create(user=self.user)
         self.app = App.objects.create(repo=self.repo, name='TestApp', package_id='org.example')
-        self.screenshot = Screenshot.objects.create(app=self.app)
+        self.screenshot = Screenshot.objects.create(app=self.app, language_code='en-us')
 
     def tearDown(self):
         if os.path.isdir(TEST_DIR):
@@ -39,7 +39,7 @@ class ScreenshotTestCase(TestCase):
         self.assertTrue(self.screenshot.language_code in str(self.screenshot))
 
     def test_get_relative_path(self):
-        self.assertEqual('org.example/en/phoneScreenshots', self.screenshot.get_relative_path())
+        self.assertEqual('org.example/en-US/phoneScreenshots', self.screenshot.get_relative_path())
 
     @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
     def test_file(self):
@@ -48,7 +48,7 @@ class ScreenshotTestCase(TestCase):
 
     def test_get_url(self):
         self.test_file()  # needs to save a file first, because getting URL that includes file
-        self.assertEqual('/media/user_2/repo_1/repo/org.example/en/phoneScreenshots/test.png',
+        self.assertEqual('/media/user_2/repo_1/repo/org.example/en-US/phoneScreenshots/test.png',
                          self.screenshot.get_url())
 
     def test_types(self):

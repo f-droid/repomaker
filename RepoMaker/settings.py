@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 import logging
 import os
 
+from django.utils.translation import ugettext_lazy
+from django.conf import global_settings
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -181,6 +184,7 @@ MAX_ATTEMPTS = 23  # the number of attempts for marking a task as permanently fa
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 
 LANGUAGE_CODE = 'en'
+LANGUAGES = [('en-us', ugettext_lazy('American English'))] + global_settings.LANGUAGES
 
 TIME_ZONE = 'UTC'
 

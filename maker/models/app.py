@@ -14,7 +14,7 @@ from hvad.models import TranslatableModel, TranslatedFields
 from hvad.utils import load_translation
 
 from maker.storage import get_icon_file_path_for_app, get_graphic_asset_file_path
-from maker.utils import clean
+from maker.utils import clean, to_universal_language_code
 from .category import Category
 from .repository import Repository
 
@@ -173,10 +173,12 @@ class App(AbstractApp):
         return meta
 
     def _add_translations_to_localized(self, localized):
-        for language_code in self.get_available_languages():
+        for original_language_code in self.get_available_languages():
+            # upper-case region part of language code for compatibility
+            language_code = to_universal_language_code(original_language_code)
             if language_code not in localized:
                 localized[language_code] = dict()
-            app = self.get_translation(language_code)
+            app = self.get_translation(original_language_code)
             if app.summary:
                 localized[language_code]['summary'] = app.summary
             if app.description:
@@ -197,11 +199,13 @@ class App(AbstractApp):
         localized = dict()
         screenshots = Screenshot.objects.filter(app=self).all()
         for s in screenshots:
-            if s.language_code not in localized:
-                localized[s.language_code] = dict()
-            if s.type not in localized[s.language_code]:
-                localized[s.language_code][s.type] = []
-            localized[s.language_code][s.type].append(os.path.basename(s.file.name))
+            # upper-case region part of language code for compatibility
+            language_code = to_universal_language_code(s.language_code)
+            if language_code not in localized:
+                localized[language_code] = dict()
+            if s.type not in localized[language_code]:
+                localized[language_code][s.type] = []
+            localized[language_code][s.type].append(os.path.basename(s.file.name))
         return localized
 
     # pylint: disable=attribute-defined-outside-init

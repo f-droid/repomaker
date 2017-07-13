@@ -29,3 +29,17 @@ def clean(text):
         filters=[EmptyLinkFilter],
     )
     return cleaner.clean(text)
+
+
+def to_universal_language_code(language):
+    """
+    Turns a lower-cased Django language name (en-us) into a universal language code
+    with the region part upper-cased (en-US).
+    """
+    p = language.find('-')
+    if p >= 0:
+        if len(language[p + 1:]) > 2:
+            return language[:p].lower() + '-' + language[p + 1].upper() + language[p + 2:].lower()
+        return language[:p].lower() + '-' + language[p + 1:].upper()
+    else:
+        return language

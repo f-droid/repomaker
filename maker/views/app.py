@@ -163,7 +163,7 @@ class AppTranslationCreateForm(AppForm):
                                         widget=DataListTextInput(settings.LANGUAGES))
 
     def clean_lang(self):
-        lang = self.cleaned_data['lang']
+        lang = self.cleaned_data['lang'].lower()
         if not re.match(language_code_re, lang):
             self._errors['lang'] = _('This is not a valid language code.')
         if lang in self.instance.get_available_languages():

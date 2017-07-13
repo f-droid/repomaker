@@ -125,28 +125,30 @@ class RemoteApp(AbstractApp):
         # TODO also support 'name, 'whatsNew' and 'video'
         supported_fields = ['summary', 'description', 'featureGraphic', 'icon', 'tvBanner']
         available_languages = self.get_available_languages()
-        for language_code, translation in localized.items():
+        for original_language_code, translation in localized.items():
             if set(supported_fields).isdisjoint(translation.keys()):
                 continue  # no supported fields in translation
+            # store language code in lower-case, because in Django they are all lower-case as well
+            language_code = original_language_code.lower()
             # TODO not only add, but also remove old translations again
             if language_code in available_languages:
                 # we need to retrieve the existing translation
                 app = RemoteApp.objects.language(language_code).get(pk=self.pk)
-                app.apply_translation(language_code, translation)
+                app.apply_translation(original_language_code, translation)
             else:
                 # create a new translation
                 self.translate(language_code)
-                self.apply_translation(language_code, translation)
+                self.apply_translation(original_language_code, translation)
 
     # pylint: disable=attribute-defined-outside-init
-    def apply_translation(self, language_code, translation):
+    def apply_translation(self, original_language_code, translation):
         # textual metadata
         if 'summary' in translation:
             self.summary = translation['summary']
         if 'description' in translation:
             self.description = clean(translation['description'])
         # graphic assets
-        url = self._get_base_url(language_code)
+        url = self._get_base_url(original_language_code)
         if 'featureGraphic' in translation:
             self.feature_graphic_url = url + translation['featureGraphic']
         if 'icon' in translation:
@@ -157,11 +159,14 @@ class RemoteApp(AbstractApp):
 
     def _update_screenshots(self, localized):
         from maker.models import RemoteScreenshot
-        for locale, types in localized.items():
+        for original_language_code, types in localized.items():
+            # store language code in lower-case, because in Django they are all lower-case as well
+            language_code = original_language_code.lower()
             for t, files in types.items():
-                type_url = self._get_base_url(locale, t)
+                type_url = self._get_base_url(original_language_code, t)
                 # TODO not only add, but also remove old screenshots again
-                RemoteScreenshot.add(locale, t, self, type_url, files)
+                # add screenshot (ignores unsupported types such as summary)
+                RemoteScreenshot.add(language_code, t, self, type_url, files)
 
     def _get_base_url(self, locale, asset_type=None):
         """

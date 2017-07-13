@@ -6,9 +6,11 @@ from unittest.mock import patch
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.files.base import ContentFile
 from django.test import TestCase, override_settings
 
-from maker.models import Repository, RemoteRepository, App, RemoteApp
+from maker.models import Repository, RemoteRepository, App, RemoteApp, Screenshot
+from maker.models.screenshot import PHONE
 from .. import TEST_DIR, TEST_MEDIA_DIR, datetime_is_recent
 
 
@@ -64,7 +66,7 @@ class AppTestCase(TestCase):
         remote_app = self.remote_app
 
         # add two translations to RemoteApp
-        remote_app.translate(settings.LANGUAGE_CODE)
+        remote_app.translate('en-us')
         remote_app.summary = 'dog'
         remote_app.description = 'cat'
         remote_app.save()
@@ -77,7 +79,7 @@ class AppTestCase(TestCase):
         app.copy_translations_from_remote_app(remote_app)
 
         # assert that English translation was copied
-        app = App.objects.language(settings.LANGUAGE_CODE).get(pk=app.pk)
+        app = App.objects.language('en-us').get(pk=app.pk)
         self.assertEqual('dog', app.summary)
         self.assertEqual('cat', app.description)
 
@@ -107,10 +109,26 @@ class AppTestCase(TestCase):
         self.assertEqual('<p>test</p>', self.app.description)
 
     @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
-    def test_get_translations_dict(self):
+    def test_get_screenshot_dict(self):
+        # create two screenshots
+        Screenshot.objects.create(type=PHONE, language_code='en-us', app=self.app,
+                                  file=ContentFile(b'foo', name='test1.png'))
+        Screenshot.objects.create(type=PHONE, language_code='de', app=self.app,
+                                  file=ContentFile(b'foo', name='test2.png'))
+
+        localized = self.app._get_screenshot_dict()  # pylint: disable=protected-access
+
+        # ensure that localized dict gets created properly,
+        self.assertEqual(
+            {'en-US': {PHONE: ['test1.png']},  # region part of language code should be upper-case
+             'de': {PHONE: ['test2.png']}
+             }, localized)
+
+    @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
+    def test_add_translations_to_localized(self):
         # load two translations from other test
         self.test_copy_translations_from_remote_app()
-        self.assertEqual({settings.LANGUAGE_CODE, 'de'}, set(self.app.get_available_languages()))
+        self.assertEqual({'en-us', 'de'}, set(self.app.get_available_languages()))
 
         # add also graphic assets
         app = App.objects.language('de').get(pk=self.app.pk)
@@ -120,13 +138,13 @@ class AppTestCase(TestCase):
         app.save()
 
         # get localized dict
-        localized = {'en': {'otherKey': 'test'}}
+        localized = {'en-US': {'otherKey': 'test'}}
         app._add_translations_to_localized(localized)  # pylint: disable=protected-access
 
         # assert that dict was created properly
-        self.assertEqual({settings.LANGUAGE_CODE, 'de'}, set(localized.keys()))
-        self.assertEqual('dog', localized['en']['summary'])
-        self.assertEqual('cat', localized['en']['description'])
+        self.assertEqual({'en-US', 'de'}, set(localized.keys()))
+        self.assertEqual('dog', localized['en-US']['summary'])
+        self.assertEqual('cat', localized['en-US']['description'])
         self.assertEqual('hund', localized['de']['summary'])
         self.assertEqual('katze', localized['de']['description'])
 
@@ -136,9 +154,9 @@ class AppTestCase(TestCase):
         self.assertEqual('tv.png', localized['de']['tvBanner'])
 
         # assert that existing content is not deleted
-        self.assertEqual('test', localized['en']['otherKey'])
+        self.assertEqual('test', localized['en-US']['otherKey'])
 
-    def test_get_translations_dict_not_empty(self):
+    def test_add_translations_to_localized_not_empty(self):
         # get localized dict
         localized = {}
         self.app._add_translations_to_localized(localized)  # pylint: disable=protected-access

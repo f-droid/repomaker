@@ -11,6 +11,7 @@ from django.test import TestCase, override_settings
 
 from maker.models import Repository, RemoteRepository, App, RemoteApp, Apk, ApkPointer, \
     RemoteApkPointer, RemoteScreenshot
+from maker.models.screenshot import PHONE
 from maker.storage import get_icon_file_path_for_app
 from .. import TEST_DIR, TEST_MEDIA_DIR, datetime_is_recent
 
@@ -125,6 +126,19 @@ class RemoteAppTestCase(TestCase):
         self.assertEqual(localized['en']['summary'], app.summary)
         self.assertEqual(localized['en']['description'], app.description)
 
+    def test_update_translations_lowercase_language_code(self):
+        # update remote app translation with a new one
+        localized = {'en-US': {'summary': 'foo', 'description': 'bar', 'featureGraphic': 'test'}}
+        self.app._update_translations(localized)  # pylint: disable=protected-access
+
+        # assert that translation has been saved with an all lower-case language code
+        app = RemoteApp.objects.language('en-us').get(pk=self.app.pk)
+        self.assertEqual(localized['en-US']['summary'], app.summary)
+        self.assertEqual(localized['en-US']['description'], app.description)
+
+        # assert that language_code in URL was not changed
+        self.assertEqual('http://repo_url/org.example/en-US/test', app.feature_graphic_url)
+
     def test_apply_translation(self):
         # apply new translation
         translation = {'summary': 'test1', 'description': 'test2', 'featureGraphic': 'feature.png',
@@ -149,6 +163,44 @@ class RemoteAppTestCase(TestCase):
         # assert that translation has no <script> tag
         self.assertEqual(translation['summary'], self.app.summary)
         self.assertEqual('test2', self.app.description)
+
+    def test_update_screenshots(self):
+        self.assertEqual(0, RemoteScreenshot.objects.all().count())
+
+        # update remote app screenshots with two new ones
+        localized = {'en': {'summary': 'foo', PHONE: ['test1', 'test2']}}
+        self.app._update_screenshots(localized)  # pylint: disable=protected-access
+
+        # assert that all screenshots have been saved properly
+        screenshots = RemoteScreenshot.objects.all()
+        self.assertEqual(2, screenshots.count())
+        self.assertEqual(PHONE, screenshots[0].type)
+        self.assertEqual(PHONE, screenshots[1].type)
+        self.assertEqual('en', screenshots[0].language_code)
+        self.assertEqual('en', screenshots[1].language_code)
+        self.assertEqual(self.app, screenshots[0].app)
+        self.assertEqual(self.app, screenshots[1].app)
+        self.assertEqual('http://repo_url/org.example/en/phoneScreenshots/test1',
+                         screenshots[0].url)
+        self.assertEqual('http://repo_url/org.example/en/phoneScreenshots/test2',
+                         screenshots[1].url)
+
+    def test_update_screenshots_lowercase_language_code(self):
+        # update remote app screenshots with two new ones
+        localized = {'en-US': {'summary': 'foo', PHONE: ['test1', 'test2']}}
+        self.app._update_screenshots(localized)  # pylint: disable=protected-access
+
+        # assert that all screenshots have been saved properly
+        screenshots = RemoteScreenshot.objects.all()
+        self.assertEqual(2, screenshots.count())
+        # language code saved in lower-case
+        self.assertEqual('en-us', screenshots[0].language_code)
+        self.assertEqual('en-us', screenshots[1].language_code)
+        # language code in URL left unchanged
+        self.assertEqual('http://repo_url/org.example/en-US/phoneScreenshots/test1',
+                         screenshots[0].url)
+        self.assertEqual('http://repo_url/org.example/en-US/phoneScreenshots/test2',
+                         screenshots[1].url)
 
     @patch('maker.tasks.download_remote_screenshot')
     @patch('maker.tasks.download_remote_graphic_assets')
