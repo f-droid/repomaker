@@ -3,40 +3,41 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2017-07-18 12:55+0000\n"
+"Last-Translator: monolifed <monolifed@gmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/f-droid"
+"/repomaker-javascript/tr/>\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2.16-dev\n"
 
 #, javascript-format
 msgid "%s app added"
 msgid_plural "%s apps added"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s uygulama eklendi"
+msgstr[1] "%s uygulama eklendi"
 
 msgid "Add"
-msgstr ""
+msgstr "Ekle"
 
 msgid "You can only upload images here."
-msgstr ""
+msgstr "Burada sadece resim yükleyebilirsiniz."
 
 #, javascript-format
 msgid "Uploading %s file..."
 msgid_plural "Uploading %s files..."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s dosya karşıya yükleniyor..."
+msgstr[1] "%s dosya karşıya yükleniyor..."
 
 msgid "Try to drag and drop again!"
-msgstr ""
+msgstr "Tekrar sürükle ve bırakı deneyin!"
 
 msgid "Added"
-msgstr ""
+msgstr "Eklendi"

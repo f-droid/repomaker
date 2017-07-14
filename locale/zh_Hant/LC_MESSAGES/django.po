@@ -7,9 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-07-13 09:59+0000\n"
+"PO-Revision-Date: 2017-07-21 12:20+0000\n"
 "Last-Translator: ezjerry liao <ezjerry@gmail.com>\n"
-"Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/f-droid/repomaker/zh_Hant/>\n"
+"Language-Team: Chinese (Traditional) "
+"<https://hosted.weblate.org/projects/f-droid/repomaker/zh_Hant/>\n"
 "Language: zh_Hant\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,7 +20,7 @@ msgstr ""
 
 #, python-format
 msgid "This file is not an update for %s"
-msgstr ""
+msgstr "此檔案不是 %s 的更新"
 
 msgid "This APK already exists in the current repo."
 msgstr "此 APK 已經存在於目前的軟倉庫。"
@@ -557,6 +558,8 @@ msgstr "容易，免費，需要一個帳戶"
 
 msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
 msgstr ""
+"Git 是一款受好評的版本控制工具。您可以安全地將軟體倉庫發佈到 GitLab、GitHub 或任何其它的 Git 服務。Git 服務使用 SSH "
+"安全的將檔案從您的電腦複製至遠端電腦。"
 
 msgid "Setup"
 msgstr "設置"
@@ -575,6 +578,8 @@ msgstr "需要個人 Web 伺服器或支援 SSH 的主機"
 
 msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
 msgstr ""
+"SSH 是一種可用於將檔案安全地複製到遠端電腦的技術。當使用 Git 作為存儲時，這些檔案也將透過 SSH 進行複制。但是 SSH "
+"選項可以直接複製檔案，而無需使用任何其它技術。"
 
 msgid "Amazon S3"
 msgstr "Amazon S3"
@@ -585,13 +590,12 @@ msgstr "需要 Amazon 帳號，價格各有不同"
 msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
 msgstr "Amazon S3 是 Amazon 網路服務所提供的 Web 服務。Amazon S3 透過 Web 服務介面提供存儲。有多種訂價，相關詳細資訊，請造訪 Amazon S3 網站。"
 
-#, fuzzy, python-format
-#| msgid "Version %(version)s (%(code)s)"
+#, python-format
 msgid "Version %(version)s (%(date)s)"
-msgstr "版本 %(version)s (%(code)s)"
+msgstr "版本 %(version)s (%(date)s)"
 
 msgid "Added"
-msgstr "已增加"
+msgstr "已加入"
 
 msgid "Enter email"
 msgstr "輸入電子郵件"
@@ -624,7 +628,7 @@ msgid "Repository URL"
 msgstr "軟體倉庫網址"
 
 msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
-msgstr ""
+msgstr "請在最後使用帶指紋的網址，以便我們可以驗證軟體倉庫的真實性。"
 
 msgid "Please don't add one of your own repositories here."
 msgstr "請不要在這裡增加一個您自己的軟體倉庫。"
