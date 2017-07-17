@@ -159,6 +159,29 @@ class ApkPointerTestCase(TestCase):
 
         self.assertEqual(file_path, self.apk_pointer.file.path)
 
+    def test_delete_app_icons_from_repo(self):
+        self.apk.initialize(self.repo)
+
+        # get App and assert that icon exists
+        app = App.objects.all().get()
+        icon_path = app.icon.path
+        self.assertTrue(os.path.isfile(icon_path))
+
+        # get ApkPointer and delete app icons from repo
+        apk_pointer = ApkPointer.objects.filter(app=app).get()
+        apk_pointer.delete_app_icons_from_repo()
+
+        # assert that the icon was not deleted, because it is used by the app
+        self.assertTrue(os.path.isfile(icon_path))
+
+        # give the app another icon
+        app.icon.save('new-icon.png', BytesIO(b'foo'), save=True)
+
+        # delete the app icons again and assert that the unused icon got deleted now
+        apk_pointer = ApkPointer.objects.filter(app=app).get()
+        apk_pointer.delete_app_icons_from_repo()
+        self.assertFalse(os.path.isfile(icon_path))
+
 
 class RemoteApkPointerTestCase(TestCase):
 
