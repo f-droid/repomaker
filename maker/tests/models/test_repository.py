@@ -208,7 +208,7 @@ class RepositoryTestCase(TestCase):
         self.assertTrue(os.path.isfile(style_abs_path))
 
         # assert that the Roboto fonts has been copied
-        font_path = os.path.join(repo_page_assets, 'roboto-fonts', 'Roboto')
+        font_path = os.path.join(repo_page_assets, 'roboto-fonts', 'roboto')
         self.assertTrue(os.path.isdir(font_path))
         self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Bold.woff2')))
         self.assertTrue(os.path.isfile(os.path.join(font_path, 'Roboto-Medium.woff2')))

@@ -217,14 +217,14 @@ class Repository(AbstractRepository):
         ]
 
         # Ensure Roboto fonts path exists
-        roboto_font_path = os.path.join(repo_page_assets, 'roboto-fonts', 'Roboto')
+        roboto_font_path = os.path.join(repo_page_assets, 'roboto-fonts', 'roboto')
         if not os.path.exists(roboto_font_path):
             os.makedirs(roboto_font_path)
 
         # Add the three needed fonts from Roboto to files
         roboto_fonts = ['Roboto-Bold.woff2', 'Roboto-Medium.woff2', 'Roboto-Regular.woff2']
         for font in roboto_fonts:
-            source = os.path.join(settings.NODE_MODULES_ROOT, 'roboto-fontface', 'fonts', 'Roboto',
+            source = os.path.join(settings.NODE_MODULES_ROOT, 'roboto-fontface', 'fonts', 'roboto',
                                   font)
             target = os.path.join(roboto_font_path, font)
             files.append((source, target))
