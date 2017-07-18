@@ -131,13 +131,34 @@
 <div class="rm-grid--center mdl-grid">
 	<div class="rm-app-feature-graphic mdl-cell mdl-cell--8-col">
 		<h4 class="rm-app-section">{% trans 'Feature Graphic' %}</h4>
+
+		<div id="rm-dnd-holder--feature-graphic" class="rm-app-screenshot-drop rm-form">
+			<i class="rm-app-screenshot-drop-icon">file_upload</i>
+			<div class="rm-app-screenshot-drop-title">{% trans 'Add files' %}</div>
+			<div class="rm-app-screenshot-drop-description-first">
+				<span class="rm-dng-text" hidden>{% trans 'Drag and drop a feature graphic' %}</span>
+			</div>
+			<div class="rm-app-screenshot-drop-description-second">
+				<span class="rm-dng-text" hidden>{% trans 'or' %}</span>
+				<label for="id_feature_graphic" class="rm-app-screenshot-drop-upload-browse">{% trans 'browse to upload' %}</label>
+				<input type="file" name="feature_graphic" id="id_feature_graphic">
+			</div>
+			{{ form.feature_graphic.errors }}
+		</div>
+		<div id="rm-dnd-holder--feature-graphic--loading" class="rm-app-screenshot-drop--loading" hidden>
+			<div class="rm-dnd-progress mdl-js-progress"></div>
+			<h3 id="rm-dnd-holder--feature-graphic--loading-title" class="rm-app-screenshot-drop--loading-title"></h3>
+		</div>
+
 		{% if app.feature_graphic %}
 		<img src="{{ app.feature_graphic.url }}"/>
+		<!-- TODO AJAX: post form with feature_graphic-clear=true -->
+		<a onclick="alert('todo')">
+			<button type="button" class="mdl-button mdl-js-button rm-button--red">
+				<i class="material-icons">delete</i>
+			</button>
+		</a>
 		{% endif %}
-		<!-- TODO -->
-		<div>
-			{{ form.feature_graphic }}
-		</div>
 	</div>
 </div>
 {% endblock feature-graphic %}

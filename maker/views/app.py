@@ -1,4 +1,5 @@
 import logging
+import os
 import re
 
 from django.conf import settings
@@ -83,6 +84,14 @@ class AppForm(TranslatableModelForm):
             self.fields['category'].queryset = Category.objects.filter(
                 Q(user=None) | Q(user=self.instance.repo.user))
 
+    def save(self, commit=True):
+        # remove old feature graphic
+        if 'feature_graphic' in self.initial and 'feature_graphic' in self.changed_data:
+            old_graphic = self.initial['feature_graphic'].path
+            if os.path.exists(old_graphic):
+                os.remove(old_graphic)
+        return super().save(commit)
+
     class Meta:
         model = App
         fields = ['summary', 'summary_override', 'description', 'description_override',
@@ -135,6 +144,20 @@ class AppEditView(ApkUploadMixin, LanguageMixin, TranslatableUpdateView):
             if request.META['HTTP_RM_BACKGROUND_TYPE'] == 'screenshots':
                 try:
                     self.add_screenshots()
+                except Exception as e:
+                    logging.error(e)
+                    return HttpResponseServerError(e)
+                self.get_repo().update_async()  # schedule repository update
+                return HttpResponse(status=204)
+            if request.META['HTTP_RM_BACKGROUND_TYPE'] == 'feature-graphic':
+                try:
+                    graphic = self.request.FILES.getlist('feature-graphic')[0]
+                    self.object = self.get_object()
+                    if self.object.feature_graphic and os.path.exists(
+                            self.object.feature_graphic.path):
+                        os.remove(self.object.feature_graphic.path)
+                    self.object.feature_graphic = graphic
+                    self.object.save()
                 except Exception as e:
                     logging.error(e)
                     return HttpResponseServerError(e)

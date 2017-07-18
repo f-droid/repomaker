@@ -3,13 +3,14 @@ var holders = [
     document.getElementById('rm-dnd-holder--screenshots'),
     document.getElementById('rm-dnd-holder--apks'),
     document.getElementById('rm-dnd-holder-2--apks'),
+    document.getElementById('rm-dnd-holder--feature-graphic'),
 ]
 
 function uploadFiles(element, files) {
     var type = element.id.split("--").pop()
     var formData = new FormData()
     for (var i = 0; i < files.length; i++) {
-        if (type == 'screenshots' && !isImage(files[i])) {
+        if ((type == 'screenshots' || type == 'feature-graphic') && !isImage(files[i])) {
             showError(element, gettext('You can only upload images here.'))
             return
         }

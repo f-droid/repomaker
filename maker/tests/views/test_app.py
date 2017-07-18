@@ -1,3 +1,4 @@
+import io
 import os
 import shutil
 
@@ -44,12 +45,19 @@ class AppViewTestCase(TestCase):
         self.assertRedirects(response, self.app.get_absolute_url())
 
     def test_app_detail_default_lang(self):
+        # save screenshot and feature graphic
+        screenshot = Screenshot.objects.create(app=self.app, language_code=self.app.language_code)
+        screenshot.file.save('screenshot.png', io.BytesIO(b'foo'), save=True)
+        self.app.feature_graphic.save('feature.png', io.BytesIO(b'foo'), save=True)
+
         response = self.client.get(self.app.get_absolute_url())
         self.assertEqual(200, response.status_code)
         self.assertContains(response, self.app.name)
         self.assertContains(response, self.app.author_name)
         self.assertContains(response, self.app.summary)
         self.assertContains(response, self.app.description)
+        self.assertContains(response, 'src="' + screenshot.file.url)
+        self.assertContains(response, 'src="' + self.app.feature_graphic.url)
 
     def test_app_detail_other_lang(self):
         self.translate_to_de()
@@ -218,6 +226,40 @@ class AppViewTestCase(TestCase):
                              HTTP_RM_BACKGROUND_TYPE='screenshots')
 
         self.assertEqual(1, Screenshot.objects.all().count())
+        self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
+
+    def test_upload_feature_graphic(self):
+        # manually add a feature graphic and ensure that its file exists
+        self.app.feature_graphic.save('old.png', io.BytesIO(b'foo'), save=True)
+        old_graphic = self.app.feature_graphic.path
+        self.assertTrue(os.path.isfile(old_graphic))
+
+        with open(os.path.join(TEST_FILES_DIR, 'test.png'), 'rb') as f:
+            self.client.post(self.app.get_edit_url(), {'feature_graphic': f})
+
+        # refresh app object and assert that graphic got saved and old one removed
+        self.app = App.objects.get(pk=self.app.pk)
+        self.assertTrue(self.app.feature_graphic)
+        self.assertTrue(self.app.feature_graphic.name.endswith('/test.png'))
+        self.assertFalse(os.path.isfile(old_graphic))
+        self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
+
+    def test_upload_feature_graphic_ajax(self):
+        # manually add a feature graphic and ensure that its file exists
+        self.app.feature_graphic.save('old.png', io.BytesIO(b'foo'), save=True)
+        old_graphic = self.app.feature_graphic.path
+        self.assertTrue(os.path.isfile(old_graphic))
+
+        with open(os.path.join(TEST_FILES_DIR, 'test.png'), 'rb') as f:
+            self.client.post(self.app.get_edit_url(), {'feature-graphic': f},
+                             HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                             HTTP_RM_BACKGROUND_TYPE='feature-graphic')
+
+        # refresh app object and assert that graphic got saved and old one removed
+        self.app = App.objects.get(pk=self.app.pk)
+        self.assertTrue(self.app.feature_graphic)
+        self.assertTrue(self.app.feature_graphic.name.endswith('/test.png'))
+        self.assertFalse(os.path.isfile(old_graphic))
         self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
 
     def test_add_lang(self):

@@ -131,6 +131,14 @@
 {% endblock screenshots %}
 
 {% block feature-graphic %}
+{% if app.feature_graphic %}
+<div class="rm-grid--center mdl-grid">
+	<div class="rm-app-feature-graphic mdl-cell mdl-cell--8-col">
+		<h4 class="rm-app-section">{% trans 'Feature Graphic' %}</h4>
+		<img src="{{ app.feature_graphic.url }}"/>
+	</div>
+</div>
+{% endif %}
 {% endblock feature-graphic %}
 
 {% block apks %}
