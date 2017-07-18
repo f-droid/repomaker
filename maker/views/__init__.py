@@ -136,9 +136,6 @@ class DatabaseLockedView(TemplateView):
     request = None
     template_name = 'maker/db_locked.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
     def post(self, request, *args, **kwargs):
         return self.get(request, *args, **kwargs)
 

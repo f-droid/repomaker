@@ -55,5 +55,4 @@ class ApkPointerDeleteView(RepositoryAuthorizationMixin, DeleteView):
 
     def get_success_url(self):
         self.get_repo().update_async()
-        return reverse_lazy('app_edit', kwargs={'repo_id': self.kwargs['repo_id'],
-                                                'app_id': self.kwargs['app_id']})
+        return self.get_object().app.get_edit_url()
