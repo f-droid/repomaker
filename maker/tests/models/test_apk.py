@@ -227,9 +227,9 @@ class ApkTestCase(TestCase):
         self.assertEqual('org.bitbucket.tickytacky.mirrormirror', apk.package_id)
         self.assertEqual(2, apk.version_code)
         self.assertEqual('1.0.1', apk.version_name)
-        self.assertEqual(7084, apk.size)
-        self.assertEqual('91ea97410acda0a4ff86b7504c3a58eb', apk.signature)
-        self.assertEqual('64021f6d632eb5ba55bdeb5c4a78ed612bd3facc25d9a8a5d1c9d5d7a6bcc047',
+        self.assertEqual(8378, apk.size)
+        self.assertEqual('2dfd88aa96d0362bdb35696be57e6024', apk.signature)
+        self.assertEqual('7733e133eec140ab5e410f69955a4cba4a61133437ba436e92b75f03cbabfd52',
                          apk.hash)
         self.assertEqual('sha256', apk.hash_type)
         self.assertTrue(datetime_is_recent(apk.added_date))
@@ -256,7 +256,7 @@ class ApkTestCase(TestCase):
     def test_initialize_reuses_existing_apk(self):
         # create existing Apk object with same package_id and hash
         apk = Apk(package_id='org.bitbucket.tickytacky.mirrormirror',
-                  hash='64021f6d632eb5ba55bdeb5c4a78ed612bd3facc25d9a8a5d1c9d5d7a6bcc047')
+                  hash='7733e133eec140ab5e410f69955a4cba4a61133437ba436e92b75f03cbabfd52')
         apk.save()
 
         # initialize the Apk with its stored APK file

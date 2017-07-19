@@ -318,7 +318,7 @@ class RepositoryTestCase(TestCase):
         fake_repo_create(repo)
 
         # add an app with APK
-        apk_hash = '64021f6d632eb5ba55bdeb5c4a78ed612bd3facc25d9a8a5d1c9d5d7a6bcc047'
+        apk_hash = '7733e133eec140ab5e410f69955a4cba4a61133437ba436e92b75f03cbabfd52'
         app = App.objects.create(repo=repo, package_id='org.bitbucket.tickytacky.mirrormirror',
                                  name='TestApp', summary_override='TestSummary',
                                  description_override='TestDesc', website='TestSite',
