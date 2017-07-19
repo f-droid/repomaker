@@ -166,7 +166,6 @@ class RemoteAppImportView(RepositoryAuthorizationMixin, LanguageMixin, DetailVie
 
 class RemoteAppImportViewScreenshots(RemoteAppImportView):
 
-    # TODO load the screenshots with AJAX if JavaScript is available
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['show_screenshots'] = True

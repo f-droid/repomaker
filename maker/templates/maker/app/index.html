@@ -117,7 +117,7 @@
 {% if form or screenshots.exists %}
 <div class="rm-grid--center mdl-grid">
 	{% block screenshot-header %}{% endblock screenshot-header %}
-	<div class="rm-app-screenshots mdl-cell mdl-cell--8-col">
+	<div class="rm-app-screenshots">
 		{% block screenshot-drop %}{% endblock screenshot-drop %}
 		{% for screenshot in screenshots %}
 		<div class="rm-app-screenshot">

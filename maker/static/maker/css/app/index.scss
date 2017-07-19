@@ -254,6 +254,7 @@ select#id_category {
 }
 
 .rm-app-screenshots {
+    @extend .mdl-cell, .mdl-cell--8-col;
     display: flex;
     flex-direction: row;
     overflow: auto;
@@ -409,12 +410,12 @@ a.rm-app-navigation-previous:hover {
  * Remote app
  */
 $rm-privacy-grey: #ababab;
-.rm-remote-app-privacy {
+.rm-remote-app-privacy-text {
     @extend .mdl-cell, .mdl-cell--12-col, .center;
     color: $rm-privacy-grey;
 }
 
-.rm-remote-app-privacy-button {
+.rm-remote-app-privacy-button-container {
     @extend .mdl-cell, .mdl-cell--12-col, .center;
     a button {
         @extend .rm-button;

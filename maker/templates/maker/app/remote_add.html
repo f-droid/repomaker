@@ -3,13 +3,7 @@
 {% load static %}
 
 {% block back-button %}
-<a href="{% url 'add_app' repo.id %}" class="rm-toolbar-action-left"
-   {% if screenshots %}
-   onclick="window.history.go(-2)"
-   {% else %}
-   onclick="history.back()"
-   {% endif %}
->
+<a href="{% url 'add_app' repo.id %}" class="rm-toolbar-action-left">
 	<i class="material-icons">arrow_back</i>
 </a>
 {% endblock back-button %}
@@ -18,12 +12,7 @@
 <form action="" enctype="multipart/form-data" method="post">
 	{% csrf_token %}
 	<input type="submit" value="{% trans 'Add' %}" class="rm-button--blue mdl-js-button"
-		   onclick="addRemoteApp(event, {{ repo.id }}, {{ app.repo.id }}, {{ app.id }},
-		   {% if screenshots %}
-		   2
-		   {% else %}
-		   1
-		   {% endif %})"/>
+		   onclick="addRemoteApp(event, {{ repo.id }}, {{ app.repo.id }}, {{ app.id }}, '{% url 'add_app' repo.id %}')"/>
 </form>
 {% endblock top-buttons %}
 
@@ -35,7 +24,7 @@
 {% if screenshots.exists %}
 <div class="rm-grid--center mdl-grid">
 	{% if show_screenshots %}
-	<div class="rm-app-screenshots mdl-cell mdl-cell--8-col">
+	<div class="rm-app-screenshots">
 		{% for screenshot in screenshots %}
 		<div class="rm-app-screenshot">
 			<img src="{{ screenshot.get_url }}"/>
@@ -43,14 +32,20 @@
 		{% endfor %}
 	</div>
 	{% else %}
-	<div class="rm-remote-app-privacy">
+	<div class="rm-app-screenshots" hidden></div>
+	<div class="rm-remote-app-privacy-text">
 		{% trans 'There are currently no screenshots shown because this gives the repo owner the ability to track you.' %}
 	</div>
-	<div class="rm-remote-app-privacy-button">
-		<a href="{% url 'add_remote_app_screenshots' repo.id app.repo.id app.id app.language_code %}" onclick="storeReferrer()">
+	<div class="rm-remote-app-privacy-button-container">
+		<a href="{% url 'add_remote_app_screenshots' repo.id app.repo.id app.id app.language_code %}">
 			<button class="rm-button">{% trans 'show screenshots' %}</button>
 		</a>
 	</div>
+	<datalist id='rm-app-screenshots-data'>
+		{% for screenshot in screenshots %}
+		<option value="{{ screenshot.get_url }}">
+		{% endfor %}
+	</datalist>
 	{% endif %}
 </div>
 {% endif %}
@@ -60,4 +55,5 @@
 
 {% block page-footer %}
 <script src="{% static 'maker/js/app/add.js' %}"></script>
+<script src="{% static 'maker/js/app/remote_add.js' %}"></script>
 {% endblock page-footer %}

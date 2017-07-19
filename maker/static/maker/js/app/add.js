@@ -28,7 +28,7 @@ if (typeof(Storage) !== "undefined") {
     }
 }
 
-function addRemoteApp(event, repoId, appRepoId, appId, remoteAdd) {
+function addRemoteApp(event, repoId, appRepoId, appId, remoteAddUrl) {
     // Prevent opening new page
     event.preventDefault()
 
@@ -54,7 +54,7 @@ function addRemoteApp(event, repoId, appRepoId, appId, remoteAdd) {
     for(var i = 0; i < appsToAdd.length; i++) {
         if (appsToAdd[i].appRepoId == appRepoId && appsToAdd[i].appId == appId) {
             appAlreadyAdded = true
-            if (!remoteAdd) {
+            if (!remoteAddUrl) {
                 appsToAdd.splice(i, 1)
             }
             buttonSetNormal(element)
@@ -72,17 +72,8 @@ function addRemoteApp(event, repoId, appRepoId, appId, remoteAdd) {
         updateAppsToAddCount()
     }
 
-    if (remoteAdd === 1) {
-        location.href = document.referrer
-    }
-    else if (remoteAdd === 2) {
-        var referrer = sessionStorage.getItem(sessionStorageKeyReferrer)
-        if (referrer !== null && referrer.length !== 0) {
-            location.href = referrer
-        }
-        else {
-            window.history.go(-2)
-        }
+    if (remoteAddUrl) {
+        location.href = remoteAddUrl
     }
 }
 
@@ -209,10 +200,6 @@ function setHiddenOfElement(element, hidden) {
     if (element !== null) {
         element.hidden = hidden
     }
-}
-
-function storeReferrer() {
-    sessionStorage.setItem(sessionStorageKeyReferrer, document.referrer)
 }
 
 /**

@@ -82,8 +82,7 @@ class RemoteRepositoryViewTest(TestCase):
         self.assertContains(response, self.app.summary)
         self.assertContains(response, self.app.description)
 
-        # assert that screenshot is not, but link is shown
-        self.assertNotContains(response, self.screenshot.url)
+        # assert that link to show screenshots is shown
         self.assertContains(response, reverse('add_remote_app_screenshots', kwargs=kwargs))
 
     def test_remote_app_details_screenshot(self):
