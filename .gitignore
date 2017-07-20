@@ -9,8 +9,14 @@ credentials
 node_modules/
 /static/
 .coverage
+repomaker/static/repomaker/css/styles.css
+repomaker/static/repomaker/css/repo/page.css
 
 .idea/*
 !.idea/codeStyleSettings.xml
 
 *.mo
+
+/build/
+/dist/
+/repomaker.egg-info/

@@ -1,0 +1,23 @@
+{% extends "repomaker/base_modal.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Logout' %}{% endblock title %}
+
+
+{% block rm-content %}
+<div class="rm-grid--center mdl-grid">
+	<div class="rm-grid--center mdl-cell mdl-cell--5-col center">
+		<i class="material-icons--header">exit_to_app</i>
+		<h4>{% trans 'See you later' %}</h4>
+		<p>{% trans 'Your security is important to us. Please confirm that you want to logout.' %}</p>
+
+		<form class="rm-form mdl-grid" action="" enctype="multipart/form-data" method="post">
+			{% csrf_token %}
+			{% if redirect_field_value %}
+			<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+			{% endif %}
+			<input type="submit" value="{% trans 'logout' %}"/>
+		</form>
+	</div>
+</div>
+{% endblock rm-content %}

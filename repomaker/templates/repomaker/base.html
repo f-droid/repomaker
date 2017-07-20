@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load static %}
+{% load sass_tags %}
+{% load i18n %}
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Repo Maker - {% block title %}{% endblock %}</title>
+	<link href="{% sass_src 'repomaker/css/styles.scss' %}" rel="stylesheet" type="text/css" media="all">
+	<script src="{% url 'javascript-catalog' %}"></script>
+	{% block head %}{% endblock head %}
+</head>
+
+<body>
+<!-- Always shows a header, even in smaller screens. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-desktop-drawer-button">
+	<header class="rm-header {% block rm-header-classes %}{% endblock rm-header-classes %} mdl-layout__header mdl-layout__header--waterfall">
+		<div class="mdl-layout__header-row">
+			{% block toolbar %}
+
+			{% block toolbar-items-left %}{% endblock toolbar-items-left %}
+
+			<!-- Title -->
+			<span class="rm-title mdl-layout-title">
+				{% block toolbar-title %}<a href="/">Repo Maker</a>{% endblock toolbar-title %}
+			</span>
+			<!-- Add spacer, to align navigation to the right -->
+			<div class="mdl-layout-spacer"></div>
+
+			{% block toolbar-items-right %}{% endblock toolbar-items-right %}
+
+			<nav class="rm-navigation mdl-navigation">
+				{% block navigation %}{% endblock navigation %}
+				{% if user.is_authenticated and user.username != 'user' %}
+					{% load account %}
+					<!-- TODO: Open account view instead -->
+					<a class="rm-toolbar-account" href="{% url 'account_email' %}">
+					{% blocktrans with user=user.first_name|default:user.username trimmed %}
+					Hello, {{ user }}
+					{% endblocktrans %}
+					</a>
+					<a class="rm-toolbar-account" href="{% url 'account_logout' %}">
+						<i class="material-icons">exit_to_app</i>
+					</a>
+				{% endif %}
+			</nav>
+			{% endblock toolbar %}
+		</div>
+	</header>
+
+	<main class="mdl-layout__content">
+		{% block rm-content--without-margin %}
+		{% include 'repomaker/widgets/site_notice.html' %}
+		{% endblock rm-content--without-margin %}
+		<div class="rm-content">{% block rm-content %}{% endblock %}</div>
+	</main>
+</div>
+<script src="{% static 'node_modules/material-design-lite/material.min.js' %}"></script>
+{% if form %}
+{{ form.media }}
+
+<!--
+	This is due to a bug in MDL: https://github.com/google/material-design-lite/issues/1502
+	Remove when migrating to another library
+-->
+<script src="{% static 'repomaker/js/no-invalid-by-default.js' %}"></script>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends "repomaker/base_modal.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Delete Repo' %}{% endblock %}
+
+{% block rm-content %}
+<div class="rm-form mdl-grid rm-grid--center">
+	<div class="mdl-cell mdl-cell--6-col center">
+		<p>
+			{% blocktrans with repo=object trimmed %}
+			Are you sure you want to delete the repo <strong>{{ repo }}</strong>?
+			{% endblocktrans %}
+		</p>
+		<p class="error">
+			{% blocktrans trimmed %}
+			This will also delete all apps and other files from your repo.
+			You will not be able to get them back,
+			users of your repo will not be able to use it anymore and
+			not receive updates for the apps they received from you.
+			There is no way to recover this repo!
+			{% endblocktrans %}
+		</p>
+		<p>
+			<b>
+			{% blocktrans trimmed %}
+			Please only proceed if you know what you are doing!
+			{% endblocktrans %}
+			</b>
+		</p>
+		<form action="" method="post">
+			{% csrf_token %}
+			<input type="submit" value="{% trans 'Yes, I want to delete the repo' %}"/>
+		</form>
+	</div>
+</div>
+{% endblock rm-content %}

@@ -1,0 +1,44 @@
+{% extends "repomaker/base.html" %}
+{% load i18n %}
+{% load humanize %}
+
+{% block title %}{{ repo.name }}{% endblock %}
+
+{% block toolbar-items-left %}
+<a href="/" class="rm-toolbar-item">
+	<i class="material-icons">home</i>
+</a>
+{% endblock toolbar-items-left %}
+
+{% block toolbar-title %}
+{{ repo.name }}
+{% endblock toolbar-title %}
+
+{% block toolbar-items-right %}
+<a href="{% url 'add_repo' %}" class="rm-toolbar-item">
+	<i class="material-icons">add</i>
+</a>
+{% endblock toolbar-items-right %}
+
+{% block rm-content--without-margin %}
+<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+	<div class="rm-repo-tabs__tab-bar mdl-tabs__tab-bar">
+		<a href="#rm-repo-panel-apps" class="rm-repo-tabs__tab mdl-tabs__tab is-active">{% trans 'Content' %}</a>
+		<a href="#rm-repo-panel-share" class="rm-repo-tabs__tab mdl-tabs__tab">{% trans 'Share' %}</a>
+		<a href="#rm-repo-panel-info" class="rm-repo-tabs__tab mdl-tabs__tab">{% trans 'Info' %}</a>
+	</div>
+
+	{% include 'repomaker/widgets/site_notice.html' %}
+
+	<div class="mdl-tabs__panel is-active" id="rm-repo-panel-apps">
+		{% include "repomaker/repo/index_apps.html" %}
+	</div>
+	<div class="mdl-tabs__panel" id="rm-repo-panel-share">
+		{% include "repomaker/repo/index_share.html" %}
+	</div>
+	<div class="mdl-tabs__panel" id="rm-repo-panel-info">
+		{% include "repomaker/repo/index_info.html" %}
+	</div>
+</div>
+
+{% endblock rm-content--without-margin %}

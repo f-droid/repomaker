@@ -1,0 +1,43 @@
+{% extends "repomaker/base.html" %}
+{% load i18n %}
+{% load sass_tags %}
+
+{% block title %}
+{% block head_title %}{% endblock %}
+{% endblock %}
+
+{% block head %}
+{% block extra_head %}{% endblock %}
+{% endblock %}
+
+
+{% block rm-content %}
+{% block body %}
+
+{% if messages %}
+<div>
+	<ul>
+		{% for message in messages %}
+		<li>{{message}}</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endif %}
+
+<div>
+	{% if user.is_authenticated %}
+	<a href="{% url 'account_email' %}">{% trans 'Change E-mail' %}</a> |
+	<a href="{% url 'account_logout' %}">{% trans 'Sign Out' %}</a>
+	{% else %}
+	<a href="{% url 'account_login' %}">{% trans 'Sign In' %}</a> |
+	<a href="{% url 'account_signup' %}">{% trans 'Sign Up' %}</a>
+	{% endif %}
+</div>
+
+{% block content %}{% endblock content %}
+
+{% endblock body %}
+
+{% block extra_body %}{% endblock extra_body %}
+
+{% endblock rm-content %}

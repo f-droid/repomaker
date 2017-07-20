@@ -1,0 +1,37 @@
+{% extends "repomaker/app/edit.html" %}
+{% load i18n %}
+
+{% block back-button %}
+<a href="{% url 'app' app.repo.id app.id %}" class="rm-toolbar-action-left">
+	<i class="material-icons">arrow_back</i>
+</a>
+{% endblock back-button %}
+
+{% block top-buttons %}
+<form action="" enctype="multipart/form-data" method="post">
+{% csrf_token %}
+<button type="submit" class="rm-button mdl-button mdl-js-button">
+	{% trans 'Done' %}
+</button>
+{% endblock top-buttons %}
+
+{% block author %}{% endblock author %}
+{% block info %}{% endblock info %}
+{% block categories %}{% endblock categories %}
+
+{% block before-summary %}
+<div class="rm-app-summary-edit mdl-js-textfield{% if form.lang.errors %} is-invalid{% endif %}">
+	<label for="id_lang" class="mdl-textfield__label">{% trans 'Language Code' %}</label>
+	{{ form.lang }}
+</div>
+{% if form.lang.errors %}
+<div class="error">{{ form.lang.errors }}</div>
+{% endif %}
+{% endblock before-summary %}
+
+<!-- We can not do drag and drop before language code has been chosen (and saved) -->
+{% block screenshots %}{% endblock screenshots %}
+{% block feature-graphic %}{% endblock feature-graphic %}
+
+{% block apks %}{% endblock apks %}
+{% block bottom-navigation %}{% endblock bottom-navigation %}

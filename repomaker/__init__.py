@@ -1,8 +1,24 @@
-#!/usr/bin/env python3
 import os
 import sys
 
-if __name__ == "__main__":
+# The name of the default user. Please DO NOT CHANGE
+DEFAULT_USER_NAME = 'user'
+
+
+def runserver():
+    execute([sys.argv[0], 'migrate'])
+    if len(sys.argv) <= 1 or sys.argv[1] != 'runserver':
+        sys.argv = sys.argv[:1] + ['runserver'] + sys.argv[1:]
+    execute(sys.argv)
+
+
+def process_tasks():
+    if len(sys.argv) <= 1 or sys.argv[1] != 'process_tasks':
+        sys.argv = sys.argv[:1] + ['process_tasks'] + sys.argv[1:]
+    execute(sys.argv)
+
+
+def execute(params):
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "repomaker.settings")
     try:
         from django.core.management import execute_from_command_line
@@ -19,4 +35,4 @@ if __name__ == "__main__":
                 "forget to activate a virtual environment?"
             )
         raise
-    execute_from_command_line(sys.argv)
+    execute_from_command_line(params)

@@ -1,0 +1,29 @@
+{% extends "repomaker/storage/detail.html" %}
+{% load i18n %}
+
+{% block help_text %}
+
+{% if storage.disabled %}
+	{% if object.public_key %}
+		<p>A fresh SSH key has been created for you:</p>
+		<pre style="overflow: auto; padding: 1em; background-color: #fafafa; border: 1px solid #e5e5e5;">{{ object.public_key }}</pre>
+	{% else %}
+		<p>
+			{% trans "Your local default SSH key will be used to connect to the storage." %}
+		</p>
+	{% endif %}
+	{% block ssh_help_text %}
+	<p>
+		{% trans "Please make sure to authorize this public SSH key for your remote storage, if you have not done so already." %}
+	</p>
+	{% endblock ssh_help_text %}
+	<p>
+		{% trans "Activate this storage only once you have added the SSH key." %}
+	</p>
+{% else %}
+	<p>
+		{% trans "If this storage is experiencing problems, please check that the SSH key works properly." %}
+	</p>
+{% endif %}
+
+{% endblock help_text %}

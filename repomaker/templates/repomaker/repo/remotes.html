@@ -1,0 +1,208 @@
+{% extends "repomaker/base_modal.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Browse Gallery' %}{% endblock %}
+
+{% block toolbar %}
+<div class="rm-grid--full-width rm-grid--center mdl-grid">
+	<div class="rm-app-toolbar mdl-cell mdl-cell--9-col">
+		{% block back-button %}
+		<a href="{% url 'repo' repo.id %}" class="rm-repo-add-toolbar-done" onclick="back(event)">
+			<i class="material-icons">arrow_back</i>
+		</a>
+		{% endblock back-button %}
+		<!-- Title -->
+		<span class="rm-repo-add-toolbar-title">
+			{% trans 'Browse Gallery' %}
+		</span>
+		<div class="mdl-layout-spacer"></div>
+		<span class="rm-repo-add-toolbar-count" hidden>
+			<span id="rm-repo-add-toolbar-count-text"></span>
+			<a href="" onclick="clearAppsToAdd(event)">
+				<i class="material-icons">clear</i>
+			</a>
+		</span>
+	</div>
+</div>
+{% endblock toolbar %}
+
+{% block rm-content %}
+<div class="rm-app-add">
+	<div class="rm-app-add-filters">
+		<!-- TODO: Show with JS "in Multimedia and GuardianProject Official Releases" -->
+		<!-- TODO: Add ability to clear all filters -->
+		<form action="" method="get">
+			<div class="rm-app-add-filters-search mdl-js-textfield">
+				<i class="material-icons">search</i>
+				<input type="text" name="search" class="rm-app-add-filters-search-input"
+					   value="{{ request.GET.search }}" placeholder="{% trans 'Search' %}"/>
+				{% if remote_repo %}
+					{% if category %}
+						{% url 'add_app_with_category' repo.id remote_repo.id category.id as url_clear_search %}
+					{% else %}
+						{% url 'add_app' repo.id remote_repo.id as url_clear_search %}
+					{% endif %}
+				{% else %}
+					{% if category %}
+						{% url 'add_app_with_category' repo.id category.id as url_clear_search %}
+					{% else %}
+						{% url 'add_app' repo.id as url_clear_search %}
+					{% endif %}
+				{% endif %}
+				<a href="{{ url_clear_search }}" class="rm-app-add-filters-search-clear">
+					<i class="material-icons">clear</i>
+				</a>
+			</div>
+		</form>
+
+		<hr class="rm-app-add-divider" />
+
+		<!-- TODO: Align titles horizontally to chips -->
+		<div class="rm-app-add-filters-second-row">
+			<div class="rm-app-add-filters-category-container">
+				<div class="rm-app-add-filters-category">
+					<span class="rm-app-add-filters-category-title">
+						{% blocktrans with count=categories.count trimmed %}
+						Category ({{ count}})
+						{% endblocktrans %}
+					</span>
+						{% if category %}
+						<span class="rm-app-add-filters-category-chip">
+						<span class="rm-app-add-filters-category-chip-title">{{ category.name }}</span>
+						<a type="button" class="mdl-chip__action"
+						   href="{% if remote_repo %}{% url 'add_app' repo.id remote_repo.id %}{% else %}{% url 'add_app' repo.id %}{% endif %}?{{ search_params }}">
+							<i class="material-icons">clear</i>
+						</a>
+					</span>
+						{% else %}
+						<span id="rm-app-add-filters-category" class="rm-app-add-filters-category-chip--all">
+						<span class="rm-app-add-filters-category-chip-title">{% trans 'All' %}</span>
+					</span>
+					<div class="rm-app-add-filters-category-menu mdl-js-menu mdl-js-ripple-effect" data-mdl-for="rm-app-add-filters-category">
+						{% for c in categories %}
+						<a href="{% if remote_repo %}{% url 'add_app_with_category' repo.id remote_repo.id c.id %}{% else %}{% url 'add_app_with_category' repo.id c.id %}{% endif %}?{{ search_params }}">
+							<button>{{ c.name }}</button>
+						</a>
+						{% endfor %}
+					</div>
+					{% endif %}
+				</div>
+				<noscript>
+					<li>
+						<a class="rm-no-underline"
+						   href="{% if remote_repo %}{% url 'add_app' repo.id remote_repo.id %}{% else %}{% url 'add_app' repo.id %}{% endif %}?{{ search_params }}">
+							{% trans 'All' %}
+						</a>
+					</li>
+					{% for c in categories %}
+					<li>
+						<a class="rm-no-underline"
+						   href="{% if remote_repo %}{% url 'add_app_with_category' repo.id remote_repo.id c.id %}{% else %}{% url 'add_app_with_category' repo.id c.id %}{% endif %}?{{ search_params }}">
+							{{ c.name }}
+						</a>
+					</li>
+					{% endfor %}
+				</noscript>
+			</div>
+			<div class="rm-app-add-filters-source-container">
+				<div class="rm-app-add-filters-source">
+					<span class="rm-app-add-filters-source-title">
+						{% blocktrans with count=remote_repos.count trimmed %}
+						Source ({{ count}})
+						{% endblocktrans %}
+					</span>
+					{% if remote_repo %}
+					<span class="rm-app-add-filters-source-chip">
+						<span class="rm-app-add-filters-source-chip-title">{{ remote_repo.name }}</span>
+						<a type="button" class="mdl-chip__action"
+								href="{% if category %}{% url 'add_app_with_category' repo.id category.id %}{% else %}{% url 'add_app' repo.id %}{% endif %}?{{ search_params }}">
+							<i class="material-icons">clear</i>
+						</a>
+					</span>
+					{% else %}
+					<span id="rm-app-add-filters-source" class="rm-app-add-filters-source-chip--all">
+						<span class="rm-app-add-filters-source-chip-title">{% trans 'All' %}</span>
+					</span>
+					<div class="rm-app-add-filters-source-menu mdl-js-menu mdl-js-ripple-effect" data-mdl-for="rm-app-add-filters-source">
+						<a href="{% url 'add_remote_repo' %}">
+							<button>{% trans 'Add a repo' %}</button>
+						</a>
+						<hr />
+						{% for r in remote_repos %}
+						<a href="{% if category %}{% url 'add_app_with_category' repo.id r.id category.id %}{% else %}{% url 'add_app' repo.id r.id %}{% endif %}?{{ search_params }}">
+							<button>{{ r.name }}</button>
+						</a>
+						{% endfor %}
+					</div>
+					{% endif %}
+				</div>
+
+				<noscript>
+					<a class="rm-no-underline"
+					   href="{% url 'add_remote_repo' %}">
+						{% trans 'Add a repo' %}
+					</a>
+					<hr />
+					<li>
+						<a class="rm-no-underline"
+						   href="{% if category %}{% url 'add_app_with_category' repo.id category.id %}{% else %}{% url 'add_app' repo.id %}{% endif %}?{{ search_params }}">
+							{% trans 'All' %}
+						</a>
+					</li>
+					{% for r in remote_repos %}
+					<li>
+						<a class="rm-no-underline"
+						   href="{% if category %}{% url 'add_app_with_category' repo.id r.id category.id %}{% else %}{% url 'add_app' repo.id r.id %}{% endif %}?{{ search_params }}">
+							{{ r.name }}
+						</a>
+					</li>
+					{% endfor %}
+				</noscript>
+			</div>
+		</div>
+	</div>
+
+	<div class="rm-app-add-apps">
+		<p id="rm-app-add-errors" hidden></p>
+		{% if remote_repo %}
+		<div class="rm-app-add-remote-repository-information">
+			<h1 class="rm-app-add-remote-repository-information-title">{{ remote_repo.name }}</h1>
+			<p class="rm-app-add-remote-repository-information-description">{{ remote_repo.description }}</p>
+			<hr class="rm-app-add-remote-repository-information-divider" />
+		</div>
+		{% endif %}
+		{% csrf_token %}
+		{% for app in apps %}
+			{% url 'add_remote_app' repo.id app.repo.id app.id app.language_code as url %}
+			{% trans 'Add' as action_title %}
+			{% include "repomaker/widgets/app_with_action.html" with url=url width=12 action_title=action_title %}
+		{% empty %}
+			<div class="rm-app-add-no-results">
+				{% if request.GET.search %}
+					{% blocktrans with search_term=request.GET.search trimmed %}
+						No apps found that match '{{ search_term }}'.
+						Please try a different search or remove other filter criteria.
+					{% endblocktrans %}
+				{% elif not category %}
+					{% if remote_repo %}
+						{% trans 'There are no apps in this repo.' %}
+					{% else %}
+						{% trans 'There are no apps available in the repos.' %}
+					{% endif %}
+					{% trans 'If you just added a repo, wait for the apps to download and try again later.' %}
+				{% elif remote_repo %}
+					{% trans 'This repo has no apps in the selected category. Try clearing it or select a different repo.' %}
+				{% else %}
+					{% trans 'There are no apps available in the selected category. Try clearing it.' %}
+				{% endif %}
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+{% include "repomaker/widgets/pagination.html" %}
+
+<script src="{% static 'repomaker/js/endless-app-scroll.js' %}"></script>
+<script src="{% static 'repomaker/js/app/add.js' %}"></script>
+{% endblock rm-content %}

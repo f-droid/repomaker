@@ -1,0 +1,27 @@
+{% extends "repomaker/base_modal.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Delete Storage' %}{% endblock %}
+
+{% block rm-content %}
+<div class="rm-form mdl-grid rm-grid--center">
+	<div class="mdl-cell mdl-cell--6-col center">
+		<p>
+			{% blocktrans with repo=object trimmed %}
+			Are you sure you want to remove the storage at <strong>{{ object }}</strong> from your repo?
+			{% endblocktrans %}
+		</p>
+		<p class="error">
+			{% blocktrans trimmed %}
+			This will not remove the content from that storage
+			but will stop to publish future versions of your repo to it.
+			{% endblocktrans %}
+		</p>
+		<!-- Add option to purge: https://gitlab.com/fdroid/repomaker/issues/112 -->
+		<form action="" method="post">
+			{% csrf_token %}
+			<input type="submit" value="{% trans 'Confirm' %}"/>
+		</form>
+	</div>
+</div>
+{% endblock rm-content %}

@@ -1,0 +1,19 @@
+{% extends "repomaker/base_modal.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Error' %}{% endblock title %}
+
+
+{% block rm-content %}
+<div class="rm-grid--center mdl-grid">
+	<div class="rm-grid--center mdl-cell mdl-cell--6-col">
+		<h2 class="center">{% trans 'Error' %}</h2>
+		<div class="error">
+			{{ error }}
+			{% for field in form %}
+			{{ field.errors }}
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% endblock rm-content %}

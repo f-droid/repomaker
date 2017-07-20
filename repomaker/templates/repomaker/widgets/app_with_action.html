@@ -1,0 +1,30 @@
+{% extends "repomaker/widgets/app.html" %}
+{% load i18n %}
+
+{% block rm-app-card-attributes %}
+{% if not app.added %}
+onclick="window.location.href = '{{ url }}'"
+{% endif %}
+{% endblock rm-app-card-attributes %}
+
+{% block rm-app-card-right %}
+<div class="rm-app-card-footer">
+	<div class="rm-app-card-categories">
+		{% for category in app.category.all %}
+		<span class="rm-app-card-category-chip mdl-chip">
+			<span class="rm-app-card-category-text mdl-chip__text">{{ category }}</span>
+		</span>
+		{% endfor %}
+	</div>
+	{% if app.added %}
+	<span class="rm-app-card-footer-action">
+		<button disabled>{% trans 'Added' %}</button>
+	</span>
+	{% else %}
+	<a href="{{ url }}" id='rm-app-card-footer-action--{{ app.id }}' class="rm-app-card-footer-action"
+	   onclick="addRemoteApp(event, {{ repo.id }}, {{ app.repo.id }}, {{ app.id }})">
+		<button id='rm-app-card-footer-action--{{ app.id }}-button'>{{ action_title }}</button>
+	</a>
+	{% endif %}
+</div>
+{% endblock rm-app-card-right %}

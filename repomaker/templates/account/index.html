@@ -1,0 +1,52 @@
+{% extends "repomaker/base_modal.html" %}
+
+{% load i18n %}
+{% load sass_tags %}
+
+{% block title %}{% trans "Sign In" %}{% endblock %}
+
+{% block toolbar %}<span class="rm-logo">repomaker</span>{% endblock toolbar %}
+
+{% block rm-content %}
+<div class="mdl-grid mdl-cell--8-col">
+
+	<div class="mdl-cell mdl-cell--6-col">
+		<h1>{% trans "Distribute apps." %}<br/>{% trans "Spread the love." %}</h1>
+		<span>
+			{% blocktrans trimmed %}
+			Repomaker is a free web app built for creating collections
+			of apps, music, books, videos and pictures to share with your peers.
+			It uses F-Droid as the mobile distribution platform.
+			Available on Android only.
+			{% endblocktrans %}
+		</span>
+	</div>
+
+	<div class="mdl-cell mdl-cell--2-col"></div>
+
+	<div class="mdl-cell mdl-cell--4-col">
+
+		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+
+			<div class="rm-login-tab-bar">
+				<a href="{{ login_url }}" class="rm-login-tab {% block login-active %}{% endblock %}">
+					{% trans "Login" %}
+				</a>
+				<a href="{{ signup_url }}" class="rm-login-tab {% block signup-active %}{% endblock %}">
+					{% trans "Sign Up" %}
+				</a>
+			</div>
+
+			<div class="mdl-tabs__panel {% block login-tab-active %}{% endblock %}" id="login-panel">
+				{% block login-form %}{% endblock login-form %}
+			</div>
+
+			<div class="mdl-tabs__panel {% block signup-tab-active %}{% endblock %}" id="signup-panel">
+				{% block signup-form %}{% endblock signup-form %}
+			</div>
+
+		</div>
+	</div>
+
+</div>
+{% endblock rm-content %}

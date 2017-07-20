@@ -1,0 +1,23 @@
+{% extends "repomaker/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Add Screenshot' %}{% endblock %}
+
+
+{% block rm-content %}
+
+<h1>{% trans 'Add Screenshot' %}</h1>
+
+<div class="rm-form">
+	<form action="" enctype="multipart/form-data" method="post">
+		{% csrf_token %}
+		{% include '../form.html' %}
+		<div class="mdl-cell mdl-cell--6-col">
+			<input type="submit" value="{% trans 'Upload Screenshot' %}"/>
+		</div>
+	</form>
+</div>
+
+<p></p>
+
+{% endblock rm-content %}

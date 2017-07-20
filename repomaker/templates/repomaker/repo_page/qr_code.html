@@ -1,0 +1,36 @@
+{% extends 'repomaker/repo_page/base.html' %}
+
+{% block header-classes %}qr-header{% endblock header-classes %}
+
+{% block header %}
+<nav class="mdl-navigation">
+	<a href="../index.html" class="rm-no-underline">
+		X
+	</a>
+</nav>
+{% endblock header %}
+
+{% block content %}
+<section class="mdl-grid mdl-cell--8-col qr-content">
+
+	<div class="mdl-cell mdl-cell--12-col repo-content">
+		<h3>
+			Scan the QR code to add <a href="{{ repo.get_fingerprint_url }}" class="rm-no-underline">{{ repo.name }}</a>
+			to F-Droid.
+		</h3>
+	</div>
+
+	<div class="mdl-cell mdl-cell--6-col qr-code">
+		<a href="{{ repo.get_fingerprint_url }}">
+			<img src="qrcode.png"/>
+			<br/>
+			{{ repo.name }}
+		</a>
+	</div>
+
+	<div class="mdl-cell mdl-cell--6-col">
+		{% include 'repomaker/repo_page/fdroid.html' %}
+	</div>
+
+</section>
+{% endblock content %}

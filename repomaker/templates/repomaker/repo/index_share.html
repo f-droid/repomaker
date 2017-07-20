@@ -1,0 +1,79 @@
+{% load i18n %}
+{% load static %}
+<div class="rm-repo-share-container">
+	<div class="rm-repo-share">
+		{% if not repo.last_publication_date %}
+		<div class="rm-repo-share-empty">
+			<i class="material-icons--header">cloud_upload</i>
+			<h4>
+				{% trans 'Add storage to publish' %}
+			</h4>
+			<p>
+				{% blocktrans trimmed %}
+				Your repo will be automatically published when you add storage.
+				Repomaker does not publically promote your stuff.
+				Only people who receive the direct link to your repo
+				will be able to see it.
+				{% endblocktrans %}
+			</p>
+			<a href="{% url 'storage_add' repo.id %}" class="rm-no-underline">
+				<button class="rm-button--blue mdl-button mdl-js-button">
+					{% trans 'add storage' %}
+				</button>
+			</a>
+		</div>
+		{% else %}
+		<div class="rm-repo-share-general">
+			<div class="rm-repo-share-general-text">
+				{% blocktrans count app_count=repo.app_set.all.count trimmed %}
+				You have  <span>{{ app_count }} app</span> in your repo. Share it!
+				{% plural %}
+				You have  <span>{{ app_count }} apps</span> in your repo. Share it!
+				{% endblocktrans %}
+			</div>
+			<a href="{{ repo.url }}" class="rm-repo-share-general-view" target="_blank">
+				<button class="mdl-js-button">
+					{% trans 'view repo' %}
+				</button>
+			</a>
+		</div>
+
+		<div class="rm-repo-share-share-header">{% trans 'share public link' %}</div>
+		<div class="rm-repo-share-share">
+			<span class="rm-repo-share-share-url">{{ repo.url }}</span>
+			<button class="rm-repo-share-share-copy mdl-js-button" onclick="copyLink('{{ repo.get_fingerprint_url }}')">
+				{% trans 'copy link' %}
+			</button>
+		</div>
+		<hr class="rm-repo-share-divider"/>
+
+		<div class="rm-repo-share-add-header">{% trans 'add to an android phone' %}</div>
+		<div class="rm-repo-share-add">
+			<span class="rm-repo-share-add-text">
+				{% trans 'To install these apps on your Android phone, add them to F-Droid.' %}<br />
+				{% trans 'F-Droid ensures access to secure app updates.' %}
+			</span>
+			<a href="{{ repo.url }}/assets/qr_code.html" class="rm-repo-share-add-scan" target="_blank">
+				<button class="mdl-js-button">
+					{% trans 'Scan QR' %}
+				</button>
+			</a>
+		</div>
+		<hr class="rm-repo-share-divider"/>
+		<div class="rm-repo-share-social">
+			{% blocktrans with name=repo.name asvar text trimmed %}
+			Check out this F-Droid repo: {{ name }}
+			{% endblocktrans %}
+			<a href="https://twitter.com/intent/tweet?text={{ text|urlencode }}&url={{ repo.get_fingerprint_url|urlencode }}"
+			   target="_blank">
+				<img src="{% static 'repomaker/images/repo_page/twitter.png' %}"/>
+			</a>
+			<a href="https://www.facebook.com/sharer/sharer.php?u={{ repo.get_fingerprint_url|urlencode }}"
+			   target="_blank">
+				<img src="{% static 'repomaker/images/repo_page/facebook.png' %}"/>
+			</a>
+		</div>
+		{% endif %}
+	</div>
+</div>
+<script src="{% static 'repomaker/js/repo/share.js' %}"></script>

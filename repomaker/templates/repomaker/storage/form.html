@@ -1,0 +1,72 @@
+{% extends "repomaker/base_modal.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+{% if object %}
+{% blocktrans %}Update {{ storage_name }}{% endblocktrans %}
+{% else %}
+{% blocktrans %}Setup {{ storage_name }}{% endblocktrans %}
+{% endif %}
+{% endblock title %}
+
+{% block toolbar %}
+<div class="rm-grid--full-width rm-grid--center mdl-grid">
+	<div class="rm-app-toolbar mdl-cell mdl-cell--8-col">
+		{% if object %}
+		<a href="{{ object.get_absolute_url }}" class="rm-storage-toolbar-back"
+		   onclick="history.back();">
+			<i class="material-icons">arrow_back</i>
+		</a>
+		{% else %}
+		<a href="{% url 'storage_add' repo.id %}" class="rm-storage-toolbar-back"
+		   onclick="history.back();">
+			<i class="material-icons">arrow_back</i>
+		</a>
+		{% endif %}
+		<span class="rm-storage-toolbar-title">
+			{% trans 'Storage' %}
+		</span>
+	</div>
+</div>
+{% endblock toolbar %}
+
+{% block rm-content %}
+<div class="rm-grid--center mdl-grid">
+	<div class="rm-grid--center mdl-cell mdl-cell--4-col">
+		<div class="center"><img src="{% static 'repomaker/images/storage.png' %}"/></div>
+		{% block header %}
+		<h4 class="center">
+			{% if object %}
+			{% blocktrans %}Update {{ storage_name }}{% endblocktrans %}
+			{% else %}
+			{% blocktrans %}Setup {{ storage_name }}{% endblocktrans %}
+			{% endif %}
+		</h4>
+		{% endblock header %}
+
+
+		<form class="rm-form mdl-grid rm-grid--center" action="" enctype="multipart/form-data" method="post">
+			{% csrf_token %}
+			{% block form %}
+			{% include '../form.html' %}
+			{% endblock form %}
+			<div class="rm-storage-actions">
+				{% if object %}
+				<a href="{{ object.get_absolute_url }}" class="rm-storage-cancel"
+				   onclick="history.back();">
+					<button type="button">{% trans 'cancel' %}</button>
+				</a>
+				{% else %}
+				<a href="{% url 'storage_add' repo.id %}" class="rm-storage-cancel"
+				   onclick="history.back();">
+					<button type="button">{% trans 'cancel' %}</button>
+				</a>
+				{% endif %}
+				<input type="submit" value="{% trans 'save' %}"/>
+			</div>
+
+		</form>
+	</div>
+</div>
+{% endblock rm-content %}

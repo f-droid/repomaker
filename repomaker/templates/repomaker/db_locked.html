@@ -1,0 +1,26 @@
+{% extends "repomaker/base_modal.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Please Wait!' %}{% endblock title %}
+
+{% block toolbar %}{% endblock toolbar %}
+
+{% block rm-content %}
+<div class="rm-grid--center mdl-grid">
+	<div class="rm-grid--center center mdl-cell mdl-cell--6-col">
+		<h3>{% trans 'Please Wait!' %}</h3>
+		<div class="mdl-progress mdl-js-progress mdl-progress__indeterminate center is-active"></div>
+		<h4>{% trans 'Background Operation in Progress' %}</h4>
+		<p>
+			{% blocktrans trimmed %}
+			Repomaker might be updating or publishing your repo. Or it might be updating a remote repo.
+			Depending on the type and size of the background operation, this might take awhile.
+			{% endblocktrans %}
+		</p>
+		<p>
+			<input type="button" value="{% trans 'Try Again' %}" class="rm-button--blue" onclick="window.location.reload()"/>
+		</p>
+		<noscript>{% trans "The button won't work for you. Please press F5 to try again." %}</noscript>
+	</div>
+</div>
+{% endblock rm-content %}

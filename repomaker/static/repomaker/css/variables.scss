@@ -1,0 +1,15 @@
+// Paths
+$material-design-icons-font-path: unquote(get-setting(NODE_MODULES_URL) + 'material-design-icons-iconfont/dist/fonts/');
+$roboto-font-path: unquote(get-setting(NODE_MODULES_URL) + "roboto-fontface/fonts");
+$image_path: unquote(get-setting(NODE_MODULES_URL) + 'material-design-lite/dist/images/');
+$socialaccount_provider_url: unquote(get-setting(STATIC_URL) + 'repomaker/images/socialaccount_providers/');
+
+// Colors
+$rm-blue: #0066CC;
+$rm-red: #FF3E16;
+$tab-active-text-color: white;
+
+// Sizes
+$rm-icon-size: 80px;
+$rm-icon-size-large: 120px;
+$rm-app-navigation-padding: 16px;

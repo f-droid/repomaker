@@ -1,0 +1,60 @@
+{% extends "repomaker/storage/form.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block form %}
+<div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label
+		{% if field.errors %} is-invalid {% endif %}">
+	<label for="{{ form.ssh_url.id_for_label }}" class="mdl-textfield__label">{{ form.ssh_url.label }}</label>
+	{{ form.ssh_url }}
+</div>
+{% if form.ssh_url.errors %}
+<span class="error">{{ form.ssh_url.errors }}</span>
+{% endif %}
+<div class="mdl-cell mdl-cell--12-col">
+	{% blocktrans trimmed %}
+	Here's how to copy the SSH Address from GitLab:
+	{% endblocktrans %}
+	<a href="{% static 'repomaker/images/gitlab_url.png' %}">
+		<img src="{% static 'repomaker/images/gitlab_url.png' %}" style="border: #e5e5e5 solid; width: 100%"/>
+	</a>
+</div>
+
+<div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label
+		{% if field.errors %} is-invalid {% endif %}">
+	<label for="{{ form.url.id_for_label }}" class="mdl-textfield__label">{{ form.url.label }}</label>
+	{{ form.url }}
+</div>
+<span class="help-text">{{ form.url.help_text }}</span>
+{% if form.url.errors %}
+<span class="error">{{ form.url.errors }}</span>
+{% endif %}
+
+{% if form.main %}
+<div class="mdl-cell mdl-cell--12-col mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect
+		{% if field.errors %}is-invalid{% endif %}">
+	<label for="{{ form.main.id_for_label }}" class="mdl-checkbox__label">
+		{{ form.main.label }}
+	</label>
+	{{ form.main }}
+</div>
+<span class="help-text">{{ form.main.help_text }}</span>
+{% if form.main.errors %}
+<span class="error">{{ form.main.errors }}</span>
+{% endif %}
+{% endif %}
+
+{% if form.ignore_identity_file %}
+<div class="mdl-cell mdl-cell--12-col mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect
+		{% if field.errors %}is-invalid{% endif %}">
+	<label for="{{ form.ignore_identity_file.id_for_label }}" class="mdl-checkbox__label">
+		{{ form.ignore_identity_file.label }}
+	</label>
+	{{ form.ignore_identity_file }}
+</div>
+<span class="help-text">{{ form.ignore_identity_file.help_text }}</span>
+{% if form.ignore_identity_file.errors %}
+<span class="error">{{ form.ignore_identity_file.errors }}</span>
+{% endif %}
+{% endif %}
+{% endblock form %}

@@ -1,0 +1,21 @@
+{% extends "repomaker/base_modal.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Edit Repo' %}{% endblock %}
+
+
+{% block rm-content %}
+<div class="rm-grid--center mdl-grid">
+	<div class="rm-grid--center mdl-cell mdl-cell--4-col">
+		<h4 style="text-align: center">{% trans 'Edit Repo' %}</h4>
+
+		<div class="rm-form mdl-grid ">
+			<form action="" enctype="multipart/form-data" method="post">
+				{% csrf_token %}
+				{% include '../form.html' %}
+				<input type="submit" value="{% trans 'Save Changes' %}"/>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock rm-content %}

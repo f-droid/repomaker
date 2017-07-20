@@ -1,0 +1,20 @@
+{% extends "repomaker/base_modal.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Delete App' %}{% endblock %}
+
+{% block rm-content %}
+<div class="rm-form mdl-grid rm-grid--center">
+    <div class="mdl-cell mdl-cell--6-col center">
+        <p>
+            {% blocktrans with app=object.app trimmed %}
+            Are you sure you want to delete your app <strong>{{ object }}</strong>?
+            {% endblocktrans %}
+        </p>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="submit" value="{% trans 'Confirm' %}"/>
+        </form>
+    </div>
+</div>
+{% endblock rm-content %}

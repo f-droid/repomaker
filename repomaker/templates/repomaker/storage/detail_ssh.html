@@ -1,0 +1,46 @@
+{% extends "repomaker/storage/detail_ssh_key.html" %}
+{% load i18n %}
+
+{% block ssh_help_text %}
+<p>
+	{% blocktrans trimmed %}
+	Please make sure to add this public SSH key to your SSH server's
+	<tt>
+		<a href="https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys">~/.ssh/authorized_keys</a>
+	</tt> file,	if you have not done so already.
+	{% endblocktrans %}
+</p>
+<p>
+	{% trans "Security Warning: This gives repomaker write access to that storage. Please limit this user's access as much as possible." %}
+</p>
+{% endblock ssh_help_text %}
+
+{% block storage_details %}
+<li class="rm-storage-detail-info-item-container">
+	<span class="rm-storage-detail-info-item">
+		<i class="rm-storage-detail-info-item-icon">face</i>
+		<span class="rm-storage-detail-info-item-title">{% trans 'Username' %}</span>
+		<span class="rm-storage-detail-info-item-subtitle">
+			{{ storage.username }}
+		</span>
+	</span>
+</li>
+<li class="rm-storage-detail-info-item-container">
+	<span class="rm-storage-detail-info-item">
+		<i class="rm-storage-detail-info-item-icon">cloud_circle</i>
+		<span class="rm-storage-detail-info-item-title">{% trans 'Host' %}</span>
+		<span class="rm-storage-detail-info-item-subtitle">
+			{{ storage.host }}
+		</span>
+	</span>
+</li>
+<li class="rm-storage-detail-info-item-container">
+	<span class="rm-storage-detail-info-item">
+		<i class="rm-storage-detail-info-item-icon">folder</i>
+		<span class="rm-storage-detail-info-item-title">{% trans 'Path' %}</span>
+		<span class="rm-storage-detail-info-item-subtitle">
+			{{ storage.path }}
+		</span>
+	</span>
+</li>
+{% endblock storage_details %}

@@ -1,0 +1,104 @@
+{% extends "repomaker/base_modal.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Add Storage' %}{% endblock title %}
+
+{% block toolbar %}
+<div class="rm-storage-toolbar-container">
+	<div class="rm-storage-toolbar">
+		<a href="{% url 'repo' repo.id %}" class="rm-storage-toolbar-back" onclick="history.back();">
+			<i class="material-icons">arrow_back</i>
+		</a>
+		<span class="rm-storage-toolbar-title">
+			{% trans 'Storage' %}
+		</span>
+	</div>
+</div>
+{% endblock toolbar %}
+
+{% block rm-content %}
+<div class="rm-storage-container">
+	<div class="rm-storage">
+		<div class="rm-storage-header">
+			<div class="rm-storage-header-icon"><img src="{% static 'repomaker/images/storage.png' %}"/></div>
+			<h4 class="rm-storage-header-title">
+				{% trans 'Setup a place to store your repo' %}
+			</h4>
+		</div>
+
+		<div class="rm-storage-git">
+			<h4 class="rm-storage-git-title">{% trans 'Git' %}</h4>
+			<div class="rm-storage-git-subtitle">{% trans 'Easy, free, requires an account' %}</div>
+			<p class="rm-storage-git-description">
+				{% blocktrans trimmed %}
+				Git is a popular tool to version control things.
+				You can securely publish repos to GitLab, GitHub or any other Git service.
+				Git services use SSH to securely copy files from your computer to remote computers.
+				{% endblocktrans %}
+			</p>
+			<div class="rm-storage-action">
+				<a href="{% url 'storage_git_add' repo.id %}" class="rm-storage-setup">
+					<button>{% trans 'Setup' %}</button>
+				</a>
+			</div>
+			<p></p>
+			<!-- TODO: Offer options for GitLab and GitHub directly -->
+			<!--
+			<ul>
+				<li>
+					<a href="{% url 'storage_git_add' repo.id %}">
+						{% trans 'GitLab' %}
+					</a>
+				</li>
+				<li>
+					<a href="{% url 'storage_git_add' repo.id %}">
+						{% trans 'GitHub' %}
+					</a>
+				</li>
+				<li>
+					<a href="{% url 'storage_git_add' repo.id %}">
+						{% trans 'Other' %}
+					</a>
+				</li>
+			</ul>
+			-->
+		</div>
+
+		<div class="rm-storage-ssh">
+			<h4 class="rm-storage-ssh-title">{% trans 'SSH' %}</h4>
+			<div class="rm-storage-ssh-subtitle">{% trans 'Requires a personal web server or host that supports SSH' %}</div>
+			<p class="rm-storage-ssh-description">
+				{% blocktrans trimmed %}
+				SSH is a technology that can be used to copy files securely to remote computers.
+				When using Git as storage, the files will also be copied via SSH.
+				But the pure SSH option directly copies the files without using any other technology.
+				{% endblocktrans %}
+			</p>
+			<div class="rm-storage-action">
+				<a href="{% url 'storage_ssh_add' repo.id %}" class="rm-storage-setup">
+					<button>{% trans 'Setup' %}</button>
+				</a>
+			</div>
+		</div>
+
+		<div class="rm-storage-s3">
+			<h4 class="rm-storage-s3-title">{% trans 'Amazon S3' %}</h4>
+			<div class="rm-storage-s3-subtitle">{% trans 'Requires an Amazon account, Pricing varies' %}</div>
+			<p class="rm-storage-s3-description">
+				{% blocktrans trimmed %}
+				Amazon S3 is a web service offered by Amazon Web Services.
+				Amazon S3 provides storages through web service interfaces.
+				Pricing varies.
+				Visit the Amazon S3 website for details.
+				{% endblocktrans %}
+			</p>
+			<div class="rm-storage-action">
+				<a href="{% url 'storage_s3_add' repo.id %}" class="rm-storage-setup">
+					<button>{% trans 'Setup' %}</button>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock rm-content %}

@@ -1,0 +1,61 @@
+{% extends "repomaker/base.html" %}
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}{% trans 'My Repos' %}{% endblock %}
+
+{% block toolbar-items-left %}
+<a href="/" class="rm-toolbar-item">
+	<i class="material-icons">home</i>
+</a>
+{% endblock toolbar-items-left %}
+
+{% block toolbar-title %}{% trans 'My Repos' %}{% endblock toolbar-title %}
+
+{% block navigation %}
+<a href="{% url 'add_repo' %}" class="rm-toolbar-item">
+	<i class="material-icons">add</i>
+</a>
+{% endblock navigation %}
+
+{% block rm-content %}
+<div class="mdl-grid mdl-cell--10-col">
+
+	{% for repo in repositories %}
+	<a href="{% url 'repo' repo.id %}" title="{{ repo.name }}" class="rm-repo-card rm-no-underline">
+		<div class="mdl-card__title">
+			<h1 class="mdl-card__title-text rm-app-number">{{ repo.app_set.all.count }}</h1>
+		</div>
+		<div class="mdl-card__title">
+			<h2 class="mdl-card__title-text rm-repo-title">{{ repo.name }} </h2>
+		</div>
+		<div class="mdl-card__supporting-text rm-repo-date">
+			{% if repo.last_publication_date %}
+			{% blocktrans with repo.last_publication_date|naturaltime as time_ago trimmed %}
+			Published {{ time_ago }}
+			{% endblocktrans %}
+			{% else %}
+			{% blocktrans with repo.created_date|naturaltime as time_ago trimmed %}
+			Created {{ time_ago }}
+			{% endblocktrans %}
+			{% endif %}
+		</div>
+		<div class="mdl-card__supporting-text">
+			{{ repo.description|truncatewords:25 }}
+		</div>
+	</a>
+	{% empty %}
+	<div class="rm-repo-empty-box">
+		<img src="{% static 'repomaker/images/repo_index_empty_state.png' %}"/>
+		<p>{% trans 'Make a collection of apps to share' %}</p>
+		<a href="{% url 'add_repo' %}" class="rm-no-underline">
+			<button class="rm-button--blue mdl-button mdl-js-button">
+				{% trans 'Create Repo' %}
+			</button>
+		</a>
+	</div>
+	{% endfor %}
+
+</div>
+{% endblock rm-content %}

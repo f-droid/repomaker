@@ -1,0 +1,66 @@
+{% load i18n %}
+{% load static %}
+<div class="rm-repo-apps">
+	{% if request.GET.search or is_paginated %}
+	<div class="rm-repo-apps-header mdl-cell mdl-cell--12-col">
+		<div class="rm-repo-apps-header-search">
+			<a href="#" onclick="toggleSearch()" class="rm-repo-apps-header-search-icon">
+				<i class="material-icons">search</i>
+			</a>
+			<div id="rm-repo-apps-header-search-input"
+				 class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label rm-form">
+				<form action="" method="get">
+					<label for="id_search" class="mdl-textfield__label">
+						{% trans 'Search for apps in your repository' %}
+					</label>
+					<input type="text" name="search" id="id_search" class="mdl-textfield__input" value="{{ request.GET.search }}">
+				</form>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	<div class="rm-repo-apps-add-container">
+		<a href="{% url 'add_app' repo.id %}" class="rm-repo-apps-add-remote">
+			<button class="mdl-js-button">
+				{% trans 'add from gallery' %}
+			</button>
+		</a>
+		<div id="rm-dnd-holder--apks" class="rm-repo-apps-add">
+			<form action="{% url 'apk_upload' repo.id %}" enctype="multipart/form-data" method="post">
+				{% csrf_token %}
+				<div class="rm-repo-apps-add-title">
+					{% blocktrans with label_start='<label for="id_apks" class="rm-repo-apps-add-choose">' label_end='</label>' trimmed %}
+					Alternatively, drag and drop or {{ label_start }}choose files{{ label_end }}
+					{% endblocktrans %}
+				</div>
+				<div class="rm-repo-apps-add-description">
+					{% trans 'Accepted files include Android apps, documents, eBooks, audio and video.' %}
+				</div>
+				<p>{{ form.apks }}</p>
+				<button type="submit" class="rm-repo-apps-add-button mdl-js-button">
+					{% trans 'Add' %}
+				</button>
+			</form>
+		</div>
+		<div id="rm-dnd-holder--apks--loading" class="rm-repo-apps-add--loading" hidden>
+			{% csrf_token %}
+			<div class="rm-dnd-progress mdl-js-progress"></div>
+			<h3 id="rm-dnd-holder--apks--loading-title" class="rm-repo-apps-add--loading-title"></h3>
+		</div>
+	</div>
+	{% for app in apps %}
+		{% url 'app' repo.id app.id as url %}
+		{% include "repomaker/widgets/app.html" with clickable=True url=url width=6 %}
+	{% empty %}
+	{% if request.GET.search %}
+	<div class="rm-no-search-results">
+		{% trans 'Your search did not return any results.' %}
+	</div>
+	{% endif %}
+	{% endfor %}
+</div>
+
+<script src="{% static 'repomaker/js/endless-app-scroll.js' %}"></script>
+<script src="{% static 'repomaker/js/repo/apps.js' %}"></script>
+
+{% include "repomaker/widgets/pagination.html" %}

@@ -1,0 +1,10 @@
+{% extends "repomaker/base.html" %}
+
+{% block rm-header-classes %}rm-header--light{% endblock rm-header-classes %}
+
+{% block toolbar %}
+<div class="mdl-layout-spacer"></div>
+<a href="/" onclick="history.back()" class="rm-toolbar-item">
+	<i class="material-icons mdl-list__item-icon">close</i>
+</a>
+{% endblock toolbar %}

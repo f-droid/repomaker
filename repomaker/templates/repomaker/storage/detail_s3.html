@@ -1,0 +1,32 @@
+{% extends "repomaker/storage/detail.html" %}
+{% load i18n %}
+
+{% block storage_details %}
+<li class="rm-storage-detail-info-item-container">
+	<span class="rm-storage-detail-info-item">
+		<i class="rm-storage-detail-info-item-icon">public</i>
+		<span class="rm-storage-detail-info-item-title">{% trans 'Region' %}</span>
+		<span class="rm-storage-detail-info-item-subtitle">
+			{{ storage.get_region_display }}
+		</span>
+	</span>
+</li>
+<li class="rm-storage-detail-info-item-container">
+	<span class="rm-storage-detail-info-item">
+		<i class="rm-storage-detail-info-item-icon">dns</i>
+		<span class="rm-storage-detail-info-item-title">{% trans 'Bucket' %}</span>
+		<span class="rm-storage-detail-info-item-subtitle">
+			{{ storage.bucket }}
+		</span>
+	</span>
+</li>
+<li class="rm-storage-detail-info-item-container">
+	<span class="rm-storage-detail-info-item">
+		<i class="rm-storage-detail-info-item-icon">vpn_key</i>
+		<span class="rm-storage-detail-info-item-title">{% trans 'Access Key ID' %}</span>
+		<span class="rm-storage-detail-info-item-subtitle">
+			{{ storage.accesskeyid }}
+		</span>
+	</span>
+</li>
+{% endblock storage_details %}
