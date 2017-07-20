@@ -235,6 +235,12 @@ class ApkTestCase(TestCase):
         self.assertTrue(datetime_is_recent(apk.added_date))
         self.assertFalse(apk.is_downloading)
 
+    def test_initialize_rejects_md5_apk(self):
+        with open(os.path.join(TEST_FILES_DIR, 'test_md5_signature.apk'), 'rb') as f:
+            self.apk.file.save('test_md5_signature.apk', f, save=True)
+        with self.assertRaises(ValidationError):
+            self.apk.initialize()
+
     def test_initialize_rejects_invalid_apk(self):
         # overwrite APK file with rubbish
         self.apk.file.delete()
