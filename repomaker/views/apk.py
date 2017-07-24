@@ -20,6 +20,7 @@ class ApkForm(BaseModelForm):
 
 
 class ApkUploadView(ApkUploadMixin, UpdateView):
+    object = None
     form_class = ApkForm
     template_name = "repomaker/error.html"
 

@@ -56,6 +56,13 @@ class ApkViewTestCase(TestCase):
         self.assertEqual(1, Apk.objects.all().count())
         self.assertEqual(1, ApkPointer.objects.all().count())
 
+    def test_upload_invalid_apk(self):
+        with open(os.path.join(TEST_FILES_DIR, 'test_invalid_signature.apk'), 'rb') as f:
+            response = self.client.post(reverse('apk_upload', kwargs={'repo_id': self.repo.id}),
+                                        {'apks': f})
+        self.assertContains(response, 'Error')
+        self.assertContains(response, 'Invalid APK signature')
+
     def upload_files(self, files):
         self.assertEqual(0, App.objects.all().count())
         self.assertEqual(0, Apk.objects.all().count())
