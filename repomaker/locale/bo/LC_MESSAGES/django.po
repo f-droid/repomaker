@@ -7,15 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-07-19 17:12+0000\n"
+"PO-Revision-Date: 2017-08-22 17:08+0000\n"
 "Last-Translator: tenzin tselek <omaahum99@yahoo.in>\n"
-"Language-Team: Tibetan <https://hosted.weblate.org/projects/f-droid/repomaker/bo/>\n"
+"Language-Team: Tibetan "
+"<https://hosted.weblate.org/projects/f-droid/repomaker/bo/>\n"
 "Language: bo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.16-dev\n"
+"X-Generator: Weblate 2.17-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -103,7 +104,7 @@ msgid "Default Storage"
 msgstr "སོར་བཞག་གསོག་ཉར་ཁང་།"
 
 msgid "American English"
-msgstr ""
+msgstr "ཨ་རིའི་དབྱིན་ཇི།"
 
 msgid "Change E-mail"
 msgstr "གློག་འཕྲིན་བརྗེས།"
@@ -186,10 +187,8 @@ msgstr "ཚར་སོང་།"
 msgid "By"
 msgstr "རྒྱུད་དེ།"
 
-#, fuzzy
-#| msgid "Short Summary (40 characters)"
 msgid "Summary Override (40 characters)"
-msgstr "སྙིང་བསྡུས་ཐུང་ཐུང།(ཁྱད་ཆོས་༤༠)"
+msgstr "ཕྱོགས་སྡོམ་སྐྱར་བྲིས།(ཁྱད་ཆོས་༤༠)"
 
 msgid "Short Summary (40 characters)"
 msgstr "སྙིང་བསྡུས་ཐུང་ཐུང།(ཁྱད་ཆོས་༤༠)"
@@ -200,10 +199,8 @@ msgstr "སྡེ་ཚན།"
 msgid "Choose Category"
 msgstr "སྡེ་ཚན་འདེམས།"
 
-#, fuzzy
-#| msgid "Description"
 msgid "Description Override"
-msgstr "འགྲེལ་བཤད།"
+msgstr "འགྲེལ་བཤད་སྐྱར་བྲིས།"
 
 msgid "Description"
 msgstr "འགྲེལ་བཤད།"
@@ -224,28 +221,23 @@ msgid "browse to upload"
 msgstr "ལྟ་བའི་ཆེད་དུ་ནང་བཅུག་བྱེད།"
 
 msgid "Feature Graphic"
-msgstr ""
+msgstr "བརྐོས་རིས་ཀྱི་ཁྱད་ཆོས།"
 
-#, fuzzy
-#| msgid "Drag and drop .apk files"
 msgid "Drag and drop a feature graphic"
-msgstr "འཐེན་ནས་བཞག .apkཡིག་ཆ།"
+msgstr "བརྐོས་རིས་དེ་འཐེན་ནས་བཞག"
 
 msgid "Drag and drop .apk files"
 msgstr "འཐེན་ནས་བཞག .apkཡིག་ཆ།"
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Languages (%(count)s)"
-msgstr "སྐད་རིགས་ (%(count)s 1)"
+msgstr "སྐད་རིགས་རྣམས།(%(count)s 1)"
 
 msgid "Edit"
 msgstr "ཕྱོགས་སྒྲིག"
 
-#, fuzzy
-#| msgid "Save Translation"
 msgid "Add Translation"
-msgstr "བསྒྱུར་བ་དེ་ཉར་ཚགས་།"
+msgstr "ཕབ་བསྒྱུར་ཁ་སྣོན།"
 
 #, python-format
 msgid "By %(author)s"
@@ -303,29 +295,32 @@ msgstr "དྲྭ་ཤེལ་པར་ལེན་སུབས།"
 msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
 msgstr "ཁྱེད་རང་དངོས་གནས་པར་ལེན་བྱས་པ་དེ་ཁྱེད་རང་གི་མཉེན་ཆས་ནས་སུབས་མཁན་ཡིན་ནམ།<strong> 1%(app)s 2</strong> 3?"
 
-#, fuzzy
-#| msgid "Language"
 msgid "Language Code"
-msgstr "སྐད་རིགས།"
+msgstr "སྐད་རིགས་ཨང་རྟགས།"
 
 #, python-format
 msgid "Hello, %(user)s"
 msgstr "བཀྲིས་བེད་ལེགས།%(user)s 1"
 
 msgid "Please Wait!"
-msgstr ""
+msgstr "ཏོག་ཙམ་སྒུག་རོགས།!"
 
 msgid "Background Operation in Progress"
-msgstr ""
+msgstr "རྒྱབ་ལྗོངས་ཀྱི་ལས་འགུལ་ཡར་རྒྱས་གཏོང་བཞིན་ཡོད།"
 
 msgid "Repomaker might be updating or publishing your repo. Or it might be updating a remote repo. Depending on the type and size of the background operation, this might take awhile."
 msgstr ""
+"རེ་པོ་མེ་ཀར་གསར་བསྒྱུར་བྱེད་བཞིན་པའམ་ཡང་ན་ཁྱེད་རང་གི་རེ་པོ་པར་སྐྲུན་བྱེད་བཞིན"
+"་འདུག ཡང་ན་འདིས་རྒྱང་རིང་ཀྱི་རེ་པོ་གསར་བསྒྱུར་བྱེད་བཞིན་པ་ཡིན་པ་འདྲ། "
+"རྒྱབ་ལྗོངས་ལས་འགུལ་གྱི་རིགས་ཀྱི་ཆེ་ཆུང་ལ་གཞིགས་ནས་དུས་ཚོད་ཏོག་ཙམ་འགོར་ས་རེད།"
 
 msgid "Try Again"
-msgstr ""
+msgstr "ཚོད་ལྟ་ཡང་སྐྱར་ཞིག་བྱེད།"
 
 msgid "The button won't work for you. Please press F5 to try again."
 msgstr ""
+"མཐེབ་གཞོང་འདི་ཁྱེད་རང་ལ་ལས་ཀ་བྱེད་ཀྱི་མ་རེད། ཡང་སྐྱར་ཚོད་ལྟ་བྱེད་པའི་ཆེད་དུ་ "
+"F5 སྣོན།"
 
 msgid "Error"
 msgstr "སྐྱོན།"
@@ -632,10 +627,10 @@ msgid "Enter your email address and we'll send a link to reset it. If you did no
 msgstr "ཁྱེད་རང་གི་གློག་འཕྲིན་ཁ་བྱང་ནང་འཛུལ་བྱས་ནས་ང་ཚོས་སྐྱར་སྒྲིག་ཆེད་དུ་དྲྭ་ཚིགས་ཤིག་གཏོང་ཆོག། གལ་ཏེ་ཁྱེད་རང་གིས་གློག་འཕྲིན་དང་མཉམ་དུ་ནང་འཇུག་མ་བྱས་ཚེ། ཁྱེད་རང་གི་གསང་ཨང་བདེ་འཇགས་ངང་ནས་སྐྱར་སྒྲིག་བྱེད་རྒྱུར་ང་ཚོས་ཕན་ཐོག་བྱེད་ཐུབ་མ་སོང་།"
 
 msgid "This is not a valid language code."
-msgstr ""
+msgstr "འདི་སྐད་རིགས་ཀྱི་ཨང་རྟགས་ཁུངས་ལྡན་རེད་མིན་འདུག"
 
 msgid "This language already exists. Please choose another one!"
-msgstr ""
+msgstr "སྐད་རིགས་འདི་སྔོན་ཚོད་ནས་འདུག གཞན་པ་ཞིག་འདེམས་རོགས་གནང་།!"
 
 msgid "Enter SSH URL"
 msgstr "SSH URL ནང་འཛུལ་བྱེད།"

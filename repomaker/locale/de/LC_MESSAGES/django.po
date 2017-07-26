@@ -7,19 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-07-11 16:49+0000\n"
+"PO-Revision-Date: 2017-09-08 16:46+0000\n"
 "Last-Translator: Claus Rüdinger <Mail-an-CR@web.de>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/f-droid/repomaker/de/>\n"
+"Language-Team: German "
+"<https://hosted.weblate.org/projects/f-droid/repomaker/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.16-dev\n"
+"X-Generator: Weblate 2.17-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
-msgstr ""
+msgstr "Diese Datei ist keine Aktualisierung für %s"
 
 msgid "This APK already exists in the current repo."
 msgstr "Diese APK ist im aktuellen Repo bereits enthalten."
@@ -103,7 +104,7 @@ msgid "Default Storage"
 msgstr "Standardspeicher"
 
 msgid "American English"
-msgstr ""
+msgstr "Amerikanisches Englisch"
 
 msgid "Change E-mail"
 msgstr "E-Mail ändern"
@@ -186,10 +187,8 @@ msgstr "Fertig"
 msgid "By"
 msgstr "Von"
 
-#, fuzzy
-#| msgid "Short Summary (40 characters)"
 msgid "Summary Override (40 characters)"
-msgstr "Kurze Zusammenfassung (40 Zeichen)"
+msgstr "Korrektur der Zusammenfassung (40 Zeichen)"
 
 msgid "Short Summary (40 characters)"
 msgstr "Kurze Zusammenfassung (40 Zeichen)"
@@ -200,10 +199,8 @@ msgstr "Kategorie"
 msgid "Choose Category"
 msgstr "Kategorie auswählen"
 
-#, fuzzy
-#| msgid "Description"
 msgid "Description Override"
-msgstr "Beschreibung"
+msgstr "Korrektur der Beschreibung"
 
 msgid "Description"
 msgstr "Beschreibung"
@@ -224,28 +221,23 @@ msgid "browse to upload"
 msgstr "suchen zum Hochladen"
 
 msgid "Feature Graphic"
-msgstr ""
+msgstr "Feature-Bild"
 
-#, fuzzy
-#| msgid "Drag and drop .apk files"
 msgid "Drag and drop a feature graphic"
-msgstr ".apk-Dateien ziehen und ablegen"
+msgstr "Feature-Bild ziehen und ablegen"
 
 msgid "Drag and drop .apk files"
 msgstr ".apk-Dateien ziehen und ablegen"
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Languages (%(count)s)"
 msgstr "Sprachen (%(count)s)"
 
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#, fuzzy
-#| msgid "Save Translation"
 msgid "Add Translation"
-msgstr "Übersetzung speichern"
+msgstr "Übersetzung hinzufügen"
 
 #, python-format
 msgid "By %(author)s"
@@ -303,29 +295,31 @@ msgstr "Bildschirmfoto löschen"
 msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
 msgstr "Soll dieses Bildschirmfoto von deiner App <strong>%(app)s</strong> wirklich gelöscht werden?"
 
-#, fuzzy
-#| msgid "Language"
 msgid "Language Code"
-msgstr "Sprache"
+msgstr "Sprachcode"
 
 #, python-format
 msgid "Hello, %(user)s"
 msgstr "Hallo %(user)s!"
 
 msgid "Please Wait!"
-msgstr ""
+msgstr "Bitte warten!"
 
 msgid "Background Operation in Progress"
-msgstr ""
+msgstr "Hintergrundaktion läuft"
 
 msgid "Repomaker might be updating or publishing your repo. Or it might be updating a remote repo. Depending on the type and size of the background operation, this might take awhile."
 msgstr ""
+"Möglicherweise aktualisiert oder veröffentlicht Repomaker gerade dein Repo "
+"oder aktualisiert ein entferntes Repo. Abhängig von Art und Umfang der "
+"Hintergrundaktion kann dies einige Zeit in Anspruch nehmen."
 
 msgid "Try Again"
-msgstr ""
+msgstr "Bitte wiederholen"
 
 msgid "The button won't work for you. Please press F5 to try again."
 msgstr ""
+"Dieser Knopf wird nicht funktionieren. Bitte F5 zum Wiederholen drücken."
 
 msgid "Error"
 msgstr "Fehler"
@@ -403,12 +397,9 @@ msgstr "Deine Suche brachte keine Ergebnisse."
 msgid "Name"
 msgstr "Benutzername"
 
-#, fuzzy
 msgid "Storage"
 msgstr "Speicherplatz"
 
-#, fuzzy
-#| msgid "Add SSH Storage"
 msgid "Add Storage"
 msgstr "Speicherplatz hinzufügen"
 
@@ -620,10 +611,9 @@ msgstr "Benötigt ein Amazon-Konto, die Preise dafür variieren"
 msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
 msgstr "Amazon S3 ist ein von Amazon Web Services angebotener Dienst. Amazon S3 bietet Speicherplatz über Webdienst-Schnittstellen. Die Kosten dafür sind unterschiedlich. Einzelheiten dazu findest du auf der Internetseite von Amazon S3."
 
-#, fuzzy, python-format
-#| msgid "Version %(version)s (%(code)s)"
+#, python-format
 msgid "Version %(version)s (%(date)s)"
-msgstr "Version %(version)s %(code)s"
+msgstr "Version %(version)s %(date)s"
 
 msgid "Added"
 msgstr "Hinzugefügt"
@@ -635,10 +625,10 @@ msgid "Enter your email address and we'll send a link to reset it. If you did no
 msgstr "Bitte gib deine E-Mail-Adresse an, damit wir einen Link zum Zurücksetzen schicken können. Wenn die Registrierung ohne eine Mail-Adresse erfolgte, ist das sichere Zurücksetzen des Passworts nicht möglich."
 
 msgid "This is not a valid language code."
-msgstr ""
+msgstr "Dies ist kein gültiger Sprachcode."
 
 msgid "This language already exists. Please choose another one!"
-msgstr ""
+msgstr "Diese Sprache existiert bereits. Bitte eine andere auswählen!"
 
 msgid "Enter SSH URL"
 msgstr "SSH-Adresse eingeben"

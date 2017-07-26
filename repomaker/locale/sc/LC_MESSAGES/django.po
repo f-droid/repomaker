@@ -7,9 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-07-18 23:01+0000\n"
+"PO-Revision-Date: 2017-07-28 13:05+0000\n"
 "Last-Translator: Ajeje Brazorf <lmelonimamo@yahoo.it>\n"
-"Language-Team: Sardinian <https://hosted.weblate.org/projects/f-droid/repomaker/sc/>\n"
+"Language-Team: Sardinian "
+"<https://hosted.weblate.org/projects/f-droid/repomaker/sc/>\n"
 "Language: sc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -103,7 +104,7 @@ msgid "Default Storage"
 msgstr "Memòria predefinida"
 
 msgid "American English"
-msgstr ""
+msgstr "Inglesu americanu"
 
 msgid "Change E-mail"
 msgstr "Càmbia sa posta eletrònica"
@@ -234,18 +235,15 @@ msgstr "Trisina e lassa documentos .apk"
 msgid "Drag and drop .apk files"
 msgstr "Trisina e lassa documentos .apk"
 
-#, fuzzy, python-format
-#| msgid "Language (%(count)s)"
+#, python-format
 msgid "Languages (%(count)s)"
-msgstr "Limba (%(count)s)"
+msgstr "Limbas (%(count)s)"
 
 msgid "Edit"
 msgstr "Modìfica"
 
-#, fuzzy
-#| msgid "Save Translation"
 msgid "Add Translation"
-msgstr "Sarva tradutzione"
+msgstr "Annanghe tradutzione"
 
 #, python-format
 msgid "By %(author)s"
@@ -303,29 +301,31 @@ msgstr "Iscantzella ischermada"
 msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
 msgstr "Seguru ses de chèrrere iscantzellare cust'ischermada dae s'aplicatzione tua <strong>%(app)s</strong>?"
 
-#, fuzzy
-#| msgid "Language"
 msgid "Language Code"
-msgstr "Limba"
+msgstr "Còdighe de sa limba"
 
 #, python-format
 msgid "Hello, %(user)s"
 msgstr "Salude, %(user)s"
 
 msgid "Please Wait!"
-msgstr ""
+msgstr "Pro praghere iseta!"
 
 msgid "Background Operation in Progress"
-msgstr ""
+msgstr "Operatzione in cursu in s'isfundu"
 
 msgid "Repomaker might be updating or publishing your repo. Or it might be updating a remote repo. Depending on the type and size of the background operation, this might take awhile."
 msgstr ""
+"Repomaker diat pòdere istare agiornende o publichende su depòsitu tuo. O "
+"diat pòdere istare agiornende unu depòsitu remotu.  Diat pòdere èssere "
+"netzessàriu unu pagu de tempus pro acabare, ma dipendet dae sa casta e sa "
+"mannària de s'operatzione in s'isfundu."
 
 msgid "Try Again"
-msgstr ""
+msgstr "Torra a proare"
 
 msgid "The button won't work for you. Please press F5 to try again."
-msgstr ""
+msgstr "Su butone no est funtzionende pro tie. Incarca F5 pro torrare a proare."
 
 msgid "Error"
 msgstr "Errore"
@@ -631,10 +631,10 @@ msgid "Enter your email address and we'll send a link to reset it. If you did no
 msgstr "Inserta s'indiritzu de posta eletrònica e nois amus a imbiare unu ligàmene pro la ripristinare. Si no intras cun un'indiritzu de posta eletrònica non ti podimus agiudare a ripristinare in manera segura sa crae tua."
 
 msgid "This is not a valid language code."
-msgstr ""
+msgstr "Custu no est unu còdighe de sa limba vàlidu."
 
 msgid "This language already exists. Please choose another one!"
-msgstr ""
+msgstr "Custa limba esistit giai. Pro praghere issèbera·ne un'àtera!"
 
 msgid "Enter SSH URL"
 msgstr "Inserta s'URL SSH"
