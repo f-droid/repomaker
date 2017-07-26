@@ -1,0 +1,707 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2017-07-18 23:01+0000\n"
+"Last-Translator: Ajeje Brazorf <lmelonimamo@yahoo.it>\n"
+"Language-Team: Sardinian <https://hosted.weblate.org/projects/f-droid/repomaker/sc/>\n"
+"Language: sc\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.16-dev\n"
+
+#, python-format
+msgid "This file is not an update for %s"
+msgstr "Custu documentu no est un'agiornamentu pro %s"
+
+msgid "This APK already exists in the current repo."
+msgstr "Custu APK esistit giai in su depòsitu atuale."
+
+msgid "Invalid APK signature"
+msgstr "Firma APK non vàlida"
+
+msgid "Invalid APK."
+msgstr "APK non vàlidu."
+
+msgid "Unsupported File Type"
+msgstr "Casta de documentu non suportada"
+
+msgid "This file is of a different type than the other versions of this app."
+msgstr "Custu documentu est de una casta diferente dae sas àteras versiones de custa aplicatzione."
+
+msgid "APK"
+msgstr "APK"
+
+msgid "Book"
+msgstr "Libru"
+
+msgid "Document"
+msgstr "Documentu"
+
+msgid "Image"
+msgstr "Immàgine"
+
+msgid "Audio"
+msgstr "Àudio"
+
+msgid "Video"
+msgstr "Vìdeu"
+
+msgid "Other"
+msgstr "Àteru"
+
+msgid "This app does already exist in your repository."
+msgstr "Custa aplicatzione no esistit in custu depòsitu."
+
+msgid "This app does not have any working versions available."
+msgstr "Custa aplicatzione non tenet versiones funtzionantes disponìbiles."
+
+msgid "Phone"
+msgstr "Telèfono"
+
+msgid "7'' Tablet"
+msgstr "Tauledda (tablet) a 7''"
+
+msgid "10'' Tablet"
+msgstr "Tauledda (tablet) a 10''"
+
+msgid "TV"
+msgstr "TV"
+
+msgid "Wearable"
+msgstr "Bestìbile"
+
+msgid "US Standard"
+msgstr "Istandard US"
+
+msgid "Amazon S3 Storage"
+msgstr "Memòria Amazon S3"
+
+msgid "Enter a valid user name consisting of letters, numbers, underscores or hyphens."
+msgstr "Inserta unu nùmene impreadore vàlidu fatu de lìteras, nùmeros o tratigheddos."
+
+msgid "Enter a valid hostname."
+msgstr "Inserta unu nùmene de istrangiadore vàlidu."
+
+msgid "Enter a valid path."
+msgstr "Inserta un'àndala vàlida."
+
+msgid "SSH Storage"
+msgstr "Memòria SSH"
+
+msgid "Git Storage"
+msgstr "Memòria GIT"
+
+msgid "Default Storage"
+msgstr "Memòria predefinida"
+
+msgid "American English"
+msgstr ""
+
+msgid "Change E-mail"
+msgstr "Càmbia sa posta eletrònica"
+
+msgid "Sign Out"
+msgstr "Essi"
+
+msgid "Sign In"
+msgstr "Intra"
+
+msgid "Sign Up"
+msgstr "Registra·ti"
+
+msgid "Distribute apps."
+msgstr "Distribui aplicatziones."
+
+msgid "Spread the love."
+msgstr "Cumpartzi s'amore."
+
+msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
+msgstr "Repomaker est un'aplicatzione web de badas pro creare colletziones de aplicatziones, de mùsica, de libros, de vìdeos e de immàgines pro las cumpartzire cun sos collegas o amigos tuos. Impreat F-Droid comente prataforma de distributzione. Est disponìbile petzi pro Android."
+
+msgid "Login"
+msgstr "Intra"
+
+msgid "Forgot Password"
+msgstr "Crae ismentigada"
+
+msgid "Or login with"
+msgstr "O intra cun"
+
+msgid "Logout"
+msgstr "Essi"
+
+msgid "See you later"
+msgstr "Nos bidimus prus a tardu"
+
+msgid "Your security is important to us. Please confirm that you want to logout."
+msgstr "Sa seguresa tua est importante pro nois. Pro praghere cunfirma chi cheres essire dae sa sessione."
+
+msgid "logout"
+msgstr "essi"
+
+msgid "submit"
+msgstr "imbia"
+
+msgid "We have sent you an email with a link to reset your password."
+msgstr "T'amus imbiadu una lìtera eletrònica cun unu ligàmene pro recuperare sa crae tua."
+
+msgid "Signup"
+msgstr "Registra·ti"
+
+msgid "Delete App Version"
+msgstr "Iscantzella sa versione de s'aplicatzione"
+
+#, python-format
+msgid "Are you sure you want to delete this version <strong>%(version)s</strong> (%(code)s) from your app <strong>%(app)s</strong>?"
+msgstr "Seguru ses de chèrrere iscantzellare custa versione <strong>%(version)s</strong> (%(code)s) dae s'aplicatzione tua <strong>%(app)s</strong>?"
+
+msgid "Confirm"
+msgstr "Cunfirma"
+
+msgid "Delete App"
+msgstr "Iscantzella aplicatzione"
+
+#, python-format
+msgid "Are you sure you want to delete your app <strong>%(object)s</strong>?"
+msgstr "Seguru ses de chèrrere iscantzellare s'aplicatzione tua <strong>%(object)s</strong>?"
+
+#, python-format
+msgid "Edit %(app)s"
+msgstr "Modìfica %(app)s"
+
+msgid "Remove App"
+msgstr "Boga aplicatzione"
+
+msgid "Done"
+msgstr "Acabadu"
+
+msgid "By"
+msgstr "De"
+
+#, fuzzy
+#| msgid "Short Summary (40 characters)"
+msgid "Summary Override (40 characters)"
+msgstr "Resumu minore (40 caràteres)"
+
+msgid "Short Summary (40 characters)"
+msgstr "Resumu minore (40 caràteres)"
+
+msgid "Category"
+msgstr "Categoria"
+
+msgid "Choose Category"
+msgstr "Issèbera categoria"
+
+#, fuzzy
+#| msgid "Description"
+msgid "Description Override"
+msgstr "Descritzione"
+
+msgid "Description"
+msgstr "Descritzione"
+
+msgid "Screenshots"
+msgstr "Ischermadas"
+
+msgid "Add files"
+msgstr "Annanghe documentos"
+
+msgid "Drag and drop screenshots"
+msgstr "Trisina e lassa ischermadas"
+
+msgid "or"
+msgstr "o"
+
+msgid "browse to upload"
+msgstr "esplora pro carrigare"
+
+msgid "Feature Graphic"
+msgstr ""
+
+#, fuzzy
+#| msgid "Drag and drop .apk files"
+msgid "Drag and drop a feature graphic"
+msgstr "Trisina e lassa documentos .apk"
+
+msgid "Drag and drop .apk files"
+msgstr "Trisina e lassa documentos .apk"
+
+#, fuzzy, python-format
+#| msgid "Language (%(count)s)"
+msgid "Languages (%(count)s)"
+msgstr "Limba (%(count)s)"
+
+msgid "Edit"
+msgstr "Modìfica"
+
+#, fuzzy
+#| msgid "Save Translation"
+msgid "Add Translation"
+msgstr "Sarva tradutzione"
+
+#, python-format
+msgid "By %(author)s"
+msgstr "De %(author)s"
+
+#, python-format
+msgid "Updated %(time)s ago"
+msgstr "Agiornada %(time)s a como"
+
+msgid "version history"
+msgstr "cronologia de sas versiones"
+
+#, python-format
+msgid "Version %(version)s (%(code)s)"
+msgstr "Versione %(version)s (%(code)s)"
+
+#, python-format
+msgid "Released %(date)s"
+msgstr "Intregada su %(date)s"
+
+msgid "APK is still downloading..."
+msgstr "S'APK est galu in iscarrigamentu..."
+
+msgid "This app has no APK files."
+msgstr "Custa aplicatzione non tenet documentos APK."
+
+msgid "If you added this app from a remote repo, try deleting it and adding it again."
+msgstr "Si as annantu custa aplicatzione dae unu depòsitu remotu, proa a l'iscantzellare e a la torrare a annànghere."
+
+msgid "Previous"
+msgstr "Anteposta"
+
+msgid "Next"
+msgstr "Imbeniente"
+
+msgid "Add"
+msgstr "Annanghe"
+
+msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
+msgstr "Pro como non bi sunt ischermada ammustradas, ca cussu diat dèpere permìtere a su proprietàriu de su depòsitu de t'arrastare."
+
+msgid "show screenshots"
+msgstr "ammustra ischermadas"
+
+msgid "Add Screenshot"
+msgstr "Annanghe ischermada"
+
+msgid "Upload Screenshot"
+msgstr "Càrriga ischermada"
+
+msgid "Delete Screenshot"
+msgstr "Iscantzella ischermada"
+
+#, python-format
+msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
+msgstr "Seguru ses de chèrrere iscantzellare cust'ischermada dae s'aplicatzione tua <strong>%(app)s</strong>?"
+
+#, fuzzy
+#| msgid "Language"
+msgid "Language Code"
+msgstr "Limba"
+
+#, python-format
+msgid "Hello, %(user)s"
+msgstr "Salude, %(user)s"
+
+msgid "Please Wait!"
+msgstr ""
+
+msgid "Background Operation in Progress"
+msgstr ""
+
+msgid "Repomaker might be updating or publishing your repo. Or it might be updating a remote repo. Depending on the type and size of the background operation, this might take awhile."
+msgstr ""
+
+msgid "Try Again"
+msgstr ""
+
+msgid "The button won't work for you. Please press F5 to try again."
+msgstr ""
+
+msgid "Error"
+msgstr "Errore"
+
+msgid "My Repos"
+msgstr "Depòsitos meos"
+
+#, python-format
+msgid "Published %(time_ago)s"
+msgstr "Publicada %(time_ago)s"
+
+#, python-format
+msgid "Created %(time_ago)s"
+msgstr "Creada %(time_ago)s"
+
+msgid "Make a collection of apps to share"
+msgstr "Faghe una colletzione de aplicatziones de cumpartzire"
+
+msgid "Create Repo"
+msgstr "Crea depòsitu"
+
+msgid "New Repo"
+msgstr "Depòsitu nou"
+
+msgid "Create"
+msgstr "Crea"
+
+msgid "Delete Repo"
+msgstr "Iscantzella depòsitu"
+
+#, python-format
+msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
+msgstr "Seguru ses de bòlere iscantzellare su depòsitu <strong>%(repo)s</strong>?"
+
+msgid "This will also delete all apps and other files from your repo. You will not be able to get them back, users of your repo will not be able to use it anymore and not receive updates for the apps they received from you. There is no way to recover this repo!"
+msgstr "Custu at a iscantzellare totu sas aplicatziones e sos àteros documentos dae su depòsitu tuo. Non los as a pòdere recuperare, sos impreadores de su depòsitu tuo no l'ant a pòdere impreare prus e no ant a pòdere prus retzire agiornamentos pro sas aplicatziones chi ant retzidu dae tie. Non b'est manera de recuperare custu depòsitu!"
+
+msgid "Please only proceed if you know what you are doing!"
+msgstr "Pro praghere sighi petzi si ischis su chi ses faghende!"
+
+msgid "Yes, I want to delete the repo"
+msgstr "Eja, chèrgio iscantzellare su depòsitu"
+
+msgid "Edit Repo"
+msgstr "Modìfica depòsitu"
+
+msgid "Save Changes"
+msgstr "Sarva sas modìficas"
+
+msgid "Content"
+msgstr "Cuntenutu"
+
+msgid "Share"
+msgstr "Cumpartzi"
+
+msgid "Info"
+msgstr "Informatziones"
+
+msgid "Search for apps in your repository"
+msgstr "Chirca aplicatziones in su depòsitu tuo"
+
+msgid "add from gallery"
+msgstr "annanghe a sa galleria"
+
+#, python-format
+msgid "Alternatively, drag and drop or %(label_start)schoose files%(label_end)s"
+msgstr "O, fintzas, trìsina e lassa o %(label_start)sissèbera documentos%(label_end)s"
+
+msgid "Accepted files include Android apps, documents, eBooks, audio and video."
+msgstr "Sos documentos atzetados includent aplicatziones Android, documentos, ebooks, documentos àudio e vìdeos."
+
+msgid "Your search did not return any results."
+msgstr "Sa chirca tua no at datu risultados."
+
+msgid "Name"
+msgstr "Nùmene"
+
+msgid "Storage"
+msgstr "Memòria"
+
+msgid "Add Storage"
+msgstr "Annanghe memòria"
+
+msgid "Fingerprint"
+msgstr "Imprenta digitale"
+
+msgid "Remove Repo"
+msgstr "Boga depòsitu"
+
+msgid "Add storage to publish"
+msgstr "Annanghe memòria pro publicare"
+
+msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
+msgstr "Su depòsitu tuo at a èssere publicadu automaticamente cando as a annànghere memòria. Repomaker non publitzizat publicamente sa cosa tua. Petzi sas persones chi ant a retzire su ligàmene diretu a su depòsitu tuo l'ant a pòdere bìdere."
+
+msgid "add storage"
+msgstr "annanghe memòria"
+
+#, python-format
+msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
+msgid_plural "You have  <span>%(app_count)s apps</span> in your repo. Share it!"
+msgstr[0] "Tenes  <span>%(app_count)s aplicatzione</span> in su depòsitu tuo. Cumpartzi·la!"
+msgstr[1] "Tenes  <span>%(app_count)s aplicatziones</span> in su depòsitu tuo. Cumpartzi·las!"
+
+msgid "view repo"
+msgstr "abbista su depòsitu"
+
+msgid "share public link"
+msgstr "cumpartzi su ligàmene pùblicu"
+
+msgid "copy link"
+msgstr "còpia ligàmene"
+
+msgid "add to an android phone"
+msgstr "annanghe a unu telèfono Android"
+
+msgid "To install these apps on your Android phone, add them to F-Droid."
+msgstr "Pro installare custas aplicatziones in su telèfono Android tuo annanghe·las a F-Droid."
+
+msgid "F-Droid ensures access to secure app updates."
+msgstr "F-Droid garantit s'atzessu a agiornamentos seguros pro sas aplicatziones."
+
+msgid "Scan QR"
+msgstr "Iscansi QR"
+
+#, python-format
+msgid "Check out this F-Droid repo: %(name)s"
+msgstr "Abbista·ti custu depòsitu F-Droid: %(name)s"
+
+msgid "Browse Gallery"
+msgstr "Esplora sa galleria"
+
+msgid "Search"
+msgstr "Chirca"
+
+#, python-format
+msgid "Category (%(count)s)"
+msgstr "Categoria (%(count)s)"
+
+msgid "All"
+msgstr "Totu"
+
+#, python-format
+msgid "Source (%(count)s)"
+msgstr "Mitza (%(count)s)"
+
+msgid "Add a repo"
+msgstr "Annanghe unu depòsitu"
+
+#, python-format
+msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
+msgstr "Peruna aplicatzione agatada cun  '%(search_term)s'. Pro praghere proa a fàghere una chirca diferente o boga àteros critèrios de filtru."
+
+msgid "There are no apps in this repo."
+msgstr "Non bi sunt aplicatziones in custu depòsitu."
+
+msgid "There are no apps available in the repos."
+msgstr "Non bi sunt aplicatziones disponìbiles in sos depòsitos."
+
+msgid "If you just added a repo, wait for the apps to download and try again later."
+msgstr "Si as acabadu como de annànghere unu depòsitu, iseta chi sas aplicatziones siant iscarrigadas e torra a proare prus a tardu."
+
+msgid "This repo has no apps in the selected category. Try clearing it or select a different repo."
+msgstr "Custu depòsitu non tenet aplicatziones in sa categoria isseberada. Proa a la bogare o issèbera un'àteru depòsitu."
+
+msgid "There are no apps available in the selected category. Try clearing it."
+msgstr "Non bi sunt aplicatziones disponìbiles in sa categoria isseberada. Proa a la bogare."
+
+msgid "Delete Storage"
+msgstr "Iscantzella memòria"
+
+#, python-format
+msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong> from your repo?"
+msgstr "Seguru ses de chèrrere bogare sa memòria in <strong>%(object)s</strong> dae su depòsitu tuo?"
+
+msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
+msgstr "Custu no at a bogare su cuntenutu dae cussa memòria ma at a acabare de bi publicare in intro versiones imbenientes de su depòsitu tuo."
+
+msgid "Enable Storage"
+msgstr "Abìlita memòria"
+
+msgid "Disable Storage"
+msgstr "Disabìlita memòria"
+
+msgid "Repo Address"
+msgstr "Indiritzu de su depòsitu"
+
+msgid "Edit Storage"
+msgstr "Modìfica memòria"
+
+msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
+msgstr "Pro praghere assegura·ti de annànghere custa crae SSH a su contu Git tuo pro fàghere funtzionare su carrigamentu. Bi sunt istrutziones pro <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> e <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">Github</a>."
+
+msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
+msgstr "E, fintzas, assegura·ti chi sa camba printzipale de su depòsitu tuo siat <b>non amparada</b> dae sos imbios fortados."
+
+msgid "Git Repository SSH Address"
+msgstr "Indiritzu SSH de su depòsitu Git"
+
+msgid "Region"
+msgstr "Regione"
+
+msgid "Bucket"
+msgstr "Istèrgiu"
+
+msgid "Access Key ID"
+msgstr "Crae de atzessu ID"
+
+msgid "Please make sure to add this public SSH key to your SSH server's <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> file,\tif you have not done so already."
+msgstr "Pro praghere assegura·ti de annànghere custa crae SSH a su documentu de sas <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\"></a> </tt>,\tsi non l'as giai fatu."
+
+msgid "Security Warning: This gives repomaker write access to that storage. Please limit this user's access as much as possible."
+msgstr "Avertimentu pro sa seguresa: Custu at a dare a repomaker atzessu a custa memòria. Pro praghere lìmita s'atzessu de custu impreadore su prus chi podes."
+
+msgid "Username"
+msgstr "Nùmene impreadore"
+
+msgid "Host"
+msgstr "Istrangiadore (host)"
+
+msgid "Path"
+msgstr "Àndala"
+
+msgid "Your local default SSH key will be used to connect to the storage."
+msgstr "Sa crae SSH predefinida tua at a èssere impreada pro sa connessione a sa memòria."
+
+msgid "Please make sure to authorize this public SSH key for your remote storage, if you have not done so already."
+msgstr "Pro praghere assegura·ti de autorizare custa crae SSH pro su depòsitu remotu tuo, si non l'as giai fatu."
+
+msgid "Activate this storage only once you have added the SSH key."
+msgstr "Ativa custa memòria petzi a pustis de àere annantu sa crae SSH."
+
+msgid "If this storage is experiencing problems, please check that the SSH key works properly."
+msgstr "Si custa memòria est tenende problemas, pro praghere verìfica chi sa crae SSH siat funtzionende comente si tocat."
+
+#, python-format
+msgid "Update %(storage_name)s"
+msgstr "Agiorna %(storage_name)s"
+
+#, python-format
+msgid "Setup %(storage_name)s"
+msgstr "Configura %(storage_name)s"
+
+msgid "cancel"
+msgstr "annulla"
+
+msgid "save"
+msgstr "sarva"
+
+msgid "Here's how to copy the SSH Address from GitLab:"
+msgstr "In custa manera podes copiare s'indiritzu SSH dae GitLab:"
+
+msgid "Setup a place to store your repo"
+msgstr "Cunfigura unu logu in ue sarvare su depòsitu tuo"
+
+msgid "Git"
+msgstr "Git"
+
+msgid "Easy, free, requires an account"
+msgstr "Fàtzile, de badas, tenet bisòngiu de unu contu"
+
+msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
+msgstr "Git est un'aina populare pro manigiare versiones de cosas. Podes publicare depòsitos in GitLab, GitHub o cale si siat àteru servìtziu Git in manera segura. Sos servìtzios Git impreant SSH pro copiare in manera segura documentos dae s'elaboradore tuo a elaboradores remotos."
+
+msgid "Setup"
+msgstr "Configura"
+
+msgid "GitLab"
+msgstr "GitLab"
+
+msgid "GitHub"
+msgstr "GitHub"
+
+msgid "SSH"
+msgstr "SSH"
+
+msgid "Requires a personal web server or host that supports SSH"
+msgstr "Tenet bisòngiu de unu server web personale o de un'allogiamentu (host) chi suportet SSH"
+
+msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
+msgstr "SSH est una tecnologia chi podet èssere impreada pro copiare documentos in manera segura in elaboradores remotos. Imprrende Git comente memòria fintzas sos documentos ant a èssere copiados pro mèdiu de SSH. Ma s'optzione SSh pura copiat diretamente sos documentos chene impreare àteras tecnologias."
+
+msgid "Amazon S3"
+msgstr "Amazon S3"
+
+msgid "Requires an Amazon account, Pricing varies"
+msgstr "Tenet bisòngiu de unu contu Amazon, su prètziu podet variare"
+
+msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
+msgstr "Amazon S3 est unu servìtziu web ofertu dae Amazon Web Services. Amazon S3 frunit ispàtzios de memòria pro mèdiu de interfaches de servìtzios web. Vìsita su situ web de Amazon S3 pro àteras informatziones."
+
+#, python-format
+msgid "Version %(version)s (%(date)s)"
+msgstr "Versione %(version)s (%(date)s)"
+
+msgid "Added"
+msgstr "Annantu"
+
+msgid "Enter email"
+msgstr "Inserta unu contu de posta eletrònica"
+
+msgid "Enter your email address and we'll send a link to reset it. If you did not sign up with an email, we cannot help you securely reset your password."
+msgstr "Inserta s'indiritzu de posta eletrònica e nois amus a imbiare unu ligàmene pro la ripristinare. Si no intras cun un'indiritzu de posta eletrònica non ti podimus agiudare a ripristinare in manera segura sa crae tua."
+
+msgid "This is not a valid language code."
+msgstr ""
+
+msgid "This language already exists. Please choose another one!"
+msgstr ""
+
+msgid "Enter SSH URL"
+msgstr "Inserta s'URL SSH"
+
+msgid "Raw Git URL"
+msgstr "URL Git chene modìficas"
+
+msgid "This is the location where the uploaded files can be accessed from in raw form. Leave empty for GitHub or GitLab.com repositories."
+msgstr "Custa est sa positzione in ue si podet atzèdere a sos documentos carrigados chene modìficas. Lassa bòidu in casu de depòsitos GitHub o GitLab.com."
+
+msgid "This URL must start with 'git@'."
+msgstr "Custu URL depet incumintzare cun 'git@'."
+
+msgid "This URL must end with '.git'."
+msgstr "Custu URL depet acabare cun '.git'."
+
+msgid "This URL is invalid. Please copy the exact SSH URL of your git repository."
+msgstr "Custu URL no est vàlidu. Pro praghere còpia s'URL SSH esatu in su depòsitu git tuo."
+
+msgid "Please add a valid URLfor the raw content of this git repository."
+msgstr "Pro praghere annanghe unu URL vàlidu pro su cuntenutu puru de custu depòsitu git."
+
+msgid "Repository URL"
+msgstr "URL depòsitu"
+
+msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
+msgstr "Pro praghere imprea un'URL cun un'imprenta digitale a sa fine, ca gasi podimus validare s'autentitzidade de su depòsitu."
+
+msgid "Please don't add one of your own repositories here."
+msgstr "Pro praghere no annangas unu de sos dispositivos tuos inoghe."
+
+#, python-format
+msgid "Could not validate repository: %s"
+msgstr "Impossìbile validare su depòsitu: %s"
+
+msgid "Describe the repo"
+msgstr "Descrie su depòsitu"
+
+msgid "Bucket Name"
+msgstr "Nùmene istèrgiu (bucket)"
+
+msgid "Secret Access Key"
+msgstr "Crae de atzessu segreta"
+
+msgid "Other regions are currently not supported."
+msgstr "Àteras regiones non sunt suportadas, pro como."
+
+msgid "Language"
+msgstr "Limba"
+
+msgid "Select Screenshot for upload"
+msgstr "Issèbera un'ischermada de carrigare"
+
+msgid "Use local default SSH Key"
+msgstr "Imprea sa crae SSH predefinida locale"
+
+msgid "User Name"
+msgstr "Nùmene impreadore"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "This is the location where the uploaded files can be accessed from."
+msgstr "Custa est sa positzione dae ue si podet atzèdere a sos documentos carrigados."
+
+msgid "Primary Storage"
+msgstr "Memòria primària"
+
+msgid "Make this storage the primary storage of the repository."
+msgstr "Issebera custa memòria comente memòria primària de su depòsitu."

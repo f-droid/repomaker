@@ -1,0 +1,707 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2017-07-22 12:56+0000\n"
+"Last-Translator: monolifed <monolifed@gmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/f-droid/repomaker/tr/>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2.16-dev\n"
+
+#, python-format
+msgid "This file is not an update for %s"
+msgstr "Bu dosya %s için bir güncelleme değil"
+
+msgid "This APK already exists in the current repo."
+msgstr "Bu APK zaten şu anki depoda var."
+
+msgid "Invalid APK signature"
+msgstr "Geçersiz APK imzası"
+
+msgid "Invalid APK."
+msgstr "Geçersiz APK."
+
+msgid "Unsupported File Type"
+msgstr "Desteklenmeyen Dosya Türü"
+
+msgid "This file is of a different type than the other versions of this app."
+msgstr "Bu dosya bu uygulamanın diğer sürümlerden farklı bir türde."
+
+msgid "APK"
+msgstr "APK"
+
+msgid "Book"
+msgstr "Kitap"
+
+msgid "Document"
+msgstr "Belge"
+
+msgid "Image"
+msgstr "Görüntü"
+
+msgid "Audio"
+msgstr "Ses"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Other"
+msgstr "Diğer"
+
+msgid "This app does already exist in your repository."
+msgstr "Bu uygulama zaten deponuzda var."
+
+msgid "This app does not have any working versions available."
+msgstr "Bu uygulamanın kullanılabilir çalışan bir sürümü yok."
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "7'' Tablet"
+msgstr "7'' Tablet"
+
+msgid "10'' Tablet"
+msgstr "10'' Tablet"
+
+msgid "TV"
+msgstr "TV"
+
+msgid "Wearable"
+msgstr "Giyilebilir"
+
+msgid "US Standard"
+msgstr "ABD Standart"
+
+msgid "Amazon S3 Storage"
+msgstr "Amazon S3 Depolama"
+
+msgid "Enter a valid user name consisting of letters, numbers, underscores or hyphens."
+msgstr "Harf, rakam, altçizgi veya çizgiden oluşan geçerli bir kullanıcı adı girin."
+
+msgid "Enter a valid hostname."
+msgstr "Geçerli bir sunucu adı girin."
+
+msgid "Enter a valid path."
+msgstr "Geçerli bir konum girin."
+
+msgid "SSH Storage"
+msgstr "SSH Depolama"
+
+msgid "Git Storage"
+msgstr "Git Depolama"
+
+msgid "Default Storage"
+msgstr "Öntanımlı Depolama"
+
+msgid "American English"
+msgstr ""
+
+msgid "Change E-mail"
+msgstr "E-postayı Değiştir"
+
+msgid "Sign Out"
+msgstr "Oturumu Kapat"
+
+msgid "Sign In"
+msgstr "Oturum Aç"
+
+msgid "Sign Up"
+msgstr "Kaydol"
+
+msgid "Distribute apps."
+msgstr "Uygulamaları dağıt."
+
+msgid "Spread the love."
+msgstr "Aşkı yay."
+
+msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
+msgstr "Repomaker, arkadaşlarınız ile paylaşmak için uygulamaların, müziklerin, kitapların ve resimlerin kolleksiyonlarını oluşturmak için geliştirilmiş  özgür bir web uygulamasıdır. F-Droid'i mobil dağıtım platformu olarak kullanır. Sadece Android'de kullanılabilir."
+
+msgid "Login"
+msgstr "Oturum Aç"
+
+msgid "Forgot Password"
+msgstr "Parolamı Unuttum"
+
+msgid "Or login with"
+msgstr "Veya birlikte giriş yap"
+
+msgid "Logout"
+msgstr "Oturumu Kapat"
+
+msgid "See you later"
+msgstr "Sonra görüşürüz"
+
+msgid "Your security is important to us. Please confirm that you want to logout."
+msgstr "Güvenliğiniz bizim için önemlidir. Lütfen oturumu kapatmak istediğinizi onaylayın."
+
+msgid "logout"
+msgstr "oturumu kapat"
+
+msgid "submit"
+msgstr "gönder"
+
+msgid "We have sent you an email with a link to reset your password."
+msgstr "Şifrenizi sıfırlamanız için size bir bağlantı içeren bir e-posta gönderdik."
+
+msgid "Signup"
+msgstr "Kaydol"
+
+msgid "Delete App Version"
+msgstr "Uygulama Sürümünü Sil"
+
+#, python-format
+msgid "Are you sure you want to delete this version <strong>%(version)s</strong> (%(code)s) from your app <strong>%(app)s</strong>?"
+msgstr "Bu <strong>%(version)s</strong> (%(code)s) sürümünü <strong>%(app)s</strong> uygulamanızdan silmek istediğinize emin misiniz?"
+
+msgid "Confirm"
+msgstr "Onayla"
+
+msgid "Delete App"
+msgstr "Uygulamayı Sil"
+
+#, python-format
+msgid "Are you sure you want to delete your app <strong>%(object)s</strong>?"
+msgstr "<strong>%(object)s</strong> uygulamanızı silmek istediğinize emin misiniz?"
+
+#, python-format
+msgid "Edit %(app)s"
+msgstr "%(app)s Uygulamasını Düzenle"
+
+msgid "Remove App"
+msgstr "Uygulamayı Kaldır"
+
+msgid "Done"
+msgstr "Bitti"
+
+msgid "By"
+msgstr "Tarafından"
+
+#, fuzzy
+#| msgid "Short Summary (40 characters)"
+msgid "Summary Override (40 characters)"
+msgstr "Kısa Özet (40 karakter)"
+
+msgid "Short Summary (40 characters)"
+msgstr "Kısa Özet (40 karakter)"
+
+msgid "Category"
+msgstr "Kategori"
+
+msgid "Choose Category"
+msgstr "Kategori Seç"
+
+#, fuzzy
+#| msgid "Description"
+msgid "Description Override"
+msgstr "Açıklama"
+
+msgid "Description"
+msgstr "Açıklama"
+
+msgid "Screenshots"
+msgstr "Ekran Görüntüsü"
+
+msgid "Add files"
+msgstr "Dosyaları ekle"
+
+msgid "Drag and drop screenshots"
+msgstr "Ekran görüntülerini sürükle ve bırak"
+
+msgid "or"
+msgstr "veya"
+
+msgid "browse to upload"
+msgstr "yüklemek için göz at"
+
+msgid "Feature Graphic"
+msgstr ""
+
+#, fuzzy
+#| msgid "Drag and drop .apk files"
+msgid "Drag and drop a feature graphic"
+msgstr ".apk dosyalarını sürükle ve bırak"
+
+msgid "Drag and drop .apk files"
+msgstr ".apk dosyalarını sürükle ve bırak"
+
+#, fuzzy, python-format
+#| msgid "Language (%(count)s)"
+msgid "Languages (%(count)s)"
+msgstr "Dil (%(count)s)"
+
+msgid "Edit"
+msgstr "Düzenle"
+
+#, fuzzy
+#| msgid "Save Translation"
+msgid "Add Translation"
+msgstr "Çeviriyi Kaydet"
+
+#, python-format
+msgid "By %(author)s"
+msgstr "%(author)s tarafından"
+
+#, python-format
+msgid "Updated %(time)s ago"
+msgstr "%(time)s önce güncellendi"
+
+msgid "version history"
+msgstr "sürüm geçmişi"
+
+#, python-format
+msgid "Version %(version)s (%(code)s)"
+msgstr "Sürüm %(version)s (%(code)s)"
+
+#, python-format
+msgid "Released %(date)s"
+msgstr "%(date)s tarihinde yayımlandı"
+
+msgid "APK is still downloading..."
+msgstr "APK hala indiriliyor..."
+
+msgid "This app has no APK files."
+msgstr "Bu uygulamanın APK dosyası yok."
+
+msgid "If you added this app from a remote repo, try deleting it and adding it again."
+msgstr "Bu uygulamayı uzak bir depodan eklediyseniz, onu silip tekrar eklemeyi deneyin."
+
+msgid "Previous"
+msgstr "Önceki"
+
+msgid "Next"
+msgstr "Sonraki"
+
+msgid "Add"
+msgstr "Ekle"
+
+msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
+msgstr "Şu anda hiçbir ekran görüntüsü gösterilmiyor çünkü bu repo sahibine sizi takip olanağı sağlar."
+
+msgid "show screenshots"
+msgstr "ekran görüntülerini göster"
+
+msgid "Add Screenshot"
+msgstr "Ekran Görüntüsü Ekle"
+
+msgid "Upload Screenshot"
+msgstr "Karşıya Ekran Görüntüsü Yükle"
+
+msgid "Delete Screenshot"
+msgstr "Ekran Görüntüsünü Sil"
+
+#, python-format
+msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
+msgstr "Bu ekran görüntüsünü <strong>%(app)s</strong> uygulamanızdan silmek istediğinize emin misiniz?"
+
+#, fuzzy
+#| msgid "Language"
+msgid "Language Code"
+msgstr "Dil"
+
+#, python-format
+msgid "Hello, %(user)s"
+msgstr "Merhaba, %(user)s"
+
+msgid "Please Wait!"
+msgstr ""
+
+msgid "Background Operation in Progress"
+msgstr ""
+
+msgid "Repomaker might be updating or publishing your repo. Or it might be updating a remote repo. Depending on the type and size of the background operation, this might take awhile."
+msgstr ""
+
+msgid "Try Again"
+msgstr ""
+
+msgid "The button won't work for you. Please press F5 to try again."
+msgstr ""
+
+msgid "Error"
+msgstr "Hata"
+
+msgid "My Repos"
+msgstr "Depolarım"
+
+#, python-format
+msgid "Published %(time_ago)s"
+msgstr "%(time_ago)s önce yayımlandı"
+
+#, python-format
+msgid "Created %(time_ago)s"
+msgstr "%(time_ago)s önce oluşturuldu"
+
+msgid "Make a collection of apps to share"
+msgstr "Paylaşmak için uygulamalardan koleksiyon yap"
+
+msgid "Create Repo"
+msgstr "Depo Oluştur"
+
+msgid "New Repo"
+msgstr "Yeni Depo"
+
+msgid "Create"
+msgstr "Oluştur"
+
+msgid "Delete Repo"
+msgstr "Depo Sil"
+
+#, python-format
+msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
+msgstr "Bu <strong>%(repo)s</strong> deposunu silmek istediğinize emin misiniz?"
+
+msgid "This will also delete all apps and other files from your repo. You will not be able to get them back, users of your repo will not be able to use it anymore and not receive updates for the apps they received from you. There is no way to recover this repo!"
+msgstr "Bu ayrıca deponuzdan tüm uygulamaları ve diğer dosyaları silecek. Onları geri alamayacaksınız, deponuzun kullanıcıları onu artık kullanamayacaklar ve sizden aldıkları uygulamalar için güncellemeler alamayacaklar. Bu depoyu kurtarmanın yolu yoktur!"
+
+msgid "Please only proceed if you know what you are doing!"
+msgstr "Lütfen sadece ne yaptığınızı biliyorsanız  devam edin!"
+
+msgid "Yes, I want to delete the repo"
+msgstr "Evet, depoyu silmek istiyorum"
+
+msgid "Edit Repo"
+msgstr "Depo Düzenle"
+
+msgid "Save Changes"
+msgstr "Değişiklikleri Kaydet"
+
+msgid "Content"
+msgstr "İçerik"
+
+msgid "Share"
+msgstr "Paylaş"
+
+msgid "Info"
+msgstr "Bilgi"
+
+msgid "Search for apps in your repository"
+msgstr "Deponuzda uygulamaları arayın"
+
+msgid "add from gallery"
+msgstr "galeriden ekle"
+
+#, python-format
+msgid "Alternatively, drag and drop or %(label_start)schoose files%(label_end)s"
+msgstr "Alternatif olarak, sürükleyip bırakın ya da %(label_start)s dosyaları seçin%(label_end)s"
+
+msgid "Accepted files include Android apps, documents, eBooks, audio and video."
+msgstr "Kabul edilen dosyalar Android uygulamalarını, belgeleri, e-kitapları, sesleri ve videoları içerir."
+
+msgid "Your search did not return any results."
+msgstr "Aramanız hiç sonuç döndürmedi."
+
+msgid "Name"
+msgstr "Ad"
+
+msgid "Storage"
+msgstr "Depolama"
+
+msgid "Add Storage"
+msgstr "Depolama Ekle"
+
+msgid "Fingerprint"
+msgstr "Parmak izi"
+
+msgid "Remove Repo"
+msgstr "Depo Sil"
+
+msgid "Add storage to publish"
+msgstr "Yayımlama için depo ekle"
+
+msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
+msgstr "Depolama eklediğinizde, deponuz kendiliğinden yayımlanacaktır. Repomaker deponuzun genel reklamını yapmaz. Sadece deponuza doğrudan bağlantıyı alan kişiler onu görebilecektir."
+
+msgid "add storage"
+msgstr "depolama ekle"
+
+#, python-format
+msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
+msgid_plural "You have  <span>%(app_count)s apps</span> in your repo. Share it!"
+msgstr[0] "Deponuzda <span>%(app_count)s uygulamaya</span> sahipsiniz. Paylaşın!"
+msgstr[1] "Deponuzda <span>%(app_count)s uygulamaya</span> sahipsiniz. Paylaşın!"
+
+msgid "view repo"
+msgstr "depo görüntüle"
+
+msgid "share public link"
+msgstr "açık bağlantıyı paylaş"
+
+msgid "copy link"
+msgstr "bağlantıyı kopyala"
+
+msgid "add to an android phone"
+msgstr "bir android telefona ekle"
+
+msgid "To install these apps on your Android phone, add them to F-Droid."
+msgstr "Bu uygulamaları Android telefonunuzda kurmak için, onları F-Droid'e ekleyin."
+
+msgid "F-Droid ensures access to secure app updates."
+msgstr "F-Droid güvenli uygulama güncellemelerine erişim sağlar."
+
+msgid "Scan QR"
+msgstr "QR Tara"
+
+#, python-format
+msgid "Check out this F-Droid repo: %(name)s"
+msgstr "Bu F-Droid deposuna göz atın: %(name)s"
+
+msgid "Browse Gallery"
+msgstr "Galeriye Gözat"
+
+msgid "Search"
+msgstr "Ara"
+
+#, python-format
+msgid "Category (%(count)s)"
+msgstr "Kategori (%(count)s)"
+
+msgid "All"
+msgstr "Hepsi"
+
+#, python-format
+msgid "Source (%(count)s)"
+msgstr "Kaynak (%(count)s)"
+
+msgid "Add a repo"
+msgstr "Bir depo ekle"
+
+#, python-format
+msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
+msgstr "'%(search_term)s' ile eşleşen uygulama bulunamadı. Lütfen farklı bir arama deneyin veya diğer süzme ölçütlerini kaldırın."
+
+msgid "There are no apps in this repo."
+msgstr "Bu depoda uygulama yok."
+
+msgid "There are no apps available in the repos."
+msgstr "Depolarda kullanılabilir uygulama yok."
+
+msgid "If you just added a repo, wait for the apps to download and try again later."
+msgstr "Bir depoyu henüz eklediyseniz, uygulamaların indirilmesini bekleyin ve daha sonra tekrar deneyin."
+
+msgid "This repo has no apps in the selected category. Try clearing it or select a different repo."
+msgstr "Bu deponun seçilen kategoride uygulası yok. Temizlemeyi deneyin ya da farklı bir depo seçin."
+
+msgid "There are no apps available in the selected category. Try clearing it."
+msgstr "Seçilen kategoride kullanılabilir uygulama yok. Temizlemeyi deneyin."
+
+msgid "Delete Storage"
+msgstr "Depolamayı Sil"
+
+#, python-format
+msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong> from your repo?"
+msgstr "Deponuzdan <strong>%(object)s</strong> konumundaki depolamayı kaldırmak istediğinize emin misiniz?"
+
+msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
+msgstr "Bu depolamadan içeriği kaldırmaz sadece reponuzun gelecek sürümlerini ona yayımlamayı durdurur."
+
+msgid "Enable Storage"
+msgstr "Depolamayı Etkinleştir"
+
+msgid "Disable Storage"
+msgstr "Depolamayı Devre Dışı Kıl"
+
+msgid "Repo Address"
+msgstr "Depo Adresi"
+
+msgid "Edit Storage"
+msgstr "Depolamayı Düzenle"
+
+msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
+msgstr "Lütfen karşıya yüklemenin çalışması için bu açık SSH anahtarını Git hesabınıza eklediğinizden emin olun. <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> ve <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a> için talimatlar vardır."
+
+msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
+msgstr "Ayrıca, lütfen deponuzun master dalının force push'tan <b>korunmadığına</b> emin olun."
+
+msgid "Git Repository SSH Address"
+msgstr "Git Deposu SSH Adresi"
+
+msgid "Region"
+msgstr "Bölge"
+
+msgid "Bucket"
+msgstr "Kova"
+
+msgid "Access Key ID"
+msgstr "Erişim Anahtarı Kimliği"
+
+msgid "Please make sure to add this public SSH key to your SSH server's <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> file,\tif you have not done so already."
+msgstr "Lütfen, hala yapmadıysanız, bu açık SSH anahtarının SSH sunucunuzun <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> dosyasına eklendiğinden emin olun."
+
+msgid "Security Warning: This gives repomaker write access to that storage. Please limit this user's access as much as possible."
+msgstr "Güvenlik Uyarısı: Bu repomaker'a o depolamaya yazma erişimi verir. Lütfen bu kullanıcının erişimini olabildiğince kısıtlayın."
+
+msgid "Username"
+msgstr "Kullanıcı Adı"
+
+msgid "Host"
+msgstr "Sunucu"
+
+msgid "Path"
+msgstr "Konum"
+
+msgid "Your local default SSH key will be used to connect to the storage."
+msgstr "Depolamaya bağlamak için yerel öntanımlı SSH anahtarınız  kullanılacak."
+
+msgid "Please make sure to authorize this public SSH key for your remote storage, if you have not done so already."
+msgstr "Lütfen hala yapmadıysanız, uzak depolamanız için bu açık SSH anahtarını yetkilendirdiğinizden emin olun."
+
+msgid "Activate this storage only once you have added the SSH key."
+msgstr "Bu depolama sadece siz SSH anahtarı eklediğinizde etkinleşsin."
+
+msgid "If this storage is experiencing problems, please check that the SSH key works properly."
+msgstr "Bu depolama sorunlar yaşıyorsa, lütfen SSH anahtarının düzgün çalıştığını doğrulayın."
+
+#, python-format
+msgid "Update %(storage_name)s"
+msgstr "%(storage_name)s güncelle"
+
+#, python-format
+msgid "Setup %(storage_name)s"
+msgstr "%(storage_name)s kur"
+
+msgid "cancel"
+msgstr "iptal"
+
+msgid "save"
+msgstr "kaydet"
+
+msgid "Here's how to copy the SSH Address from GitLab:"
+msgstr "GitLab'dan SSH Adresinin nasıl kopyalanacağı:"
+
+msgid "Setup a place to store your repo"
+msgstr "Deponuzu saklamak için bir yer ayarlayın"
+
+msgid "Git"
+msgstr "Gıt"
+
+msgid "Easy, free, requires an account"
+msgstr "Kolay, ücretsiz, bir hesap gerektirir"
+
+msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
+msgstr "Git, sürüm kontrol şeyleri için popüler bir araçtır . GitLab, GitHub, veya başka bir Git hizmeti ile deponuzu güvenli olarak yayımlayabilirsiniz. Git hizmetleri dosyaları bilgisayarınızdan uzak bilgisayarlara güvenli olarak kopyalamak için SSH kullanır."
+
+msgid "Setup"
+msgstr "Kur"
+
+msgid "GitLab"
+msgstr "GitLab"
+
+msgid "GitHub"
+msgstr "GitHub"
+
+msgid "SSH"
+msgstr "SSH"
+
+msgid "Requires a personal web server or host that supports SSH"
+msgstr "SSH destekleyen kişisel bir web sunucusu veya bir sunucu gerektirir"
+
+msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
+msgstr "SSH dosyaları uzak bilgisayarlara güvenli olarak kopyalamak için kullanılabilen bir teknolojidir. Depolama olarak Git kullanılırken, dosyalar da SSH ile kopyalanır. Ama sade SSH seçeneği başka bir teknoloji kullanmadan dosyaları doğrudan kopyalar."
+
+msgid "Amazon S3"
+msgstr "Amazon S3"
+
+msgid "Requires an Amazon account, Pricing varies"
+msgstr "Bir Amazon hesabı gerekir. Ücretlendirme değişir"
+
+msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
+msgstr "Amazon S3, Amazon Web Hizmetleri tarafından sunulan bir web hizmetidir. Amazon S3, depoları web hizmeti arabirimleri üzerinden sağlar. Fiyatlandırma değişir. Ayrıntılar için Amazon S3 web sitesini ziyaret edin."
+
+#, python-format
+msgid "Version %(version)s (%(date)s)"
+msgstr "Sürüm %(version)s (%(date)s)"
+
+msgid "Added"
+msgstr "Eklendi"
+
+msgid "Enter email"
+msgstr "E-posta girin"
+
+msgid "Enter your email address and we'll send a link to reset it. If you did not sign up with an email, we cannot help you securely reset your password."
+msgstr "E-posta adresinizi girin ve onu sıfırlamak için bir bağlantı göndereceğiz. Bir eposta ile kaydolmadıysanız, parolanızı güvenli olarak sıfırlamanıza yardımcı olamayız."
+
+msgid "This is not a valid language code."
+msgstr ""
+
+msgid "This language already exists. Please choose another one!"
+msgstr ""
+
+msgid "Enter SSH URL"
+msgstr "SSH URL'si girin"
+
+msgid "Raw Git URL"
+msgstr "Ham Git URL'si"
+
+msgid "This is the location where the uploaded files can be accessed from in raw form. Leave empty for GitHub or GitLab.com repositories."
+msgstr "Bu karşıya yüklenen dosyaların ham formda erişilebileceği yerdir. GitHub veya GitLab.com depoları için boş bırakın."
+
+msgid "This URL must start with 'git@'."
+msgstr "Bu URL 'git@' ile başlamalı."
+
+msgid "This URL must end with '.git'."
+msgstr "Bu URL '.git' ile bitmeli."
+
+msgid "This URL is invalid. Please copy the exact SSH URL of your git repository."
+msgstr "Bu URL geçersiz. Lütfen git deponuzun tam SSH URL'sini kopyalayın."
+
+msgid "Please add a valid URLfor the raw content of this git repository."
+msgstr "Lütfen bu git deposunun ham içeriği için geçerli bir URL ekleyin."
+
+msgid "Repository URL"
+msgstr "Depo URL'si"
+
+msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
+msgstr "Lütfen sonunda parmak izi olan bir URL kullanın, böylece deponun geçerliliğini onaylayabiliriz."
+
+msgid "Please don't add one of your own repositories here."
+msgstr "Lütfen buraya kendi depolarınızdan birini eklemeyin."
+
+#, python-format
+msgid "Could not validate repository: %s"
+msgstr "Depo doğrulanamadı: %s"
+
+msgid "Describe the repo"
+msgstr "Depoyu açıkla"
+
+msgid "Bucket Name"
+msgstr "Kova Adı"
+
+msgid "Secret Access Key"
+msgstr "Gizli Erişim Anahtarı"
+
+msgid "Other regions are currently not supported."
+msgstr "Diğer bölgeler şu anda desteklenmiyor."
+
+msgid "Language"
+msgstr "Dil"
+
+msgid "Select Screenshot for upload"
+msgstr "Karşıya yükleme için ekran görüntüsü seç"
+
+msgid "Use local default SSH Key"
+msgstr "Yerel öntanımlı SSH Anahtarını kullan"
+
+msgid "User Name"
+msgstr "Kullanıcı Adı"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "This is the location where the uploaded files can be accessed from."
+msgstr "Bu karşıya yüklenen dosyaların erişilebileceği yerdir."
+
+msgid "Primary Storage"
+msgstr "Birincil Depolama"
+
+msgid "Make this storage the primary storage of the repository."
+msgstr "Bu depolamayı deponun birincil depolaması yap."
