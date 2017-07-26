@@ -2,17 +2,21 @@ import os
 
 from setuptools import setup, find_packages
 
+DATA_PREFIX = os.path.join('share', 'repomaker')
+
 packages = find_packages(exclude=['*.tests*'])
 print("Packages: %s" % str(packages))
 
 
-def all_files_in(directory):
-    files = []
+def get_data_files_in(directory):
+    pairs = []
     for (rel_path, directories, filenames) in os.walk(directory):
+        files = []
         for filename in filenames:
-            # TODO do not store files outside package directory
-            files.append(os.path.join('..', rel_path, filename))
-    return files
+            files.append(os.path.join(rel_path, filename))
+        if len(files) > 0:
+            pairs.append((os.path.join(DATA_PREFIX, rel_path), files))
+    return pairs
 
 
 setup(
@@ -44,9 +48,8 @@ setup(
         'git+https://gitlab.com/fdroid/fdroidserver.git@0be224b3e0c7b82b36bdd3c6bca07e0e6cb4a023#egg=fdroidserver',
     ],
 
-    # List additional groups of dependencies here (e.g. development
-    # dependencies). You can install these using the following syntax,
-    # for example:
+    # List additional groups of dependencies here (e.g. development dependencies).
+    # You can install these using the following syntax, for example:
     # $ pip install -e .[dev,test]
     extras_require={
         'test': [
@@ -56,21 +59,18 @@ setup(
         ],
     },
 
-    # If there are data files included in your packages that need to be
-    # installed, specify them here.  If using Python 2.6 or less, then these
-    # have to be included in MANIFEST.in as well.
-    package_data={
-        'repomaker': [
-            '../locale/*/LC_MESSAGES/*.mo',
-            '../media/default-*.png',
-        ] + all_files_in('node_modules')  # TODO only include what we need
-    },
+    # package_data={},
 
     # Although 'package_data' is the preferred approach, in some case you may
     # need to place data files outside of your packages. See:
-    # http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files # noqa
+    # http://docs.python.org/3.5/distutils/setupscript.html#installing-additional-files # noqa
     # In this case, 'data_file' will be installed into '<sys.prefix>/my_data'
-#    data_files=[('my_data', ['data/data_file'])],
+    data_files=get_data_files_in('data/static/') + [
+        (os.path.join(DATA_PREFIX, 'data', 'media'), [
+            'data/media/default-app-icon.png',
+            'data/media/default-repo-icon.png',
+        ])
+    ],
 
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow

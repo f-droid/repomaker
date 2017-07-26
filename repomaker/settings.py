@@ -17,6 +17,9 @@ from django.utils.translation import ugettext_lazy
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Where user data such as repositories will be stored
+DATA_DIR = os.path.join(BASE_DIR, 'data')
+
 SINGLE_USER_MODE = True
 
 # Quick-start development settings - unsuitable for production
@@ -33,11 +36,11 @@ logging.getLogger().setLevel(logging.DEBUG)
 ALLOWED_HOSTS = ['127.0.0.1']
 
 # Location for media accessible via the web-server such as repo icons, screenshots, etc.
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
 MEDIA_URL = "/media/"
 
 # Location for private data such as the repo signing key
-PRIVATE_REPO_ROOT = os.path.join(BASE_DIR, 'private_repo')
+PRIVATE_REPO_ROOT = os.path.join(DATA_DIR, 'private_repo')
 
 # Uncomment the next line to show this notice on every page
 # SITE_NOTICE = '''Maintenance ongoing. Please check back later.'''
@@ -48,7 +51,7 @@ PRIVATE_REPO_ROOT = os.path.join(BASE_DIR, 'private_repo')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(DATA_DIR, 'db.sqlite3'),
     }
 }
 
@@ -56,7 +59,7 @@ DATABASES = {
 # Uncomment and edit this, if you want to offer your users storage for their repositories
 # You need to configure your web-server to serve from those locations
 # DEFAULT_REPO_STORAGE = [
-#     (os.path.join(BASE_DIR, 'repos'), '/repos/'),
+#     (os.path.join(DATA_DIR, 'repos'), '/repos/'),
 #     ('/var/repomaker/repos', 'https://repos.example.org/'),
 # ]
 
@@ -201,10 +204,11 @@ LOCALE_PATHS = (
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
+STATIC_ROOT = os.path.join(DATA_DIR, 'static')
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 NODE_MODULES_ROOT = os.path.join(BASE_DIR, 'node_modules')
+NODE_MODULES_URL = STATIC_URL + 'node_modules/'
 
 STATICFILES_DIRS = [
     ('node_modules', NODE_MODULES_ROOT),
@@ -219,8 +223,6 @@ STATICFILES_FINDERS = [
 SASS_PROCESSOR_INCLUDE_DIRS = [
     NODE_MODULES_ROOT,
 ]
-
-NODE_MODULES_URL = STATIC_URL + 'node_modules/'
 
 TINYMCE_JS_URL = os.path.join(NODE_MODULES_URL, "tinymce/tinymce.js")
 TINYMCE_DEFAULT_CONFIG = {
