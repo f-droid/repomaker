@@ -28,11 +28,11 @@ setup(
         'bleach',
         'python-magic',
         'cryptography>=1.4.0',
-        'fdroidserver',
+        'fdroidserver>=0.8',
     ],
     # TODO this fdroidserver dependency doesn't seem to work :(
     dependency_links=[
-        'git+https://gitlab.com/fdroid/fdroidserver.git@0be224b3e0c7b82b36bdd3c6bca07e0e6cb4a023#egg=fdroidserver',
+        'git+https://gitlab.com/fdroid/fdroidserver.git@0.8#egg=fdroidserver-0.8',
     ],
 
     # List additional groups of dependencies here (e.g. development dependencies).
