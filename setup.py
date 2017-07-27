@@ -7,22 +7,9 @@ DATA_PREFIX = os.path.join('share', 'repomaker')
 packages = find_packages(exclude=['*.tests*'])
 print("Packages: %s" % str(packages))
 
-
-def get_data_files_in(directory):
-    pairs = []
-    for (rel_path, directories, filenames) in os.walk(directory):
-        files = []
-        for filename in filenames:
-            files.append(os.path.join(rel_path, filename))
-        if len(files) > 0:
-            pairs.append((os.path.join(DATA_PREFIX, rel_path), files))
-    return pairs
-
-
 setup(
     version='0.0.1a1',
-    packages=packages,
-    include_package_data=True,
+    packages=packages + ['repomaker-static'],
     python_requires='>=3',
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's
@@ -59,18 +46,8 @@ setup(
         ],
     },
 
-    # package_data={},
-
-    # Although 'package_data' is the preferred approach, in some case you may
-    # need to place data files outside of your packages. See:
-    # http://docs.python.org/3.5/distutils/setupscript.html#installing-additional-files # noqa
-    # In this case, 'data_file' will be installed into '<sys.prefix>/my_data'
-    data_files=get_data_files_in('data/static/') + [
-        (os.path.join(DATA_PREFIX, 'data', 'media'), [
-            'data/media/default-app-icon.png',
-            'data/media/default-repo-icon.png',
-        ])
-    ],
+    include_package_data=True,
+    package_data={},
 
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow

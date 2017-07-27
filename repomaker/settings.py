@@ -204,7 +204,7 @@ LOCALE_PATHS = (
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
-STATIC_ROOT = os.path.join(DATA_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'repomaker-static')
 STATIC_URL = '/static/'
 
 NODE_MODULES_ROOT = os.path.join(BASE_DIR, 'node_modules')

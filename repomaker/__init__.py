@@ -6,7 +6,7 @@ DEFAULT_USER_NAME = 'user'
 
 
 def runserver():
-    execute([sys.argv[0], 'migrate'])
+    execute([sys.argv[0], 'migrate'])  # TODO move into package hook?
     if len(sys.argv) <= 1 or sys.argv[1] != 'runserver':
         sys.argv = sys.argv[:1] + ['runserver'] + sys.argv[1:]
     execute(sys.argv)
@@ -19,7 +19,7 @@ def process_tasks():
 
 
 def execute(params):
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "repomaker.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "repomaker.settings_desktop")
     try:
         from django.core.management import execute_from_command_line
     except ImportError:
@@ -35,4 +35,11 @@ def execute(params):
                 "forget to activate a virtual environment?"
             )
         raise
+
+    # create DATA_DIR if it doesn't exist
+    from django.conf import settings
+    if not os.path.isdir(settings.DATA_DIR):
+        os.makedirs(settings.DATA_DIR)
+
+    # execute pending command
     execute_from_command_line(params)

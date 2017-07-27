@@ -3,8 +3,6 @@ import re
 
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-from django.contrib.staticfiles.finders import FileSystemFinder
-
 from repomaker.utils import to_universal_language_code
 
 REPO_DIR = 'repo'
