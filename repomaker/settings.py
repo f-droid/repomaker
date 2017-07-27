@@ -63,10 +63,6 @@ DATABASES = {
 #     ('/var/repomaker/repos', 'https://repos.example.org/'),
 # ]
 
-# Default icons
-REPO_DEFAULT_ICON = "default-repo-icon.png"
-APP_DEFAULT_ICON = "default-app-icon.png"
-
 # Application definition
 
 INSTALLED_APPS = [

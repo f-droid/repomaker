@@ -2,7 +2,6 @@ import datetime
 import os
 from shutil import copyfile
 
-import qrcode
 from django.conf import settings
 from fdroidserver import update
 
@@ -31,13 +30,6 @@ def fake_repo_create(repo):
     copyfile(src, dest)
     repo.key_store_pass = 'uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes='
     repo.key_pass = 'uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes='
-
-    # make sure the default icon exists in the test location
-    icon_path = os.path.join(TEST_MEDIA_DIR, settings.REPO_DEFAULT_ICON)
-    if not os.path.isdir(TEST_MEDIA_DIR):
-        os.makedirs(TEST_MEDIA_DIR)
-    icon = qrcode.QRCode()
-    icon.make_image().save(icon_path)
 
     # make sure that icon directories exist
     for icon_dir in update.get_all_icon_dirs(repo.get_repo_path()):

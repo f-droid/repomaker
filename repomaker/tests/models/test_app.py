@@ -8,9 +8,9 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
 from django.test import TestCase, override_settings
-
 from repomaker.models import Repository, RemoteRepository, App, RemoteApp, Screenshot
 from repomaker.models.screenshot import PHONE
+
 from .. import TEST_DIR, TEST_MEDIA_DIR, datetime_is_recent
 
 
@@ -21,11 +21,6 @@ class AppTestCase(TestCase):
         self.user = User.objects.create(username='user2')
         self.repo = Repository.objects.create(user=self.user)
         self.app = App.objects.create(repo=self.repo, package_id='org.example')
-
-        # copy app default icon to test location
-        os.makedirs(TEST_MEDIA_DIR)
-        shutil.copyfile(os.path.join(settings.MEDIA_ROOT, settings.APP_DEFAULT_ICON),
-                        os.path.join(TEST_MEDIA_DIR, settings.APP_DEFAULT_ICON))
 
         # remote objects
         date = datetime.fromtimestamp(0, timezone.utc)

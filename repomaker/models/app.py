@@ -6,15 +6,17 @@ from django.core.files.base import ContentFile
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+from django.templatetags.static import static
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _, get_language
 from fdroidserver import metadata, net
 from hvad.models import TranslatableModel, TranslatedFields
 from hvad.utils import load_translation
-
-from repomaker.storage import get_icon_file_path_for_app, get_graphic_asset_file_path
+from repomaker.storage import get_icon_file_path_for_app, \
+    get_graphic_asset_file_path
 from repomaker.utils import clean, to_universal_language_code
+
 from .category import Category
 from .repository import Repository
 
@@ -34,6 +36,7 @@ TYPE_CHOICES = (
     (VIDEO, _('Video')),
     (OTHER, _('Other')),
 )
+APP_DEFAULT_ICON = os.path.join('repomaker', 'images', 'default-app-icon.png')
 
 
 class AbstractApp(TranslatableModel):
@@ -43,8 +46,7 @@ class AbstractApp(TranslatableModel):
     description_override = models.TextField(blank=True)  # always clean and then consider safe
     author_name = models.CharField(max_length=255, blank=True)
     website = models.URLField(max_length=2048, blank=True)
-    icon = models.ImageField(upload_to=get_icon_file_path_for_app,
-                             default=settings.APP_DEFAULT_ICON)
+    icon = models.ImageField(upload_to=get_icon_file_path_for_app)
     category = models.ManyToManyField(Category, blank=True, limit_choices_to={'user': None})
     added_date = models.DateTimeField(default=timezone.now)
     translations = TranslatedFields(
@@ -55,6 +57,12 @@ class AbstractApp(TranslatableModel):
 
     def __str__(self):
         return self.name
+
+    @property
+    def icon_url(self):
+        if self.icon:
+            return self.icon.url
+        return static(APP_DEFAULT_ICON)
 
     def default_translate(self):
         """Creates a new default translation"""
@@ -92,14 +100,16 @@ class AbstractApp(TranslatableModel):
         return languages
 
     def get_icon_basename(self):
-        return os.path.basename(self.icon.path)
+        if self.icon:
+            return os.path.basename(self.icon.path)
+        # TODO handle default app icons on static repo page
+        return None
 
     def get_latest_version(self):
         raise NotImplementedError()
 
     def delete_old_icon(self):
-        icon_path = os.path.dirname(self.icon.path)
-        if icon_path != settings.MEDIA_ROOT:
+        if self.icon:
             self.icon.delete(save=False)
 
     class Meta:
@@ -151,8 +161,10 @@ class App(AbstractApp):
         Note that it does exclude the category. You need to add these after saving the app.
         """
         # TODO check how the icon extracted to repo/icons-640 could be used instead
-        icon = ContentFile(app.icon.read())
-        icon.name = os.path.basename(app.icon.name)
+        icon = None
+        if app.icon:
+            icon = ContentFile(app.icon.read())
+            icon.name = os.path.basename(app.icon.name)
         return App(repo=repo, package_id=app.package_id, name=app.name,
                    summary_override=app.summary_override,
                    description_override=clean(app.description_override), website=app.website,

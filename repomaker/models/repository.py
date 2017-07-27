@@ -12,20 +12,22 @@ from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.template.loader import render_to_string
+from django.templatetags.static import static
 from django.urls import reverse
 from django.utils import timezone
 from fdroidserver import common, index, server, update
-
 from repomaker import tasks
 from repomaker.storage import REPO_DIR, get_repo_file_path, get_repo_root_path, \
     get_icon_file_path
+
+REPO_DEFAULT_ICON = os.path.join('repomaker', 'images', 'default-repo-icon.png')
 
 
 class AbstractRepository(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     url = models.URLField(max_length=2048, blank=True, null=True)
-    icon = models.ImageField(upload_to=get_icon_file_path, default=settings.REPO_DEFAULT_ICON)
+    icon = models.ImageField(upload_to=get_icon_file_path)
     public_key = models.TextField(blank=True)
     fingerprint = models.CharField(max_length=512, blank=True)
     update_scheduled = models.BooleanField(default=False)
@@ -37,6 +39,12 @@ class AbstractRepository(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def icon_url(self):
+        if self.icon:
+            return self.icon.url
+        return static(REPO_DEFAULT_ICON)
 
     def get_path(self):
         raise NotImplementedError()
@@ -62,8 +70,7 @@ class AbstractRepository(models.Model):
         return self.get_fingerprint_url().replace('http', 'fdroidrepo', 1)
 
     def delete_old_icon(self):
-        icon_path = os.path.dirname(self.icon.path)
-        if icon_path != settings.MEDIA_ROOT:
+        if self.icon:
             self.icon.delete(save=False)
 
     def get_config(self):
@@ -100,7 +107,6 @@ class Repository(AbstractRepository):
         config.update({
             'repo_url': self.url,
             'repo_name': self.name,
-            'repo_icon': os.path.join(settings.MEDIA_ROOT, self.icon.name),
             'repo_description': self.description,
             'repo_keyalias': 'Key Alias',
             'keydname': 'CN=repomaker.f-droid.org, OU=F-Droid',
@@ -109,6 +115,11 @@ class Repository(AbstractRepository):
             'keypass': self.key_pass,
             'nonstandardwebroot': True,  # TODO remove this when storage URLs are standardized
         })
+        if self.icon:
+            config['repo_icon'] = self.icon.name
+        else:
+            config['repo_icon'] = os.path.join(settings.BASE_DIR, 'repomaker', 'static',
+                                               REPO_DEFAULT_ICON)
         if self.public_key is not None:
             config['repo_pubkey'] = self.public_key
         return config

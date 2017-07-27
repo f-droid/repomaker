@@ -3,17 +3,17 @@ import shutil
 from datetime import datetime
 from io import BytesIO
 
+import repomaker.models.app
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files import File
 from django.test import TestCase, override_settings
 from django.utils import timezone
 from fdroidserver.update import get_all_icon_dirs
-
-import repomaker.models.app
 from repomaker.models import Apk, ApkPointer, RemoteApkPointer, App, RemoteApp, RemoteRepository, \
     Repository
 from repomaker.storage import get_apk_file_path
+
 from .. import TEST_DIR, TEST_FILES_DIR, TEST_PRIVATE_DIR, fake_repo_create
 
 
@@ -85,7 +85,6 @@ class ApkPointerTestCase(TestCase):
         # assert that existing App object was updated
         app = App.objects.get(pk=app.pk)
         self.assertEqual('org.bitbucket.tickytacky.mirrormirror', app.name)
-        self.assertTrue(app.icon)
 
     def test_initialize_non_apk(self):
         # overwrite APK file with image file
@@ -113,7 +112,7 @@ class ApkPointerTestCase(TestCase):
         self.assertEqual('test', apps[0].name)  # name
         self.assertEqual('test', apps[0].package_id)  # package ID
         self.assertEqual(repomaker.models.app.IMAGE, apps[0].type)  # app type
-        self.assertEqual(settings.APP_DEFAULT_ICON, apps[0].icon.name)  # icon
+        self.assertEqual('/static/repomaker/images/default-app-icon.png', apps[0].icon_url)  # icon
 
     def test_icons_get_deleted_from_repo(self):
         # create the repository environment

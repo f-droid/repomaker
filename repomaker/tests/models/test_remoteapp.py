@@ -8,11 +8,11 @@ import django.core.exceptions
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
-
 from repomaker.models import Repository, RemoteRepository, App, RemoteApp, Apk, ApkPointer, \
     RemoteApkPointer, RemoteScreenshot
 from repomaker.models.screenshot import PHONE
 from repomaker.storage import get_icon_file_path_for_app
+
 from .. import TEST_DIR, TEST_MEDIA_DIR, datetime_is_recent
 
 
@@ -213,11 +213,6 @@ class RemoteAppTestCase(TestCase):
         remote_apk_pointer = RemoteApkPointer.objects.create(apk=apk, app=self.app, url='test_url')
         remote_screenshot = RemoteScreenshot.objects.create(app=self.app)
 
-        # create fake app icon
-        os.makedirs(settings.MEDIA_ROOT)
-        with open(os.path.join(settings.MEDIA_ROOT, settings.APP_DEFAULT_ICON), 'wb') as f:
-            f.write(b'foo')
-
         # add remote app to local repo
         app = self.app.add_to_repo(repo)
 
@@ -240,11 +235,6 @@ class RemoteAppTestCase(TestCase):
     def test_add_to_repo_without_apks(self):
         # create pre-requisites
         repo = Repository.objects.create(name='test', user=User.objects.create(username='user2'))
-
-        # create fake app icon
-        os.makedirs(settings.MEDIA_ROOT)
-        with open(os.path.join(settings.MEDIA_ROOT, settings.APP_DEFAULT_ICON), 'wb') as f:
-            f.write(b'foo')
 
         # try to add remote app without any APKs to local repo
         with self.assertRaises(django.core.exceptions.ValidationError):

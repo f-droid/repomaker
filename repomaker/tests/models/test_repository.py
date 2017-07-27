@@ -10,14 +10,16 @@ import sass_processor.storage
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files import File
+from django.templatetags.static import static
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from fdroidserver.update import METADATA_VERSION
-
 from repomaker.models import App, RemoteApp, Apk, ApkPointer, RemoteApkPointer, Repository, \
     RemoteRepository, S3Storage, SshStorage, GitStorage
 from repomaker.models.app import VIDEO, APK
+from repomaker.models.repository import REPO_DEFAULT_ICON
 from repomaker.storage import get_repo_file_path, REPO_DIR
+
 from .. import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_STATIC_DIR, \
     datetime_is_recent, fake_repo_create
 
@@ -50,7 +52,7 @@ class RepositoryTestCase(TestCase):
         self.assertEqual('https://example.org', repo.url)
 
         # assert that default icon was used
-        self.assertEqual(settings.REPO_DEFAULT_ICON, repo.icon)
+        self.assertEqual(static(REPO_DEFAULT_ICON), repo.icon_url)
 
         # assert that repo is not scheduled for update or updating already
         self.assertFalse(repo.update_scheduled)
@@ -122,14 +124,14 @@ class RepositoryTestCase(TestCase):
         self.assertFalse(self.repo.icon)
         self.assertFalse(os.path.isfile(icon_path))
 
-    def test_delete_old_icon_only_if_not_default(self):
+    def test_delete_nonexistent_old_icon(self):
         # assert that default icon was used
-        self.assertEqual(settings.REPO_DEFAULT_ICON, self.repo.icon.name)
+        self.assertEqual(static(REPO_DEFAULT_ICON), self.repo.icon_url)
 
         self.repo.delete_old_icon()  # delete the old icon
 
-        # assert that default icon wasn't deleted
-        self.assertEqual(settings.REPO_DEFAULT_ICON, self.repo.icon.name)
+        # assert that default icon is still used
+        self.assertEqual(static(REPO_DEFAULT_ICON), self.repo.icon_url)
 
     def test_get_absolute_url(self):
         self.assertEqual(reverse('repo', kwargs={'repo_id': self.repo.pk}),
@@ -268,7 +270,7 @@ class RepositoryTestCase(TestCase):
             timestamp = datetime.utcfromtimestamp(index['repo']['timestamp'] / 1000)
             self.assertTrue(datetime_is_recent(timestamp))
             self.assertEqual(repo.url, index['repo']['address'])
-            self.assertEqual(repo.icon, index['repo']['icon'])
+            self.assertEqual('default-repo-icon.png', index['repo']['icon'])
 
         # assert that repository homepage was re-created
         _generate_page.called_once_with()
@@ -408,7 +410,6 @@ class RepositoryTestCase(TestCase):
         remote_app2 = remote_apps[1]
         self.assertEqual(app2.name, remote_app2.name)
         self.assertEqual(app2.package_id, remote_app2.package_id)
-        self.assertTrue(remote_app2.icon)
         self.assertEqual({settings.LANGUAGE_CODE}, set(remote_app2.get_available_languages()))
 
         # assert that the existing Apks got re-used (based on package_id and hash)

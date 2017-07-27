@@ -7,9 +7,9 @@ import django.urls
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
-
 from repomaker.models import Repository, RemoteRepository, RemoteApp, RemoteScreenshot, \
     RemoteApkPointer
+
 from .. import TEST_DIR
 
 
@@ -65,10 +65,12 @@ class RemoteRepositoryViewTest(TestCase):
         json = '[' \
                '{ "categories": [], "description": "Test Description", "repo_id": 1,' \
                '  "lang": "en", "id": 1, "summary": "Test Summary",' \
-               '  "icon": "/media/default-app-icon.png", "added": false, "name": "App"},' \
+               '  "icon": "/static/repomaker/images/default-app-icon.png", "added": false,' \
+               '  "name": "App"},' \
                '{ "categories": [], "description": "Test Beschreibung", "repo_id": 1,' \
                '  "lang": "de", "id": 2, "summary": "Test Zusammenfassung",' \
-               '  "icon": "/media/default-app-icon.png", "added": false, "name": "App2"}' \
+               '  "icon": "/static/repomaker/images/default-app-icon.png", "added": false,' \
+               '  "name": "App2"}' \
                ']'
         self.assertJSONEqual(response.content.decode(), json)
 

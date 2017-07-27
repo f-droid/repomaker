@@ -13,7 +13,6 @@ from django.utils import formats
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, ListView
 from django.views.static import serve
-
 from repomaker import DEFAULT_USER_NAME
 from repomaker.models import RemoteRepository, Repository, RemoteApp
 from repomaker.storage import USER_RE, REMOTE_REPO_RE
@@ -108,7 +107,7 @@ class AppScrollListView(ListView):
             apps = self.get_context_data(**kwargs)['apps']
             apps_json = []
             for app in apps:
-                app_json = {'id': app.id, 'name': app.name, 'icon': app.icon.url,
+                app_json = {'id': app.id, 'name': app.name, 'icon': app.icon_url,
                             'summary': app.summary, 'description': app.description,
                             'lang': app.language_code}
 
