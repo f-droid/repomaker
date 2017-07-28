@@ -1,3 +1,6 @@
+#fdroidserver>=0.8
+#git+https://gitlab.com/grote/fdroidserver.git@686c7423623035fc37dff26ff51e8aeccea9ba27#egg=fdroidserver
+git+https://gitlab.com/fdroid/fdroidserver.git@0.8#egg=fdroidserver-0.8
 django
 django-background-tasks>=1.1.9
 django-compressor
@@ -11,6 +14,3 @@ bleach
 python-magic
 apache-libcloud>=2.0.0rc2
 cryptography>=1.4.0
-#fdroidserver>=0.8
-#git+https://gitlab.com/grote/fdroidserver.git@686c7423623035fc37dff26ff51e8aeccea9ba27#egg=fdroidserver
-git+https://gitlab.com/fdroid/fdroidserver.git@0.8#egg=fdroidserver-0.8
