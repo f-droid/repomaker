@@ -10,7 +10,17 @@ before_script:
   - pip3 install -r requirements-dev.txt
   - npm install --user
 
-test:
+after_script:
+  - ./tests/assert-test-confinement.sh
+
+pep8:
   script:
-    - ./run-tests.sh
-    - ./tests/assert-test-confinement.sh
+    - ./tests/test-pep8.sh
+
+pylint:
+  script:
+    - ./tests/test-pylint.sh
+
+units:
+  script:
+    - ./tests/test-units.sh
