@@ -35,10 +35,6 @@ setup(
         'cryptography>=1.4.0',
         'fdroidserver>=0.8',
     ],
-    # TODO this fdroidserver dependency doesn't seem to work :(
-    dependency_links=[
-        'git+https://gitlab.com/fdroid/fdroidserver.git@0.8#egg=fdroidserver-0.8',
-    ],
 
     # List additional groups of dependencies here (e.g. development dependencies).
     # You can install these using the following syntax, for example:

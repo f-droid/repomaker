@@ -13,6 +13,7 @@ def runserver():
     execute([sys.argv[0], 'migrate'])  # TODO move into package hook?
     if len(sys.argv) <= 1 or sys.argv[1] != 'runserver':
         sys.argv = sys.argv[:1] + ['runserver'] + sys.argv[1:]
+    sys.argv.append('--noreload')
     execute(sys.argv)
 
 
