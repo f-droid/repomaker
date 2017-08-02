@@ -1,18 +1,5 @@
 image: registry.gitlab.com/fdroid/ci-images-repomaker:latest
 
-cache:
-  paths:
-    - /usr/local/lib/python3.4/dist-packages
-    - node_modules
-
-before_script:
-  - ./setup.sh
-  - pip3 install -r requirements-dev.txt
-  - npm install --user
-
-after_script:
-  - ./tests/assert-test-confinement.sh
-
 pep8:
   script:
     - ./tests/test-pep8.sh
@@ -22,5 +9,16 @@ pylint:
     - ./tests/test-pylint.sh
 
 units:
+  cache:
+    paths:
+      - /usr/local/lib/python3.5/dist-packages
+      - node_modules
+
+  before_script:
+    - ./setup.sh
+    - pip3 install -r requirements-dev.txt
+    - npm install --user
+
   script:
     - ./tests/test-units.sh
+    - ./tests/assert-test-confinement.sh
