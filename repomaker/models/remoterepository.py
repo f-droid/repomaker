@@ -12,7 +12,6 @@ from django.db import models
 from django.dispatch import receiver
 from django.utils import timezone
 from fdroidserver import index, net
-
 from repomaker import tasks
 from repomaker.models.repository import AbstractRepository
 from repomaker.storage import get_remote_repo_path

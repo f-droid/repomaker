@@ -1,13 +1,12 @@
 import json
 import logging
 
+import repomaker.models
 from background_task import background
 from background_task.signals import task_failed
 from django.core.exceptions import ObjectDoesNotExist
 from django.dispatch import receiver
 from django.utils import timezone
-
-import repomaker.models
 
 
 @background(schedule=timezone.now())
@@ -52,6 +51,16 @@ def update_remote_repo(remote_repo_id):
     finally:
         remote_repo.is_updating = False
         remote_repo.save()
+
+
+@background(schedule=timezone.now())
+def update_remote_app_icon(remote_app_id, icon_name):
+    try:
+        remote_app = repomaker.models.RemoteApp.objects.get(pk=remote_app_id)
+    except ObjectDoesNotExist as e:
+        logging.warning('Remote App does not exist anymore, dropping task. (%s)', e)
+        return
+    remote_app.update_icon(icon_name)
 
 
 @background(schedule=timezone.now())

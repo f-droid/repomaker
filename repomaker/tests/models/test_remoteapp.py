@@ -90,7 +90,7 @@ class RemoteAppTestCase(TestCase):
 
         # update icon
         http_get.return_value = b'icon-data', 'new_etag'
-        self.app._update_icon('icon.png')  # pylint: disable=protected-access
+        self.app.update_icon('icon.png')  # pylint: disable=protected-access
         http_get.assert_called_once_with(self.repo.url + '/icons-640/icon.png', 'etag')
 
         # assert that old icon got deleted and new one was saved

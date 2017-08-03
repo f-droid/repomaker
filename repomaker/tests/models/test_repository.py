@@ -7,6 +7,7 @@ from unittest.mock import patch
 
 import sass_processor.processor
 import sass_processor.storage
+from background_task.models import Task
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files import File
@@ -315,6 +316,9 @@ class RepositoryTestCase(TestCase):
         This test creates a local repository with one app and one non-apk app
         and then imports it again as a remote repository.
         """
+        # remove pending background tasks
+        Task.objects.all().delete()
+
         # create repo
         repo = self.repo
         fake_repo_create(repo)
@@ -386,10 +390,10 @@ class RepositoryTestCase(TestCase):
         remote_repo.update_index()
         self.assertTrue(len(remote_repo.public_key) > 500)
 
-        # assert repo and app icon were also downloaded
-        self.assertEqual(3, get.call_count)
+        # assert repo icon were also downloaded
+        self.assertEqual(2, get.call_count)
         get.assert_called_with(  # last get call
-            'test_url' + '/icons-640/org.bitbucket.tickytacky.mirrormirror.2.png',
+            'test_url' + '/icons/default-repo-icon.png',
             headers={'User-Agent': 'F-Droid'}
         )
 
@@ -403,9 +407,18 @@ class RepositoryTestCase(TestCase):
         self.assertEqual('', remote_app.description_override)
         self.assertEqual(app.website, remote_app.website)
         self.assertEqual(app.author_name, remote_app.author_name)
-        self.assertTrue(remote_app.icon)
+        self.assertFalse(remote_app.icon)  # downloaded in extra task
         self.assertEqual({settings.LANGUAGE_CODE, 'de', 'en-us'},
                          set(remote_app.get_available_languages()))
+
+        # assert that remote app icon is scheduled to be downloaded in a new task
+        self.assertEqual(1, Task.objects.all().count())
+        task = Task.objects.all()[0]
+        self.assertEqual('repomaker.tasks.update_remote_app_icon', task.task_name)
+        self.assertJSONEqual(
+            '[[' + str(remote_app.pk) + ', "org.bitbucket.tickytacky.mirrormirror.2.png"], {}]',
+            task.task_params)
+
         # non-apk app
         remote_app2 = remote_apps[1]
         self.assertEqual(app2.name, remote_app2.name)

@@ -5,7 +5,6 @@ import requests
 from background_task.tasks import Task
 from django.contrib.auth.models import User
 from django.test import TestCase
-
 from repomaker import tasks
 from repomaker.models import Repository, RemoteRepository, App, RemoteApp, Apk, RemoteScreenshot
 
@@ -86,6 +85,25 @@ class TasksTest(TestCase):
 
         # assert that nothing was updated and published
         self.assertFalse(update_index.called)
+
+    @patch('repomaker.models.remoteapp.RemoteApp.update_icon')
+    def test_update_remote_app_icon(self, update_icon):
+        remote_app = RemoteApp.objects.create(
+            repo=RemoteRepository.objects.get(pk=1),
+            last_updated_date=datetime.fromtimestamp(0, timezone.utc)
+        )
+
+        tasks.update_remote_app_icon.now(remote_app.id, "icon name")
+
+        # assert that index of remote repository was updated
+        update_icon.assert_called_once_with("icon name")
+
+    @patch('repomaker.models.remoteapp.RemoteApp.update_icon')
+    def test_update_remote_app_icon_gone(self, update_icon):
+        tasks.update_remote_app_icon.now(1337, "icon name")  # this app ID doesn't exist (anymore?)
+
+        # assert that nothing was updated and published
+        self.assertFalse(update_icon.called)
 
     @patch('repomaker.models.apk.Apk.download')
     def test_download_apk(self, download):

@@ -11,9 +11,9 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from fdroidserver import net
 from hvad.models import TranslatedFields
-
 from repomaker import tasks
 from repomaker.utils import clean
+
 from .app import AbstractApp
 from .category import Category
 from .remoterepository import RemoteRepository
@@ -62,8 +62,6 @@ class RemoteApp(AbstractApp):
             self.author_name = app['authorName']
         if 'webSite' in app:
             self.website = app['webSite']
-        if 'icon' in app:
-            self._update_icon(app['icon'])
         if 'categories' in app:
             self._update_categories(app['categories'])
         if 'added' in app:
@@ -78,6 +76,11 @@ class RemoteApp(AbstractApp):
             # no localization available, translate in default language
             self.default_translate()
             self.save()
+        # do the icon last, because we require the app to be saved, so a pk exists
+        if 'icon' in app:
+            # Schedule icon updating task, because it takes too long within this task
+            # pylint: disable=unexpected-keyword-arg
+            tasks.update_remote_app_icon(self.pk, app['icon'], priority=-3)
         return True
 
     @staticmethod
@@ -98,7 +101,13 @@ class RemoteApp(AbstractApp):
             return True
         return False
 
-    def _update_icon(self, icon_name):
+    def update_icon(self, icon_name):
+        """
+        Updates the app's icon from the remote repository.
+        Should be run in a background task.
+
+        :param icon_name: The file name of the icon
+        """
         url = self.repo.url + '/icons-640/' + icon_name
         icon, etag = net.http_get(url, self.icon_etag)
         if icon is None:
