@@ -4,6 +4,7 @@ import logging
 import os
 from io import BytesIO
 
+import django.db.transaction
 from allauth.account.signals import user_signed_up
 from background_task.tasks import Task
 from django.conf import settings
@@ -66,6 +67,7 @@ class RemoteRepository(AbstractRepository):
             self.index_etag = etag  # don't set etag when only adding the repo, so it fetches again
             self.save()
 
+    @django.db.transaction.atomic
     def _update(self, repo_index, update_apps):
         """
         Updates this remote repository with the given index

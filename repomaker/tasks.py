@@ -1,10 +1,13 @@
 import json
 import logging
+import time
 
 import repomaker.models
 from background_task import background
 from background_task.signals import task_failed
+from background_task.tasks import DBTaskRunner
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.utils import OperationalError
 from django.dispatch import receiver
 from django.utils import timezone
 
@@ -125,3 +128,24 @@ def task_failed_receiver(**kwargs):
         remote_repo = repomaker.models.RemoteRepository.objects.get(pk=remote_repo_id)
         remote_repo.disabled = True
         remote_repo.save()
+
+
+class DesktopRunner(DBTaskRunner):
+
+    def run_task(self, tasks, task):
+        try:
+            super().run_task.__wrapped__(self, tasks, task)
+        except OperationalError as e:
+            if str(e) == 'database is locked':
+                time.sleep(0.25)
+                return self.run_task(tasks, task)
+            raise e
+
+    def run_next_task(self, tasks, queue=None):
+        try:
+            return super().run_next_task.__wrapped__(self, tasks, queue)
+        except OperationalError as e:
+            if str(e) == 'database is locked':
+                time.sleep(0.25)
+                return self.run_next_task(tasks, queue=queue)
+            raise e

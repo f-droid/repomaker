@@ -46,8 +46,19 @@ def execute(params):
     if not os.path.isdir(settings.DATA_DIR):
         os.makedirs(settings.DATA_DIR)
 
+    if len(sys.argv) > 1 and sys.argv[1] == 'process_tasks':
+        non_atomic_background_tasks()
+
     # execute pending command
     execute_from_command_line(params)
+
+
+def non_atomic_background_tasks():
+    from django import setup
+    setup()
+    import background_task.tasks
+    from repomaker.tasks import DesktopRunner
+    background_task.tasks.tasks._runner = DesktopRunner()  # pylint: disable=protected-access
 
 
 @register()

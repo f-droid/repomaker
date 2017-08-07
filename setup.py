@@ -9,7 +9,7 @@ print("Packages: %s" % str(packages))
 
 setup(
     name='repomaker',
-    version='0.0.1a1',
+    version='0.0.1a2',
     packages=packages + ['repomaker-static'],
     description='Create F-Droid repositories with ease',
     license='AGPL-3.0',
