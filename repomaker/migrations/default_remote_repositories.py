@@ -5,7 +5,6 @@ import datetime
 from background_task.tasks import Task
 from django.db import migrations
 from django.utils import timezone
-
 from repomaker import tasks
 
 
@@ -27,7 +26,7 @@ def forwards_func(apps, schema_editor):
     )
     repo.users = User.objects.all()
     repo.save()
-    tasks.update_remote_repo(repo.pk, repeat=Task.DAILY, priority=-2)
+    tasks.update_remote_repo(repo.pk, repeat=Task.DAILY, priority=tasks.PRIORITY_REMOTE_REPO)
 
     repo = RemoteRepository.objects.using(db_alias).create(
         name='Guardian Project Official Releases',
@@ -41,7 +40,7 @@ def forwards_func(apps, schema_editor):
     )
     repo.users = User.objects.all()
     repo.save()
-    tasks.update_remote_repo(repo.pk, repeat=Task.DAILY, priority=-2)
+    tasks.update_remote_repo(repo.pk, repeat=Task.DAILY, priority=tasks.PRIORITY_REMOTE_REPO)
 
 
 def reverse_func(apps, schema_editor):

@@ -19,6 +19,7 @@ from fdroidserver import common, index, server, update
 from repomaker import tasks
 from repomaker.storage import REPO_DIR, get_repo_file_path, get_repo_root_path, \
     get_icon_file_path
+from repomaker.tasks import PRIORITY_REPO
 
 REPO_DEFAULT_ICON = os.path.join('repomaker', 'images', 'default-repo-icon.png')
 
@@ -267,7 +268,7 @@ class Repository(AbstractRepository):
             return  # no need to update a repo twice with same data
         self.update_scheduled = True
         self.save()
-        tasks.update_repo(self.id, priority=-1)  # pylint: disable=unexpected-keyword-arg
+        tasks.update_repo(self.id, priority=PRIORITY_REPO)  # pylint: disable=unexpected-keyword-arg
 
     def update(self):
         """

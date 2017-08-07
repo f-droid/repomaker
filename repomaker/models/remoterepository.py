@@ -15,6 +15,7 @@ from fdroidserver import index, net
 from repomaker import tasks
 from repomaker.models.repository import AbstractRepository
 from repomaker.storage import get_remote_repo_path
+from repomaker.tasks import PRIORITY_REMOTE_REPO
 from repomaker.utils import clean
 
 
@@ -39,7 +40,7 @@ class RemoteRepository(AbstractRepository):
         self.update_scheduled = True
         self.save()
         # pylint: disable=unexpected-keyword-arg
-        tasks.update_remote_repo(self.id, repeat=Task.DAILY, priority=-2)
+        tasks.update_remote_repo(self.id, repeat=Task.DAILY, priority=PRIORITY_REMOTE_REPO)
 
     def update_index(self, update_apps=True):
         """

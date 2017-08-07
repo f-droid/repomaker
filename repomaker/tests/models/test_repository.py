@@ -20,6 +20,7 @@ from repomaker.models import App, RemoteApp, Apk, ApkPointer, RemoteApkPointer, 
 from repomaker.models.app import VIDEO, APK
 from repomaker.models.repository import REPO_DEFAULT_ICON
 from repomaker.storage import get_repo_file_path, REPO_DIR
+from repomaker.tasks import PRIORITY_REPO
 
 from .. import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_STATIC_DIR, \
     datetime_is_recent, fake_repo_create
@@ -230,7 +231,7 @@ class RepositoryTestCase(TestCase):
         Makes sure that the asynchronous update starts a background task.
         """
         self.repo.update_async()
-        update_repo.assert_called_once_with(self.repo.id, priority=-1)
+        update_repo.assert_called_once_with(self.repo.id, priority=PRIORITY_REPO)
         self.assertTrue(self.repo.update_scheduled)
 
     @patch('repomaker.tasks.update_repo')

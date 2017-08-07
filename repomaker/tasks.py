@@ -8,6 +8,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.dispatch import receiver
 from django.utils import timezone
 
+PRIORITY_REPO = -1
+PRIORITY_REMOTE_REPO = -2
+PRIORITY_REMOTE_APP_ICON = -3
+
 
 @background(schedule=timezone.now())
 def update_repo(repo_id):

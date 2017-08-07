@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from fdroidserver import net
 from hvad.models import TranslatedFields
 from repomaker import tasks
+from repomaker.tasks import PRIORITY_REMOTE_APP_ICON
 from repomaker.utils import clean
 
 from .app import AbstractApp
@@ -80,7 +81,7 @@ class RemoteApp(AbstractApp):
         if 'icon' in app:
             # Schedule icon updating task, because it takes too long within this task
             # pylint: disable=unexpected-keyword-arg
-            tasks.update_remote_app_icon(self.pk, app['icon'], priority=-3)
+            tasks.update_remote_app_icon(self.pk, app['icon'], priority=PRIORITY_REMOTE_APP_ICON)
         return True
 
     @staticmethod

@@ -9,12 +9,13 @@ from background_task.tasks import Task
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
-from requests.exceptions import HTTPError
-
 from repomaker.models import App, RemoteApp, Repository, \
     RemoteRepository
 from repomaker.models.repository import AbstractRepository
 from repomaker.storage import get_remote_repo_path
+from repomaker.tasks import PRIORITY_REMOTE_REPO
+from requests.exceptions import HTTPError
+
 from .. import TEST_DIR, TEST_MEDIA_DIR
 
 
@@ -50,7 +51,8 @@ class RemoteRepositoryTestCase(TestCase):
         self.repo.update_scheduled = False
 
         self.repo.update_async()
-        update_remote_repo.assert_called_once_with(self.repo.id, repeat=Task.DAILY, priority=-2)
+        update_remote_repo.assert_called_once_with(self.repo.id, repeat=Task.DAILY,
+                                                   priority=PRIORITY_REMOTE_REPO)
         self.assertTrue(self.repo.update_scheduled)
 
     @patch('repomaker.tasks.update_remote_repo')
