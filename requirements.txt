@@ -7,6 +7,7 @@ django-sass-processor
 django-allauth
 django-hvad>=1.8.0
 django-tinymce
+django-js-reverse
 qrcode
 six>=1.9  # until bleach depends on html5lib>=1.0
 bleach

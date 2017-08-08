@@ -24,6 +24,7 @@ setup(
         'django',
         'django-allauth',
         'django-tinymce',
+        'django-js-reverse',
         'django-compressor',
         'django-sass-processor',
         'django-hvad>=1.8.0',

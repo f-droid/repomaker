@@ -3,6 +3,9 @@
  */
 var rmPaginationPage = null
 
+// Div holding the repo id
+var DIV_REPO_ID = 'rm-repo-id'
+
 function handlePagination(jsonHtmlRelation, appList, loadingFinished) {
     var pagination = document.querySelector('.rm-pagination')
     // Stop if there is nothing to paginate
@@ -132,12 +135,12 @@ function putAppInformation(jsonHtmlRelation, app, appCard) {
             element.classList.add(rel)
 
             var appId = app[jsonHtmlRelation[rel]]
-            var repoId = window.location.href.split('/')[3] /* FIXME: DO NOT rely on URLs!!! */
+            var repoId = document.getElementById(DIV_REPO_ID).dataset.id
             var remoteRepoId = app['repo_id']
+            var lang = app['lang']
 
             element.id = rel + '--' + appId
-            /* FIXME: DO NOT hardcode URLs!!! */
-            element.href = '/' + repoId + '/remote-app/' + remoteRepoId + '/add/' + appId
+            element.href = Urls.add_remote_app(repoId, remoteRepoId, appId, lang)
             element.addEventListener('click', function(event) {
                 addRemoteApp(event, parseInt(repoId), remoteRepoId, appId)
             })
@@ -173,10 +176,9 @@ function putAppInformation(jsonHtmlRelation, app, appCard) {
             continue
         }
         if (rel === 'rm-app-card--repo-apps') {
-            var repoId = appCard.pathname.split('/')[2]
+            var repoId = document.getElementById(DIV_REPO_ID).dataset.id
             var appId = app[jsonHtmlRelation[rel]]
-            /* FIXME: DO NOT hardcode URLs!!! */
-            var url = '/' + repoId + '/app/' + appId
+            var url = Urls.app(repoId, appId)
             appCard.href = url
             continue
         }
@@ -195,12 +197,11 @@ function putAppInformation(jsonHtmlRelation, app, appCard) {
                 appCard.classList.remove('rm-app-card--no-hover')
                 appCard.classList.add('rm-app-card')
             }
-            var repoId = window.location.href.split('/')[3] /* FIXME: DO NOT rely on URLs!!! */
+            var repoId = document.getElementById(DIV_REPO_ID).dataset.id
             var remoteRepoId = app['repo_id']
             var appId = app[jsonHtmlRelation[rel]]
             var lang = app['lang']
-            /* FIXME: DO NOT hardcode URLs!!! */
-            var url = '/' + repoId + '/remote-app/' + remoteRepoId + '/' + appId + '/lang/' + lang
+            var url = Urls.add_remote_app(repoId, remoteRepoId, appId, lang)
 
             // Add on-click listener and remove HTML attribute
             appCard.addEventListener('click', function(event) {

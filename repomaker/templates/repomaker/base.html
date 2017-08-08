@@ -9,6 +9,7 @@
 	<title>Repo Maker - {% block title %}{% endblock %}</title>
 	<link href="{% sass_src 'repomaker/css/styles.scss' %}" rel="stylesheet" type="text/css" media="all">
 	<script src="{% url 'javascript-catalog' %}"></script>
+	<script src="{% url 'js_reverse' %}"></script>
 	{% block head %}{% endblock head %}
 </head>
 

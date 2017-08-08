@@ -5,6 +5,9 @@ pep8:
     - ./tests/test-pep8.sh
 
 pylint:
+  before_script:
+    - pip3 install -r requirements.txt
+
   script:
     - ./tests/test-pylint.sh
 

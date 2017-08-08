@@ -204,5 +204,6 @@
 {% include "repomaker/widgets/pagination.html" %}
 
 <script src="{% static 'repomaker/js/endless-app-scroll.js' %}"></script>
+<div id="rm-repo-id" data-id="{{ repo.id }}"></div>
 <script src="{% static 'repomaker/js/app/add.js' %}"></script>
 {% endblock rm-content %}

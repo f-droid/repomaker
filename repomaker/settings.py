@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'background_task',
     'hvad',  # model i18n
     'tinymce',
+    'django_js_reverse',
     'django.forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -131,6 +132,16 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'repomaker.urls'
+
+# URLs to be exluded by JavaScript URL handler
+JS_REVERSE_EXCLUDE_NAMESPACES = [
+    'accounts',
+    'admin',
+    'jsreverse',
+    'tinymce',
+]
+
+JS_REVERSE_JS_MINIFY = not DEBUG
 
 TEMPLATES = [
     {
