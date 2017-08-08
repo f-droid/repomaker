@@ -17,11 +17,15 @@ and start from scratch after each update.
 ## Runtime
 
 * keytool from Java Runtime Environment (JRE)
-  `apt install openjdk-8-jre-headless`
-* apksigner `apt install apksigner` or alternatively jarsigner from Java Development Kit (JDK)
-  `apt install openjdk-8-jdk`
-* Android Asset Packaging Tool (aapt) `apt install aapt`
-* libmagic for mime-type detection `apt install libmagic1`
+* apksigner or alternatively jarsigner from Java Development Kit (JDK)
+* Android Asset Packaging Tool (aapt)
+* libmagic for mime-type detection
+* rsync to publish repositories
+* git to publish repositories to git mirrors
+
+On Debian, you can simply run this:
+
+`sudo apt install openjdk-8-jre-headless apksigner aapt libmagic1 rsync git`
 
 ## Development
 
