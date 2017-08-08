@@ -93,6 +93,9 @@ class RemoteAppTestCase(TestCase):
         self.app.update_icon('icon.png')  # pylint: disable=protected-access
         http_get.assert_called_once_with(self.repo.url + '/icons-640/icon.png', 'etag')
 
+        # re-retrieve app from database to make sure it was saved
+        self.app = RemoteApp.objects.get(pk=self.app.pk)
+
         # assert that old icon got deleted and new one was saved
         self.assertFalse(os.path.isfile(old_icon_path))
         new_icon_name = get_icon_file_path_for_app(self.app, 'icon.png')

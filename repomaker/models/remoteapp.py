@@ -116,7 +116,7 @@ class RemoteApp(AbstractApp):
 
         self.delete_old_icon()
         self.icon_etag = etag
-        self.icon.save(icon_name, BytesIO(icon), save=False)
+        self.icon.save(icon_name, BytesIO(icon), save=True)
 
     def _update_categories(self, categories):
         if not self.pk:
