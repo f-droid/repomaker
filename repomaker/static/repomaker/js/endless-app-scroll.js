@@ -187,15 +187,11 @@ function putAppInformation(jsonHtmlRelation, app, appCard) {
             appCard.removeAttribute('onclick')
 
             if (app['added']) {
-                if (appCard.classList.contains('rm-app-card')) {
-                    appCard.classList.remove('rm-app-card')
-                    appCard.classList.add('rm-app-card--no-hover')
-                }
+                appCard.classList.add('rm-app-card--no-hover')
                 continue
             }
             if (appCard.classList.contains('rm-app-card--no-hover')) {
                 appCard.classList.remove('rm-app-card--no-hover')
-                appCard.classList.add('rm-app-card')
             }
             var repoId = document.getElementById(DIV_REPO_ID).dataset.id
             var remoteRepoId = app['repo_id']

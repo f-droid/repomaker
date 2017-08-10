@@ -1,6 +1,6 @@
 {% load i18n %}
 {% if not clickable or repo_page %}
-<div class="rm-app-card{% if no_hover or app.added %}--no-hover{% endif %} mdl-cell mdl-cell--{{ width }}-col
+<div class="rm-app-card{% if no_hover or app.added %} rm-app-card--no-hover{% endif %} mdl-cell mdl-cell--{{ width }}-col
 			mdl-card mdl-shadow--2dp mdl-color--white"
 	 {% block rm-app-card-attributes %}{% endblock rm-app-card-attributes %}>
 {% else %}
