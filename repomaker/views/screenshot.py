@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.forms import Select
-from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DeleteView
 
@@ -32,5 +31,4 @@ class ScreenshotDeleteView(RepositoryAuthorizationMixin, DeleteView):
 
     def get_success_url(self):
         self.get_repo().update_async()
-        return reverse_lazy('app_edit', kwargs={'repo_id': self.kwargs['repo_id'],
-                                                'app_id': self.kwargs['app_id']})
+        return self.get_object().app.get_edit_url()
