@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.forms import Select
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import CreateView, DeleteView
+from django.views.generic import DeleteView
 
 from repomaker.models import Screenshot
 from repomaker.views.repository import RepositoryAuthorizationMixin
@@ -20,21 +20,6 @@ class ScreenshotForm(BaseModelForm):
         widgets = {
             'language_code': Select(choices=settings.LANGUAGES)
         }
-
-
-class ScreenshotCreateView(RepositoryAuthorizationMixin, CreateView):
-    model = Screenshot
-    form_class = ScreenshotForm
-    template_name = "repomaker/app/screenshot_add.html"
-
-    def form_valid(self, form):
-        form.instance.app_id = self.kwargs['app_id']
-        result = super(ScreenshotCreateView, self).form_valid(form)
-        self.get_repo().update_async()
-        return result
-
-    def get_success_url(self):
-        return reverse('app', args=[self.object.app.repo.pk, self.object.app.pk])
 
 
 class ScreenshotDeleteView(RepositoryAuthorizationMixin, DeleteView):

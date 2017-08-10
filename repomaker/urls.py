@@ -17,7 +17,7 @@ from repomaker.views.repository import RepositoryCreateView, RepositoryView, Rep
     RepositoryDeleteView, RepositoryListView
 from repomaker.views.s3storage import S3StorageCreate, S3StorageDetail, S3StorageUpdate, \
     S3StorageDelete
-from repomaker.views.screenshot import ScreenshotCreateView, ScreenshotDeleteView
+from repomaker.views.screenshot import ScreenshotDeleteView
 from repomaker.views.sshstorage import SshStorageCreate, SshStorageUpdate, SshStorageDetail, \
     SshStorageDelete
 from repomaker.views.storage import StorageAddView
@@ -80,8 +80,6 @@ urlpatterns = [
         name='delete_app'),
 
     # App Screenshots
-    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/screenshot/add/$',
-        ScreenshotCreateView.as_view(), name='screenshot_add'),
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/screenshot/(?P<s_id>[0-9]+)/delete/$',
         ScreenshotDeleteView.as_view(), name='screenshot_delete'),
 
