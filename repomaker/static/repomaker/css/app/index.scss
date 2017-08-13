@@ -319,6 +319,7 @@ select#id_category {
 }
 
 .rm-app-screenshot-delete {
+    @extend .rm-no-underline;
     display: inline-flex;
     vertical-align: bottom;
     margin-left: 25px;
@@ -326,7 +327,12 @@ select#id_category {
     margin-right: -95px;
 
     button {
+        @extend .rm-button--red;
         color: white;
+
+        i {
+            @extend .material-icons;
+        }
     }
 }
 
@@ -359,7 +365,32 @@ select#id_category {
 }
 
 .rm-app-versions-item {
+    @extend .mdl-list__item, .mdl-list__item--two-line;
     border-bottom: thin solid #f1f1f1;
+}
+
+.rm-app-versions-item-info {
+    @extend .mdl-list__item-primary-content;
+}
+
+.rm-app-versions-item-info-released {
+    @extend .mdl-list__item-sub-title;
+}
+
+.rm-app-versions-item-info-loading {
+    @extend .mdl-list__item-sub-title;
+}
+
+.rm-app-versions-item-delete {
+    @extend .mdl-list__item-secondary-action, .rm-no-underline;
+
+    button {
+        @extend .rm-button--red-border;
+
+        i {
+            @extend .material-icons;
+        }
+    }
 }
 
 /*

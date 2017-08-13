@@ -5,9 +5,10 @@ import re
 from django.conf import settings
 from django.db.models import Q
 from django.forms import FileField, ImageField, ClearableFileInput, CharField
-from django.http import HttpResponse, HttpResponseServerError
+from django.http import HttpResponseServerError, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils import formats
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation.trans_real import language_code_re
 from django.views.generic import DetailView
@@ -129,26 +130,50 @@ class AppEditView(ApkUploadMixin, LanguageMixin, TranslatableUpdateView):
 
     def post(self, request, *args, **kwargs):
         if 'apks' in self.request.FILES:
-            failed = self.add_apks(self.get_object())
-            if len(failed) > 0:
+            add_apks = self.add_apks(self.get_object())
+            if len(add_apks['failed']) > 0:
                 if self.request.is_ajax():
-                    return HttpResponseServerError(self.get_error_msg(failed))
+                    return HttpResponseServerError(self.get_error_msg(add_apks['failed']))
                 self.object = self.get_object()
                 form = self.get_form()
-                form.add_error('apks', self.get_error_msg(failed))
+                form.add_error('apks', self.get_error_msg(add_apks['failed']))
                 return self.form_invalid(form)
             if self.request.is_ajax():
-                return HttpResponse(status=204)
+                apk_objects = add_apks['apks']
+                apks = []
+                for apk in apk_objects:
+                    apk_dict = {
+                        'id': ApkPointer.objects.get(apk=apk.id).id,
+                        'version': _('Version %(version)s (%(code)s)') % {
+                            'version': apk.version_name,
+                            'code': apk.version_code
+                        },
+                        'released': _('Released %(date)s') % {
+                            'date': formats.date_format(apk.added_date, 'DATE_FORMAT'),
+                        }
+                    }
+                    apks.append(apk_dict)
+                json_response = {
+                    'repo': self.get_repo().id,
+                    'app': self.get_object().id,
+                    'apks': apks
+                }
+                return JsonResponse(json_response, safe=False)
             return super().post(request, args, kwargs)
         if 'HTTP_RM_BACKGROUND_TYPE' in request.META:
             if request.META['HTTP_RM_BACKGROUND_TYPE'] == 'screenshots':
                 try:
-                    self.add_screenshots()
+                    screenshots = self.add_screenshots()
                 except Exception as e:
                     logging.error(e)
                     return HttpResponseServerError(e)
                 self.get_repo().update_async()  # schedule repository update
-                return HttpResponse(status=204)
+                json_response = {
+                    'repo': self.get_repo().id,
+                    'app': self.get_object().id,
+                    'screenshots': screenshots
+                }
+                return JsonResponse(json_response, safe=False)
             if request.META['HTTP_RM_BACKGROUND_TYPE'] == 'feature-graphic':
                 try:
                     graphic = self.request.FILES.getlist('feature-graphic')[0]
@@ -162,7 +187,12 @@ class AppEditView(ApkUploadMixin, LanguageMixin, TranslatableUpdateView):
                     logging.error(e)
                     return HttpResponseServerError(e)
                 self.get_repo().update_async()  # schedule repository update
-                return HttpResponse(status=204)
+                json_response = {
+                    'repo': self.get_repo().id,
+                    'app': self.get_object().id,
+                    'feature-graphic': self.object.feature_graphic.url
+                }
+                return JsonResponse(json_response, safe=False)
         return super().post(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -173,9 +203,20 @@ class AppEditView(ApkUploadMixin, LanguageMixin, TranslatableUpdateView):
         return result
 
     def add_screenshots(self):
+        """
+        Adds screenshots to an app.
+        :return: Array with information about screenshots
+        """
+        screenshots = []
         for screenshot in self.request.FILES.getlist('screenshots'):
-            Screenshot.objects.create(app=self.get_object(), file=screenshot,
-                                      language_code=self.get_language())
+            screenshot = Screenshot.objects.create(app=self.get_object(), file=screenshot,
+                                                   language_code=self.get_language())
+            screenshot = {
+                'id': screenshot.id,
+                'url': screenshot.file.url
+            }
+            screenshots.append(screenshot)
+        return screenshots
 
 
 class AppTranslationCreateForm(AppForm):

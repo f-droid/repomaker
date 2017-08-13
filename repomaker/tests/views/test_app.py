@@ -221,12 +221,20 @@ class AppViewTestCase(TestCase):
         self.assertEqual(0, Screenshot.objects.all().count())
 
         with open(os.path.join(TEST_FILES_DIR, 'test.png'), 'rb') as f:
-            self.client.post(self.app.get_edit_url(), {'screenshots': f},
-                             HTTP_X_REQUESTED_WITH='XMLHttpRequest',
-                             HTTP_RM_BACKGROUND_TYPE='screenshots')
+            response = self.client.post(self.app.get_edit_url(), {'screenshots': f},
+                                        HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                        HTTP_RM_BACKGROUND_TYPE='screenshots')
 
         self.assertEqual(1, Screenshot.objects.all().count())
         self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
+
+        self.assertContains(response, self.repo.id)
+        self.assertContains(response, self.app.id)
+        self.assertContains(response, 'screenshots')
+
+        screenshot = Screenshot.objects.get(app=self.app.id)
+        self.assertContains(response, screenshot.id)
+        self.assertContains(response, screenshot.file.url)
 
     def test_upload_feature_graphic(self):
         # manually add a feature graphic and ensure that its file exists
@@ -251,9 +259,9 @@ class AppViewTestCase(TestCase):
         self.assertTrue(os.path.isfile(old_graphic))
 
         with open(os.path.join(TEST_FILES_DIR, 'test.png'), 'rb') as f:
-            self.client.post(self.app.get_edit_url(), {'feature-graphic': f},
-                             HTTP_X_REQUESTED_WITH='XMLHttpRequest',
-                             HTTP_RM_BACKGROUND_TYPE='feature-graphic')
+            response = self.client.post(self.app.get_edit_url(), {'feature-graphic': f},
+                                        HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                        HTTP_RM_BACKGROUND_TYPE='feature-graphic')
 
         # refresh app object and assert that graphic got saved and old one removed
         self.app = App.objects.get(pk=self.app.pk)
@@ -261,6 +269,40 @@ class AppViewTestCase(TestCase):
         self.assertTrue(self.app.feature_graphic.name.endswith('/test.png'))
         self.assertFalse(os.path.isfile(old_graphic))
         self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
+
+        self.assertContains(response, self.app.repo.id)
+        self.assertContains(response, self.app.id)
+        self.assertContains(response, 'feature-graphic')
+        self.assertContains(response, self.app.feature_graphic.url)
+
+    def test_upload_apk(self):
+        self.assertEqual(0, Apk.objects.all().count())
+
+        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+            self.client.post(self.app.get_edit_url(), {'apks': f})
+
+        self.assertEqual(1, Apk.objects.all().count())
+        self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
+
+    def test_upload_apk_ajax(self):
+        self.assertEqual(0, Apk.objects.all().count())
+
+        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+            response = self.client.post(self.app.get_edit_url(), {'apks': f},
+                                        HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                        HTTP_RM_BACKGROUND_TYPE='screenshots')
+
+        self.assertEqual(1, Apk.objects.all().count())
+        self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
+
+        self.assertContains(response, self.repo.id)
+        self.assertContains(response, self.app.id)
+        self.assertContains(response, 'apks')
+
+        apk_pointer = ApkPointer.objects.get(app=self.app.id)
+        self.assertContains(response, apk_pointer.id)
+        self.assertContains(response, apk_pointer.apk.version_name)
+        self.assertContains(response, apk_pointer.apk.version_code)
 
     def test_add_lang(self):
         self.assertFalse('de' in self.app.get_available_languages())

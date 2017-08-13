@@ -151,21 +151,21 @@
 		{% if apks %}
 		<ul class="rm-app-versions-list mdl-list">
 			{% for pointer in apks %}
-			<li class="rm-app-versions-item mdl-list__item mdl-list__item--two-line">
-				<span class="mdl-list__item-primary-content">
+			<li class="rm-app-versions-item">
+				<span class="rm-app-versions-item-info">
 					<span>
 						{% blocktrans with version=pointer.apk.version_name code=pointer.apk.version_code trimmed %}
 						Version {{ version }} ({{ code }})
 						{% endblocktrans %}
 					</span>
 					{% if pointer.file %}
-					<span class="mdl-list__item-sub-title">
+					<span class="rm-app-versions-item-info-released">
 						{% blocktrans with date=pointer.apk.added_date|date:"DATE_FORMAT" trimmed %}
 						Released {{ date }}
 						{% endblocktrans %}
 					</span>
 					{% else %}
-					<span class="mdl-list__item-sub-title">
+					<span class="rm-app-versions-item-info-loading">
 						<!-- TODO: Use progress bar instead and reload when download done -->
 						{% trans 'APK is still downloading...' %}
 					</span>
@@ -176,8 +176,10 @@
 			{% endfor %}
 		</ul>
 		{% else %}
-		<p>{% trans 'This app has no APK files.' %}</p>
-		<p>{% trans 'If you added this app from a remote repo, try deleting it and adding it again.' %}</p>
+		<div id="rm-app-versions-empty">
+			<p>{% trans 'This app has no APK files.' %}</p>
+			<p>{% trans 'If you added this app from a remote repo, try deleting it and adding it again.' %}</p>
+		</div>
 		{% endif %}
 	</div>
 </div>

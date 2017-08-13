@@ -34,9 +34,9 @@ class ApkUploadView(ApkUploadMixin, UpdateView):
             return self.form_invalid(form)
 
         # add posted APKs
-        failed = self.add_apks()
-        if len(failed) > 0:
-            form.add_error('apks', self.get_error_msg(failed))
+        add_apks = self.add_apks()
+        if len(add_apks['failed']) > 0:
+            form.add_error('apks', self.get_error_msg(add_apks['failed']))
             return super(ApkUploadView, self).form_invalid(form)
 
         # don't let the View create anything as we already did

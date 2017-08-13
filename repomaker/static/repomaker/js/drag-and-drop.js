@@ -89,12 +89,135 @@ function updateProgress(element, event) {
 }
 
 function uploadFinished(request, element, type, files) {
-    if (request.status === 204) {
+    if (type === 'screenshots' && request.status === 200) {
+        var response = JSON.parse(request.responseText)
+        addScreenshots(element, response)
+    }
+    else if (type === 'feature-graphic' && request.status === 200) {
+        var response = JSON.parse(request.responseText)
+        setFeatureGraphic(element, response)
+    }
+    else if (type === 'apks' && request.status === 200) {
+        var response = JSON.parse(request.responseText)
+        addApks(element, response)
+    }
+    else if (request.status === 204) {
         location.reload()
     }
     else {
         showError(element, request.responseText)
     }
+}
+
+function addScreenshots(dndField, response) {
+    var screenshotsContainer = dndField.parentElement
+    var repo = response['repo']
+    var app = response['app']
+    var screenshots = response['screenshots']
+    for (var i = 0; i < screenshots.length; i++) {
+        var id = screenshots[i]['id']
+        var url = screenshots[i]['url']
+        var screenshotDiv = document.createElement('div')
+        screenshotDiv.classList.add('rm-app-screenshot')
+
+        var screenshotDelete = document.createElement('a')
+        screenshotDelete.href = Urls.screenshot_delete(repo, app, id)
+        screenshotDelete.classList.add('rm-app-screenshot-delete')
+
+        var screenshotDeleteButton = document.createElement('button')
+        screenshotDeleteButton.type = 'button'
+        screenshotDeleteButton.classList.add('mdl-js-button')
+
+        var screenshotDeleteButtonContent = document.createElement('i')
+        screenshotDeleteButtonContent.innerText = 'delete'
+
+        screenshotDeleteButton.appendChild(screenshotDeleteButtonContent)
+        screenshotDelete.appendChild(screenshotDeleteButton)
+
+        var screenshotImg = document.createElement('img')
+        screenshotImg.src = url
+
+        screenshotDiv.appendChild(screenshotDelete)
+        screenshotDiv.appendChild(screenshotImg)
+        screenshotsContainer.appendChild(screenshotDiv)
+    }
+    resetDndField(dndField)
+}
+
+function setFeatureGraphic(dndField, response) {
+    var featureGraphicContainer = dndField.parentElement
+    var featureGraphicUrl = response['feature-graphic']
+
+    var featureGraphicImg = document.getElementById('rm-app-feature-graphic-img')
+    if (featureGraphicImg === null) {
+        featureGraphicImg = document.createElement('img')
+        featureGraphicImg.id = 'rm-app-feature-graphic-img'
+        featureGraphicImg.src = featureGraphicUrl
+        featureGraphicContainer.appendChild(featureGraphicImg)
+    }
+    else {
+        featureGraphicImg.src = featureGraphicUrl
+    }
+    resetDndField(dndField)
+}
+
+function addApks(dndField, response) {
+    var apksContainer = dndField.parentElement
+    var appVersionList = apksContainer.querySelector('.rm-app-versions-list')
+    if (appVersionList === null) {
+        appVersionList = document.createElement('ul')
+        appVersionList.classList.add('rm-app-versions-list')
+        appVersionList.classList.add('mdl-list')
+
+        apksContainer.appendChild(appVersionList)
+
+        var apksContainerEmpty = document.getElementById('rm-app-versions-empty')
+        apksContainer.removeChild(apksContainerEmpty)
+    }
+    var repo = response['repo']
+    var app = response['app']
+    var apks = response['apks']
+    for (var i = 0; i < apks.length; i++) {
+        var id = apks[i]['id']
+        var version = apks[i]['version']
+        var released = apks[i]['released']
+
+        var apkLi = document.createElement('li')
+        apkLi.classList.add('rm-app-versions-item')
+
+        var apkDelete = document.createElement('a')
+        apkDelete.href = Urls.apk_delete(repo, app, id)
+        apkDelete.classList.add('rm-app-versions-item-delete')
+
+        var apkDeleteButton = document.createElement('button')
+        apkDeleteButton.type = 'button'
+        apkDeleteButton.classList.add('mdl-js-button')
+
+        var apkDeleteButtonContent = document.createElement('i')
+        apkDeleteButtonContent.innerText = 'delete'
+
+        apkDeleteButton.appendChild(apkDeleteButtonContent)
+        apkDelete.appendChild(apkDeleteButton)
+
+        var apkInfo = document.createElement('span')
+        apkInfo.classList.add('rm-app-versions-item-info')
+
+        var apkInfoVersion = document.createElement('span')
+        apkInfoVersion.innerText = version
+
+        var apkInfoReleased = document.createElement('span')
+        apkInfoReleased.classList.add('rm-app-versions-item-info-released')
+        apkInfoReleased.innerText = released
+
+        apkInfo.appendChild(apkInfoVersion)
+        apkInfo.appendChild(apkInfoReleased)
+
+        apkLi.appendChild(apkInfo)
+        apkLi.appendChild(apkDelete)
+
+        appVersionList.insertBefore(apkLi, appVersionList.firstChild)
+    }
+    resetDndField(dndField)
 }
 
 function showDndTexts() {
@@ -104,11 +227,23 @@ function showDndTexts() {
     }
 }
 
+var dndFieldOriginalContent = null
+
 function showError(element, text) {
     element.hidden = false
     document.getElementById(element.id + '--loading').hidden = true
+    dndFieldOriginalContent = element.innerHTML
     element.innerHTML = '<p class="error">' + text + '</p>'
     element.innerHTML += '<p>' + gettext('Try to drag and drop again!') + '</p>'
+}
+
+function resetDndField(dndField) {
+    var loadingField = document.getElementById(dndField.id + '--loading')
+    dndField.hidden = false
+    loadingField.hidden = true
+    if (dndFieldOriginalContent !== null) {
+        dndField.innerHTML = dndFieldOriginalContent
+    }
 }
 
 function isImage(file) {

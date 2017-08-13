@@ -34,10 +34,10 @@ class ApkUploadMixin(RepositoryAuthorizationMixin):
 
     def post(self, request, *args, **kwargs):
         if not self.apks_added and 'apks' in self.request.FILES:
-            failed = self.add_apks()
-            if len(failed) > 0:
+            add_apks = self.add_apks()
+            if len(add_apks['failed']) > 0:
                 # TODO return list, so JavaScript can handle the individual error properly
-                return HttpResponseServerError(self.get_error_msg(failed))
+                return HttpResponseServerError(self.get_error_msg(add_apks['failed']))
             return HttpResponse(status=204)
         # noinspection PyUnresolvedReferences
         return super().post(request, args, kwargs)
@@ -46,15 +46,18 @@ class ApkUploadMixin(RepositoryAuthorizationMixin):
         """
         Adds uploaded APKs from the request object to the database and initializes them
 
-        :return: A list of tuples, one for each failed APK file
-                 where the first element is the name of the APK file and the second an error message
+        :return: A dict with the successfully initialized APKs in a list called 'apks' and a list of
+                 tuples called 'errors', one tuple for each failed APK file where the first element
+                 is the name of the APK file and the second an error message
         """
         files = self.request.FILES.getlist('apks')
         repo = self.get_repo()
 
+        apks = []
         failed = []
         for apk_file in files:
             apk = Apk.objects.create(file=apk_file)
+            apks.append(apk)
             try:
                 apk.initialize(repo, app)  # this also creates a pointer and attaches the app
             except Exception as e:
@@ -71,7 +74,10 @@ class ApkUploadMixin(RepositoryAuthorizationMixin):
             self.get_repo().update_async()  # schedule repository update
 
         self.apks_added = True
-        return failed
+        return {
+            'apks': apks,
+            'failed': failed,
+        }
 
     @staticmethod
     def get_error_msg(failed):
