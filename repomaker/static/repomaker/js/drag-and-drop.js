@@ -146,6 +146,8 @@ function addScreenshots(dndField, response) {
 
 function setFeatureGraphic(dndField, response) {
     var featureGraphicContainer = dndField.parentElement // TODO getElementById
+    var repo = response['repo']
+    var app = response['app']
     var featureGraphicUrl = response['feature-graphic']
 
     var featureGraphicImg = document.getElementById('rm-app-feature-graphic-img')
@@ -153,11 +155,31 @@ function setFeatureGraphic(dndField, response) {
         featureGraphicImg = document.createElement('img')
         featureGraphicImg.id = 'rm-app-feature-graphic-img'
         featureGraphicImg.src = featureGraphicUrl
+
+        var featureGraphicDelete = document.createElement('a')
+        featureGraphicDelete.href = Urls.delete_feature_graphic(repo, app)
+        featureGraphicDelete.classList.add('rm-app-feature-graphic-delete')
+
+        var featureGraphicDeleteButton = document.createElement('button')
+        featureGraphicDeleteButton.type = 'button'
+        featureGraphicDeleteButton.classList.add('mdl-js-button')
+
+        var featureGraphicDeleteButtonContent = document.createElement('i')
+        featureGraphicDeleteButtonContent.innerText = 'delete'
+
+        featureGraphicDeleteButton.appendChild(featureGraphicDeleteButtonContent)
+        featureGraphicDelete.appendChild(featureGraphicDeleteButton)
+
         featureGraphicContainer.appendChild(featureGraphicImg)
+        featureGraphicContainer.appendChild(featureGraphicDelete)
     }
     else {
         featureGraphicImg.src = featureGraphicUrl
+
+        var featureGraphicDelete = featureGraphicContainer.querySelector('.rm-app-feature-graphic-delete')
+        featureGraphicDelete.href = Urls.delete_feature_graphic(repo, app)
     }
+
     resetDndField(dndField)
 }
 

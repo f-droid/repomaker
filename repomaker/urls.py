@@ -8,7 +8,7 @@ from repomaker.models import S3Storage, SshStorage, GitStorage
 from repomaker.views import media_serve
 from repomaker.views.apk import ApkUploadView, ApkPointerDeleteView
 from repomaker.views.app import AppDetailView, AppDeleteView, AppEditView, \
-    AppTranslationCreateView
+    AppTranslationCreateView, AppFeatureGraphicDeleteView
 from repomaker.views.gitstorage import GitStorageCreate, GitStorageUpdate, GitStorageDetail, \
     GitStorageDelete
 from repomaker.views.remoterepository import RemoteRepositoryCreateView, AppRemoteAddView, \
@@ -78,6 +78,9 @@ urlpatterns = [
     # App Delete
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/delete/$', AppDeleteView.as_view(),
         name='delete_app'),
+    # Feature Graphic Delete
+    url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/feature_graphic/delete/$',
+        AppFeatureGraphicDeleteView.as_view(), name='delete_feature_graphic'),
 
     # App Screenshots
     url(r'^(?P<repo_id>[0-9]+)/app/(?P<app_id>[0-9]+)/screenshot/(?P<s_id>[0-9]+)/delete/$',

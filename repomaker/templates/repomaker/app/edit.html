@@ -152,10 +152,9 @@
 
 		{% if app.feature_graphic %}
 		<img id="rm-app-feature-graphic-img" src="{{ app.feature_graphic.url }}"/>
-		<!-- TODO AJAX: post form with feature_graphic-clear=true -->
-		<a onclick="alert('todo')">
-			<button type="button" class="mdl-button mdl-js-button rm-button--red">
-				<i class="material-icons">delete</i>
+		<a href="{% url 'delete_feature_graphic' app.repo.id app.id %}" class="rm-app-feature-graphic-delete">
+			<button type="button" class="mdl-js-button">
+				<i>delete</i>
 			</button>
 		</a>
 		{% endif %}

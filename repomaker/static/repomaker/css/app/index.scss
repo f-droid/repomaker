@@ -340,12 +340,20 @@ select#id_category {
     img {
         max-width: 100%;
     }
+}
 
-    a {
-        @extend .rm-no-underline;
-        position: relative;
-        bottom: 60px;
-        margin-left: 25px;
+.rm-app-feature-graphic-delete {
+    @extend .rm-no-underline;
+    position: relative;
+    bottom: 60px;
+    margin-left: 25px;
+
+    button {
+        @extend .rm-button--red;
+
+        i {
+            @extend .material-icons;
+        }
     }
 }
 

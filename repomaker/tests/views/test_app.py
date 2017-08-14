@@ -377,6 +377,24 @@ class AppViewTestCase(TestCase):
         self.assertRedirects(response, reverse('app', kwargs=kwargs))
         self.assertEqual({settings.LANGUAGE_CODE, 'de-de'}, set(self.app.get_available_languages()))
 
+    def test_delete_feature_graphic(self):
+        self.app.feature_graphic.save('feature.png', io.BytesIO(b'foo'), save=True)
+        feature_graphic = self.app.feature_graphic.path
+        self.assertTrue(os.path.isfile(feature_graphic))
+
+        kwargs = {'repo_id': self.repo.pk, 'app_id': self.app.pk}
+        response = self.client.get(reverse('delete_feature_graphic', kwargs=kwargs))
+
+        # assert that it contains the relevant information
+        self.assertContains(response, self.app.name)
+        self.assertContains(response, 'src="' + self.app.feature_graphic.url)
+
+        # request the feature graphic to be deleted
+        response = self.client.post(reverse('delete_feature_graphic', kwargs=kwargs))
+
+        self.assertRedirects(response, self.app.get_edit_url())
+        self.assertFalse(os.path.isfile(feature_graphic))
+
     def translate_to_de(self):
         self.app.translate('de')
         self.app.summary = 'Test-Zusammenfassung'

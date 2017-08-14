@@ -5,7 +5,7 @@ import re
 from django.conf import settings
 from django.db.models import Q
 from django.forms import FileField, ImageField, ClearableFileInput, CharField
-from django.http import HttpResponseServerError, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponseServerError, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils import formats
@@ -261,3 +261,25 @@ class AppDeleteView(RepositoryAuthorizationMixin, DeleteView):
     def get_success_url(self):
         self.get_repo().update_async()  # schedule repository update
         return reverse_lazy('repo', kwargs={'repo_id': self.kwargs['repo_id']})
+
+
+class AppFeatureGraphicDeleteView(RepositoryAuthorizationMixin, DeleteView):
+    model = App
+    pk_url_kwarg = 'app_id'
+    context_object_name = 'app'
+    template_name = 'repomaker/app/feature_graphic_delete.html'
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Deletes the feature graphic of the app and then
+        redirects to the success URL.
+        """
+        self.get_object().feature_graphic.delete()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_repo(self):
+        return self.get_object().repo
+
+    def get_success_url(self):
+        self.get_repo().update_async()
+        return self.get_object().get_edit_url()
