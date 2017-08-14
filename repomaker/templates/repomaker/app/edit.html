@@ -118,8 +118,8 @@
 
 
 {% block screenshot-delete %}
-<a href="{% url 'screenshot_delete' app.repo.id app.id screenshot.id %}"
-   class="rm-app-screenshot-delete">
+<a href="{% url 'screenshot_delete' app.repo.id app.id screenshot.id %}" class="rm-app-screenshot-delete"
+   data-id="{{ screenshot.id }}">
 	<button type="button" class="mdl-js-button">
 		<i>delete</i>
 	</button>
@@ -186,7 +186,8 @@
 
 
 {% block apk-delete %}
-<a href="{% url 'apk_delete' app.repo.id app.id pointer.id %}" class="rm-app-versions-item-delete">
+<a href="{% url 'apk_delete' app.repo.id app.id pointer.id %}" class="rm-app-versions-item-delete"
+   data-id="{{ pointer.id }}">
 	<button type="button" class="mdl-js-button">
 		<i>delete</i>
 	</button>
@@ -201,5 +202,9 @@
 
 {% block page-footer %}
 </form>
+<div id="rm-repo-id" data-id="{{ app.repo.id }}"></div>
+<div id="rm-app-id" data-id="{{ app.id }}"></div>
+<link rel="stylesheet" type="text/css" href="{% static 'node_modules/dialog-polyfill/dialog-polyfill.css' %}" />
+<script src="{% static 'node_modules/dialog-polyfill/dialog-polyfill.js' %}"></script>
 <script src="{% static 'repomaker/js/app/edit.js' %}"></script>
 {% endblock page-footer %}

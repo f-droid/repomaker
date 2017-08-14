@@ -123,6 +123,7 @@ function addScreenshots(dndField, response) {
         var screenshotDelete = document.createElement('a')
         screenshotDelete.href = Urls.screenshot_delete(repo, app, id)
         screenshotDelete.classList.add('rm-app-screenshot-delete')
+        screenshotDelete.dataset.id = id
 
         var screenshotDeleteButton = document.createElement('button')
         screenshotDeleteButton.type = 'button'
@@ -140,6 +141,7 @@ function addScreenshots(dndField, response) {
         screenshotDiv.appendChild(screenshotDelete)
         screenshotDiv.appendChild(screenshotImg)
         screenshotsContainer.appendChild(screenshotDiv)
+        registerDeleteListenerScreenshot(screenshotDelete)
     }
     resetDndField(dndField)
 }
@@ -181,6 +183,7 @@ function setFeatureGraphic(dndField, response) {
     }
 
     resetDndField(dndField)
+    registerDeleteListenerFeatureGraphic()
 }
 
 function addApks(dndField, response) {
@@ -210,6 +213,7 @@ function addApks(dndField, response) {
         var apkDelete = document.createElement('a')
         apkDelete.href = Urls.apk_delete(repo, app, id)
         apkDelete.classList.add('rm-app-versions-item-delete')
+        apkDelete.dataset.id = id
 
         var apkDeleteButton = document.createElement('button')
         apkDeleteButton.type = 'button'
@@ -238,6 +242,7 @@ function addApks(dndField, response) {
         apkLi.appendChild(apkDelete)
 
         appVersionList.insertBefore(apkLi, appVersionList.firstChild)
+        registerDeleteListenerApk(apkDelete)
     }
     resetDndField(dndField)
 }
