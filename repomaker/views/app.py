@@ -86,8 +86,9 @@ class AppForm(TranslatableModelForm):
                 Q(user=None) | Q(user=self.instance.repo.user))
 
     def save(self, commit=True):
-        # remove old feature graphic
-        if 'feature_graphic' in self.initial and 'feature_graphic' in self.changed_data:
+        # remove old feature graphic if there was one
+        if 'feature_graphic' in self.initial and self.initial['feature_graphic'].name \
+                and 'feature_graphic' in self.changed_data:
             old_graphic = self.initial['feature_graphic'].path
             if os.path.exists(old_graphic):
                 os.remove(old_graphic)
