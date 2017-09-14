@@ -289,8 +289,7 @@ class AppViewTestCase(TestCase):
 
         with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
             response = self.client.post(self.app.get_edit_url(), {'apks': f},
-                                        HTTP_X_REQUESTED_WITH='XMLHttpRequest',
-                                        HTTP_RM_BACKGROUND_TYPE='screenshots')
+                                        HTTP_X_REQUESTED_WITH='XMLHttpRequest')
 
         self.assertEqual(1, Apk.objects.all().count())
         self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
@@ -300,6 +299,37 @@ class AppViewTestCase(TestCase):
         self.assertContains(response, 'apks')
 
         apk_pointer = ApkPointer.objects.get(app=self.app.id)
+        self.assertContains(response, apk_pointer.id)
+        self.assertContains(response, apk_pointer.apk.version_name)
+        self.assertContains(response, apk_pointer.apk.version_code)
+
+        # Create another repo and app and add the same APK there to test again with two pointers
+        repo2 = Repository.objects.create(
+            name="Test Name 2",
+            description="Test Description",
+            url="https://example.org",
+            user=User.objects.get(username=DEFAULT_USER_NAME),
+        )
+        # create app in repo
+        app2 = App.objects.create(repo=repo2,
+                                  package_id='org.bitbucket.tickytacky.mirrormirror',
+                                  name='TestApp', website='TestSite', author_name='author')
+        app2.translate(settings.LANGUAGE_CODE)
+        app2.save()
+
+        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+            response = self.client.post(app2.get_edit_url(), {'apks': f},
+                                        HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+
+        self.assertEqual(1, Apk.objects.all().count())
+        self.assertEqual(2, ApkPointer.objects.all().count())
+        self.assertTrue(Repository.objects.get(pk=repo2.pk).update_scheduled)
+
+        self.assertContains(response, repo2.id)
+        self.assertContains(response, app2.id)
+        self.assertContains(response, 'apks')
+
+        apk_pointer = ApkPointer.objects.get(app=app2.id)
         self.assertContains(response, apk_pointer.id)
         self.assertContains(response, apk_pointer.apk.version_name)
         self.assertContains(response, apk_pointer.apk.version_code)

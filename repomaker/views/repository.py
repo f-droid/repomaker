@@ -34,10 +34,10 @@ class ApkUploadMixin(RepositoryAuthorizationMixin):
 
     def post(self, request, *args, **kwargs):
         if not self.apks_added and 'apks' in self.request.FILES:
-            add_apks = self.add_apks()
-            if len(add_apks['failed']) > 0:
+            added_apks = self.add_apks()
+            if len(added_apks['failed']) > 0:
                 # TODO return list, so JavaScript can handle the individual error properly
-                return HttpResponseServerError(self.get_error_msg(add_apks['failed']))
+                return HttpResponseServerError(self.get_error_msg(added_apks['failed']))
             return HttpResponse(status=204)
         # noinspection PyUnresolvedReferences
         return super().post(request, args, kwargs)
@@ -47,7 +47,7 @@ class ApkUploadMixin(RepositoryAuthorizationMixin):
         Adds uploaded APKs from the request object to the database and initializes them
 
         :return: A dict with the successfully initialized APKs in a list called 'apks' and a list of
-                 tuples called 'errors', one tuple for each failed APK file where the first element
+                 tuples called 'failed', one tuple for each failed APK file where the first element
                  is the name of the APK file and the second an error message
         """
         files = self.request.FILES.getlist('apks')
@@ -57,9 +57,9 @@ class ApkUploadMixin(RepositoryAuthorizationMixin):
         failed = []
         for apk_file in files:
             apk = Apk.objects.create(file=apk_file)
-            apks.append(apk)
             try:
-                apk.initialize(repo, app)  # this also creates a pointer and attaches the app
+                apk = apk.initialize(repo, app)  # this also creates a pointer and attaches the app
+                apks.append(apk)
             except Exception as e:
                 logging.warning(e)
                 if apk.pk:

@@ -130,20 +130,21 @@ class AppEditView(ApkUploadMixin, LanguageMixin, TranslatableUpdateView):
 
     def post(self, request, *args, **kwargs):
         if 'apks' in self.request.FILES:
-            add_apks = self.add_apks(self.get_object())
-            if len(add_apks['failed']) > 0:
+            app = self.get_object()
+            added_apks = self.add_apks(app)
+            if len(added_apks['failed']) > 0:
                 if self.request.is_ajax():
-                    return HttpResponseServerError(self.get_error_msg(add_apks['failed']))
-                self.object = self.get_object()
+                    return HttpResponseServerError(self.get_error_msg(added_apks['failed']))
+                self.object = app
                 form = self.get_form()
-                form.add_error('apks', self.get_error_msg(add_apks['failed']))
+                form.add_error('apks', self.get_error_msg(added_apks['failed']))
                 return self.form_invalid(form)
             if self.request.is_ajax():
-                apk_objects = add_apks['apks']
+                apk_objects = added_apks['apks']
                 apks = []
                 for apk in apk_objects:
                     apk_dict = {
-                        'id': ApkPointer.objects.get(apk=apk.id).id,
+                        'id': ApkPointer.objects.get(app=app, apk=apk).id,
                         'version': _('Version %(version)s (%(code)s)') % {
                             'version': apk.version_name,
                             'code': apk.version_code
@@ -155,7 +156,7 @@ class AppEditView(ApkUploadMixin, LanguageMixin, TranslatableUpdateView):
                     apks.append(apk_dict)
                 json_response = {
                     'repo': self.get_repo().id,
-                    'app': self.get_object().id,
+                    'app': app.id,
                     'apks': apks
                 }
                 return JsonResponse(json_response, safe=False)

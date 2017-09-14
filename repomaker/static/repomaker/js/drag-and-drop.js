@@ -110,7 +110,7 @@ function uploadFinished(request, element, type, files) {
 }
 
 function addScreenshots(dndField, response) {
-    var screenshotsContainer = dndField.parentElement
+    var screenshotsContainer = dndField.parentElement // TODO getElementById
     var repo = response['repo']
     var app = response['app']
     var screenshots = response['screenshots']
@@ -145,7 +145,7 @@ function addScreenshots(dndField, response) {
 }
 
 function setFeatureGraphic(dndField, response) {
-    var featureGraphicContainer = dndField.parentElement
+    var featureGraphicContainer = dndField.parentElement // TODO getElementById
     var featureGraphicUrl = response['feature-graphic']
 
     var featureGraphicImg = document.getElementById('rm-app-feature-graphic-img')
@@ -162,7 +162,7 @@ function setFeatureGraphic(dndField, response) {
 }
 
 function addApks(dndField, response) {
-    var apksContainer = dndField.parentElement
+    var apksContainer = dndField.parentElement // TODO getElementById
     var appVersionList = apksContainer.querySelector('.rm-app-versions-list')
     if (appVersionList === null) {
         appVersionList = document.createElement('ul')

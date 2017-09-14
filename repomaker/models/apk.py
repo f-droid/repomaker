@@ -125,7 +125,7 @@ class Apk(models.Model):
             if ApkPointer.objects.filter(apk=apk, repo=repo).exists():
                 raise ValidationError(_('This APK already exists in the current repo.'))
             pointer = ApkPointer(apk=apk, repo=repo)
-            pointer.initialize(repo_file)
+            pointer.initialize(repo_file)  # also saves the pointer
 
         return apk
 
