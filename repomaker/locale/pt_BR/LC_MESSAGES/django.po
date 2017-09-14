@@ -234,6 +234,14 @@ msgstr "Arraste e solte arquivos .apk"
 msgid "Drag and drop .apk files"
 msgstr "Arraste e solte arquivos .apk"
 
+msgid "Delete Feature Graphic"
+msgstr ""
+
+#, fuzzy, python-format
+#| msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
+msgid "Are you sure you want to delete the feature graphic from your app <strong>%(app)s</strong>?"
+msgstr "Você tem certeza que quer apagar esta captura de tela do aplicativo <strong>%(app)s</strong>?"
+
 #, fuzzy, python-format
 #| msgid "Language (%(count)s)"
 msgid "Languages (%(count)s)"
@@ -289,12 +297,6 @@ msgstr "No momento não existem capturas de tela sendo exibidas porque isso dá 
 
 msgid "show screenshots"
 msgstr "mostrar capturas de tela"
-
-msgid "Add Screenshot"
-msgstr "Adicionar captura de tela"
-
-msgid "Upload Screenshot"
-msgstr "Enviar captura de tela"
 
 msgid "Delete Screenshot"
 msgstr "Apagar captura de tela"

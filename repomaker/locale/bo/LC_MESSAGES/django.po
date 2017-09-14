@@ -9,8 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2017-08-22 17:08+0000\n"
 "Last-Translator: tenzin tselek <omaahum99@yahoo.in>\n"
-"Language-Team: Tibetan "
-"<https://hosted.weblate.org/projects/f-droid/repomaker/bo/>\n"
+"Language-Team: Tibetan <https://hosted.weblate.org/projects/f-droid/repomaker/bo/>\n"
 "Language: bo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -229,6 +228,16 @@ msgstr "བརྐོས་རིས་དེ་འཐེན་ནས་བཞག
 msgid "Drag and drop .apk files"
 msgstr "འཐེན་ནས་བཞག .apkཡིག་ཆ།"
 
+#, fuzzy
+#| msgid "Feature Graphic"
+msgid "Delete Feature Graphic"
+msgstr "བརྐོས་རིས་ཀྱི་ཁྱད་ཆོས།"
+
+#, fuzzy, python-format
+#| msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
+msgid "Are you sure you want to delete the feature graphic from your app <strong>%(app)s</strong>?"
+msgstr "ཁྱེད་རང་དངོས་གནས་པར་ལེན་བྱས་པ་དེ་ཁྱེད་རང་གི་མཉེན་ཆས་ནས་སུབས་མཁན་ཡིན་ནམ།<strong> 1%(app)s 2</strong> 3?"
+
 #, python-format
 msgid "Languages (%(count)s)"
 msgstr "སྐད་རིགས་རྣམས།(%(count)s 1)"
@@ -282,12 +291,6 @@ msgstr "ད་ལྟའི་ཆར་དྲྭ་ཤེལ་པར་ལེན
 msgid "show screenshots"
 msgstr "དྲྭ་ཤེལ་པར་ལེན་བྱས་པ་རྣམས་སྟོན།"
 
-msgid "Add Screenshot"
-msgstr "དྲྭ་ཤེལ་པར་ལེན་ཁ་སྣོན།"
-
-msgid "Upload Screenshot"
-msgstr "དྲྭ་ཤེལ་པར་ལེན་ནང་བཅུག"
-
 msgid "Delete Screenshot"
 msgstr "དྲྭ་ཤེལ་པར་ལེན་སུབས།"
 
@@ -309,18 +312,13 @@ msgid "Background Operation in Progress"
 msgstr "རྒྱབ་ལྗོངས་ཀྱི་ལས་འགུལ་ཡར་རྒྱས་གཏོང་བཞིན་ཡོད།"
 
 msgid "Repomaker might be updating or publishing your repo. Or it might be updating a remote repo. Depending on the type and size of the background operation, this might take awhile."
-msgstr ""
-"རེ་པོ་མེ་ཀར་གསར་བསྒྱུར་བྱེད་བཞིན་པའམ་ཡང་ན་ཁྱེད་རང་གི་རེ་པོ་པར་སྐྲུན་བྱེད་བཞིན"
-"་འདུག ཡང་ན་འདིས་རྒྱང་རིང་ཀྱི་རེ་པོ་གསར་བསྒྱུར་བྱེད་བཞིན་པ་ཡིན་པ་འདྲ། "
-"རྒྱབ་ལྗོངས་ལས་འགུལ་གྱི་རིགས་ཀྱི་ཆེ་ཆུང་ལ་གཞིགས་ནས་དུས་ཚོད་ཏོག་ཙམ་འགོར་ས་རེད།"
+msgstr "རེ་པོ་མེ་ཀར་གསར་བསྒྱུར་བྱེད་བཞིན་པའམ་ཡང་ན་ཁྱེད་རང་གི་རེ་པོ་པར་སྐྲུན་བྱེད་བཞིན་འདུག ཡང་ན་འདིས་རྒྱང་རིང་ཀྱི་རེ་པོ་གསར་བསྒྱུར་བྱེད་བཞིན་པ་ཡིན་པ་འདྲ། རྒྱབ་ལྗོངས་ལས་འགུལ་གྱི་རིགས་ཀྱི་ཆེ་ཆུང་ལ་གཞིགས་ནས་དུས་ཚོད་ཏོག་ཙམ་འགོར་ས་རེད།"
 
 msgid "Try Again"
 msgstr "ཚོད་ལྟ་ཡང་སྐྱར་ཞིག་བྱེད།"
 
 msgid "The button won't work for you. Please press F5 to try again."
-msgstr ""
-"མཐེབ་གཞོང་འདི་ཁྱེད་རང་ལ་ལས་ཀ་བྱེད་ཀྱི་མ་རེད། ཡང་སྐྱར་ཚོད་ལྟ་བྱེད་པའི་ཆེད་དུ་ "
-"F5 སྣོན།"
+msgstr "མཐེབ་གཞོང་འདི་ཁྱེད་རང་ལ་ལས་ཀ་བྱེད་ཀྱི་མ་རེད། ཡང་སྐྱར་ཚོད་ལྟ་བྱེད་པའི་ཆེད་དུ་ F5 སྣོན།"
 
 msgid "Error"
 msgstr "སྐྱོན།"

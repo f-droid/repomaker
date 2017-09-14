@@ -232,6 +232,14 @@ msgstr ""
 msgid "Drag and drop .apk files"
 msgstr ""
 
+msgid "Delete Feature Graphic"
+msgstr ""
+
+#, fuzzy, python-format
+#| msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
+msgid "Are you sure you want to delete the feature graphic from your app <strong>%(app)s</strong>?"
+msgstr "Sei sicuro di voler cancellare il repo <strong>%(repo)s</strong>?"
+
 #, fuzzy, python-format
 #| msgid "Language (%(count)s)"
 msgid "Languages (%(count)s)"
@@ -286,12 +294,6 @@ msgid "There are currently no screenshots shown because this gives the repo owne
 msgstr ""
 
 msgid "show screenshots"
-msgstr ""
-
-msgid "Add Screenshot"
-msgstr ""
-
-msgid "Upload Screenshot"
 msgstr ""
 
 msgid "Delete Screenshot"
