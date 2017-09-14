@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-07-25 11:45+0000\n"
+"PO-Revision-Date: 2017-11-29 10:59+0000\n"
 "Last-Translator: Lobsang <lobsangsither@gmail.com>\n"
 "Language-Team: Tibetan <https://hosted.weblate.org/projects/f-droid/repomaker-javascript/bo/>\n"
 "Language: bo\n"
@@ -15,179 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.16-dev\n"
-
-#, javascript-format
-msgid "Available %s"
-msgstr ""
-
-#, javascript-format
-msgid "This is the list of available %s. You may choose some by selecting them in the box below and then clicking the \"Choose\" arrow between the two boxes."
-msgstr ""
-
-#, javascript-format
-msgid "Type into this box to filter down the list of available %s."
-msgstr ""
-
-msgid "Filter"
-msgstr ""
-
-msgid "Choose all"
-msgstr ""
-
-#, javascript-format
-msgid "Click to choose all %s at once."
-msgstr ""
-
-msgid "Choose"
-msgstr ""
-
-msgid "Remove"
-msgstr ""
-
-#, javascript-format
-msgid "Chosen %s"
-msgstr ""
-
-#, javascript-format
-msgid "This is the list of chosen %s. You may remove some by selecting them in the box below and then clicking the \"Remove\" arrow between the two boxes."
-msgstr ""
-
-msgid "Remove all"
-msgstr ""
-
-#, javascript-format
-msgid "Click to remove all chosen %s at once."
-msgstr ""
-
-msgid "%(sel)s of %(cnt)s selected"
-msgid_plural "%(sel)s of %(cnt)s selected"
-msgstr[0] ""
-
-msgid "You have unsaved changes on individual editable fields. If you run an action, your unsaved changes will be lost."
-msgstr ""
-
-msgid "You have selected an action, but you haven't saved your changes to individual fields yet. Please click OK to save. You'll need to re-run the action."
-msgstr ""
-
-msgid "You have selected an action, and you haven't made any changes on individual fields. You're probably looking for the Go button rather than the Save button."
-msgstr ""
-
-#, javascript-format
-msgid "Note: You are %s hour ahead of server time."
-msgid_plural "Note: You are %s hours ahead of server time."
-msgstr[0] ""
-
-#, javascript-format
-msgid "Note: You are %s hour behind server time."
-msgid_plural "Note: You are %s hours behind server time."
-msgstr[0] ""
-
-msgid "Now"
-msgstr ""
-
-msgid "Choose a Time"
-msgstr ""
-
-msgid "Choose a time"
-msgstr ""
-
-msgid "Midnight"
-msgstr ""
-
-msgid "6 a.m."
-msgstr ""
-
-msgid "Noon"
-msgstr ""
-
-msgid "6 p.m."
-msgstr ""
-
-msgid "Cancel"
-msgstr ""
-
-msgid "Today"
-msgstr ""
-
-msgid "Choose a Date"
-msgstr ""
-
-msgid "Yesterday"
-msgstr ""
-
-msgid "Tomorrow"
-msgstr ""
-
-msgid "January"
-msgstr ""
-
-msgid "February"
-msgstr ""
-
-msgid "March"
-msgstr ""
-
-msgid "April"
-msgstr ""
-
-msgid "May"
-msgstr ""
-
-msgid "June"
-msgstr ""
-
-msgid "July"
-msgstr ""
-
-msgid "August"
-msgstr ""
-
-msgid "September"
-msgstr ""
-
-msgid "October"
-msgstr ""
-
-msgid "November"
-msgstr ""
-
-msgid "December"
-msgstr ""
-
-msgctxt "one letter Sunday"
-msgid "S"
-msgstr ""
-
-msgctxt "one letter Monday"
-msgid "M"
-msgstr ""
-
-msgctxt "one letter Tuesday"
-msgid "T"
-msgstr ""
-
-msgctxt "one letter Wednesday"
-msgid "W"
-msgstr ""
-
-msgctxt "one letter Thursday"
-msgid "T"
-msgstr ""
-
-msgctxt "one letter Friday"
-msgid "F"
-msgstr ""
-
-msgctxt "one letter Saturday"
-msgid "S"
-msgstr ""
-
-msgid "Show"
-msgstr ""
-
-msgid "Hide"
-msgstr ""
+"X-Generator: Weblate 2.18-dev\n"
 
 #, javascript-format
 msgid "%s app added"
@@ -196,6 +24,34 @@ msgstr[0] "%s མཉེས་ཆས་ཁ་སྣོན།"
 
 msgid "Add"
 msgstr "ཁ་སྣོན།"
+
+#, javascript-format
+msgid "Sorry, there was an error deleting it: %s"
+msgstr "དགོངས་དག འདི་སུབས་པ་ལ་ནོར་སྐྱོན་ཤོར་འདུག: %s 1"
+
+msgid "Delete Screenshot"
+msgstr "དྲྭ་ཤེལ་པར་ལེན་སུབས།"
+
+msgid "Are you sure you want to delete this screenshot from your package?"
+msgstr "ཁྱེད་ཀྱིས་ཐུམ་སྒྲིལ་ནས་དྲྭ་ཤེལ་པར་ལེན་སུབས་པར་གཏན་འཁེལ་བ་རེད་དམ།"
+
+msgid "Delete Feature Graphic"
+msgstr "བརྐོས་རིས་ཁྱད་ཆོས་སུབས།"
+
+msgid "Are you sure you want to delete the feature graphic from your package?"
+msgstr "ཁྱེད་རང་གི་ཐུམ་སྒྲིལ་ནས་བརྐོས་རིས་ཁྱད་ཆོས་སུབས་པར་གཏན་འཁེལ་བ་རེད་དམ།"
+
+msgid "Delete Version"
+msgstr "ཐོན་རིམ་སུབས།"
+
+msgid "Are you sure you want to delete this version from your package?"
+msgstr "ཁྱེད་རང་གིས་ཐུམ་སྒྲིལ་ནས་ཐོན་རིམ་འདི་སུབས་པར་གཏན་འཁེལ་བ་རེད་དམ།"
+
+msgid "Confirm"
+msgstr "གཏན་འཁེལ།"
+
+msgid "Cancel"
+msgstr "བརྩི་མེད།"
 
 msgid "You can only upload images here."
 msgstr "ཁྱེད་རང་གིས་པར་རིས་གཅིག་པུ་འདིར་ནང་འཇུག་བྱེད།"
@@ -210,28 +66,3 @@ msgstr "འདིར་འཐེན་ནས་ཡང་སྐྱར་བཞག
 
 msgid "Added"
 msgstr "ཁ་སྣོན།"
-
-#, javascript-format
-msgid "Sorry, there was an error deleting it: %s"
-msgstr ""
-
-msgid "Delete Screenshot"
-msgstr ""
-
-msgid "Are you sure you want to delete this screenshot from your package?"
-msgstr ""
-
-msgid "Delete Feature Graphic"
-msgstr ""
-
-msgid "Are you sure you want to delete the feature graphic from your package?"
-msgstr ""
-
-msgid "Delete Version"
-msgstr ""
-
-msgid "Are you sure you want to delete this version from your package?"
-msgstr ""
-
-msgid "Confirm"
-msgstr ""

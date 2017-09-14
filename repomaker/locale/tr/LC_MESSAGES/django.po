@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-07-26 21:37+0000\n"
+"PO-Revision-Date: 2017-11-24 01:50+0000\n"
 "Last-Translator: monolifed <monolifed@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/f-droid/repomaker/tr/>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.16-dev\n"
+"X-Generator: Weblate 2.18-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -124,7 +124,7 @@ msgid "Spread the love."
 msgstr "Aşkı yay."
 
 msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
-msgstr "Repomaker, arkadaşlarınız ile paylaşmak için uygulamaların, müziklerin, kitapların ve resimlerin kolleksiyonlarını oluşturmak için geliştirilmiş  özgür bir web uygulamasıdır. F-Droid'i mobil dağıtım platformu olarak kullanır. Sadece Android'de kullanılabilir."
+msgstr "Repomaker, arkadaşlarınız ile paylaşmak için uygulamaların, müziklerin, kitapların ve resimlerin kolleksiyonlarını oluşturmak için inşa edilmiş  özgür bir web uygulamasıdır. F-Droid'i mobil dağıtım platformu olarak kullanır. Sadece Android'de kullanılabilir."
 
 msgid "Login"
 msgstr "Oturum Aç"
@@ -228,15 +228,26 @@ msgstr "Öne çıkan bir görseli sürükleyip bırakın"
 msgid "Drag and drop .apk files"
 msgstr ".apk dosyalarını sürükle ve bırak"
 
-#, fuzzy
-#| msgid "Feature Graphic"
-msgid "Delete Feature Graphic"
-msgstr "Öne Çıkan Görsel"
+msgid "Back"
+msgstr ""
 
-#, fuzzy, python-format
-#| msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
+msgid "Editing Disabled"
+msgstr ""
+
+msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
+msgstr ""
+
+#, fuzzy
+#| msgid "Disable Storage"
+msgid "Disable Automatic Updates"
+msgstr "Depolamayı Devre Dışı Kıl"
+
+msgid "Delete Feature Graphic"
+msgstr "Öne Çıkan Görseli Sil"
+
+#, python-format
 msgid "Are you sure you want to delete the feature graphic from your app <strong>%(app)s</strong>?"
-msgstr "Bu ekran görüntüsünü <strong>%(app)s</strong> uygulamanızdan silmek istediğinize emin misiniz?"
+msgstr "Öne çıkan görseli <strong>%(app)s</strong> uygulamanızdan silmek istediğinize emin misiniz?"
 
 #, python-format
 msgid "Languages (%(count)s)"
@@ -255,6 +266,10 @@ msgstr "%(author)s tarafından"
 #, python-format
 msgid "Updated %(time)s ago"
 msgstr "%(time)s önce güncellendi"
+
+#, python-format
+msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
+msgstr ""
 
 msgid "version history"
 msgstr "sürüm geçmişi"
@@ -509,7 +524,9 @@ msgstr "Depo Adresi"
 msgid "Edit Storage"
 msgstr "Depolamayı Düzenle"
 
-msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
+#, fuzzy
+#| msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
+msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
 msgstr "Lütfen karşıya yüklemenin çalışması için bu açık SSH anahtarını Git hesabınıza eklediğinizden emin olun. <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> ve <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a> için talimatlar vardır."
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
@@ -616,6 +633,9 @@ msgstr "Sürüm %(version)s (%(date)s)"
 
 msgid "Added"
 msgstr "Eklendi"
+
+msgid "There was an error creating the repository. Please try again!"
+msgstr ""
 
 msgid "Enter email"
 msgstr "E-posta girin"

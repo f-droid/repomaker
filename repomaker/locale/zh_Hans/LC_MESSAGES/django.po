@@ -228,6 +228,20 @@ msgstr "拖放添加特征图片"
 msgid "Drag and drop .apk files"
 msgstr "拖放添加  .apk 文件"
 
+msgid "Back"
+msgstr ""
+
+msgid "Editing Disabled"
+msgstr ""
+
+msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
+msgstr ""
+
+#, fuzzy
+#| msgid "Disable Storage"
+msgid "Disable Automatic Updates"
+msgstr "禁用存储"
+
 #, fuzzy
 #| msgid "Feature Graphic"
 msgid "Delete Feature Graphic"
@@ -255,6 +269,10 @@ msgstr "作者 %(author)s"
 #, python-format
 msgid "Updated %(time)s ago"
 msgstr "更新：%(time)s 前"
+
+#, python-format
+msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
+msgstr ""
 
 msgid "version history"
 msgstr "版本历史"
@@ -508,7 +526,9 @@ msgstr "资源库地址"
 msgid "Edit Storage"
 msgstr "编辑存储"
 
-msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
+#, fuzzy
+#| msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
+msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
 msgstr "为了正常上传，请确保将该 SSH 公钥添加至您的 Git 账号。相关指南请参阅： <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> 和 <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>。"
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
@@ -615,6 +635,9 @@ msgstr "版本 %(version)s (%(date)s)"
 
 msgid "Added"
 msgstr "已添加"
+
+msgid "There was an error creating the repository. Please try again!"
+msgstr ""
 
 msgid "Enter email"
 msgstr "输入电子邮箱"

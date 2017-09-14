@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-07-28 13:05+0000\n"
+"PO-Revision-Date: 2017-12-02 14:51+0000\n"
 "Last-Translator: Ajeje Brazorf <lmelonimamo@yahoo.it>\n"
 "Language-Team: Sardinian <https://hosted.weblate.org/projects/f-droid/repomaker/sc/>\n"
 "Language: sc\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.16-dev\n"
+"X-Generator: Weblate 2.18-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -186,10 +186,8 @@ msgstr "Acabadu"
 msgid "By"
 msgstr "De"
 
-#, fuzzy
-#| msgid "Short Summary (40 characters)"
 msgid "Summary Override (40 characters)"
-msgstr "Resumu minore (40 caràteres)"
+msgstr "Reiscritura de su resumu (40 caràteres)"
 
 msgid "Short Summary (40 characters)"
 msgstr "Resumu minore (40 caràteres)"
@@ -200,10 +198,8 @@ msgstr "Categoria"
 msgid "Choose Category"
 msgstr "Issèbera categoria"
 
-#, fuzzy
-#| msgid "Description"
 msgid "Description Override"
-msgstr "Descritzione"
+msgstr "Reiscritura de sa descritzione"
 
 msgid "Description"
 msgstr "Descritzione"
@@ -224,23 +220,34 @@ msgid "browse to upload"
 msgstr "esplora pro carrigare"
 
 msgid "Feature Graphic"
-msgstr ""
+msgstr "Immàgine superiore"
 
-#, fuzzy
-#| msgid "Drag and drop .apk files"
 msgid "Drag and drop a feature graphic"
-msgstr "Trisina e lassa documentos .apk"
+msgstr "Trisina e lassa un'immàgine superiore pro sas butegas de sas aplicatziones"
 
 msgid "Drag and drop .apk files"
 msgstr "Trisina e lassa documentos .apk"
 
-msgid "Delete Feature Graphic"
+msgid "Back"
 msgstr ""
 
-#, fuzzy, python-format
-#| msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
+msgid "Editing Disabled"
+msgstr ""
+
+msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
+msgstr ""
+
+#, fuzzy
+#| msgid "Disable Storage"
+msgid "Disable Automatic Updates"
+msgstr "Disabìlita memòria"
+
+msgid "Delete Feature Graphic"
+msgstr "Iscantzella s'immàgine superiore"
+
+#, python-format
 msgid "Are you sure you want to delete the feature graphic from your app <strong>%(app)s</strong>?"
-msgstr "Seguru ses de chèrrere iscantzellare cust'ischermada dae s'aplicatzione tua <strong>%(app)s</strong>?"
+msgstr "Seguru ses de chèrrere iscantzellare cust'immàgine superiore dae s'aplicatzione tua <strong>%(app)s</strong>?"
 
 #, python-format
 msgid "Languages (%(count)s)"
@@ -259,6 +266,10 @@ msgstr "De %(author)s"
 #, python-format
 msgid "Updated %(time)s ago"
 msgstr "Agiornada %(time)s a como"
+
+#, python-format
+msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
+msgstr ""
 
 msgid "version history"
 msgstr "cronologia de sas versiones"
@@ -513,7 +524,9 @@ msgstr "Indiritzu de su depòsitu"
 msgid "Edit Storage"
 msgstr "Modìfica memòria"
 
-msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
+#, fuzzy
+#| msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
+msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
 msgstr "Pro praghere assegura·ti de annànghere custa crae SSH a su contu Git tuo pro fàghere funtzionare su carrigamentu. Bi sunt istrutziones pro <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> e <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">Github</a>."
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
@@ -620,6 +633,9 @@ msgstr "Versione %(version)s (%(date)s)"
 
 msgid "Added"
 msgstr "Annantu"
+
+msgid "There was an error creating the repository. Please try again!"
+msgstr ""
 
 msgid "Enter email"
 msgstr "Inserta unu contu de posta eletrònica"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-07-28 14:35+0000\n"
+"PO-Revision-Date: 2018-01-24 12:06+0000\n"
 "Last-Translator: ezjerry liao <ezjerry@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/f-droid/repomaker/zh_Hant/>\n"
 "Language: zh_Hant\n"
@@ -15,14 +15,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.16-dev\n"
+"X-Generator: Weblate 2.19-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
 msgstr "此檔案不是 %s 的更新"
 
 msgid "This APK already exists in the current repo."
-msgstr "此 APK 已經存在於目前的軟倉庫。"
+msgstr "此 APK 已經存在於目前的軟體庫。"
 
 msgid "Invalid APK signature"
 msgstr "無效的 APK 簽名"
@@ -58,7 +58,7 @@ msgid "Other"
 msgstr "其他"
 
 msgid "This app does already exist in your repository."
-msgstr "此應用程式已存在於您的軟體倉庫中。"
+msgstr "此應用程式已存在於您的軟體庫中。"
 
 msgid "This app does not have any working versions available."
 msgstr "此應用程式沒有任何實用的版本。"
@@ -124,7 +124,7 @@ msgid "Spread the love."
 msgstr "傳播愛心。"
 
 msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
-msgstr "Repomaker 是一個免費的網路應用程式製作，用於建立收集應用程式、音樂、書籍、視訊和圖片與同行分享。 它使用F-Droid 作為行動分發平台。只可用在 Android 上。"
+msgstr "軟體製作 是一個免費的網路應用程式製作，用於建立收集應用程式、音樂、書籍、視訊和圖片與同行分享。 它使用F-Droid 作為行動分發平台。只可用在 Android 上。"
 
 msgid "Login"
 msgstr "登入"
@@ -228,15 +228,26 @@ msgstr "拖放特徵圖形"
 msgid "Drag and drop .apk files"
 msgstr "拖放 .apk 檔案"
 
-#, fuzzy
-#| msgid "Feature Graphic"
-msgid "Delete Feature Graphic"
-msgstr "特徵圖形"
+msgid "Back"
+msgstr ""
 
-#, fuzzy, python-format
-#| msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
+msgid "Editing Disabled"
+msgstr ""
+
+msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
+msgstr ""
+
+#, fuzzy
+#| msgid "Disable Storage"
+msgid "Disable Automatic Updates"
+msgstr "停用存儲"
+
+msgid "Delete Feature Graphic"
+msgstr "刪除特徵圖形"
+
+#, python-format
 msgid "Are you sure you want to delete the feature graphic from your app <strong>%(app)s</strong>?"
-msgstr "您確定要從<strong>%(app)s</strong>應用程式中刪除這個螢幕快照？"
+msgstr "您確定要從<strong>%(app)s</strong>應用程式中刪除這個特徵圖形？"
 
 #, python-format
 msgid "Languages (%(count)s)"
@@ -256,6 +267,10 @@ msgstr "為 %(author)s"
 msgid "Updated %(time)s ago"
 msgstr "%(time)s 前已更新"
 
+#, python-format
+msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
+msgstr ""
+
 msgid "version history"
 msgstr "版本歷程"
 
@@ -274,7 +289,7 @@ msgid "This app has no APK files."
 msgstr "此軟體程式有沒有 APK 檔。"
 
 msgid "If you added this app from a remote repo, try deleting it and adding it again."
-msgstr "如果您從遠端軟體倉庫加入了這個應用程式，請嘗試刪除它並重新加入。"
+msgstr "如果您從遠端軟體庫加入了這個應用程式，請嘗試刪除它並重新加入。"
 
 msgid "Previous"
 msgstr "上一步"
@@ -286,7 +301,7 @@ msgid "Add"
 msgstr "新增"
 
 msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
-msgstr "目前沒有螢幕快照顯示，因為這樣會讓軟體倉庫所有者有跟踪您的能力。"
+msgstr "目前沒有螢幕快照顯示，因為這樣會讓軟體庫所有者有追蹤您的能力。"
 
 msgid "show screenshots"
 msgstr "顯示螢幕快照"
@@ -312,7 +327,7 @@ msgid "Background Operation in Progress"
 msgstr "背景作業進行中"
 
 msgid "Repomaker might be updating or publishing your repo. Or it might be updating a remote repo. Depending on the type and size of the background operation, this might take awhile."
-msgstr "Repomaker 可能正在更新或發佈您的軟體倉庫，又或它可能正在更新遠端軟體倉庫。依據背景作業時的類型和大小，這可能需要一些時間。"
+msgstr "軟體製作可能正在更新或發佈您的軟體庫，又或它可能正在更新遠端軟體庫。依據背景作業時的類型和大小，這可能需要一些時間。"
 
 msgid "Try Again"
 msgstr "再試一次"
@@ -324,7 +339,7 @@ msgid "Error"
 msgstr "錯誤"
 
 msgid "My Repos"
-msgstr "我的軟體倉庫"
+msgstr "我的軟體庫"
 
 #, python-format
 msgid "Published %(time_ago)s"
@@ -338,32 +353,32 @@ msgid "Make a collection of apps to share"
 msgstr "製作一批應用程式來分享"
 
 msgid "Create Repo"
-msgstr "建立軟體倉庫"
+msgstr "建立軟體庫"
 
 msgid "New Repo"
-msgstr "新軟體倉庫"
+msgstr "新增軟體庫"
 
 msgid "Create"
 msgstr "建立"
 
 msgid "Delete Repo"
-msgstr "刪除軟體倉庫"
+msgstr "刪除軟體庫"
 
 #, python-format
 msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
-msgstr "您確定要刪除軟體倉庫 <strong>%(repo)s</strong>？"
+msgstr "您確定要刪除軟體庫 <strong>%(repo)s</strong>？"
 
 msgid "This will also delete all apps and other files from your repo. You will not be able to get them back, users of your repo will not be able to use it anymore and not receive updates for the apps they received from you. There is no way to recover this repo!"
-msgstr "這將會從您的軟體倉庫中刪除全部應用程式以及其它的檔案。您將無法讓他們返回，使用者將無法再使用您的軟體倉庫，也無法從您那收到應用程式的更新。沒有辦法可恢復此軟體倉庫！"
+msgstr "這將會從您的軟體庫中刪除全部應用程式以及其它的檔案。您將無法讓他們返回，使用者將無法再使用您的軟體庫，也無法從您那收到應用程式的更新。沒有辦法可恢復此軟體庫！"
 
 msgid "Please only proceed if you know what you are doing!"
 msgstr "如果您知道您在做什麼，請繼續！"
 
 msgid "Yes, I want to delete the repo"
-msgstr "是的，我確定要刪除軟體倉庫"
+msgstr "是的，我確定要刪除軟體庫"
 
 msgid "Edit Repo"
-msgstr "編輯軟體倉庫"
+msgstr "編輯軟體庫"
 
 msgid "Save Changes"
 msgstr "儲存變更"
@@ -378,7 +393,7 @@ msgid "Info"
 msgstr "資訊"
 
 msgid "Search for apps in your repository"
-msgstr "在您的軟體倉庫搜尋應用程式"
+msgstr "在您的軟體庫搜尋應用程式"
 
 msgid "add from gallery"
 msgstr "從陳列室中增加"
@@ -406,13 +421,13 @@ msgid "Fingerprint"
 msgstr "指紋"
 
 msgid "Remove Repo"
-msgstr "移除軟體倉庫"
+msgstr "移除軟體庫"
 
 msgid "Add storage to publish"
 msgstr "增加存儲以發佈"
 
 msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
-msgstr "當您增加存儲時，您的軟體倉庫將會自動發佈。Repomaker 不會公開地推廣您的東西。只有接收到您的軟體倉庫直接鏈接的人才能看到它。"
+msgstr "當您增加存儲時，您的軟體庫將會自動發佈。軟體製作不會公開地推廣您的東西。只有接收到您的軟體庫直接鏈接的人才能看到它。"
 
 msgid "add storage"
 msgstr "增加存儲"
@@ -420,10 +435,10 @@ msgstr "增加存儲"
 #, python-format
 msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
 msgid_plural "You have  <span>%(app_count)s apps</span> in your repo. Share it!"
-msgstr[0] "在您的軟體倉庫有 <span>%(app_count)s 個應用程式</span>。分享它！"
+msgstr[0] "在您的軟體庫有 <span>%(app_count)s 個應用程式</span>。分享它！"
 
 msgid "view repo"
-msgstr "檢視軟體倉庫"
+msgstr "檢視軟體庫"
 
 msgid "share public link"
 msgstr "分享公用連結"
@@ -445,7 +460,7 @@ msgstr "掃描 QR 碼"
 
 #, python-format
 msgid "Check out this F-Droid repo: %(name)s"
-msgstr "檢驗這個 F-Droid 軟體倉庫： %(name)s"
+msgstr "檢驗這個 F-Droid 軟體庫：%(name)s"
 
 msgid "Browse Gallery"
 msgstr "瀏覽陳列室"
@@ -465,23 +480,23 @@ msgid "Source (%(count)s)"
 msgstr "來源 (%(count)s)"
 
 msgid "Add a repo"
-msgstr "增加軟體倉庫"
+msgstr "增加軟體庫"
 
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
 msgstr "未找到符合 '%(search_term)s' 的應用程式。請嘗試不同的搜尋或移除其他篩選條件。"
 
 msgid "There are no apps in this repo."
-msgstr "在此軟體倉庫中沒有應用程式。"
+msgstr "在此軟體庫中沒有應用程式。"
 
 msgid "There are no apps available in the repos."
-msgstr "在軟體倉庫中沒有可用的應用程式。"
+msgstr "在軟體庫中沒有可用的應用程式。"
 
 msgid "If you just added a repo, wait for the apps to download and try again later."
-msgstr "如果您剛加入軟體倉庫，請等待應用程式下載完並且稍後再重試。"
+msgstr "如果您剛加入軟體庫，請等待應用程式下載完並且稍後再重試。"
 
 msgid "This repo has no apps in the selected category. Try clearing it or select a different repo."
-msgstr "此軟體倉庫在所選取的類別中沒有應用程式。嘗試清除它或選擇不同的軟體倉庫。"
+msgstr "此軟體庫在所選取的類別中沒有應用程式。嘗試清除它或選擇不同的軟體庫。"
 
 msgid "There are no apps available in the selected category. Try clearing it."
 msgstr "所選取的類別中沒有可用的應用程式。嘗試清除它。"
@@ -491,10 +506,10 @@ msgstr "刪除存儲"
 
 #, python-format
 msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong> from your repo?"
-msgstr "您確定要從您的軟體倉庫移除<strong>%(object)s</strong>存儲？"
+msgstr "您確定要從您的軟體庫移除<strong>%(object)s</strong>存儲？"
 
 msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
-msgstr "這不會從存儲中刪除內容，但將會停止向其發佈您的軟體倉庫未來版本。"
+msgstr "這不會從存儲中刪除內容，但將會停止向其發佈您的軟體庫未來版本。"
 
 msgid "Enable Storage"
 msgstr "啟用存儲"
@@ -503,19 +518,21 @@ msgid "Disable Storage"
 msgstr "停用存儲"
 
 msgid "Repo Address"
-msgstr "軟體倉庫位址"
+msgstr "軟體庫位址"
 
 msgid "Edit Storage"
 msgstr "編輯存儲"
 
-msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
+#, fuzzy
+#| msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
+msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
 msgstr "為使上傳工作正常，請務必將此公共 SSH 金鑰增加到您的 Git 帳戶。在<a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\"> Gitlab</a>和<a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\"> 3GitHub</a>有用法說明。"
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
-msgstr "此外，因爲強力推送請查明您的軟體倉庫主分支是<b>未受保護</b>的。"
+msgstr "此外，因爲強力推送請查明您的軟體庫主分支是<b>未受保護</b>的。"
 
 msgid "Git Repository SSH Address"
-msgstr "Git 軟體倉庫 SSH 位址"
+msgstr "Git 軟體庫 SSH 位址"
 
 msgid "Region"
 msgstr "地區"
@@ -571,7 +588,7 @@ msgid "Here's how to copy the SSH Address from GitLab:"
 msgstr "這裡是如何從 GitLab 複製 SSH 位址："
 
 msgid "Setup a place to store your repo"
-msgstr "設置一個處所去存儲您的軟體倉庫"
+msgstr "設置一個處所去存儲您的軟體庫"
 
 msgid "Git"
 msgstr "Git"
@@ -580,7 +597,7 @@ msgid "Easy, free, requires an account"
 msgstr "容易，免費，需要一個帳戶"
 
 msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
-msgstr "Git 是一款受好評的版本控制工具。您可以安全地將軟體倉庫發佈到 GitLab、GitHub 或任何其它的 Git 服務。Git 服務使用 SSH 安全的將檔案從您的電腦複製至遠端電腦。"
+msgstr "Git 是一款受好評的版本控制工具。您可以安全地將軟體庫發佈到 GitLab、GitHub 或任何其它的 Git 服務。Git 服務使用 SSH 安全的將檔案從您的電腦複製至遠端電腦。"
 
 msgid "Setup"
 msgstr "設置"
@@ -616,6 +633,9 @@ msgstr "版本 %(version)s (%(date)s)"
 msgid "Added"
 msgstr "已加入"
 
+msgid "There was an error creating the repository. Please try again!"
+msgstr ""
+
 msgid "Enter email"
 msgstr "輸入電子郵件"
 
@@ -635,7 +655,7 @@ msgid "Raw Git URL"
 msgstr "Raw Git 網址"
 
 msgid "This is the location where the uploaded files can be accessed from in raw form. Leave empty for GitHub or GitLab.com repositories."
-msgstr "這個位置可以 raw 格式存取已上載的檔案。為 GitHub 或 GitLab.com 軟體倉庫留空間。"
+msgstr "這個位置可以 raw 格式存取已上載的檔案。為 GitHub 或 GitLab.com 軟體庫留空間。"
 
 msgid "This URL must start with 'git@'."
 msgstr "該網址必須以'git@'開頭。"
@@ -644,26 +664,26 @@ msgid "This URL must end with '.git'."
 msgstr "該網址必須以'.git'為結尾。"
 
 msgid "This URL is invalid. Please copy the exact SSH URL of your git repository."
-msgstr "此網址是無效的。請複製您 git 軟體倉庫的正確 SSH 網址。"
+msgstr "此網址是無效的。請複製您 git 軟體庫的正確 SSH 網址。"
 
 msgid "Please add a valid URLfor the raw content of this git repository."
-msgstr "請為這個 git 軟體倉庫的 raw 內容增加有效的網址。"
+msgstr "請為這個 git 軟體庫的 raw 內容增加有效的網址。"
 
 msgid "Repository URL"
-msgstr "軟體倉庫網址"
+msgstr "軟體庫網址"
 
 msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
-msgstr "請在最後使用帶指紋的網址，以便我們可以驗證軟體倉庫的真實性。"
+msgstr "請在最後使用帶指紋的網址，以便我們可以驗證軟體庫的真實性。"
 
 msgid "Please don't add one of your own repositories here."
-msgstr "請不要在這裡增加一個您自己的軟體倉庫。"
+msgstr "請不要在這裡增加一個您自己的軟體庫。"
 
 #, python-format
 msgid "Could not validate repository: %s"
-msgstr "無法驗證軟體倉庫：%s"
+msgstr "無法驗證軟體庫：%s"
 
 msgid "Describe the repo"
-msgstr "描述軟體倉庫"
+msgstr "描述軟體庫"
 
 msgid "Bucket Name"
 msgstr "儲存桶名稱"
@@ -696,4 +716,4 @@ msgid "Primary Storage"
 msgstr "主存儲"
 
 msgid "Make this storage the primary storage of the repository."
-msgstr "使此存儲作為軟體倉庫的主存儲。"
+msgstr "使此存儲作為軟體庫的主存儲。"

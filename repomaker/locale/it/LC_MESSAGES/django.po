@@ -232,6 +232,18 @@ msgstr ""
 msgid "Drag and drop .apk files"
 msgstr ""
 
+msgid "Back"
+msgstr ""
+
+msgid "Editing Disabled"
+msgstr ""
+
+msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
+msgstr ""
+
+msgid "Disable Automatic Updates"
+msgstr ""
+
 msgid "Delete Feature Graphic"
 msgstr ""
 
@@ -259,6 +271,10 @@ msgstr "Di %(author)s"
 
 #, python-format
 msgid "Updated %(time)s ago"
+msgstr ""
+
+#, python-format
+msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
 msgstr ""
 
 msgid "version history"
@@ -516,7 +532,7 @@ msgstr ""
 msgid "Edit Storage"
 msgstr ""
 
-msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
+msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
 msgstr ""
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
@@ -627,6 +643,9 @@ msgstr "Versione %(version)s (%(date)s)"
 
 msgid "Added"
 msgstr "Aggiunto"
+
+msgid "There was an error creating the repository. Please try again!"
+msgstr ""
 
 msgid "Enter email"
 msgstr "Inserisci email"
