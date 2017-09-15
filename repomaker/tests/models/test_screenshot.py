@@ -11,7 +11,7 @@ from repomaker.models import Repository, RemoteRepository, App, RemoteApp, Scree
     RemoteScreenshot
 from repomaker.models.screenshot import AbstractScreenshot, PHONE, SEVEN_INCH, TEN_INCH, TV, WEAR
 from repomaker.storage import get_screenshot_file_path
-from .. import TEST_DIR, TEST_MEDIA_DIR
+from .. import TEST_DIR, TEST_MEDIA_DIR, RmTestCase
 
 
 class AbstractScreenshotTestCase(TestCase):
@@ -22,17 +22,12 @@ class AbstractScreenshotTestCase(TestCase):
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
-class ScreenshotTestCase(TestCase):
+class ScreenshotTestCase(RmTestCase):
 
     def setUp(self):
-        self.user = User.objects.create(username='user2')
-        self.repo = Repository.objects.create(user=self.user)
+        super().setUp()
         self.app = App.objects.create(repo=self.repo, name='TestApp', package_id='org.example')
         self.screenshot = Screenshot.objects.create(app=self.app, language_code='en-us')
-
-    def tearDown(self):
-        if os.path.isdir(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
 
     def test_str(self):
         self.assertTrue(self.app.name in str(self.screenshot))
@@ -49,7 +44,7 @@ class ScreenshotTestCase(TestCase):
 
     def test_get_url(self):
         self.test_file()  # needs to save a file first, because getting URL that includes file
-        self.assertEqual('/media/user_2/repo_1/repo/org.example/en-US/phoneScreenshots/test.png',
+        self.assertEqual('/media/user_1/repo_1/repo/org.example/en-US/phoneScreenshots/test.png',
                          self.screenshot.get_url())
 
     def test_types(self):

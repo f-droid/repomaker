@@ -1,30 +1,14 @@
 import os
-import shutil
 
-from django.contrib.auth.models import User
-from django.test import TestCase, override_settings
+from django.test import override_settings
 from django.urls import reverse
+from repomaker.models import App, Apk, ApkPointer
 
-from repomaker import DEFAULT_USER_NAME
-from repomaker.models import App, Apk, ApkPointer, Repository
-from .. import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR
+from .. import TEST_FILES_DIR, TEST_MEDIA_DIR, RmTestCase
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
-class ApkViewTestCase(TestCase):
-
-    def setUp(self):
-        self.repo = Repository.objects.create(
-            name="Test Name",
-            description="Test Description",
-            url="https://example.org",
-            user=User.objects.get(username=DEFAULT_USER_NAME),
-        )
-        self.repo.chdir()
-
-    def tearDown(self):
-        if os.path.isdir(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
+class ApkViewTestCase(RmTestCase):
 
     def test_apk_upload(self):
         self.upload_file('test_1.apk')

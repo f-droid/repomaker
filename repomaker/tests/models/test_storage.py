@@ -9,23 +9,18 @@ from django.test import TestCase, override_settings
 from repomaker.models import Repository, S3Storage, GitStorage, SshStorage
 from repomaker.models.storage import StorageManager
 from repomaker.storage import REPO_DIR, get_repo_path, get_repo_root_path, PrivateStorage
-from .. import TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR
+from .. import TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, RmTestCase
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
-class GitStorageTestCase(TestCase):
+class GitStorageTestCase(RmTestCase):
 
     def setUp(self):
-        self.repo = Repository.objects.create(user=User.objects.create(username='user2'))
+        super().setUp()
         self.storage = GitStorage.objects.create(repo=self.repo,
                                                  host="example.org",
                                                  path="user/repo",
                                                  url="https://raw.example.org/user/repo")
-        self.repo.chdir()
-
-    def tearDown(self):
-        if os.path.isdir(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
 
     def test_remote_url(self):
         self.assertEqual("git@example.org:user/repo.git", self.storage.get_remote_url())

@@ -1,5 +1,4 @@
 import os
-import shutil
 from datetime import datetime, timezone
 from unittest.mock import Mock, patch
 
@@ -8,7 +7,7 @@ import requests
 from background_task.tasks import Task
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.test import TestCase, override_settings
+from django.test import override_settings
 from repomaker.models import App, RemoteApp, Repository, \
     RemoteRepository
 from repomaker.models.repository import AbstractRepository
@@ -16,18 +15,14 @@ from repomaker.storage import get_remote_repo_path
 from repomaker.tasks import PRIORITY_REMOTE_REPO
 from requests.exceptions import HTTPError
 
-from .. import TEST_DIR, TEST_MEDIA_DIR
+from .. import TEST_MEDIA_DIR, RmTestCase
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
-class RemoteRepositoryTestCase(TestCase):
+class RemoteRepositoryTestCase(RmTestCase):
 
     def setUp(self):
         self.repo = RemoteRepository.objects.get(pk=1)
-
-    def tearDown(self):
-        if os.path.isdir(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
 
     def test_get_path(self):
         self.assertEqual(os.path.join(settings.MEDIA_ROOT, 'remote_repo_1'), self.repo.get_path())

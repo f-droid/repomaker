@@ -1,28 +1,26 @@
-import os
-import shutil
 from unittest.mock import patch
 
 import django.http
 import django.urls
+from django.conf import settings
 from django.contrib.auth.models import User
-from django.test import TestCase
 from django.urls import reverse
-from repomaker.models import Repository, RemoteRepository, RemoteApp, RemoteScreenshot, \
+from repomaker.models import RemoteRepository, RemoteApp, RemoteScreenshot, \
     RemoteApkPointer
 
-from .. import TEST_DIR
+from .. import RmTestCase
 
 
-class RemoteRepositoryViewTest(TestCase):
+class RemoteRepositoryViewTest(RmTestCase):
 
     def setUp(self):
-        self.repo = Repository.objects.create(
-            name="Test Name",
-            description="Test Description",
-            url="https://example.org",
-            user=User.objects.all()[0],
-        )
+        super().setUp()
+
         self.remote_repo = RemoteRepository.objects.get(pk=1)
+
+        # Add remote repo to all multi-user mode users
+        if not settings.SINGLE_USER_MODE:
+            self.remote_repo.users = User.objects.all()
 
         self.app = RemoteApp.objects.create(repo=self.remote_repo, package_id='org.example',
                                             last_updated_date=self.remote_repo.last_updated_date,
@@ -44,10 +42,6 @@ class RemoteRepositoryViewTest(TestCase):
         # add a remote screenshot
         self.screenshot = RemoteScreenshot.objects.create(app=self.app, url='test-url',
                                                           language_code=self.app.language_code)
-
-    def tearDown(self):
-        if os.path.isdir(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
 
     def test_list_app_translation(self):
         # Request repo app list page and ensure all localized descriptions are shown

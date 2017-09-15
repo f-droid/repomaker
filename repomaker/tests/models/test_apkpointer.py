@@ -1,29 +1,25 @@
 import os
-import shutil
 from datetime import datetime
 from io import BytesIO
 
 import repomaker.models.app
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.files import File
 from django.test import TestCase, override_settings
 from django.utils import timezone
 from fdroidserver.update import get_all_icon_dirs
-from repomaker.models import Apk, ApkPointer, RemoteApkPointer, App, RemoteApp, RemoteRepository, \
-    Repository
+from repomaker.models import Apk, ApkPointer, RemoteApkPointer, App, RemoteApp, RemoteRepository
 from repomaker.storage import get_apk_file_path
 
-from .. import TEST_DIR, TEST_FILES_DIR, TEST_PRIVATE_DIR, fake_repo_create
+from .. import TEST_DIR, TEST_FILES_DIR, TEST_PRIVATE_DIR, fake_repo_create, RmTestCase
 
 
 @override_settings(MEDIA_ROOT=TEST_DIR, PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
-class ApkPointerTestCase(TestCase):
+class ApkPointerTestCase(RmTestCase):
     apk_file_name = 'test_1.apk'
 
     def setUp(self):
-        # Create Repository
-        self.repo = Repository.objects.create(user=User.objects.create(username='user2'))
+        super().setUp()
 
         # Create APK
         self.apk = Apk.objects.create()
@@ -41,13 +37,10 @@ class ApkPointerTestCase(TestCase):
         with open(file_path, 'rb') as f:
             self.apk_pointer.file.save(self.apk_file_name, File(f), save=True)
 
-    def tearDown(self):
-        shutil.rmtree(TEST_DIR)
-
     def test_str(self):
         self.apk_pointer.app = App.objects.create(repo=self.repo, name='TestApp')
         self.apk_pointer.apk = Apk.objects.create()
-        self.assertEqual('TestApp - 0 - user_2/repo_1/repo/test_1.apk', str(self.apk_pointer))
+        self.assertEqual('TestApp - 0 - user_1/repo_1/repo/test_1.apk', str(self.apk_pointer))
 
     def test_initialize(self):
         self.apk.initialize(self.repo)  # this calls self.apk_pointer.initialize()

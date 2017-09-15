@@ -2,3 +2,6 @@ from repomaker.settings import *  # pylint: disable=wildcard-import,unused-wildc
 
 
 SINGLE_USER_MODE = False
+
+INSTALLED_APPS.append('allauth')
+INSTALLED_APPS.append('allauth.socialaccount')

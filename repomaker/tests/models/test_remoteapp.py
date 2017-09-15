@@ -13,11 +13,11 @@ from repomaker.models import Repository, RemoteRepository, App, RemoteApp, Apk, 
 from repomaker.models.screenshot import PHONE
 from repomaker.storage import get_icon_file_path_for_app
 
-from .. import TEST_DIR, TEST_MEDIA_DIR, datetime_is_recent
+from .. import TEST_DIR, TEST_MEDIA_DIR, datetime_is_recent, RmTestCase
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
-class RemoteAppTestCase(TestCase):
+class RemoteAppTestCase(RmTestCase):
 
     def setUp(self):
         date = datetime.fromtimestamp(1337, timezone.utc)
@@ -25,10 +25,6 @@ class RemoteAppTestCase(TestCase):
                                                     last_change_date=date)
         self.app = RemoteApp.objects.create(repo=self.repo, package_id="org.example",
                                             last_updated_date=date)
-
-    def tearDown(self):
-        if os.path.isdir(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
 
     def test_update_from_json_only_when_update(self):
         json = {'name': 'app', 'lastUpdated': 10000}

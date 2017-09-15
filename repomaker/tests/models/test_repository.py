@@ -23,25 +23,11 @@ from repomaker.storage import get_repo_file_path, REPO_DIR
 from repomaker.tasks import PRIORITY_REPO
 
 from .. import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_STATIC_DIR, \
-    datetime_is_recent, fake_repo_create
+    datetime_is_recent, fake_repo_create, RmTestCase
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
-class RepositoryTestCase(TestCase):
-
-    def setUp(self):
-        # create repository
-        self.user = User.objects.create(username='user2')
-        self.repo = Repository.objects.create(
-            name="Test Name",
-            description="Test Description",
-            url="https://example.org",
-            user=self.user,
-        )
-
-    def tearDown(self):
-        if os.path.isdir(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
+class RepositoryTestCase(RmTestCase):
 
     @patch('repomaker.models.repository.Repository._generate_page')
     def test_repository_creation(self, _generate_page):
@@ -59,9 +45,6 @@ class RepositoryTestCase(TestCase):
         # assert that repo is not scheduled for update or updating already
         self.assertFalse(repo.update_scheduled)
         self.assertFalse(repo.is_updating)
-
-        # assert that the owner of the repository was not modified
-        self.assertEqual(self.user.id, repo.user_id)
 
         # assert all dates were set correctly
         self.assertTrue(datetime_is_recent(repo.last_updated_date))
@@ -466,10 +449,9 @@ class RepositoryTestCase(TestCase):
 
     def test_delete(self):
         # Check that repo exists
-        self.assertEqual(1, len(Repository.objects.all()))
+        self.assertEqual(1, Repository.objects.all().count())
 
         # Fake create repo directories
-        self.assertIsNone(os.makedirs(self.repo.get_path()))
         self.assertTrue(os.path.exists(self.repo.get_path()))
         self.assertIsNone(os.makedirs(self.repo.get_private_path()))
         self.assertTrue(os.path.exists(self.repo.get_private_path()))
@@ -484,25 +466,11 @@ class RepositoryTestCase(TestCase):
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, STATIC_ROOT=TEST_STATIC_DIR)
-class RepositoryPageTestCase(TestCase):
+class RepositoryPageTestCase(RmTestCase):
     """
     This is its own testcase,
     because overriding variables such as STATIC_ROOT can cause sass to crash.
     """
-
-    def setUp(self):
-        # create repository
-        self.user = User.objects.create(username='user2')
-        self.repo = Repository.objects.create(
-            name="Test Name",
-            description="Test Description",
-            url="https://example.org",
-            user=self.user,
-        )
-
-    def tearDown(self):
-        if os.path.isdir(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
 
     @patch('repomaker.models.repository.Repository._copy_page_assets')
     def test_generate_page(self, _copy_page_assets):

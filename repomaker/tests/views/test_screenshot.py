@@ -2,25 +2,19 @@ import os
 import shutil
 
 from django.contrib.auth.models import User
-from django.test import TestCase, override_settings
+from django.test import override_settings
 from django.urls import reverse
 
 from repomaker import DEFAULT_USER_NAME
 from repomaker.models import App, Repository, Screenshot
-from .. import TEST_DIR, TEST_MEDIA_DIR
+from .. import TEST_DIR, TEST_MEDIA_DIR, RmTestCase
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
-class ScreenshotViewTestCase(TestCase):
+class ScreenshotViewTestCase(RmTestCase):
 
     def setUp(self):
-        self.repo = Repository.objects.create(
-            name="Test Name",
-            description="Test Description",
-            url="https://example.org",
-            user=User.objects.get(username=DEFAULT_USER_NAME),
-        )
-        self.repo.chdir()
+        super().setUp()
 
         self.app = App.objects.create(
             repo=self.repo,
@@ -29,10 +23,6 @@ class ScreenshotViewTestCase(TestCase):
         )
         self.app.default_translate()
         self.app.save()
-
-    def tearDown(self):
-        if os.path.isdir(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
 
     def test_delete_screenshot(self):
         screenshot = Screenshot.objects.create(app=self.app, file='test.png')

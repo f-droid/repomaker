@@ -1,29 +1,21 @@
 import io
 import os
-import shutil
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.test import TestCase, override_settings
+from django.test import override_settings
 from django.urls import reverse
-
 from repomaker import DEFAULT_USER_NAME
 from repomaker.models import App, Apk, ApkPointer, Repository, Screenshot
-from .. import TEST_DIR, TEST_MEDIA_DIR, TEST_FILES_DIR
+
+from .. import TEST_MEDIA_DIR, TEST_FILES_DIR, RmTestCase
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
-class AppViewTestCase(TestCase):
+class AppViewTestCase(RmTestCase):
 
     def setUp(self):
-        # create repository for singe-user-mode
-        self.repo = Repository.objects.create(
-            name="Test Name",
-            description="Test Description",
-            url="https://example.org",
-            user=User.objects.get(username=DEFAULT_USER_NAME),
-        )
-        self.repo.chdir()
+        super().setUp()
 
         # create app in repo
         self.app = App.objects.create(repo=self.repo,
@@ -34,10 +26,6 @@ class AppViewTestCase(TestCase):
         self.app.summary = 'Test Summary'
         self.app.description = 'Test Description'
         self.app.save()
-
-    def tearDown(self):
-        if os.path.isdir(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
 
     def test_app_detail_default_lang_redirect(self):
         kwargs = {'repo_id': self.app.repo.pk, 'app_id': self.app.pk}

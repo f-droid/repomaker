@@ -1,29 +1,29 @@
 import os
-import shutil
 from datetime import datetime
 from io import BytesIO
 from unittest.mock import patch
 
+import repomaker.models.app
 import requests
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.files import File
-from django.test import TestCase, override_settings
+from django.test import override_settings
 from django.utils import timezone
 from fdroidserver.exception import BuildException
-
-import repomaker.models.app
 from repomaker.models import Apk, ApkPointer, RemoteApkPointer, App, RemoteApp, RemoteRepository, \
     Repository
 from repomaker.storage import get_apk_file_path
-from .. import TEST_DIR, TEST_FILES_DIR, datetime_is_recent
+
+from .. import TEST_DIR, TEST_FILES_DIR, datetime_is_recent, RmTestCase
 
 
 @override_settings(MEDIA_ROOT=TEST_DIR)
-class ApkTestCase(TestCase):
+class ApkTestCase(RmTestCase):
 
     def setUp(self):
+        super().setUp()
+
         # Create APK
         self.apk = Apk.objects.create()
         # Attach a real APK file
@@ -31,11 +31,6 @@ class ApkTestCase(TestCase):
         file_path = os.path.join(TEST_FILES_DIR, 'test_1.apk')
         with open(file_path, 'rb') as f:
             self.apk.file.save(self.apk_file_name, File(f), save=True)
-
-        # Create Repository
-        self.repo = Repository.objects.create(name="Test", description="Test",
-                                              url="https://f-droid.org",
-                                              user=User.objects.create(username='user2'))
 
         # Create RemoteRepository
         self.remote_repository = RemoteRepository.objects.create(
@@ -50,9 +45,6 @@ class ApkTestCase(TestCase):
             repo=self.remote_repository,
             last_updated_date=datetime.fromtimestamp(0, timezone.utc)
         )
-
-    def tearDown(self):
-        shutil.rmtree(TEST_DIR)
 
     def test_str(self):
         self.apk.package_id = 'org.example'

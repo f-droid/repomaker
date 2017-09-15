@@ -1,17 +1,16 @@
-import sys
-from importlib import reload
-
-import django.urls
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.test import TestCase, override_settings, modify_settings
-
+from django.test import TestCase, override_settings
 from repomaker import DEFAULT_USER_NAME
+from repomaker.tests import RmTestCase
 
 
 class LoginSingleUserTest(TestCase):
 
     def test_login(self):
+        if not settings.SINGLE_USER_MODE:
+            return
+
         response = self.client.get('/')
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'repomaker/index.html')
@@ -22,26 +21,28 @@ class LoginSingleUserTest(TestCase):
         self.assertEqual(user, response.context['request'].user)
 
 
-@override_settings(SINGLE_USER_MODE=False)
-@modify_settings(INSTALLED_APPS={'append': ['allauth', 'allauth.socialaccount']})
 class LoginMultiUserTest(TestCase):
 
-    def setUp(self):
-        # update URL conf with overridden settings
-        reload(sys.modules[settings.ROOT_URLCONF])
-        django.urls.clear_url_caches()
-
     def test_login_redirect(self):
+        if settings.SINGLE_USER_MODE:
+            return
+
         response = self.client.get('/')
         self.assertRedirects(response, '/accounts/login/?next=/')
 
     def test_login_get(self):
+        if settings.SINGLE_USER_MODE:
+            return
+
         response = self.client.get('/accounts/login/?next=/')
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'account/login.html')
         self.assertTemplateUsed(response, 'account/login_form.html')
 
     def test_login(self):
+        if settings.SINGLE_USER_MODE:
+            return
+
         # create a new user to log in with
         User.objects.create_user('user2', 'user2@example.org', 'pass')
 
@@ -55,7 +56,7 @@ class LoginMultiUserTest(TestCase):
         self.assertEqual(str(user.pk), self.client.session['_auth_user_id'])
 
 
-class MiscTest(TestCase):
+class MiscTest(RmTestCase):
 
     @override_settings(SITE_NOTICE='test site notice')
     def test_site_notice(self):

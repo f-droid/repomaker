@@ -1,34 +1,24 @@
 import os
-import shutil
-import sys
-from importlib import reload
 from unittest.mock import patch
 
-import django.urls
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.test import TestCase, override_settings, modify_settings
+from django.test import override_settings
 from django.urls import reverse
-
-from repomaker import DEFAULT_USER_NAME
 from repomaker.models import App, Apk, ApkPointer, Repository
 from repomaker.views.repository import RepositoryCreateView, RepositoryForm, RepositoryView
-from .. import TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_FILES_DIR, fake_repo_create
+
+from .. import TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_FILES_DIR, fake_repo_create, RmTestCase
 
 
 @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
-class RepositoryTestCase(TestCase):
+class RepositoryTestCase(RmTestCase):
+
     def setUp(self):
+        super().setUp()
+
         # create second user
         self.user = User.objects.create(username='user2')
-
-        # create repository for singe-user-mode
-        self.repo = Repository.objects.create(
-            name="Test Name",
-            description="Test Description",
-            url="https://example.org",
-            user=User.objects.get(username=DEFAULT_USER_NAME),
-        )
 
         # create app in repo
         self.app = App.objects.create(repo=self.repo,
@@ -38,10 +28,6 @@ class RepositoryTestCase(TestCase):
         self.app.summary = 'TestSummary'
         self.app.description = 'TestDesc'
         self.app.save()
-
-    def tearDown(self):
-        if os.path.isdir(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
 
     def test_empty_state(self):
         # remove all repositories before we can test an empty state
@@ -113,21 +99,6 @@ class RepositoryTestCase(TestCase):
         # assert that page content is as expected
         self.assertContains(response, self.repo.name, 2)  # once in link title
         self.assertContains(response, self.repo.description, 1)
-
-    @override_settings(SINGLE_USER_MODE=False)
-    @modify_settings(INSTALLED_APPS={'append': ['allauth', 'allauth.socialaccount']})
-    def test_details_multi_user(self):
-        # Update URL conf with overridden settings
-        reload(sys.modules[settings.ROOT_URLCONF])
-        django.urls.clear_url_caches()
-
-        # Login
-        self.client.force_login(user=self.user)
-
-        # Replace single- app and repo with multi-user-mode one
-        self.repo.user = self.user
-
-        self.test_details()
 
     def test_details(self):
         # Add fake fingerprint to repo for view to work

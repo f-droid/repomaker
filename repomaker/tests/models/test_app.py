@@ -5,31 +5,26 @@ from datetime import datetime, timezone
 from unittest.mock import patch
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
-from django.test import TestCase, override_settings
-from repomaker.models import Repository, RemoteRepository, App, RemoteApp, Screenshot
+from django.test import override_settings
+from repomaker.models import RemoteRepository, App, RemoteApp, Screenshot
 from repomaker.models.screenshot import PHONE
 
-from .. import TEST_DIR, TEST_MEDIA_DIR, datetime_is_recent
+from .. import TEST_DIR, TEST_MEDIA_DIR, datetime_is_recent, RmTestCase
 
 
-class AppTestCase(TestCase):
+class AppTestCase(RmTestCase):
 
     def setUp(self):
+        super().setUp()
+
         # local objects
-        self.user = User.objects.create(username='user2')
-        self.repo = Repository.objects.create(user=self.user)
         self.app = App.objects.create(repo=self.repo, package_id='org.example')
 
         # remote objects
         date = datetime.fromtimestamp(0, timezone.utc)
         self.remote_repo = RemoteRepository.objects.create(last_change_date=date)
         self.remote_app = RemoteApp.objects.create(repo=self.remote_repo, last_updated_date=date)
-
-    def tearDown(self):
-        if os.path.isdir(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
 
     @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
     def test_from_remote_app(self):
@@ -186,7 +181,7 @@ class AppTestCase(TestCase):
         # assert that old feature graphic got deleted and new one was saved
         app = App.objects.language('de').get(pk=app.pk)
         self.assertFalse(os.path.isfile(old_feature_graphic_path))
-        self.assertEqual('user_2/repo_1/repo/org.example/de/feature-graphic.png',
+        self.assertEqual('user_1/repo_1/repo/org.example/de/feature-graphic.png',
                          app.feature_graphic.name)
         self.assertTrue(os.path.isfile(app.feature_graphic.path))
 
