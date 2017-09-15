@@ -22,6 +22,8 @@ class StorageViewsTestCase(RmTestCase):
         self.storage_git_add(True)
 
     def test_storage_git_add_local_key(self):
+        if not settings.SINGLE_USER_MODE:
+            return  # local keys can only be used in single user mode
         self.storage_git_add(False)
 
     def storage_git_add(self, create_key):
@@ -62,7 +64,7 @@ class StorageViewsTestCase(RmTestCase):
         self.assertEqual('gitlab.com', storage.host)
         self.assertEqual('test/test', storage.path)
         self.assertEqual('https://gitlab.com/test/test/raw/master/fdroid', storage.url)
-        if create_key and settings.SINGLE_USER_MODE:
+        if create_key:
             self.assertTrue(storage.identity_file)
             self.assertTrue(os.path.isfile(storage.identity_file.path))
             self.assertTrue(len(storage.public_key) > 700)

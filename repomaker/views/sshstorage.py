@@ -38,11 +38,11 @@ class SshStorageForm(StorageForm):
 
 
 class SshKeyMixin(MainStorageMixin):
-
     def form_valid(self, form):
-        if 'ignore_identity_file' in form.cleaned_data \
-                and not form.cleaned_data['ignore_identity_file'] \
-                and not form.instance.identity_file:
+        create_key = not settings.SINGLE_USER_MODE or (  # multi-user mode or
+            'ignore_identity_file' in form.cleaned_data and  # in the form,
+            not form.cleaned_data['ignore_identity_file'])  # but wants a key created (file ignored)
+        if create_key and not form.instance.identity_file:
             result = super(SshKeyMixin, self).form_valid(form)  # validate rest of the form and save
             form.instance.create_identity_file()
             return result
