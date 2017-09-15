@@ -1,16 +1,9 @@
-import os
-import shutil
-
-from django.contrib.auth.models import User
-from django.test import override_settings
 from django.urls import reverse
+from repomaker.models import App, Screenshot
 
-from repomaker import DEFAULT_USER_NAME
-from repomaker.models import App, Repository, Screenshot
-from .. import TEST_DIR, TEST_MEDIA_DIR, RmTestCase
+from .. import RmTestCase
 
 
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class ScreenshotViewTestCase(RmTestCase):
 
     def setUp(self):

@@ -1,7 +1,6 @@
 import io
 import json
 import os
-import shutil
 from datetime import datetime, timezone
 from unittest.mock import patch
 
@@ -9,10 +8,8 @@ import sass_processor.processor
 import sass_processor.storage
 from background_task.models import Task
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.files import File
 from django.templatetags.static import static
-from django.test import TestCase, override_settings
 from django.urls import reverse
 from fdroidserver.update import METADATA_VERSION
 from repomaker.models import App, RemoteApp, Apk, ApkPointer, RemoteApkPointer, Repository, \
@@ -22,11 +19,9 @@ from repomaker.models.repository import REPO_DEFAULT_ICON
 from repomaker.storage import get_repo_file_path, REPO_DIR
 from repomaker.tasks import PRIORITY_REPO
 
-from .. import TEST_FILES_DIR, TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_STATIC_DIR, \
-    datetime_is_recent, fake_repo_create, RmTestCase
+from .. import datetime_is_recent, fake_repo_create, RmTestCase
 
 
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
 class RepositoryTestCase(RmTestCase):
 
     @patch('repomaker.models.repository.Repository._generate_page')
@@ -172,7 +167,6 @@ class RepositoryTestCase(RmTestCase):
         self.repo._generate_qrcode()  # pylint: disable=protected-access
         self.assertFalse(self.repo.qrcode)  # no QR code exists
 
-    @override_settings(STATIC_ROOT=TEST_STATIC_DIR)
     def test_copy_page_assets(self):
         # create fake stylesheet for copying
         stylesheet_path = os.path.join(settings.STATIC_ROOT, 'repomaker', 'css', 'repo')
@@ -315,7 +309,7 @@ class RepositoryTestCase(RmTestCase):
                                  author_name='author', type=APK)
         apk = Apk.objects.create(package_id='org.bitbucket.tickytacky.mirrormirror', version_code=2,
                                  hash=apk_hash)
-        file_path = os.path.join(TEST_FILES_DIR, 'test_1.apk')
+        file_path = os.path.join(settings.TEST_FILES_DIR, 'test_1.apk')
         with open(file_path, 'rb') as f:
             apk.file.save('test_1.apk', File(f), save=True)
         apk_pointer = ApkPointer.objects.create(repo=repo, app=app, apk=apk)
@@ -346,7 +340,7 @@ class RepositoryTestCase(RmTestCase):
         apk_hash = '5ec4b30df6a98cc58628e763f35a560e1b333712f1d1f3c9f95f8a1ece54b254'
         app2 = App.objects.create(repo=repo, package_id='test', name='TestMedia', type=VIDEO)
         apk2 = Apk.objects.create(package_id='test', version_code=1337, hash=apk_hash)
-        with open(os.path.join(TEST_FILES_DIR, 'test.webm'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test.webm'), 'rb') as f:
             apk2.file.save('test.webm', File(f), save=True)
         apk_pointer2 = ApkPointer.objects.create(repo=repo, app=app2, apk=apk2)
         apk_pointer2.link_file_from_apk()
@@ -465,7 +459,6 @@ class RepositoryTestCase(RmTestCase):
         self.assertFalse(os.path.exists(self.repo.get_private_path()))
 
 
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, STATIC_ROOT=TEST_STATIC_DIR)
 class RepositoryPageTestCase(RmTestCase):
     """
     This is its own testcase,

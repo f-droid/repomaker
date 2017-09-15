@@ -8,17 +8,15 @@ import requests
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.files import File
-from django.test import override_settings
 from django.utils import timezone
 from fdroidserver.exception import BuildException
 from repomaker.models import Apk, ApkPointer, RemoteApkPointer, App, RemoteApp, RemoteRepository, \
     Repository
 from repomaker.storage import get_apk_file_path
 
-from .. import TEST_DIR, TEST_FILES_DIR, datetime_is_recent, RmTestCase
+from .. import datetime_is_recent, RmTestCase
 
 
-@override_settings(MEDIA_ROOT=TEST_DIR)
 class ApkTestCase(RmTestCase):
 
     def setUp(self):
@@ -28,7 +26,7 @@ class ApkTestCase(RmTestCase):
         self.apk = Apk.objects.create()
         # Attach a real APK file
         self.apk_file_name = 'test.apk'
-        file_path = os.path.join(TEST_FILES_DIR, 'test_1.apk')
+        file_path = os.path.join(settings.TEST_FILES_DIR, 'test_1.apk')
         with open(file_path, 'rb') as f:
             self.apk.file.save(self.apk_file_name, File(f), save=True)
 
@@ -84,7 +82,7 @@ class ApkTestCase(RmTestCase):
 
         # fake return value of GET request for APK
         get.return_value.status_code = requests.codes.ok
-        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
             get.return_value.content = f.read()
 
         # download file and assert there was a GET request for the URL
@@ -155,7 +153,7 @@ class ApkTestCase(RmTestCase):
 
         # fake return value of GET request for APK
         get.return_value.status_code = requests.codes.ok
-        with open(os.path.join(TEST_FILES_DIR, 'test_invalid_signature.apk'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_invalid_signature.apk'), 'rb') as f:
             get.return_value.content = f.read()
 
         # try to download the invalid file
@@ -191,7 +189,7 @@ class ApkTestCase(RmTestCase):
 
         # fake return value of GET request for test file
         get.return_value.status_code = requests.codes.ok
-        with open(os.path.join(TEST_FILES_DIR, 'test.webm'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test.webm'), 'rb') as f:
             get.return_value.content = f.read()
 
         # download file and assert there was a GET request for the URL
@@ -228,7 +226,7 @@ class ApkTestCase(RmTestCase):
         self.assertFalse(apk.is_downloading)
 
     def test_initialize_rejects_md5_apk(self):
-        with open(os.path.join(TEST_FILES_DIR, 'test_md5_signature.apk'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_md5_signature.apk'), 'rb') as f:
             self.apk.file.save('test_md5_signature.apk', f, save=True)
         with self.assertRaises(ValidationError):
             self.apk.initialize()
@@ -267,7 +265,7 @@ class ApkTestCase(RmTestCase):
 
     def test_initialize_non_apk(self):
         # overwrite APK file with image file
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.png'), 'test.png')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.png'), 'test.png')
 
         # initialize the ApkPointer with its stored image file
         self.apk.initialize()
@@ -283,7 +281,8 @@ class ApkTestCase(RmTestCase):
 
     def test_initialize_standard_file_name(self):
         # overwrite APK file with image that has standard file name
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.png'), 'package_name_1337.png')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.png'),
+                              'package_name_1337.png')
 
         # initialize the ApkPointer with its stored image file
         self.apk.initialize()
@@ -295,7 +294,7 @@ class ApkTestCase(RmTestCase):
 
     def test_initialize_no_file_extension(self):
         # overwrite APK file with image that has no file extension
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.png'), 'test')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.png'), 'test')
         self.assertEqual('test', os.path.basename(self.apk.file.name))
 
         # initialize the Apk with its stored image file
@@ -306,102 +305,102 @@ class ApkTestCase(RmTestCase):
 
     def test_initialize_videos(self):
         # initialize the Apk with video file
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.avi'), 'test1.avi')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.avi'), 'test1.avi')
         self.apk.initialize(self.repo)
         # assert that video type was recognized
         self.assertEqual(repomaker.models.app.VIDEO, App.objects.get(package_id='test1').type)
 
         # initialize the Apk with video file
         ApkPointer.objects.all().delete()
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.mp4'), 'test2.mp4')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.mp4'), 'test2.mp4')
         self.apk.initialize(self.repo)
         # assert that video type was recognized
         self.assertEqual(repomaker.models.app.VIDEO, App.objects.get(package_id='test2').type)
 
         # initialize the Apk with video file
         ApkPointer.objects.all().delete()
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.webm'), 'test3.webm')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.webm'), 'test3.webm')
         self.apk.initialize(self.repo)
         # assert that video type was recognized
         self.assertEqual(repomaker.models.app.VIDEO, App.objects.get(package_id='test3').type)
 
     def test_initialize_audios(self):
         # initialize the Apk with audio file
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.flac'), 'test1.flac')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.flac'), 'test1.flac')
         self.apk.initialize(self.repo)
         # assert that audio type was recognized
         self.assertEqual(repomaker.models.app.AUDIO, App.objects.get(package_id='test1').type)
 
         # initialize the Apk with audio file
         ApkPointer.objects.all().delete()
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.mp3'), 'test2.mp3')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.mp3'), 'test2.mp3')
         self.apk.initialize(self.repo)
         # assert that audio type was recognized
         self.assertEqual(repomaker.models.app.AUDIO, App.objects.get(package_id='test2').type)
 
         # initialize the Apk with audio file
         ApkPointer.objects.all().delete()
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.ogg'), 'test3.ogg')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.ogg'), 'test3.ogg')
         self.apk.initialize(self.repo)
         # assert that audio type was recognized
         self.assertEqual(repomaker.models.app.AUDIO, App.objects.get(package_id='test3').type)
 
     def test_initialize_books(self):
         # initialize the Apk with book file
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.epub'), 'test1.epub')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.epub'), 'test1.epub')
         self.apk.initialize(self.repo)
         # assert that book type was recognized
         self.assertEqual(repomaker.models.app.BOOK, App.objects.get(package_id='test1').type)
 
         # initialize the Apk with book file
         ApkPointer.objects.all().delete()
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.mobi'), 'test2.mobi')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.mobi'), 'test2.mobi')
         self.apk.initialize(self.repo)
         # assert that book type was recognized
         self.assertEqual(repomaker.models.app.BOOK, App.objects.get(package_id='test2').type)
 
     def test_initialize_documents(self):
         # initialize the Apk with document file
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.docx'), 'test1.docx')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.docx'), 'test1.docx')
         self.apk.initialize(self.repo)
         # assert that document type was recognized
         self.assertEqual(repomaker.models.app.DOCUMENT, App.objects.get(package_id='test1').type)
 
         # initialize the Apk with document file
         ApkPointer.objects.all().delete()
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.odt'), 'test2.odt')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.odt'), 'test2.odt')
         self.apk.initialize(self.repo)
         # assert that document type was recognized
         self.assertEqual(repomaker.models.app.DOCUMENT, App.objects.get(package_id='test2').type)
 
         # initialize the Apk with document file
         ApkPointer.objects.all().delete()
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.ods'), 'test3.ods')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.ods'), 'test3.ods')
         self.apk.initialize(self.repo)
         # assert that document type was recognized
         self.assertEqual(repomaker.models.app.DOCUMENT, App.objects.get(package_id='test3').type)
 
         # initialize the Apk with document file
         ApkPointer.objects.all().delete()
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'test.pdf'), 'test4.pdf')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.pdf'), 'test4.pdf')
         self.apk.initialize(self.repo)
         # assert that document type was recognized
         self.assertEqual(repomaker.models.app.DOCUMENT, App.objects.get(package_id='test4').type)
 
     def test_initialize_unsupported_type(self):
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'keystore.jks'), 'test.php')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'keystore.jks'), 'test.php')
         with self.assertRaises(ValidationError):
             self.apk.initialize()
 
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'keystore.jks'), 'test.py')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'keystore.jks'), 'test.py')
         with self.assertRaises(ValidationError):
             self.apk.initialize()
 
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'keystore.jks'), 'test.pl')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'keystore.jks'), 'test.pl')
         with self.assertRaises(ValidationError):
             self.apk.initialize()
 
-        self.replace_apk_file(os.path.join(TEST_FILES_DIR, 'keystore.jks'), 'test.cgi')
+        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'keystore.jks'), 'test.cgi')
         with self.assertRaises(ValidationError):
             self.apk.initialize()
 

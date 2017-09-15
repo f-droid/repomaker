@@ -1,18 +1,16 @@
 import os
-import shutil
 from unittest.mock import patch
 
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
-
 from repomaker.models import Repository, S3Storage, GitStorage, SshStorage
 from repomaker.models.storage import StorageManager
 from repomaker.storage import REPO_DIR, get_repo_path, get_repo_root_path, PrivateStorage
-from .. import TEST_DIR, TEST_MEDIA_DIR, TEST_PRIVATE_DIR, RmTestCase
+
+from .. import RmTestCase
 
 
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class GitStorageTestCase(RmTestCase):
 
     def setUp(self):
@@ -25,7 +23,6 @@ class GitStorageTestCase(RmTestCase):
     def test_remote_url(self):
         self.assertEqual("git@example.org:user/repo.git", self.storage.get_remote_url())
 
-    @override_settings(PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
     def test_create_identity_file(self):
         storage = self.storage
 
@@ -45,7 +42,6 @@ class GitStorageTestCase(RmTestCase):
         path = os.path.join(settings.PRIVATE_REPO_ROOT, storage.identity_file.name)
         self.assertTrue(os.path.isfile(path))
 
-    @override_settings(PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
     def test_create_identity_file_does_not_run_twice(self):
         storage = self.storage
 
@@ -70,14 +66,14 @@ class GitStorageTestCase(RmTestCase):
     @patch('git.remote.Remote.push')
     def test_publish(self, push, bar):
         # create an empty fake repo
-        os.chdir(TEST_MEDIA_DIR)
+        os.chdir(settings.MEDIA_ROOT)
         os.mkdir(REPO_DIR)
 
         # publish to git remote storage
         self.storage.publish()
 
         # assert that git mirror directory exist and that the repo was pushed
-        self.assertTrue(os.path.isdir(os.path.join(TEST_MEDIA_DIR, 'git-mirror')))
+        self.assertTrue(os.path.isdir(os.path.join(settings.MEDIA_ROOT, 'git-mirror')))
         self.assertTrue(push.called)
         bar.called = None  # we don't care a about the progress bar, but have to use it
 
@@ -103,7 +99,8 @@ class StorageManagerTestCase(TestCase):
         # assert that only two storage locations are returned by the StorageManager
         self.assertTrue(len(StorageManager.get_storage(self.repo, onlyEnabled=True)) == 2)
 
-    @override_settings(DEFAULT_REPO_STORAGE=[(os.path.join(TEST_MEDIA_DIR, 'repos'), '/repos/')])
+    @override_settings(
+        DEFAULT_REPO_STORAGE=[(os.path.join(settings.MEDIA_ROOT, 'repos'), '/repos/')])
     def test_get_default_storage(self):
         self.assertTrue(len(StorageManager.get_default_storage(self.repo)) == 1)
 
@@ -126,7 +123,7 @@ class StorageManagerTestCase(TestCase):
         self.assertTrue('git_url/repo' in config['mirrors'])
 
 
-@override_settings(DEFAULT_REPO_STORAGE=[(os.path.join(TEST_MEDIA_DIR, 'repos'), '/repos/')])
+@override_settings(DEFAULT_REPO_STORAGE=[(os.path.join(settings.MEDIA_ROOT, 'repos'), '/repos/')])
 class DefaultStorageTestCase(TestCase):
 
     def setUp(self):
@@ -171,5 +168,5 @@ class DefaultStorageTestCase(TestCase):
         storage = StorageManager.get_storage(self.repo)[0]
         storage.publish()
         local = self.repo.get_repo_path()
-        remote = os.path.join(TEST_MEDIA_DIR, 'repos', get_repo_root_path(self.repo))
+        remote = os.path.join(settings.MEDIA_ROOT, 'repos', get_repo_root_path(self.repo))
         update_serverwebroot.assert_called_once_with(remote, local)

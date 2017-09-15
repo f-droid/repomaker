@@ -3,19 +3,14 @@ import os
 import shutil
 from shutil import copyfile
 
+import django.templatetags.static
+import repomaker.models.repository
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase
 from fdroidserver import update
 from repomaker import DEFAULT_USER_NAME
 from repomaker.models import Repository
-
-TEST_FILES_DIR = os.path.join(settings.BASE_DIR, 'tests')
-
-TEST_DIR = os.path.join(settings.BASE_DIR, 'test_dir')
-TEST_MEDIA_DIR = os.path.join(TEST_DIR, 'media')
-TEST_PRIVATE_DIR = os.path.join(TEST_DIR, 'private_repo')
-TEST_STATIC_DIR = os.path.join(TEST_DIR, 'static')
 
 
 def datetime_is_recent(dt, seconds=10 * 60):
@@ -24,15 +19,13 @@ def datetime_is_recent(dt, seconds=10 * 60):
 
 
 def fake_repo_create(repo):
-    if settings.PRIVATE_REPO_ROOT != TEST_PRIVATE_DIR:
-        raise RuntimeError('Do not write into non-test directories')
-
     # copy existing keystore
-    src = os.path.join(TEST_FILES_DIR, 'keystore.jks')
+    src = os.path.join(settings.TEST_FILES_DIR, 'keystore.jks')
     dest = os.path.join(repo.get_private_path(), 'keystore.jks')
     if not os.path.isdir(repo.get_private_path()):
         os.makedirs(repo.get_private_path())
     copyfile(src, dest)
+
     repo.key_store_pass = 'uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes='
     repo.key_pass = 'uGrqvkPLiGptUScrAHsVAyNSQqyJq4OQJSiN1YZWxes='
 
@@ -60,5 +53,5 @@ class RmTestCase(TestCase):
         self.repo.chdir()
 
     def tearDown(self):
-        if os.path.isdir(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
+        if os.path.isdir(settings.TEST_DIR):
+            shutil.rmtree(settings.TEST_DIR)

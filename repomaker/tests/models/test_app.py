@@ -1,16 +1,14 @@
 import io
 import os
-import shutil
 from datetime import datetime, timezone
 from unittest.mock import patch
 
 from django.conf import settings
 from django.core.files.base import ContentFile
-from django.test import override_settings
 from repomaker.models import RemoteRepository, App, RemoteApp, Screenshot
 from repomaker.models.screenshot import PHONE
 
-from .. import TEST_DIR, TEST_MEDIA_DIR, datetime_is_recent, RmTestCase
+from .. import datetime_is_recent, RmTestCase
 
 
 class AppTestCase(RmTestCase):
@@ -26,7 +24,6 @@ class AppTestCase(RmTestCase):
         self.remote_repo = RemoteRepository.objects.create(last_change_date=date)
         self.remote_app = RemoteApp.objects.create(repo=self.remote_repo, last_updated_date=date)
 
-    @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
     def test_from_remote_app(self):
         remote_app = self.remote_app
 
@@ -98,7 +95,6 @@ class AppTestCase(RmTestCase):
         # assert that malicious content was removed
         self.assertEqual('<p>test</p>', self.app.description)
 
-    @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
     def test_get_screenshot_dict(self):
         # create two screenshots
         Screenshot.objects.create(type=PHONE, language_code='en-us', app=self.app,
@@ -114,7 +110,6 @@ class AppTestCase(RmTestCase):
              'de': {PHONE: ['test2.png']}
              }, localized)
 
-    @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
     def test_add_translations_to_localized(self):
         # load two translations from other test
         self.test_copy_translations_from_remote_app()
@@ -154,7 +149,6 @@ class AppTestCase(RmTestCase):
         # default translation should not be included since it is empty
         self.assertFalse(settings.LANGUAGE_CODE in localized)
 
-    @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
     @patch('fdroidserver.net.http_get')
     def test_download_graphic_assets_from_remote_app(self, http_get):
         app = self.app

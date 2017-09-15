@@ -3,15 +3,13 @@ import os
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.test import override_settings
 from django.urls import reverse
 from repomaker import DEFAULT_USER_NAME
 from repomaker.models import App, Apk, ApkPointer, Repository, Screenshot
 
-from .. import TEST_MEDIA_DIR, TEST_FILES_DIR, RmTestCase
+from .. import RmTestCase
 
 
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class AppViewTestCase(RmTestCase):
 
     def setUp(self):
@@ -133,7 +131,7 @@ class AppViewTestCase(RmTestCase):
         self.assertEqual(0, Apk.objects.all().count())
         self.assertEqual(0, ApkPointer.objects.all().count())
 
-        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
             self.client.post(self.app.get_edit_url(), {'apks': f})
 
         self.assertEqual(1, App.objects.all().count())
@@ -141,7 +139,7 @@ class AppViewTestCase(RmTestCase):
         self.assertEqual(1, ApkPointer.objects.all().count())
         self.assertEqual(1, self.app.apkpointer_set.count())
 
-        with open(os.path.join(TEST_FILES_DIR, 'test_2.apk'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_2.apk'), 'rb') as f:
             self.client.post(self.app.get_edit_url(), {'apks': f})
 
         self.assertEqual(1, App.objects.all().count())
@@ -152,14 +150,14 @@ class AppViewTestCase(RmTestCase):
         self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
 
     def test_reject_non_update(self):
-        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
             self.client.post(self.app.get_edit_url(), {'apks': f})
 
         # unset scheduled update, so we can test that no new one was scheduled at the end
         self.repo.update_scheduled = False
         self.repo.save()
 
-        with open(os.path.join(TEST_FILES_DIR, 'test.pdf'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test.pdf'), 'rb') as f:
             response = self.client.post(self.app.get_edit_url(), {'apks': f})
             form = response.context['form']
             self.assertTrue(form.has_error('apks'))
@@ -175,14 +173,14 @@ class AppViewTestCase(RmTestCase):
         self.assertFalse(Repository.objects.get(pk=self.repo.pk).update_scheduled)
 
     def test_reject_non_update_ajax(self):
-        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
             self.client.post(self.app.get_edit_url(), {'apks': f})
 
         # unset scheduled update, so we can test that no new one was scheduled at the end
         self.repo.update_scheduled = False
         self.repo.save()
 
-        with open(os.path.join(TEST_FILES_DIR, 'test.pdf'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test.pdf'), 'rb') as f:
             response = self.client.post(self.app.get_edit_url(), {'apks': f},
                                         HTTP_X_REQUESTED_WITH='XMLHttpRequest',
                                         HTTP_RM_BACKGROUND_TYPE='screenshots')
@@ -199,7 +197,7 @@ class AppViewTestCase(RmTestCase):
     def test_upload_screenshot(self):
         self.assertEqual(0, Screenshot.objects.all().count())
 
-        with open(os.path.join(TEST_FILES_DIR, 'test.png'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test.png'), 'rb') as f:
             self.client.post(self.app.get_edit_url(), {'screenshots': f})
 
         self.assertEqual(1, Screenshot.objects.all().count())
@@ -208,7 +206,7 @@ class AppViewTestCase(RmTestCase):
     def test_upload_screenshot_ajax(self):
         self.assertEqual(0, Screenshot.objects.all().count())
 
-        with open(os.path.join(TEST_FILES_DIR, 'test.png'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test.png'), 'rb') as f:
             response = self.client.post(self.app.get_edit_url(), {'screenshots': f},
                                         HTTP_X_REQUESTED_WITH='XMLHttpRequest',
                                         HTTP_RM_BACKGROUND_TYPE='screenshots')
@@ -230,7 +228,7 @@ class AppViewTestCase(RmTestCase):
         old_graphic = self.app.feature_graphic.path
         self.assertTrue(os.path.isfile(old_graphic))
 
-        with open(os.path.join(TEST_FILES_DIR, 'test.png'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test.png'), 'rb') as f:
             self.client.post(self.app.get_edit_url(), {'feature_graphic': f})
 
         # refresh app object and assert that graphic got saved and old one removed
@@ -246,7 +244,7 @@ class AppViewTestCase(RmTestCase):
         old_graphic = self.app.feature_graphic.path
         self.assertTrue(os.path.isfile(old_graphic))
 
-        with open(os.path.join(TEST_FILES_DIR, 'test.png'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test.png'), 'rb') as f:
             response = self.client.post(self.app.get_edit_url(), {'feature-graphic': f},
                                         HTTP_X_REQUESTED_WITH='XMLHttpRequest',
                                         HTTP_RM_BACKGROUND_TYPE='feature-graphic')
@@ -266,7 +264,7 @@ class AppViewTestCase(RmTestCase):
     def test_upload_apk(self):
         self.assertEqual(0, Apk.objects.all().count())
 
-        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
             self.client.post(self.app.get_edit_url(), {'apks': f})
 
         self.assertEqual(1, Apk.objects.all().count())
@@ -275,7 +273,7 @@ class AppViewTestCase(RmTestCase):
     def test_upload_apk_ajax(self):
         self.assertEqual(0, Apk.objects.all().count())
 
-        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
             response = self.client.post(self.app.get_edit_url(), {'apks': f},
                                         HTTP_X_REQUESTED_WITH='XMLHttpRequest')
 
@@ -305,7 +303,7 @@ class AppViewTestCase(RmTestCase):
         app2.translate(settings.LANGUAGE_CODE)
         app2.save()
 
-        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
             response = self.client.post(app2.get_edit_url(), {'apks': f},
                                         HTTP_X_REQUESTED_WITH='XMLHttpRequest')
 

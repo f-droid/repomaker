@@ -5,16 +5,15 @@ from io import BytesIO
 import repomaker.models.app
 from django.conf import settings
 from django.core.files import File
-from django.test import TestCase, override_settings
+from django.test import TestCase
 from django.utils import timezone
 from fdroidserver.update import get_all_icon_dirs
 from repomaker.models import Apk, ApkPointer, RemoteApkPointer, App, RemoteApp, RemoteRepository
 from repomaker.storage import get_apk_file_path
 
-from .. import TEST_DIR, TEST_FILES_DIR, TEST_PRIVATE_DIR, fake_repo_create, RmTestCase
+from .. import fake_repo_create, RmTestCase
 
 
-@override_settings(MEDIA_ROOT=TEST_DIR, PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
 class ApkPointerTestCase(RmTestCase):
     apk_file_name = 'test_1.apk'
 
@@ -25,7 +24,7 @@ class ApkPointerTestCase(RmTestCase):
         self.apk = Apk.objects.create()
 
         # Attach a real APK file to the Apk
-        file_path = os.path.join(TEST_FILES_DIR, self.apk_file_name)
+        file_path = os.path.join(settings.TEST_FILES_DIR, self.apk_file_name)
         with open(file_path, 'rb') as f:
             self.apk.file.save(self.apk_file_name, File(f), save=True)
 
@@ -33,7 +32,7 @@ class ApkPointerTestCase(RmTestCase):
         self.apk_pointer = ApkPointer(repo=self.repo)
 
         # Attach a real APK file to the pointer
-        file_path = os.path.join(TEST_FILES_DIR, self.apk_file_name)
+        file_path = os.path.join(settings.TEST_FILES_DIR, self.apk_file_name)
         with open(file_path, 'rb') as f:
             self.apk_pointer.file.save(self.apk_file_name, File(f), save=True)
 
@@ -82,7 +81,7 @@ class ApkPointerTestCase(RmTestCase):
     def test_initialize_non_apk(self):
         # overwrite APK file with image file
         self.apk.file.delete()
-        file_path = os.path.join(TEST_FILES_DIR, 'test.png')
+        file_path = os.path.join(settings.TEST_FILES_DIR, 'test.png')
         with open(file_path, 'rb') as f:
             self.apk.file.save('test.png', File(f), save=True)
 

@@ -7,7 +7,6 @@ import requests
 from background_task.tasks import Task
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.test import override_settings
 from repomaker.models import App, RemoteApp, Repository, \
     RemoteRepository
 from repomaker.models.repository import AbstractRepository
@@ -15,10 +14,9 @@ from repomaker.storage import get_remote_repo_path
 from repomaker.tasks import PRIORITY_REMOTE_REPO
 from requests.exceptions import HTTPError
 
-from .. import TEST_MEDIA_DIR, RmTestCase
+from .. import RmTestCase
 
 
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class RemoteRepositoryTestCase(RmTestCase):
 
     def setUp(self):

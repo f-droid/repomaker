@@ -1,15 +1,13 @@
 import os
 
 from django.conf import settings
-from django.test import override_settings
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from repomaker.models import S3Storage, SshStorage, GitStorage
 
-from .. import TEST_MEDIA_DIR, TEST_PRIVATE_DIR, RmTestCase
+from .. import RmTestCase
 
 
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
 class StorageViewsTestCase(RmTestCase):
 
     def test_storage_add(self):

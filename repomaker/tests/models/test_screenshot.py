@@ -4,14 +4,15 @@ import shutil
 from datetime import datetime, timezone
 from unittest.mock import patch
 
+from django.conf import settings
 from django.contrib.auth.models import User
-from django.test import TestCase, override_settings
-
+from django.test import TestCase
 from repomaker.models import Repository, RemoteRepository, App, RemoteApp, Screenshot, \
     RemoteScreenshot
 from repomaker.models.screenshot import AbstractScreenshot, PHONE, SEVEN_INCH, TEN_INCH, TV, WEAR
 from repomaker.storage import get_screenshot_file_path
-from .. import TEST_DIR, TEST_MEDIA_DIR, RmTestCase
+
+from .. import RmTestCase
 
 
 class AbstractScreenshotTestCase(TestCase):
@@ -21,7 +22,6 @@ class AbstractScreenshotTestCase(TestCase):
             AbstractScreenshot().get_url()
 
 
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class ScreenshotTestCase(RmTestCase):
 
     def setUp(self):
@@ -37,7 +37,6 @@ class ScreenshotTestCase(RmTestCase):
     def test_get_relative_path(self):
         self.assertEqual('org.example/en-US/phoneScreenshots', self.screenshot.get_relative_path())
 
-    @override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
     def test_file(self):
         self.screenshot.file.save('test.png', io.BytesIO(b'foo'))
         self.assertTrue(os.path.isfile(self.screenshot.file.path))
@@ -69,7 +68,6 @@ class ScreenshotTestCase(RmTestCase):
         self.assertFalse(os.path.isfile(file_path))
 
 
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class RemoteScreenshotTestCase(TestCase):
 
     def setUp(self):
@@ -87,8 +85,8 @@ class RemoteScreenshotTestCase(TestCase):
         self.app = App.objects.create(repo=self.repo, package_id='org.example')
 
     def tearDown(self):
-        if os.path.isdir(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
+        if os.path.isdir(settings.TEST_DIR):
+            shutil.rmtree(settings.TEST_DIR)
 
     def test_str(self):
         self.assertTrue(self.remote_app.name in str(self.remote_screenshot))

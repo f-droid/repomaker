@@ -24,4 +24,3 @@ units:
 
   script:
     - ./tests/test-units.sh
-    - ./tests/assert-test-confinement.sh

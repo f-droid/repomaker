@@ -3,15 +3,13 @@ from unittest.mock import patch
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.test import override_settings
 from django.urls import reverse
 from repomaker.models import App, Apk, ApkPointer, Repository
 from repomaker.views.repository import RepositoryCreateView, RepositoryForm, RepositoryView
 
-from .. import TEST_MEDIA_DIR, TEST_PRIVATE_DIR, TEST_FILES_DIR, fake_repo_create, RmTestCase
+from .. import fake_repo_create, RmTestCase
 
 
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR, PRIVATE_REPO_ROOT=TEST_PRIVATE_DIR)
 class RepositoryTestCase(RmTestCase):
 
     def setUp(self):
@@ -155,7 +153,7 @@ class RepositoryTestCase(RmTestCase):
         self.assertEqual(0, Apk.objects.all().count())
         self.assertEqual(0, ApkPointer.objects.all().count())
 
-        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
             self.client.post(reverse('repo', kwargs={'repo_id': self.repo.id}), {'apks': f},
                              HTTP_X_REQUESTED_WITH='XMLHttpRequest', HTTP_RM_BACKGROUND_TYPE='apks')
 
@@ -173,7 +171,7 @@ class RepositoryTestCase(RmTestCase):
         self.assertEqual(0, Apk.objects.all().count())
         self.assertEqual(0, ApkPointer.objects.all().count())
 
-        with open(os.path.join(TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
             self.client.post(reverse('repo', kwargs={'repo_id': self.repo.id}), {'apks': f},
                              HTTP_X_REQUESTED_WITH='XMLHttpRequest', HTTP_RM_BACKGROUND_TYPE='apks')
 
@@ -191,7 +189,7 @@ class RepositoryTestCase(RmTestCase):
         self.assertEqual(0, Apk.objects.all().count())
         self.assertEqual(0, ApkPointer.objects.all().count())
 
-        with open(os.path.join(TEST_FILES_DIR, 'test_invalid_signature.apk'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_invalid_signature.apk'), 'rb') as f:
             response = self.client.post(reverse('repo', kwargs={'repo_id': self.repo.id}),
                                         {'apks': f}, HTTP_X_REQUESTED_WITH='XMLHttpRequest',
                                         HTTP_RM_BACKGROUND_TYPE='apks')
@@ -212,7 +210,7 @@ class RepositoryTestCase(RmTestCase):
         self.assertEqual(0, Apk.objects.all().count())
         self.assertEqual(0, ApkPointer.objects.all().count())
 
-        with open(os.path.join(TEST_FILES_DIR, 'test.avi'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test.avi'), 'rb') as f:
             self.client.post(reverse('repo', kwargs={'repo_id': self.repo.id}), {'apks': f},
                              HTTP_X_REQUESTED_WITH='XMLHttpRequest', HTTP_RM_BACKGROUND_TYPE='apks')
 

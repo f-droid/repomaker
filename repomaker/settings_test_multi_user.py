@@ -1,4 +1,4 @@
-from repomaker.settings import *  # pylint: disable=wildcard-import,unused-wildcard-import
+from repomaker.settings_test import *  # pylint: disable=wildcard-import,unused-wildcard-import
 
 
 SINGLE_USER_MODE = False

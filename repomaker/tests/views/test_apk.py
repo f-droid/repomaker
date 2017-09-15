@@ -1,13 +1,12 @@
 import os
 
-from django.test import override_settings
+from django.conf import settings
 from django.urls import reverse
 from repomaker.models import App, Apk, ApkPointer
 
-from .. import TEST_FILES_DIR, TEST_MEDIA_DIR, RmTestCase
+from .. import RmTestCase
 
 
-@override_settings(MEDIA_ROOT=TEST_MEDIA_DIR)
 class ApkViewTestCase(RmTestCase):
 
     def test_apk_upload(self):
@@ -33,7 +32,7 @@ class ApkViewTestCase(RmTestCase):
         self.assertEqual(0, Apk.objects.all().count())
         self.assertEqual(0, ApkPointer.objects.all().count())
 
-        with open(os.path.join(TEST_FILES_DIR, filename), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, filename), 'rb') as f:
             self.client.post(reverse('apk_upload', kwargs={'repo_id': self.repo.id}), {'apks': f})
 
         self.assertEqual(1, App.objects.all().count())
@@ -41,7 +40,7 @@ class ApkViewTestCase(RmTestCase):
         self.assertEqual(1, ApkPointer.objects.all().count())
 
     def test_upload_invalid_apk(self):
-        with open(os.path.join(TEST_FILES_DIR, 'test_invalid_signature.apk'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_invalid_signature.apk'), 'rb') as f:
             response = self.client.post(reverse('apk_upload', kwargs={'repo_id': self.repo.id}),
                                         {'apks': f})
         self.assertContains(response, 'Error')
@@ -55,7 +54,7 @@ class ApkViewTestCase(RmTestCase):
         # open all files
         apks = []
         for filename in files:
-            apks.append(open(os.path.join(TEST_FILES_DIR, filename), 'rb'))
+            apks.append(open(os.path.join(settings.TEST_FILES_DIR, filename), 'rb'))
 
         # post all files and ensure they are closed again afterwards
         try:
