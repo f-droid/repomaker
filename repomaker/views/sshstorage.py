@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.forms import BooleanField
 from django.utils.translation import ugettext_lazy as _
-
 from repomaker.models import SshStorage
+
 from .storage import StorageForm, MainStorageMixin, StorageCreateView, StorageDetailView, \
     StorageUpdateView, StorageDeleteView
 
@@ -14,7 +14,8 @@ class SshStorageForm(StorageForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if self.instance.pk:  # don't show identity_file option when updating
+        # don't show identity_file option when updating
+        if settings.SINGLE_USER_MODE and self.instance.pk:
             del self.fields['ignore_identity_file']
 
     def get_initial_for_field(self, field, field_name):

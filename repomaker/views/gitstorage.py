@@ -3,8 +3,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
 from django.forms import CharField, URLField, TextInput
 from django.utils.translation import ugettext_lazy as _
-
 from repomaker.models.storage import GitStorage, HostnameValidator, PathValidator
+
 from .sshstorage import SshStorageForm, SshKeyMixin
 from .storage import StorageCreateView, StorageUpdateView, StorageDeleteView, StorageDetailView
 
@@ -68,9 +68,9 @@ class GitUrlValidationMixin(SshKeyMixin):
         form.instance.path = path
 
         # try to generate the F-Droid repo URL from the git repo URL
-        url = fdroidserver.index.get_mirror_service_url(form.cleaned_data['ssh_url'])
-        if url is not None:
-            form.instance.url = url
+        mirror_urls = fdroidserver.index.get_mirror_service_urls(form.cleaned_data['ssh_url'])
+        if len(mirror_urls) > 0:
+            form.instance.url = mirror_urls[0]
         # URL generation failed, so the user needs to provide a valid URL
         else:
             try:

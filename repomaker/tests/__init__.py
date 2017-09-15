@@ -1,9 +1,14 @@
 import datetime
 import os
+import shutil
 from shutil import copyfile
 
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.test import TestCase
 from fdroidserver import update
+from repomaker import DEFAULT_USER_NAME
+from repomaker.models import Repository
 
 TEST_FILES_DIR = os.path.join(settings.BASE_DIR, 'tests')
 
@@ -35,3 +40,25 @@ def fake_repo_create(repo):
     for icon_dir in update.get_all_icon_dirs(repo.get_repo_path()):
         if not os.path.exists(icon_dir):
             os.makedirs(icon_dir)
+
+
+class RmTestCase(TestCase):
+
+    def setUp(self):
+        if not settings.SINGLE_USER_MODE:
+            user = User.objects.create(username=DEFAULT_USER_NAME)
+            self.client.force_login(user=user)
+        else:
+            user = User.objects.get()
+
+        self.repo = Repository.objects.create(
+            name="Test Name",
+            description="Test Description",
+            url="https://example.org",
+            user=user,
+        )
+        self.repo.chdir()
+
+    def tearDown(self):
+        if os.path.isdir(TEST_DIR):
+            shutil.rmtree(TEST_DIR)
