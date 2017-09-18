@@ -4,4 +4,4 @@
 	dh $@ --with python-virtualenv
 
 override_dh_virtualenv:
-	dh_virtualenv --python /usr/bin/python3 --use-system-packages --upgrade-pip -v
+	LC_ALL=C.UTF-8 dh_virtualenv --python /usr/bin/python3 --use-system-packages --upgrade-pip
