@@ -130,8 +130,11 @@ class ApkPointer(AbstractApkPointer):
         icon_directories = get_all_icon_dirs(path)
         for icon_directory in icon_directories:
             icon = os.path.join(icon_directory, icon_name)
-            if self.app and self.app.icon and icon == self.app.icon.path:
-                continue  # do not delete current app icon
+            try:
+                if self.app and self.app.icon and icon == self.app.icon.path:
+                    continue  # do not delete current app icon
+            except App.DoesNotExist:
+                pass  # if the app already was deleted, we need to remove the icons
             if os.path.isfile(icon):
                 os.remove(icon)
 

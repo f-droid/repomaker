@@ -450,6 +450,11 @@ class RepositoryTestCase(RmTestCase):
         self.assertIsNone(os.makedirs(self.repo.get_private_path()))
         self.assertTrue(os.path.exists(self.repo.get_private_path()))
 
+        # Create and app and APK for the repo
+        app = App.objects.create(repo=self.repo, package_id='org.example')
+        apk = Apk.objects.create(package_id='org.example')
+        ApkPointer.objects.create(repo=self.repo, app=app, apk=apk)
+
         # Delete repo
         self.assertTrue(self.repo.delete())
 
@@ -457,6 +462,11 @@ class RepositoryTestCase(RmTestCase):
         self.assertEqual(0, len(Repository.objects.all()))
         self.assertFalse(os.path.exists(self.repo.get_path()))
         self.assertFalse(os.path.exists(self.repo.get_private_path()))
+
+        # Assert that all content was removed as well
+        self.assertEqual(0, App.objects.all().count())
+        self.assertEqual(0, Apk.objects.all().count())
+        self.assertEqual(0, ApkPointer.objects.all().count())
 
 
 class RepositoryPageTestCase(RmTestCase):
