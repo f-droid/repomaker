@@ -12,7 +12,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from repomaker.models import Repository, App, Apk
 from repomaker.models.storage import StorageManager
-from . import BaseModelForm, AppScrollListView, LoginOrSingleUserRequiredMixin
+from . import BaseModelForm, AppScrollListView, LoginOrSingleUserRequiredMixin, ErrorView
 
 
 class RepositoryAuthorizationMixin(LoginOrSingleUserRequiredMixin, UserPassesTestMixin):
@@ -124,7 +124,13 @@ class RepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
         if len(storage) > 0:
             form.instance.url = storage[0].get_repo_url()
 
-        form.instance.create()  # generate repo, QR Code, etc. on disk
+        try:
+            form.instance.create()  # generate repo, QR Code, etc. on disk
+        except Exception as e:
+            logging.error('Creating repo failed: %s', e)
+            form.instance.delete()
+            error = _('There was an error creating the repository. Please try again!')
+            return ErrorView().dispatch(self.request, error=error + ' ' + str(e))
         return result
 
 

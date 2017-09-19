@@ -4,6 +4,8 @@ from unittest.mock import patch
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
+from fdroidserver.exception import BuildException
 from repomaker.models import App, Apk, ApkPointer, Repository
 from repomaker.views.repository import RepositoryCreateView, RepositoryForm, RepositoryView
 
@@ -84,6 +86,27 @@ class RepositoryTestCase(RmTestCase):
         self.assertTrue(isinstance(response.context['view'], RepositoryCreateView))
         self.assertTrue(isinstance(response.context['form'], RepositoryForm))
         self.assertFormError(response, 'form', 'description', 'This field is required.')
+
+    @patch('fdroidserver.common.genkeystore')
+    def test_create_fails(self, genkeystore):
+        # remember how many repositories we have
+        repo_count = Repository.objects.all().count()
+
+        # creating the key store will fail
+        genkeystore.side_effect = BuildException('keystore failure')
+
+        # post data for a new repository to be created
+        query = {'name': 'TestRepo', 'description': 'TestDescription'}
+        response = self.client.post(reverse('add_repo'), query)
+
+        # assert that error message is shown
+        self.assertContains(response, 'Error')
+        self.assertContains(response, 'keystore failure')
+        self.assertContains(response,
+                            _('There was an error creating the repository. Please try again!'))
+
+        # assert that repository was deleted
+        self.assertEqual(repo_count, Repository.objects.all().count())
 
     def test_list(self):
         response = self.client.get(reverse('index'))

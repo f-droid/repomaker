@@ -131,12 +131,16 @@ class AppScrollListView(ListView):
         raise NotImplementedError()
 
 
-class DatabaseLockedView(TemplateView):
+class ErrorView(TemplateView):
     request = None
-    template_name = 'repomaker/db_locked.html'
+    template_name = "repomaker/error.html"
 
     def post(self, request, *args, **kwargs):
         return self.get(request, *args, **kwargs)
+
+
+class DatabaseLockedView(ErrorView):
+    template_name = 'repomaker/db_locked.html'
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
