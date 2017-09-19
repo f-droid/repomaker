@@ -38,6 +38,7 @@ install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew update > /dev/null;
       brew install bash python3 libmagic;
+      brew cask reinstall java;
       brew cask install android-sdk;
       mkdir "$ANDROID_HOME/licenses";
       echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license";
