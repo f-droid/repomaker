@@ -4,4 +4,6 @@
 	dh $@ --with python-virtualenv
 
 override_dh_virtualenv:
-	LC_ALL=C.UTF-8 dh_virtualenv --python /usr/bin/python3 --use-system-packages --upgrade-pip
+	LC_ALL=C.UTF-8 dh_virtualenv --python /usr/bin/python3 --use-system-packages --upgrade-pip \
+	--extra-pip-arg "--cache-dir=/tmp" \
+	--requirements debian/requirements.txt

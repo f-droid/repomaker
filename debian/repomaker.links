@@ -1,2 +1,3 @@
+/opt/venvs/repomaker/bin/repomaker /usr/bin/repomaker
 /opt/venvs/repomaker/bin/repomaker-server /usr/bin/repomaker-server
 /opt/venvs/repomaker/bin/repomaker-tasks /usr/bin/repomaker-tasks

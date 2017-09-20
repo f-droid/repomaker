@@ -14,6 +14,7 @@ debian/debhelper-build-stamp
 debian/files
 debian/repomaker*
 !debian/repomaker.links
+!debian/repomaker.install
 
 node_modules/
 

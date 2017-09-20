@@ -1,16 +1,7 @@
-fdroidserver>=0.8
-#git+https://gitlab.com/grote/fdroidserver.git@686c7423623035fc37dff26ff51e8aeccea9ba27#egg=fdroidserver
-django
-django-background-tasks>=1.1.9
+-r debian/requirements.txt
 django-compressor
-django-sass-processor
-django-allauth
-django-hvad>=1.8.0
-django-tinymce
-django-js-reverse
 qrcode
 six>=1.9  # until bleach depends on html5lib>=1.0
 bleach
 python-magic
-apache-libcloud>=2.0.0rc2
 cryptography>=1.4.0

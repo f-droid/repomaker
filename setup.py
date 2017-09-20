@@ -41,6 +41,9 @@ setup(
     # You can install these using the following syntax, for example:
     # $ pip install -e .[dev,test]
     extras_require={
+        'gui': [
+            'pywebview[qt5]',
+        ],
         'test': [
             'pep8',
             'coverage',
@@ -59,6 +62,8 @@ setup(
             'repomaker-server = repomaker:runserver',
             'repomaker-tasks = repomaker:process_tasks',
         ],
-        # TODO 'gui_scripts': []
+        'gui_scripts': [
+            'repomaker = repomaker.gui:main',
+        ],
     },
 )
