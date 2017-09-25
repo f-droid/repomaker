@@ -27,7 +27,6 @@
 		</a>
 		<div id="rm-dnd-holder--apks" class="rm-repo-apps-add">
 			<form action="{% url 'apk_upload' repo.id %}" enctype="multipart/form-data" method="post">
-				{% csrf_token %}
 				<div class="rm-repo-apps-add-title">
 					{% blocktrans with label_start='<label for="id_apks" class="rm-repo-apps-add-choose">' label_end='</label>' trimmed %}
 					Alternatively, drag and drop or {{ label_start }}choose files{{ label_end }}
@@ -40,6 +39,7 @@
 				<button type="submit" class="rm-repo-apps-add-button mdl-js-button">
 					{% trans 'Add' %}
 				</button>
+				{% csrf_token %}
 			</form>
 		</div>
 		<div id="rm-dnd-holder--apks--loading" class="rm-repo-apps-add--loading" hidden>

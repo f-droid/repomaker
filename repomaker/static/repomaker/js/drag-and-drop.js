@@ -37,7 +37,7 @@ if ('draggable' in document.createElement('span') && !!window.FormData) {
     showDndTexts()
     holders.forEach(function(holder) {
         if (holder != null) {
-            holder.ondragover =  function () {
+            holder.ondragover = function () {
                 return onDragOver(this)
             }
             holder.ondragleave = function () {
@@ -45,6 +45,9 @@ if ('draggable' in document.createElement('span') && !!window.FormData) {
             }
             holder.ondrop = function (event) {
                 return onDrop(this, event)
+            }
+            holder.onchange = function () {
+                return onChange(this)
             }
         }
     })
@@ -63,6 +66,17 @@ function onDragLeave(element) {
 function onDrop(element, event) {
     fromHoverToLoading(element.classList)
     uploadFiles(element, event.dataTransfer.files)
+    return false
+}
+
+function onChange(element) {
+    fileElement = element.getElementsByTagName('input')[0]
+    if (fileElement == null) return false;
+
+    fromHoverToLoading(element.classList)
+    uploadFiles(element, fileElement.files)
+    fileElement.value = null  // reset files to not upload twice
+
     return false
 }
 
