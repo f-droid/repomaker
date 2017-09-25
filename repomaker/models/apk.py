@@ -116,8 +116,12 @@ class Apk(models.Model):
             apk = self
         elif apk_set.count() == 1:
             logging.info("Existing Apk found, trying to reuse...")
-            self.delete()
             apk = apk_set[0]
+            if not apk.file:
+                apk.file = self.file
+                apk.save()
+                self.file = None
+            self.delete()
         else:
             raise RuntimeError('More than one APK with package ID %s' % repo_file['packageName'])
 
@@ -234,5 +238,6 @@ def apk_pre_delete_handler(**kwargs):
 @receiver(post_delete, sender=Apk)
 def apk_post_delete_handler(**kwargs):
     apk = kwargs['instance']
-    logging.info("Deleting APK: %s", apk.file.name)
-    apk.file.delete(save=False)
+    if apk.file:
+        logging.info("Deleting APK: %s", apk.file.name)
+        apk.file.delete(save=False)

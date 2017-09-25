@@ -39,6 +39,22 @@ class ApkViewTestCase(RmTestCase):
         self.assertEqual(1, Apk.objects.all().count())
         self.assertEqual(1, ApkPointer.objects.all().count())
 
+    def test_apk_upload_reuses_existing(self):
+        Apk.objects.create(package_id='org.bitbucket.tickytacky.mirrormirror',
+                           hash='7733e133eec140ab5e410f69955a4cba4a61133437ba436e92b75f03cbabfd52')
+
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test_1.apk'), 'rb') as f:
+            self.client.post(reverse('apk_upload', kwargs={'repo_id': self.repo.id}), {'apks': f})
+
+        self.assertEqual(1, App.objects.all().count())
+        self.assertEqual(1, Apk.objects.all().count())
+        self.assertEqual(1, ApkPointer.objects.all().count())
+
+        apk = Apk.objects.get()
+        self.assertTrue(apk.file)
+        self.assertEqual('packages/test_1.apk', apk.file.name)
+        self.assertEqual(apk, ApkPointer.objects.get().apk)
+
     def test_upload_invalid_apk(self):
         with open(os.path.join(settings.TEST_FILES_DIR, 'test_invalid_signature.apk'), 'rb') as f:
             response = self.client.post(reverse('apk_upload', kwargs={'repo_id': self.repo.id}),

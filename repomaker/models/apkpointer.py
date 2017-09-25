@@ -112,6 +112,8 @@ class ApkPointer(AbstractApkPointer):
 
         # create the link/copy from source to target APK
         source = self.apk.file.name
+        if not self.apk.file:
+            raise RuntimeError('Trying to link to a non-existing APK.')
         target = get_apk_file_path(self, os.path.basename(self.apk.file.name))
         target = self.apk.file.storage.link(source, target)
 
