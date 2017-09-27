@@ -1,3 +1,6 @@
+{% load site_notice %}
+
+{% notice as site_notice %}
 {% if site_notice %}
 <div class="rm-site-notice">
 	{% autoescape off %}{{ site_notice }}{% endautoescape %}
