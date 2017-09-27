@@ -1,12 +1,42 @@
 Source: repomaker
-Section: python
+Section: utils
 Priority: optional
 Maintainer: F-Droid Community <team@f-droid.org>
-Standards-Version: 4.0.0
-Build-Depends: debhelper (>= 9), python3, python3-dev, dh-virtualenv (>= 1.0)
+Uploaders: Hans-Christoph Steiner <hans@eds.org>
+Build-Depends: debhelper (>= 9),
+               dh-python,
+               python3-dev,
+               python3-setuptools,
+Standards-Version: 4.1.0
+X-Python3-Version: >= 3.4
+Homepage: https://f-droid.org/repomaker
 
 Package: repomaker
-Depends: python3-bleach, python3-cryptography (>= 1.4.0), python3-django, python3-django-compressor, python3-qrcode, python3-six (>= 1.9), python3-magic, python3-pyqt5.qtwebengine, python3-pyqt5.qtwebkit, aapt, apksigner, libmagic1, openjdk-8-jdk, git (>= 2.3.0), rsync
-Section: python
 Architecture: all
+Depends: ${misc:Depends},
+         ${python3:Depends},
+         aapt,
+         apksigner,
+         fdroidserver,
+         fonts-materialdesignicons-webfont,
+         fonts-roboto,
+         git (>= 2.3.0),
+         libmagic1,
+         python3-pyqt5.qtwebengine | python3-pyqt4,
+         rsync,
 Description: Create F-Droid repositories with ease
+ F-Droid.org is just a repo out of hundreds of repos created by
+ individuals all around the globe. With the tools of F-Droid, everyone
+ can create their own repo. So whether you are a musician who wants to
+ publish their music or a developer who wants to serve nightly builds
+ of their app, you are free to create your own repo and share it with
+ other people independently of F-Droid.org.
+ .
+ In the past, creating a repo has been difficult because you had to
+ have knowledge on the command line, needed to edit text files to edit
+ your packages’ store details and had to paste screenshots in a
+ special system of directories to have them served well inside the
+ F-Droid app.
+ .
+ This all got easier now: with Repomaker, you are able to create your
+ own repo and do not need to have any special knowledge to do so.
