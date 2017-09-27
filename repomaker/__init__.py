@@ -5,6 +5,8 @@ from django.core.checks import Error, register
 from fdroidserver import common
 from fdroidserver.exception import FDroidException
 
+VERSION = '0.0.4'
+
 # The name of the default user. Please DO NOT CHANGE
 DEFAULT_USER_NAME = 'user'
 

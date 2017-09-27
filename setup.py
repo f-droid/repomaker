@@ -1,6 +1,7 @@
 import os
 
 from setuptools import setup, find_packages
+from repomaker import VERSION
 
 DATA_PREFIX = os.path.join('share', 'repomaker')
 
@@ -9,7 +10,7 @@ print("Packages: %s" % str(packages))
 
 setup(
     name='repomaker',
-    version='0.0.2a',
+    version=VERSION,
     packages=packages + ['repomaker-static'],
     description='Create F-Droid repositories with ease',
     license='AGPL-3.0',
