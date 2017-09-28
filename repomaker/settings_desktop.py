@@ -28,3 +28,6 @@ STATICFILES_DIRS = [
 
 # Do not try to compile SASS files
 SASS_PROCESSOR_ENABLED = False
+
+JS_REVERSE_JS_MINIFY = True
+COMPRESS_OFFLINE = True

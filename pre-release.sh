@@ -52,4 +52,7 @@ python3 manage.py collectstatic --no-input \
 mv ${NODE}/material-design-lite/src-ignore ${NODE}/material-design-lite/src
 mv ${NODE}/roboto-fontface/css-ignore ${NODE}/roboto-fontface/css
 
+# compress stylesheets and javascripts
+python3 manage.py compress --force
+
 echo "Ready to ship release!"

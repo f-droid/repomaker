@@ -9,3 +9,5 @@ PRIVATE_REPO_ROOT = os.path.join(TEST_DIR, 'private_repo')
 STATIC_ROOT = os.path.join(TEST_DIR, 'static')
 
 SINGLE_USER_MODE = True
+
+COMPRESS_ENABLED = False

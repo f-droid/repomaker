@@ -1,5 +1,7 @@
 {% load i18n %}
 {% load static %}
+{% load compress %}
+
 <div class="rm-repo-apps">
 	{% if request.GET.search or is_paginated %}
 	<div class="rm-repo-apps-header mdl-cell mdl-cell--12-col">
@@ -60,8 +62,18 @@
 	{% endfor %}
 </div>
 
+{% compress js file endless-app-scroll %}
 <script src="{% static 'repomaker/js/endless-app-scroll.js' %}"></script>
+{% endcompress %}
+
 <div id="rm-repo-id" data-id="{{ repo.id }}"></div>
-<script src="{% static 'repomaker/js/repo/apps.js' %}"></script>
+
+{% compress js file apps %}
+<script type="text/javascript" src="{% static 'repomaker/js/repo/apps.js' %}"></script>
+{% endcompress %}
+
+{% compress js file drag-and-drop %}
+<script type="text/javascript" src="{% static 'repomaker/js/drag-and-drop.js' %}"></script>
+{% endcompress %}
 
 {% include "repomaker/widgets/pagination.html" %}

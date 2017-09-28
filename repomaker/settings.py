@@ -67,6 +67,7 @@ DATABASES = {
 
 INSTALLED_APPS = [
     'repomaker.apps.RepoMakerConfig',
+    'compressor',
     'sass_processor',
     'background_task',
     'hvad',  # model i18n
@@ -224,13 +225,17 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'sass_processor.finders.CssFinder',
+    'compressor.finders.CompressorFinder',
 ]
 
 SASS_PROCESSOR_INCLUDE_DIRS = [
     NODE_MODULES_ROOT,
 ]
 
-TINYMCE_JS_URL = os.path.join(NODE_MODULES_URL, "tinymce/tinymce.js")
+COMPRESS_ENABLED = True
+COMPRESS_OUTPUT_DIR = 'compressed'
+
+TINYMCE_JS_URL = os.path.join(NODE_MODULES_URL, "tinymce/tinymce.min.js")
 TINYMCE_DEFAULT_CONFIG = {
     'theme': 'modern',
     'menubar': False,

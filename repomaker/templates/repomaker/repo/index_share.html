@@ -1,5 +1,7 @@
 {% load i18n %}
 {% load static %}
+{% load compress %}
+
 <div class="rm-repo-share-container">
 	<div class="rm-repo-share">
 		{% if not repo.last_publication_date %}
@@ -76,4 +78,6 @@
 		{% endif %}
 	</div>
 </div>
+{% compress js file share %}
 <script src="{% static 'repomaker/js/repo/share.js' %}"></script>
+{% endcompress %}

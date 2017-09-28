@@ -1,6 +1,7 @@
 {% extends "repomaker/app/index.html" %}
 {% load i18n %}
 {% load static %}
+{% load compress %}
 
 {% block back-button %}
 <a href="{% url 'add_app' repo.id %}" class="rm-toolbar-action-left">
@@ -54,6 +55,8 @@
 {% block apks %}{% endblock apks %}
 
 {% block page-footer %}
+{% compress js file remote_add %}
 <script src="{% static 'repomaker/js/app/add.js' %}"></script>
 <script src="{% static 'repomaker/js/app/remote_add.js' %}"></script>
+{% endcompress %}
 {% endblock page-footer %}

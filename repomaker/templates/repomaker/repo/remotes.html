@@ -1,6 +1,7 @@
 {% extends "repomaker/base_modal.html" %}
 {% load i18n %}
 {% load static %}
+{% load compress %}
 
 {% block title %}{% trans 'Browse Gallery' %}{% endblock %}
 
@@ -203,7 +204,14 @@
 
 {% include "repomaker/widgets/pagination.html" %}
 
+{% compress js file endless-app-scroll %}
 <script src="{% static 'repomaker/js/endless-app-scroll.js' %}"></script>
+{% endcompress %}
+
 <div id="rm-repo-id" data-id="{{ repo.id }}"></div>
+
+{% compress js file add %}
 <script src="{% static 'repomaker/js/app/add.js' %}"></script>
+{% endcompress %}
+
 {% endblock rm-content %}

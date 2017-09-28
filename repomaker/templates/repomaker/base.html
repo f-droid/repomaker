@@ -2,12 +2,15 @@
 {% load static %}
 {% load sass_tags %}
 {% load i18n %}
+{% load compress %}
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>Repo Maker - {% block title %}{% endblock %}</title>
+	{% compress css file styles %}
 	<link href="{% sass_src 'repomaker/css/styles.scss' %}" rel="stylesheet" type="text/css" media="all">
+	{% endcompress %}
 	<script src="{% url 'javascript-catalog' %}"></script>
 	<script src="{% url 'js_reverse' %}"></script>
 	{% block head %}{% endblock head %}
@@ -57,15 +60,19 @@
 		<div class="rm-content">{% block rm-content %}{% endblock %}</div>
 	</main>
 </div>
+{% compress js file material %}
 <script src="{% static 'node_modules/material-design-lite/material.min.js' %}"></script>
-{% if form %}
-{{ form.media }}
+{% endcompress %}
 
+{% if form %}
 <!--
 	This is due to a bug in MDL: https://github.com/google/material-design-lite/issues/1502
 	Remove when migrating to another library
 -->
+{% compress js file no-invalid-by-default %}
 <script src="{% static 'repomaker/js/no-invalid-by-default.js' %}"></script>
+{% endcompress %}
 {% endif %}
+
 </body>
 </html>

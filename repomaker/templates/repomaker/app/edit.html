@@ -1,11 +1,11 @@
 {% extends "repomaker/app/index.html" %}
 {% load i18n %}
 {% load static %}
+{% load compress %}
 
 {% block title %}{% blocktrans with app=app.name %}Edit {{ app }}{% endblocktrans %}{% endblock %}
 
 {% block back-button %}<div class="mdl-layout-spacer"></div>{% endblock back-button %}
-
 
 {% block top-buttons %}
 <!-- TODO: button to remove translation -->
@@ -204,7 +204,25 @@
 </form>
 <div id="rm-repo-id" data-id="{{ app.repo.id }}"></div>
 <div id="rm-app-id" data-id="{{ app.id }}"></div>
+
+{% compress css file dialog-polyfill %}
 <link rel="stylesheet" type="text/css" href="{% static 'node_modules/dialog-polyfill/dialog-polyfill.css' %}" />
+{% endcompress %}
+
+{% compress js file dialog-polyfill %}
 <script src="{% static 'node_modules/dialog-polyfill/dialog-polyfill.js' %}"></script>
-<script src="{% static 'repomaker/js/app/edit.js' %}"></script>
+{% endcompress %}
+
+<script type="text/javascript" src="/static/node_modules/tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="/static/django_tinymce/jquery-1.9.1.min.js"></script>
+
+{% compress js file edit %}
+<script type="text/javascript" src="{% static 'repomaker/js/app/edit.js' %}"></script>
+<script type="text/javascript" src="{% static 'repomaker/js/mdl-tinymce.js' %}"></script>
+{% endcompress %}
+
+{% compress js file drag-and-drop %}
+<script type="text/javascript" src="{% static 'repomaker/js/drag-and-drop.js' %}"></script>
+{% endcompress %}
+
 {% endblock page-footer %}

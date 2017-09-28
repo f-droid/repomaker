@@ -15,9 +15,6 @@ class ApkForm(BaseModelForm):
         model = Apk
         fields = ['apks']
 
-    class Media:
-        js = ('repomaker/js/drag-and-drop.js',)
-
 
 class ApkUploadView(ApkUploadMixin, UpdateView):
     object = None

@@ -39,10 +39,8 @@ class MDLTinyMCE(TinyMCE):
         return mce_config
 
     def _media(self):
-        media = super()._media()
-        media._js.remove('django_tinymce/init_tinymce.js')  # pylint: disable=protected-access
-        media._js.append('repomaker/js/mdl-tinymce.js')  # pylint: disable=protected-access
-        return media
+        # we include this manually, so we can decide what gets compressed and what not
+        return ()
 
     media = property(_media)
 
@@ -99,9 +97,6 @@ class AppForm(TranslatableModelForm):
         fields = ['summary', 'summary_override', 'description', 'description_override',
                   'author_name', 'website', 'category', 'screenshots', 'feature_graphic', 'apks']
         widgets = {'description': MDLTinyMCE(), 'description_override': MDLTinyMCE()}
-
-    class Media:
-        js = ('repomaker/js/drag-and-drop.js',)
 
 
 class AppEditView(ApkUploadMixin, LanguageMixin, TranslatableUpdateView):
