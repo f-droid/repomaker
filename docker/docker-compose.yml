@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+
+  web:
+    build: ..
+    command: bash -c './wait-for db:5432 -- python3 manage.py migrate --settings repomaker.settings_docker && python3 manage.py runserver 0.0.0.0:8000 --settings repomaker.settings_docker'
+    volumes:
+      - ./data:/repomaker/data
+    ports:
+      - "80:8000"
+    depends_on:
+      - db
+
+  tasks:
+    build: ..
+    command: bash -c './wait-for web:8000 -- python3 manage.py process_tasks --settings repomaker.settings_docker'
+    volumes:
+      - ./data:/repomaker/data
+    depends_on:
+      - db
+      - web
+
+# vim: set tabstop=2:softtabstop=2:shiftwidth=2
