@@ -132,16 +132,25 @@ class RemoteRepository(AbstractRepository):
 
             # update existing app or create a new one
             if self.pk and query_set.exists():
-                app_obj = query_set.get()
+                remote_app = query_set.get()
             else:
-                app_obj = RemoteApp(package_id=app['packageName'], repo=self)
+                remote_app = RemoteApp(package_id=app['packageName'], repo=self)
             package_names.append(app['packageName'])
-            changed = app_obj.update_from_json(app)  # this also saves the app_obj
+            changed = remote_app.update_from_json(app)  # this also saves the remote_app
 
-            if changed:
-                # update packages belonging to app
-                for package in packages[app['packageName']]:
-                    self._update_package(app_obj, package)
+            if not changed:  # TODO test what happens when only a package gets added
+                continue
+
+            # update packages belonging to app
+            for package in packages[app['packageName']]:
+                self._update_package(remote_app, package)
+
+            # update tracking apps and add latest package, if there are any
+            tracking_apps = remote_app.app_set.all()
+            if tracking_apps.count() > 0:
+                remote_pointer = remote_app.get_latest_apk_pointer()
+                for tracking_app in tracking_apps:
+                    tracking_app.update_from_tracked_remote_app(remote_pointer)
 
         # remove apps that no longer exist
         self._remove_old_apps(package_names)

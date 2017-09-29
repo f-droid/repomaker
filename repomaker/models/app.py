@@ -1,8 +1,7 @@
-import os
 from io import BytesIO
 
+import os
 from django.conf import settings
-from django.core.files.base import ContentFile
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
@@ -13,10 +12,10 @@ from django.utils.translation import ugettext_lazy as _, get_language
 from fdroidserver import metadata, net
 from hvad.models import TranslatableModel, TranslatedFields
 from hvad.utils import load_translation
+
 from repomaker.storage import get_icon_file_path_for_app, \
     get_graphic_asset_file_path
 from repomaker.utils import clean, to_universal_language_code
-
 from .category import Category
 from .repository import Repository
 
@@ -122,6 +121,8 @@ class App(AbstractApp):
     repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
     type = models.CharField(max_length=16, choices=TYPE_CHOICES, default=APK)
     last_updated_date = models.DateTimeField(auto_now=True)
+    tracked_remote = models.ForeignKey('RemoteApp', null=True, default=None,
+                                       on_delete=models.SET_NULL)
     translations = TranslatedFields(
         feature_graphic=models.ImageField(blank=True, max_length=1024,
                                           upload_to=get_graphic_asset_file_path),
@@ -152,23 +153,6 @@ class App(AbstractApp):
 
     def get_next(self):
         return self.get_next_by_added_date(repo=self.repo)
-
-    @staticmethod
-    def from_remote_app(repo, app):
-        """
-        Returns an App in :param repo from the given RemoteApp :param app.
-
-        Note that it does exclude the category. You need to add these after saving the app.
-        """
-        # TODO check how the icon extracted to repo/icons-640 could be used instead
-        icon = None
-        if app.icon:
-            icon = ContentFile(app.icon.read())
-            icon.name = os.path.basename(app.icon.name)
-        return App(repo=repo, package_id=app.package_id, name=app.name,
-                   summary_override=app.summary_override,
-                   description_override=clean(app.description_override), website=app.website,
-                   icon=icon, author_name=app.author_name)
 
     def to_metadata_app(self):
         meta = metadata.App()
@@ -221,22 +205,27 @@ class App(AbstractApp):
         return localized
 
     # pylint: disable=attribute-defined-outside-init
+    # noinspection PyAttributeOutsideInit
     def copy_translations_from_remote_app(self, remote_app):
         """
         Copies metadata translations from given RemoteApp
         and ensures that at least one translation exists at the end.
-
-        Attention: This requires that no translations exist so far.
         """
         from .remoteapp import RemoteApp
         for language_code in remote_app.get_available_languages():
             # get the translation for current language_code
             remote_app = RemoteApp.objects.language(language_code).get(pk=remote_app.pk)
             # copy the translation to this App instance
-            self.translate(language_code)
-            self.summary = remote_app.summary
-            self.description = clean(remote_app.description)
-            self.save()
+            if language_code in self.get_available_languages():
+                app = App.objects.language(language_code).get(pk=self.pk)
+                app.summary = remote_app.summary
+                app.description = clean(remote_app.description)
+                app.save()
+            else:
+                self.translate(language_code)
+                self.summary = remote_app.summary
+                self.description = clean(remote_app.description)
+                self.save()
         # ensure that at least one translation exists
         if len(self.get_available_languages()) == 0:
             self.default_translate()
@@ -279,6 +268,63 @@ class App(AbstractApp):
                     remote_app.tv_banner_etag = etag
             app.save()
             remote_app.save()
+
+    # noinspection PyTypeChecker
+    def update_from_tracked_remote_app(self, remote_apk_pointer):
+        """
+        Update all app information from the tracked remote app
+
+        :param remote_apk_pointer: the latest RemoteApkPointer of the app
+        """
+        if not self.tracked_remote:
+            raise RuntimeWarning("Trying to add an APK to an app that is not tracking a remote.")
+
+        self.name = self.tracked_remote.name
+        self.author_name = self.tracked_remote.author_name
+        self.website = self.tracked_remote.website
+        # the icon gets updated asynchronously later by the remote app
+
+        if not self.pk:
+            self.save()  # save before adding categories, so pk exists
+        self.category = self.tracked_remote.category.all()
+
+        self.copy_translations_from_remote_app(self.tracked_remote)
+
+        self.add_apk_from_tracked_remote_app(remote_apk_pointer)
+
+        self.save()
+
+    def add_apk_from_tracked_remote_app(self, remote_apk_pointer):
+        """
+        Add the latest APK to this app, if it does not already exist.
+        Creates an ApkPointer object as well and triggers an async download if necessary.
+
+        :param remote_apk_pointer: the latest RemoteApkPointer of the app
+        """
+        # bail out if we already have the latest APK
+        latest_apk = self.get_latest_version()
+        if latest_apk is not None and latest_apk == remote_apk_pointer.apk:
+            return
+
+        # create a local pointer to the APK
+        from .apk import ApkPointer
+        apk = remote_apk_pointer.apk
+        pointer = ApkPointer(apk=apk, repo=self.repo, app=self)
+        if apk.file:
+            pointer.link_file_from_apk()  # this also saves the pointer
+        else:
+            pointer.save()
+            # schedule APK file download if necessary, also updates all local pointers to that APK
+            apk.download_async(remote_apk_pointer.url)
+
+    def update_icon(self, icon):
+        """
+        Replace the old icon of this app with a new one
+
+        :param icon: The new icon as a File
+        """
+        self.delete_old_icon()
+        self.icon.save(icon.name, icon.file, save=True)
 
     def get_latest_version(self):
         from .apk import ApkPointer

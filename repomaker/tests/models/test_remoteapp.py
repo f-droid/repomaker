@@ -1,20 +1,23 @@
 import io
-import os
 from datetime import datetime, timezone
 from unittest.mock import patch
 
-import django.core.exceptions
+import os
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+
 from repomaker.models import Repository, RemoteRepository, App, RemoteApp, Apk, ApkPointer, \
     RemoteApkPointer, RemoteScreenshot
 from repomaker.models.screenshot import PHONE
 from repomaker.storage import get_icon_file_path_for_app
-
 from .. import datetime_is_recent, RmTestCase
 
 
+# noinspection PyProtectedMember
 class RemoteAppTestCase(RmTestCase):
+    repo = None
+    app = None
 
     def setUp(self):
         date = datetime.fromtimestamp(1337, timezone.utc)
@@ -74,12 +77,16 @@ class RemoteAppTestCase(RmTestCase):
         self.assertEqual('bar', self.app.description_override)  # <script> tag was removed
 
     @patch('fdroidserver.net.http_get')
-    def test_update_icon(self, http_get):
+    @patch('repomaker.models.app.App.update_icon')
+    def test_update_icon(self, update_icon, http_get):
         # set initial etag and icon for app
         self.app.icon_etag = 'etag'
         self.app.icon.save('test.png', io.BytesIO(b'foo'))
         old_icon_path = self.app.icon.path
         self.assertTrue(os.path.isfile(old_icon_path))
+
+        # create one local app tracking the remote one
+        App.objects.create(repo_id=1, package_id=self.app.package_id, tracked_remote=self.app)
 
         # update icon
         http_get.return_value = b'icon-data', 'new_etag'
@@ -97,6 +104,9 @@ class RemoteAppTestCase(RmTestCase):
 
         # assert that new etag was saved
         self.assertEqual('new_etag', self.app.icon_etag)
+
+        # assert that local app icons have been updated
+        update_icon.called_once_with(self.app.icon)
 
     def test_update_translations_new(self):
         # update remote app translation with a new one
@@ -233,5 +243,5 @@ class RemoteAppTestCase(RmTestCase):
         repo = Repository.objects.create(name='test', user=User.objects.create(username='user2'))
 
         # try to add remote app without any APKs to local repo
-        with self.assertRaises(django.core.exceptions.ValidationError):
+        with self.assertRaises(ValidationError):
             self.app.add_to_repo(repo)

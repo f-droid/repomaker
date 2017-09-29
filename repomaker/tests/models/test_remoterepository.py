@@ -1,29 +1,33 @@
-import os
 from datetime import datetime, timezone
 from unittest.mock import Mock, patch
 
 import background_task
+import os
 import requests
 from background_task.tasks import Task
 from django.conf import settings
 from django.contrib.auth.models import User
-from repomaker.models import App, RemoteApp, Repository, \
+from requests.exceptions import HTTPError
+
+from repomaker.models import App, Apk, ApkPointer, RemoteApkPointer, RemoteApp, Repository, \
     RemoteRepository
 from repomaker.models.repository import AbstractRepository
 from repomaker.storage import get_remote_repo_path
 from repomaker.tasks import PRIORITY_REMOTE_REPO
-from requests.exceptions import HTTPError
-
 from .. import RmTestCase
 
 
+# noinspection PyProtectedMember
 class RemoteRepositoryTestCase(RmTestCase):
+    remote_repo = None
 
     def setUp(self):
-        self.repo = RemoteRepository.objects.get(pk=1)
+        super().setUp()
+        self.remote_repo = RemoteRepository.objects.get(pk=1)
 
     def test_get_path(self):
-        self.assertEqual(os.path.join(settings.MEDIA_ROOT, 'remote_repo_1'), self.repo.get_path())
+        self.assertEqual(os.path.join(settings.MEDIA_ROOT, 'remote_repo_1'),
+                         self.remote_repo.get_path())
         with self.assertRaises(NotImplementedError):
             AbstractRepository().get_repo_path()
 
@@ -41,12 +45,12 @@ class RemoteRepositoryTestCase(RmTestCase):
         """
         Makes sure that the asynchronous update starts a background task.
         """
-        self.repo.update_scheduled = False
+        self.remote_repo.update_scheduled = False
 
-        self.repo.update_async()
-        update_remote_repo.assert_called_once_with(self.repo.id, repeat=Task.DAILY,
+        self.remote_repo.update_async()
+        update_remote_repo.assert_called_once_with(self.remote_repo.id, repeat=Task.DAILY,
                                                    priority=PRIORITY_REMOTE_REPO)
-        self.assertTrue(self.repo.update_scheduled)
+        self.assertTrue(self.remote_repo.update_scheduled)
 
     @patch('repomaker.tasks.update_remote_repo')
     def test_update_async_not_called_when_update_scheduled(self, update_remote_repo):
@@ -54,8 +58,8 @@ class RemoteRepositoryTestCase(RmTestCase):
         Makes sure that the asynchronous update does not start another background task
         when another one is scheduled already.
         """
-        self.repo.update_scheduled = True
-        self.repo.update_async()
+        self.remote_repo.update_scheduled = True
+        self.remote_repo.update_async()
         self.assertFalse(update_remote_repo.called)
 
     @patch('repomaker.models.remoterepository.RemoteRepository._update_apps')
@@ -67,10 +71,11 @@ class RemoteRepositoryTestCase(RmTestCase):
         download_repo_index.return_value = {
             'repo': {'name': 'Test Name', 'timestamp': 0}
         }, 'etag'
-        self.repo.last_change_date = datetime.now(tz=timezone.utc)
-        self.repo.update_index(update_apps=True)
-        download_repo_index.assert_called_once_with(self.repo.get_fingerprint_url(), etag=None)
-        self.assertNotEqual('Test Name', self.repo.name)
+        self.remote_repo.last_change_date = datetime.now(tz=timezone.utc)
+        self.remote_repo.update_index(update_apps=True)
+        download_repo_index.assert_called_once_with(self.remote_repo.get_fingerprint_url(),
+                                                    etag=None)
+        self.assertNotEqual('Test Name', self.remote_repo.name)
         self.assertFalse(_update_apps.called)
 
     @patch('repomaker.models.remoterepository.RemoteRepository._update_apps')
@@ -80,8 +85,9 @@ class RemoteRepositoryTestCase(RmTestCase):
         Test that a remote repository is only updated when the index changed since last time.
         """
         download_repo_index.return_value = None, 'etag'
-        self.repo.update_index(update_apps=True)
-        download_repo_index.assert_called_once_with(self.repo.get_fingerprint_url(), etag=None)
+        self.remote_repo.update_index(update_apps=True)
+        download_repo_index.assert_called_once_with(self.remote_repo.get_fingerprint_url(),
+                                                    etag=None)
         self.assertFalse(_update_apps.called)
 
     @patch('requests.get')
@@ -111,7 +117,7 @@ class RemoteRepositoryTestCase(RmTestCase):
         get.return_value.content = b'foo'
 
         # update index and ensure it would have been downloaded
-        repo = self.repo
+        repo = self.remote_repo
         repo.update_index(update_apps=True)
         download_repo_index.assert_called_once_with(repo.get_fingerprint_url(), etag=None)
 
@@ -156,12 +162,13 @@ class RemoteRepositoryTestCase(RmTestCase):
         update_from_json.side_effect = HTTPError(Mock(status=502))
 
         with self.assertRaises(HTTPError):
-            self.repo.update_index(update_apps=True)
-        download_repo_index.assert_called_once_with(self.repo.get_fingerprint_url(), etag=None)
+            self.remote_repo.update_index(update_apps=True)
+        download_repo_index.assert_called_once_with(self.remote_repo.get_fingerprint_url(),
+                                                    etag=None)
 
         update_from_json.assert_called_once_with(index['apps'][0])
-        self.assertEqual(datetime.fromtimestamp(0, timezone.utc), self.repo.last_change_date)
-        self.assertIsNone(self.repo.index_etag)
+        self.assertEqual(datetime.fromtimestamp(0, timezone.utc), self.remote_repo.last_change_date)
+        self.assertIsNone(self.remote_repo.index_etag)
 
     @patch('fdroidserver.net.http_get')
     def test_update_icon_without_pk(self, http_get):
@@ -181,7 +188,7 @@ class RemoteRepositoryTestCase(RmTestCase):
     @patch('fdroidserver.index.download_repo_index')
     def test_fail(self, download_repo_index):
         # assert that pre-installed remote repository is initially enabled
-        self.assertFalse(self.repo.disabled)
+        self.assertFalse(self.remote_repo.disabled)
 
         # get initial update task from pre-installed remote repository
         all_tasks = Task.objects.all()
@@ -198,16 +205,114 @@ class RemoteRepositoryTestCase(RmTestCase):
         self.assertEqual(1, download_repo_index.call_count)
 
         # ensure that remote repository got disabled
-        self.repo = RemoteRepository.objects.get(pk=1)
-        self.assertTrue(self.repo.disabled)
+        self.remote_repo = RemoteRepository.objects.get(pk=1)
+        self.assertTrue(self.remote_repo.disabled)
+
+    def test_update_apps(self):
+        # update apps from fake index, should insert one remote app
+        self.assertEqual(0, RemoteApp.objects.all().count())
+        apps = [
+            {'packageName': 'org.example',
+             'name': 'Test App',
+             'summary': 'Summary',
+             'description': 'Test Description',
+             'lastUpdated': datetime.utcnow().timestamp() * 1000,
+             }
+        ]
+        packages = {
+            'org.example': [{
+                'packageName': 'org.example',
+                'apkName': 'org.example.1.apk',
+                'hash': 'testhash1',
+                'hashType': 'sha256',
+                'versionCode': 1,
+                'versionName': '0.1',
+                'size': 42,
+            }]
+        }
+        self.remote_repo._update_apps(apps, packages)  # pylint: disable=protected-access
+
+        # assert that remote app was imported correctly
+        self.assertEqual(1, RemoteApp.objects.all().count())
+        remote_app = RemoteApp.objects.get()
+        self.assertEqual(1, len(remote_app.get_available_languages()))
+        self.assertEqual(apps[0]['packageName'], remote_app.package_id)
+        self.assertEqual(apps[0]['name'], remote_app.name)
+        self.assertEqual('Test Description', remote_app.description)
+
+        # create an App that is tracking the RemoteApp
+        app = remote_app.add_to_repo(self.repo)
+        self.assertEqual(remote_app, app.tracked_remote)
+        self.assertEqual(1, ApkPointer.objects.all().count())
+
+        # add a new package to the index
+        packages['org.example'].append({
+            'packageName': 'org.example',
+            'apkName': 'org.example.42.apk',
+            'hash': 'testhash2',
+            'hashType': 'sha256',
+            'versionCode': 42,
+            'versionName': '1.0',
+            'size': 1337,
+        })
+
+        # remove old tasks before next update
+        Task.objects.all().delete()
+
+        # update apps again with the new package (and updated app)
+        del apps[0]['localized']
+        apps[0]['name'] += ' New'
+        apps[0]['summary'] = 'New Summary'
+        apps[0]['description'] = 'New Description'
+        apps[0]['authorName'] = 'Author'
+        apps[0]['webSite'] = 'https://example.org'
+        apps[0]['lastUpdated'] += 1
+        self.remote_repo._update_apps(apps, packages)  # pylint: disable=protected-access
+
+        # assert that the package was properly imported as an Apk
+        self.assertEqual(2, Apk.objects.all().count())
+        apk = Apk.objects.get(pk=2)
+        self.assertEqual('org.example', apk.package_id)
+        self.assertEqual('testhash2', apk.hash)
+        self.assertEqual('sha256', apk.hash_type)
+
+        # assert that a RemoteApkPointer is pointing properly to that Apk
+        self.assertEqual(2, RemoteApkPointer.objects.all().count())
+        remote_apk_pointer = RemoteApkPointer.objects.get(pk=2)
+        self.assertEqual(apk, remote_apk_pointer.apk)
+        self.assertEqual(remote_app, remote_apk_pointer.app)
+        self.assertEqual(self.remote_repo.url + '/org.example.42.apk', remote_apk_pointer.url)
+
+        # assert that a ApkPointer is pointing properly to that Apk
+        self.assertEqual(2, ApkPointer.objects.all().count())
+        apk_pointer = ApkPointer.objects.get(pk=2)
+        self.assertEqual(apk, apk_pointer.apk)
+        self.assertEqual(app, apk_pointer.app)
+        self.assertEqual(app.repo, apk_pointer.repo)
+
+        # assert that the Apk is scheduled to be downloaded, so it can be added to the App
+        self.assertEqual(1, Task.objects.all().count())
+        task = Task.objects.get()
+        self.assertEqual('repomaker.tasks.download_apk', task.task_name)
+        self.assertJSONEqual(
+            '[[' + str(apk_pointer.apk.pk) + ', "' + remote_apk_pointer.url + '"], {}]',
+            task.task_params)
+
+        # assert that the app metadata was updated as well
+        app = App.objects.get(pk=app.pk)
+        self.assertEqual(apps[0]['name'], app.name)
+        self.assertEqual('New Summary', app.summary)
+        self.assertEqual('New Description', app.description)
+        self.assertEqual(apps[0]['authorName'], app.author_name)
+        self.assertEqual(apps[0]['webSite'], app.website)
 
     def test_remove_old_apps(self):
-        RemoteApp.objects.create(repo=self.repo, package_id="delete",
-                                 last_updated_date=self.repo.last_updated_date)
-        RemoteApp.objects.create(repo=self.repo, package_id="do not delete",
-                                 last_updated_date=self.repo.last_updated_date)
+        RemoteApp.objects.create(repo=self.remote_repo, package_id="delete",
+                                 last_updated_date=self.remote_repo.last_updated_date)
+        RemoteApp.objects.create(repo=self.remote_repo, package_id="do not delete",
+                                 last_updated_date=self.remote_repo.last_updated_date)
         packages = ["do not delete"]
-        self.repo._remove_old_apps(packages)  # pylint: disable=protected-access
+        self.remote_repo._remove_old_apps(packages)  # pylint: disable=protected-access
 
         # assert that only the expected app was deleted
         self.assertEqual(1, RemoteApp.objects.count())
@@ -217,13 +322,13 @@ class RemoteRepositoryTestCase(RmTestCase):
         """
         Tests that we do not run into sqlite3.OperationalError: too many SQL variables
         """
-        RemoteApp.objects.create(repo=self.repo, package_id="delete",
-                                 last_updated_date=self.repo.last_updated_date)
+        RemoteApp.objects.create(repo=self.remote_repo, package_id="delete",
+                                 last_updated_date=self.remote_repo.last_updated_date)
         # add lots of fake packages
         packages = []
         for i in range(1, 3000):
             packages.append(str(i))
-        self.repo._remove_old_apps(packages)  # pylint: disable=protected-access
+        self.remote_repo._remove_old_apps(packages)  # pylint: disable=protected-access
 
         # assert that all remote apps could be deleted
         self.assertFalse(RemoteApp.objects.exists())
@@ -231,8 +336,8 @@ class RemoteRepositoryTestCase(RmTestCase):
     def test_is_in_repo(self):
         repo = Repository.objects.create(user=User.objects.create_user('user2'))
         app = App.objects.create(repo=repo, package_id="org.example")
-        remote_app = RemoteApp.objects.create(repo=self.repo, package_id="org.example",
-                                              last_updated_date=self.repo.last_updated_date)
+        remote_app = RemoteApp.objects.create(repo=self.remote_repo, package_id="org.example",
+                                              last_updated_date=self.remote_repo.last_updated_date)
         self.assertTrue(remote_app.is_in_repo(repo))
 
         app.package_id = "different"

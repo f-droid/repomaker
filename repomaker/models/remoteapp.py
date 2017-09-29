@@ -11,10 +11,10 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from fdroidserver import net
 from hvad.models import TranslatedFields
+
 from repomaker import tasks
 from repomaker.tasks import PRIORITY_REMOTE_APP_ICON
 from repomaker.utils import clean
-
 from .app import AbstractApp
 from .category import Category
 from .remoterepository import RemoteRepository
@@ -118,6 +118,10 @@ class RemoteApp(AbstractApp):
         self.icon_etag = etag
         self.icon.save(icon_name, BytesIO(icon), save=True)
 
+        # update icons of all local apps tracking this one
+        for tracking_app in self.app_set.all():
+            tracking_app.update_icon(self.icon)
+
     def _update_categories(self, categories):
         if not self.pk:
             # we need to save before we can use a ManyToManyField
@@ -151,6 +155,7 @@ class RemoteApp(AbstractApp):
                 self.apply_translation(original_language_code, translation)
 
     # pylint: disable=attribute-defined-outside-init
+    # noinspection PyAttributeOutsideInit
     def apply_translation(self, original_language_code, translation):
         # textual metadata
         if 'summary' in translation:
@@ -214,7 +219,6 @@ class RemoteApp(AbstractApp):
         :return: The added App object
         """
         from .app import App
-        from .apk import ApkPointer
         from .screenshot import RemoteScreenshot
         if self.is_in_repo(repo):
             raise ValidationError(_("This app does already exist in your repository."))
@@ -223,23 +227,14 @@ class RemoteApp(AbstractApp):
         remote_pointer = self.get_latest_apk_pointer()
         if remote_pointer is None:
             raise ValidationError(_("This app does not have any working versions available."))
-        apk = remote_pointer.apk
 
-        # add app
-        app = App.from_remote_app(repo, self)
-        app.copy_translations_from_remote_app(self)
-        app.save()
-        app.category = self.category.all()
-        app.save()
+        # create new local app and update its information from remote app
+        app = App(repo=repo, package_id=self.package_id, tracked_remote=self)
+        app.update_from_tracked_remote_app(remote_pointer)
 
-        # create a local pointer to the APK
-        pointer = ApkPointer(apk=apk, repo=repo, app=app)
-        if apk.file:
-            pointer.link_file_from_apk()  # this also saves the pointer
-        else:
-            pointer.save()
-            # schedule APK file download if necessary, also updates all local pointers to that APK
-            apk.download_async(remote_pointer.url)
+        # since this is the initial import, also add the app icon
+        if self.icon:
+            app.update_icon(self.icon)
 
         # schedule download of remote graphic assets
         tasks.download_remote_graphic_assets(app.id, self.id)

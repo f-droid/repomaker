@@ -1,14 +1,13 @@
 import datetime
-import os
 import shutil
 from shutil import copyfile
 
-import django.templatetags.static
-import repomaker.models.repository
+import os
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase
 from fdroidserver import update
+
 from repomaker import DEFAULT_USER_NAME
 from repomaker.models import Repository
 
