@@ -401,6 +401,16 @@ select#id_category {
     }
 }
 
+.rm-app-automatically-updated {
+    color: grey;
+    font-style: italic;
+}
+
+.rm-app-edit-disabled {
+    background-color: lightyellow;
+    text-align: center;
+}
+
 /*
  * Loading
  */

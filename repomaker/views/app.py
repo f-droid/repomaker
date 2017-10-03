@@ -1,7 +1,7 @@
 import logging
-import os
 import re
 
+import os
 from django.conf import settings
 from django.db.models import Q
 from django.forms import FileField, ImageField, ClearableFileInput, CharField
@@ -122,6 +122,9 @@ class AppEditView(ApkUploadMixin, LanguageMixin, TranslatableUpdateView):
                                                            type=PHONE,
                                                            language_code=self.get_language())
         context['apks'] = ApkPointer.objects.filter(app=self.object).order_by('-apk__version_code')
+        if self.get_object().tracked_remote:
+            # do not allow edits as long as a remote app is tracked
+            self.template_name = 'repomaker/app/edit_blocked.html'
         return context
 
     def post(self, request, *args, **kwargs):
@@ -193,11 +196,16 @@ class AppEditView(ApkUploadMixin, LanguageMixin, TranslatableUpdateView):
         return super().post(request, *args, **kwargs)
 
     def form_valid(self, form):
-        result = super().form_valid(form)  # this saves the App
-
-        self.add_screenshots()
-        form.instance.repo.update_async()  # schedule repository update
-        return result
+        if 'disable-app-tracking' in form.data:
+            app = self.get_object()
+            app.tracked_remote = None
+            app.save()
+            return HttpResponseRedirect(app.get_edit_url())
+        else:
+            result = super().form_valid(form)  # this saves the App
+            self.add_screenshots()
+            form.instance.repo.update_async()  # schedule repository update
+            return result
 
     def add_screenshots(self):
         """

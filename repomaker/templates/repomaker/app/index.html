@@ -100,6 +100,18 @@
 	</div>
 </div>
 
+{% block app-info %}
+{% if app.tracked_remote %}
+<div class="rm-grid--center mdl-grid">
+	<div class="rm-app-automatically-updated mdl-cell mdl-cell--6-col">
+		{% blocktrans with repo_name=app.tracked_remote.repo.name trimmed %}
+		This app gets automatically updated from the remote repo "{{ repo_name }}".
+		{% endblocktrans %}
+	</div>
+</div>
+{% endif %}
+{% endblock app-info %}
+
 <div class="rm-grid--center mdl-grid">
 	<div class="rm-app-description mdl-cell mdl-cell--6-col">
 		{% block description %}

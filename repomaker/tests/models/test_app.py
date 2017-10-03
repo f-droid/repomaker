@@ -239,7 +239,6 @@ class AppTestCase(RmTestCase):
 
         # assert that ApkPointer has been created properly
         self.assertEqual(1, ApkPointer.objects.all().count())
-        self.assertEqual(1, ApkPointer.objects.all().count())
         apk_pointer = ApkPointer.objects.get()
         self.assertEqual(apk, apk_pointer.apk)
         self.assertEqual(self.app.repo, apk_pointer.repo)

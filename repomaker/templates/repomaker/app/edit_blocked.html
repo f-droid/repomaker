@@ -1,0 +1,45 @@
+{% extends "repomaker/app/index.html" %}
+{% load i18n %}
+{% load static %}
+{% load compress %}
+
+{% block title %}{% blocktrans with app=app.name %}Edit {{ app }}{% endblocktrans %}{% endblock %}
+
+{% block back-button %}<div class="mdl-layout-spacer"></div>{% endblock back-button %}
+
+{% block top-buttons %}
+<a href="{% url 'delete_app' app.repo.id app.id %}" class="rm-no-underline">
+	<button type="button" class="rm-button--red-border mdl-button mdl-js-button">
+		{% trans 'Remove App' %}
+	</button>
+</a>
+<a href="{% url 'app' app.repo.id app.id %}" class="rm-no-underline">
+	<button type="button" class="rm-button mdl-button mdl-js-button">
+		{% trans 'Back' %}
+	</button>
+</a>
+{% endblock top-buttons %}
+
+{% block app-lang-url %}{% url 'app_edit' app.repo.id app.id lang.code %}{% endblock app-lang-url %}
+
+{% block app-info %}
+	<div class="rm-grid--center mdl-grid rm-app-edit-disabled">
+		<div class="mdl-cell mdl-cell--6-col">
+			<h3>{% trans 'Editing Disabled' %}</h3>
+			<p>
+			{% blocktrans trimmed %}
+			This app gets updated automatically from the remote repo.
+			If you want to edit it yourself, you need to disable automatic updates first.
+			Please note that without automatic updates, you will need to add new versions manually.
+			{% endblocktrans %}
+			</p>
+			<form action="" enctype="multipart/form-data" method="post">
+				{% csrf_token %}
+				<input type="hidden" name="disable-app-tracking" value="true"/>
+				<button type="submit" class="rm-button--red mdl-button mdl-js-button">
+					{% trans 'Disable Automatic Updates' %}
+				</button>
+			</form>
+		</div>
+	</div>
+{% endblock app-info %}

@@ -1,16 +1,18 @@
 import io
-import os
 
+import os
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.urls import reverse
-from repomaker import DEFAULT_USER_NAME
-from repomaker.models import App, Apk, ApkPointer, Repository, Screenshot
 
+from repomaker import DEFAULT_USER_NAME
+from repomaker.models import App, Apk, ApkPointer, Repository, Screenshot, RemoteRepository, \
+    RemoteApp
 from .. import RmTestCase
 
 
 class AppViewTestCase(RmTestCase):
+    app = None
 
     def setUp(self):
         super().setUp()
@@ -125,6 +127,35 @@ class AppViewTestCase(RmTestCase):
         self.assertContains(response, app2.get_previous().get_edit_url())
         with self.assertRaises(App.DoesNotExist):
             app2.get_next()
+
+    def test_app_edit_remove_tracking(self):
+        # make the local app track a remote one
+        remote_repo = RemoteRepository.objects.get(pk=1)
+        remote_app = RemoteApp.objects.create(repo=remote_repo,
+                                              package_id='org.bitbucket.tickytacky.mirrormirror',
+                                              last_updated_date=remote_repo.last_updated_date)
+        self.app.tracked_remote = remote_app
+        self.app.save()
+
+        # try editing the app and find out that is is disabled due to app tracking
+        response = self.client.get(self.app.get_edit_url())
+        self.assertContains(response, 'Editing Disabled')
+        self.assertContains(response, 'disable-app-tracking')
+        self.assertNotContains(response, response.context['form']['summary'])
+
+        # remove the app tracking, so editing will be enabled
+        response = self.client.post(self.app.get_edit_url(), {'disable-app-tracking': 'true'})
+        self.assertRedirects(response, self.app.get_edit_url())
+
+        # update app from database and ensure it is no longer tracking the remote app
+        self.app = App.objects.get(pk=self.app.pk)
+        self.assertIsNone(self.app.tracked_remote)
+
+        # try editing the app again and ensure that it is now working
+        response = self.client.get(self.app.get_edit_url())
+        self.assertNotContains(response, 'Editing Disabled')
+        self.assertNotContains(response, 'disable-app-tracking')
+        self.assertContains(response, response.context['form']['summary'])
 
     def test_upload_apk_and_update(self):
         self.assertEqual(1, App.objects.all().count())
