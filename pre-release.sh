@@ -20,7 +20,7 @@ rm -rf ${NODE}/material-design-icons-iconfont/!(dist)
 rm -rf ${NODE}/material-design-icons-iconfont/.idea
 
 # material-design-lite remove unused files
-rm -rf ${NODE}/material-design-lite/!(dist|src|material.min.js)
+rm -rf ${NODE}/material-design-lite/!(dist|src|material*.js)
 rm -rf ${NODE}/material-design-lite/dist/!(images)
 rm -rf ${NODE}/material-design-lite/.[tj]*
 
@@ -29,7 +29,7 @@ rm -rf ${NODE}/roboto-fontface/!(css|fonts)
 rm -rf ${NODE}/roboto-fontface/.npmignore
 
 # tinymce remove unused files
-rm -rf ${NODE}/tinymce/!(plugins|skins|themes|tinymce.min.js|tinymce.js)
+rm -rf ${NODE}/tinymce/!(plugins|skins|themes|tinymce*.js)
 rm -rf ${NODE}/tinymce/themes/!(modern)
 rm -rf ${NODE}/tinymce/plugins/!(autolink|link|lists)
 
