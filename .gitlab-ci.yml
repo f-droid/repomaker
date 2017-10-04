@@ -24,3 +24,19 @@ units:
 
   script:
     - ./tests/test-units.sh
+
+docker:
+  image: docker:git
+  services:
+    - docker:dind
+  variables:
+    IMAGE: registry.gitlab.com/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}:latest
+
+  before_script:
+    - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} registry.gitlab.com
+  script:
+    - docker build -t $IMAGE .
+    - docker push $IMAGE
+
+  only:
+    - master

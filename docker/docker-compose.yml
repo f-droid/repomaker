@@ -7,7 +7,7 @@ services:
       - ./pgdata:/var/lib/postgresql/data
 
   web:
-    build: ..
+    image: registry.gitlab.com/fdroid/repomaker:latest
     command: bash -c './wait-for db:5432 -- python3 manage.py migrate --settings repomaker.settings_docker && python3 manage.py runserver 0.0.0.0:8000 --settings repomaker.settings_docker'
     volumes:
       - ./data:/repomaker/data
@@ -17,7 +17,7 @@ services:
       - db
 
   tasks:
-    build: ..
+    image: registry.gitlab.com/fdroid/repomaker:latest
     command: bash -c './wait-for web:8000 -- python3 manage.py process_tasks --settings repomaker.settings_docker'
     volumes:
       - ./data:/repomaker/data
