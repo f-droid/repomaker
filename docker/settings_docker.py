@@ -14,6 +14,11 @@ DATABASES = {
 
 SINGLE_USER_MODE = False
 
+# TODO
+ALLOWED_HOSTS = ['*']
+#SECRET_KEY = ''
+DEBUG = False
+
 LOGIN_REDIRECT_URL = "/"
 # http://django-allauth.readthedocs.io/en/latest/installation.html
 INSTALLED_APPS += [

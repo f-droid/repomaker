@@ -8,17 +8,17 @@ services:
 
   web:
     image: registry.gitlab.com/fdroid/repomaker:latest
-    command: bash -c './wait-for db:5432 -- python3 manage.py migrate --settings repomaker.settings_docker && python3 manage.py runserver 0.0.0.0:8000 --settings repomaker.settings_docker'
+    command: bash -c './wait-for db:5432 -- python3 manage.py migrate --settings repomaker.settings_docker && ./httpd-foreground'
     volumes:
       - ./data:/repomaker/data
     ports:
-      - "80:8000"
+      - "80:80"
     depends_on:
       - db
 
   tasks:
     image: registry.gitlab.com/fdroid/repomaker:latest
-    command: bash -c './wait-for web:8000 -- python3 manage.py process_tasks --settings repomaker.settings_docker'
+    command: su - www-data -s /bin/bash -c bash -c './wait-for web:80 -- python3 manage.py process_tasks --settings repomaker.settings_docker'
     volumes:
       - ./data:/repomaker/data
     depends_on:

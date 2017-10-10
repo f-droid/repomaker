@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+# Apache gets grumpy about PID files pre-existing
+rm -f /var/run/apache2/apache2.pid
+
+# Make sure log directory exists and has proper permissions
+chown www-data /repomaker/data
+mkdir -p /repomaker/data/logs
+chown www-data /repomaker/data/logs
+
+exec apache2ctl -DFOREGROUND
