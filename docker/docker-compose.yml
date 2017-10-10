@@ -18,7 +18,7 @@ services:
 
   tasks:
     image: registry.gitlab.com/fdroid/repomaker:latest
-    command: su - www-data -s /bin/bash -c bash -c './wait-for web:80 -- python3 manage.py process_tasks --settings repomaker.settings_docker'
+    command: bash -c './wait-for web:80 -- su - www-data -p -s /bin/bash -c "cd /repomaker && python3 manage.py process_tasks"'
     volumes:
       - ./data:/repomaker/data
     depends_on:
