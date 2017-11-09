@@ -33,6 +33,10 @@ On Debian, you can simply run this:
 
 Then run `npm install` to install these dependencies.
 
+## Translation
+
+* GNU gettext `apt install gettext`
+
 # License
 
 This program is free software: you can redistribute it and/or modify it
@@ -47,21 +51,13 @@ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 See the GNU Affero General Public License for more details.
 
 
-## Translation
+# Translating
 
 Everything can be translated.  See
 [Translation and Localization](https://f-droid.org/docs/Translation_and_Localization)
 for more info.
 
-* GNU gettext `apt install gettext`
-
-# Translating
-
-To update translations,
-run `./update-translations.sh`.
-
-To add a new translation,
-run `python3 manage.py makemessages -l <lg>`
-where `<lg>` is the language code, e.g. `de`.
+* To update translations, run `./update-translations.sh`.
+* To add a new translation, run `python3 manage.py makemessages -l <lg>` where `<lg>` is the language code, e.g. `de`.
 
 [![translation status](https://hosted.weblate.org/widgets/f-droid/-/repomaker/multi-auto.svg)](https://hosted.weblate.org/engage/f-droid/?utm_source=widget)
