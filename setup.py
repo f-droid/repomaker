@@ -5,7 +5,7 @@ from repomaker import VERSION
 
 DATA_PREFIX = os.path.join('share', 'repomaker')
 
-packages = find_packages(exclude=['*.tests*'])
+packages = find_packages()
 print("Packages: %s" % str(packages))
 
 setup(
@@ -14,8 +14,7 @@ setup(
     packages=packages + ['repomaker-static'],
     description='Create F-Droid repositories with ease',
     license='AGPL-3.0',
-    # TODO Repomaker Website https://gitlab.com/fdroid/fdroid-website/issues/70
-    url='https://gitlab.com/fdroid/repomaker',
+    url='https://f-droid.org/repomaker/',
     python_requires='>=3',
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's
