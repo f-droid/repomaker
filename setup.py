@@ -21,7 +21,7 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
-        'django',
+        'django<2.0',
         'django-allauth',
         'django-tinymce',
         'django-js-reverse',
