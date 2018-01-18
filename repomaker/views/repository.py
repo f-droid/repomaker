@@ -119,13 +119,15 @@ class RepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
         form.instance.user = self.request.user
         result = super(RepositoryCreateView, self).form_valid(form)  # saves new repo
 
-        # set main repo URL to that of first default storage, if any exists
-        storage = StorageManager.get_default_storage(form.instance)
-        if len(storage) > 0:
-            form.instance.url = storage[0].get_repo_url()
-
         try:
-            form.instance.create()  # generate repo, QR Code, etc. on disk
+            # generate repo, QR Code, etc. on disk
+            form.instance.create()
+
+            # set main repo URL to that of first default storage, if any exists
+            storage = StorageManager.get_default_storage(form.instance)
+            if len(storage) > 0:
+                form.instance.url = storage[0].get_repo_url()  # requires repo fingerprint to exist
+                form.instance.save()
         except Exception as e:
             logging.error('Creating repo failed: %s', e)
             form.instance.delete()

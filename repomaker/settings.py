@@ -26,6 +26,7 @@ SINGLE_USER_MODE = True
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: change this secret key and keep it secret!
+# Changing this in production invalidates all default repo URLs
 SECRET_KEY = '913d6#u8@-*#3l)spwzurd#fd77bey-6mfs5fc$a=yhnh!n4p9'
 
 # SECURITY WARNING: don't run with debug turned on in production!

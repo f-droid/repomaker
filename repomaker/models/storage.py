@@ -1,8 +1,11 @@
+import base64
+import hashlib
+import hmac
 import logging
-import os
 import re
 from itertools import chain
 
+import os
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -17,7 +20,7 @@ from django.utils.translation import ugettext_lazy as _
 from fdroidserver import server
 from libcloud.storage.types import Provider
 
-from repomaker.storage import get_identity_file_path, PrivateStorage, REPO_DIR, get_repo_root_path
+from repomaker.storage import get_identity_file_path, PrivateStorage, REPO_DIR
 from .repository import Repository
 
 UL = '\u00a1-\uffff'  # unicode letters range (must be a unicode string, not a raw string)
@@ -317,6 +320,16 @@ class DefaultStorage:
     def get_name():
         return _('Default Storage')
 
+    def get_identifier(self):
+        if not self.repo.fingerprint or not settings.SECRET_KEY:
+            raise AssertionError("Repo has no fingerprint or SECRET_KEY missing")
+        identifier_bytes = hmac.new(
+            settings.SECRET_KEY.encode(),
+            ('repo_fingerprint' + self.repo.fingerprint).encode(),
+            hashlib.sha256
+        ).digest()
+        return base64.urlsafe_b64encode(identifier_bytes).decode('utf-8')[:32]
+
     def get_url(self):
         return self.url
 
@@ -325,13 +338,13 @@ class DefaultStorage:
         if url.startswith('/'):
             current_site = Site.objects.get_current()
             url = 'https://' + current_site.domain + url
-        return url + get_repo_root_path(self.repo) + "/" + REPO_DIR
+        return url + self.get_identifier() + "/" + REPO_DIR
 
     def publish(self):
         logging.info("Publishing '%s' to %s", self.repo, self)
         self.repo.get_config()
         local = self.repo.get_repo_path()
-        remote = os.path.join(self.path, get_repo_root_path(self.repo))
+        remote = os.path.join(self.path, self.get_identifier())
         if not os.path.exists(remote):
             os.makedirs(remote)
         server.update_serverwebroot(remote, local)

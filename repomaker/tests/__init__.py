@@ -47,6 +47,7 @@ class RmTestCase(TestCase):
             name="Test Name",
             description="Test Description",
             url="https://example.org",
+            fingerprint="foongerprint",
             user=user,
         )
         self.repo.chdir()

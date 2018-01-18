@@ -1,13 +1,13 @@
-import os
 from unittest.mock import patch
 
+import os
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
+
 from repomaker.models import Repository, S3Storage, GitStorage, SshStorage
 from repomaker.models.storage import StorageManager
-from repomaker.storage import REPO_DIR, get_repo_path, get_repo_root_path, PrivateStorage
-
+from repomaker.storage import REPO_DIR, PrivateStorage
 from .. import RmTestCase
 
 
@@ -82,7 +82,8 @@ class StorageManagerTestCase(TestCase):
 
     def setUp(self):
         # create repo and three remote storage locations
-        self.repo = Repository.objects.create(user=User.objects.create(username='user2'))
+        self.repo = Repository.objects.create(user=User.objects.create(username='user2'),
+                                              fingerprint='fake_fingerprint')
         S3Storage.objects.create(repo=self.repo, bucket='s3_bucket')
         SshStorage.objects.create(repo=self.repo, url='ssh_url', disabled=False)
         GitStorage.objects.create(repo=self.repo, url='git_url')
@@ -127,7 +128,8 @@ class StorageManagerTestCase(TestCase):
 class DefaultStorageTestCase(TestCase):
 
     def setUp(self):
-        self.repo = Repository.objects.create(user=User.objects.create(username='user2'))
+        self.repo = Repository.objects.create(user=User.objects.create(username='user2'),
+                                              fingerprint='fake_fingerprint')
 
     @override_settings(DEFAULT_REPO_STORAGE=None)
     def test_undefined_default_storage(self):
@@ -139,15 +141,31 @@ class DefaultStorageTestCase(TestCase):
     def test_default_flag(self):
         self.assertTrue(StorageManager.get_storage(self.repo)[0].is_default)
 
+    def test_get_identifier(self):
+        storage = StorageManager.get_storage(self.repo)[0]
+        self.assertEqual('WRK98dKjNKjR5XJy5sjH_Ptuxrs4QgNK', storage.get_identifier())
+
+    @override_settings(SECRET_KEY='test')
+    def test_get_identifier_changes_with_secret_key(self):
+        storage = StorageManager.get_storage(self.repo)[0]
+        self.assertEqual('pOzUwCWqrdFLXmOFHTFmEeReLhNEqiy1', storage.get_identifier())
+
+    def test_get_identifier_changes_with_repo_fingerprint(self):
+        self.repo.fingerprint = 'different_fingerprint'
+        storage = StorageManager.get_storage(self.repo)[0]
+        self.assertEqual('Jhvw3A7Jcu3U_d8Ixq9JkQkJDjXdahLA', storage.get_identifier())
+
     @override_settings(DEFAULT_REPO_STORAGE=[('repos', 'test/')])
     def test_get_repo_url(self):
         storage = StorageManager.get_storage(self.repo)[0]
-        self.assertEqual('test/' + get_repo_path(self.repo), storage.get_repo_url())
+        expected_url = 'test/' + storage.get_identifier() + '/' + REPO_DIR
+        self.assertEqual(expected_url, storage.get_repo_url())
 
     @override_settings(DEFAULT_REPO_STORAGE=[('repos', 'test')])
     def test_get_repo_url_without_trailing_slash(self):
         storage = StorageManager.get_storage(self.repo)[0]
-        self.assertEqual('test/' + get_repo_path(self.repo), storage.get_repo_url())
+        expected_url = 'test/' + storage.get_identifier() + '/' + REPO_DIR
+        self.assertEqual(expected_url, storage.get_repo_url())
 
     def test_get_repo_url_without_schema(self):
         storage = StorageManager.get_storage(self.repo)[0]
@@ -160,7 +178,7 @@ class DefaultStorageTestCase(TestCase):
 
         # assert that we now have storage mirror in the config
         self.assertTrue(len(config['mirrors']) == 1)
-        url = 'https://example.com/repos/' + get_repo_path(self.repo)
+        url = 'https://example.com/repos/WRK98dKjNKjR5XJy5sjH_Ptuxrs4QgNK/repo'
         self.assertEqual(url, config['mirrors'][0])
 
     @patch('fdroidserver.server.update_serverwebroot')
@@ -168,5 +186,5 @@ class DefaultStorageTestCase(TestCase):
         storage = StorageManager.get_storage(self.repo)[0]
         storage.publish()
         local = self.repo.get_repo_path()
-        remote = os.path.join(settings.MEDIA_ROOT, 'repos', get_repo_root_path(self.repo))
+        remote = os.path.join(settings.DEFAULT_REPO_STORAGE[0][0], storage.get_identifier())
         update_serverwebroot.assert_called_once_with(remote, local)
