@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^jsreverse/$', urls_js, name='js_reverse'),
     url(r'^%s(?P<path>.*)$' % settings.MEDIA_URL[1:], media_serve,
-        {'document_root': settings.MEDIA_ROOT}),
+        {'document_root': settings.MEDIA_ROOT}, name='media'),
 
     # JavaScript Internationalisation
     url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog'),

@@ -35,20 +35,22 @@ def fake_repo_create(repo):
 
 
 class RmTestCase(TestCase):
+    user = None
+    repo = None
 
     def setUp(self):
         if not settings.SINGLE_USER_MODE:
-            user = User.objects.create(username=DEFAULT_USER_NAME)
-            self.client.force_login(user=user)
+            self.user = User.objects.create(username=DEFAULT_USER_NAME)
+            self.client.force_login(user=self.user)
         else:
-            user = User.objects.get()
+            self.user = User.objects.get()
 
         self.repo = Repository.objects.create(
             name="Test Name",
             description="Test Description",
             url="https://example.org",
             fingerprint="foongerprint",
-            user=user,
+            user=self.user,
         )
         self.repo.chdir()
 
