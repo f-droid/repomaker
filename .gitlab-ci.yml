@@ -1,10 +1,16 @@
 image: registry.gitlab.com/fdroid/ci-images-repomaker:latest
 
+stages:
+  - test
+  - deploy
+
 pep8:
+  stage: test
   script:
     - ./tests/test-pep8.sh
 
 pylint:
+  stage: test
   before_script:
     - pip3 install -r requirements.txt
 
@@ -12,6 +18,7 @@ pylint:
     - ./tests/test-pylint.sh
 
 units:
+  stage: test
   cache:
     paths:
       - /usr/local/lib/python3.5/dist-packages
@@ -26,6 +33,7 @@ units:
     - ./tests/test-units.sh
 
 docker:
+  stage: deploy
   image: docker:git
   services:
     - docker:dind
@@ -38,5 +46,8 @@ docker:
     - docker build -t $IMAGE .
     - docker push $IMAGE
 
+  when: on_success
   only:
     - master
+  environment:
+      name: docker
