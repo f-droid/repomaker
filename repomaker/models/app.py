@@ -324,7 +324,7 @@ class App(AbstractApp):
         :param icon: The new icon as a File
         """
         self.delete_old_icon()
-        self.icon.save(icon.name, icon.file, save=True)
+        self.icon.save(os.path.basename(icon.name), icon.file, save=True)
 
     def get_latest_version(self):
         from .apk import ApkPointer

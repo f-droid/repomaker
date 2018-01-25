@@ -126,8 +126,8 @@ class RepositoryCreateView(LoginOrSingleUserRequiredMixin, CreateView):
             # set main repo URL to that of first default storage, if any exists
             storage = StorageManager.get_default_storage(form.instance)
             if len(storage) > 0:
-                form.instance.url = storage[0].get_repo_url()  # requires repo fingerprint to exist
-                form.instance.save()
+                # requires repo fingerprint to exist
+                form.instance.set_url(storage[0].get_repo_url())  # saves form.instance
         except Exception as e:
             logging.error('Creating repo failed: %s', e)
             form.instance.delete()

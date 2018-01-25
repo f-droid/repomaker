@@ -195,11 +195,11 @@ class Repository(AbstractRepository):
 
         # Render page to string
         repo_page_string = render_to_string('repomaker/repo_page/index.html', {'repo': self})
-        repo_page_string = repo_page_string.replace('/static/maker/css/repo/', 'assets/')
+        repo_page_string = repo_page_string.replace('/static/repomaker/css/repo/', 'assets/')
 
         # Render qr_code page to string
         qr_page_string = render_to_string('repomaker/repo_page/qr_code.html', {'repo': self})
-        qr_page_string = qr_page_string.replace('/static/maker/css/repo/', '')
+        qr_page_string = qr_page_string.replace('/static/repomaker/css/repo/', '')
 
         with open(os.path.join(self.get_repo_path(), 'index.html'), 'w', encoding='utf8') as f:
             f.write(repo_page_string)  # Write repo page to file

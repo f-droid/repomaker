@@ -8,7 +8,7 @@
    class="rm-app-card mdl-cell mdl-cell--{{ width }}-col mdl-card mdl-shadow--2dp mdl-color--white rm-no-underline">
 {% endif %}
 	<div class="rm-app-card-left"
-		 style="background-image: url({% if repo_page %}icons-640/{{ app.get_icon_basename }}{% else %}{{ app.icon_url }}{% endif %})">
+		{% if app.icon %}style="background-image: url({% if repo_page %}icons-640/{{ app.get_icon_basename }}{% else %}{{ app.icon_url }}{% endif %})"{% endif %}>
 	</div>
 	<div class="rm-app-card-right">
 		<div class="rm-app-card-title">{{ app.name }}</div>

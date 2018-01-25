@@ -67,8 +67,9 @@ class RepositoryTestCase(RmTestCase):
         self.assertEqual('TestFingerprint', repo.fingerprint)
 
     @patch('fdroidserver.common.genkeystore')
+    @patch('repomaker.models.repository.Repository._copy_page_assets')
     @override_settings(DEFAULT_REPO_STORAGE=[('repos', 'test')])
-    def test_create_with_default_storage(self, genkeystore):
+    def test_create_with_default_storage(self, _copy_page_assets, genkeystore):
         # fake keystore creation to speed up test
         genkeystore.return_value = 'TestPubKey', 'TestFingerprint'
 
@@ -76,10 +77,13 @@ class RepositoryTestCase(RmTestCase):
         query = {'name': 'TestRepo', 'description': 'TestDescription'}
         response = self.client.post(reverse('add_repo'), query)
         self.assertRedirects(response, '/2/')
+        self.assertTrue(_copy_page_assets.called)
 
         # assert that a new repository was created properly
         repo = Repository.objects.get(pk=2)
         self.assertEqual('test/3h7jhCnUt8aFXubfAIXZgYSjLs0IWKEf/repo', repo.url)
+        self.assertTrue(repo.qrcode)
+        self.assertTrue(os.path.isfile(repo.qrcode.path))
 
     def test_create_no_name(self):
         # post incomplete data for a new repository to be created

@@ -214,6 +214,7 @@ class RemoteAppTestCase(RmTestCase):
     def test_add_to_repo(self, download_async, download_remote_graphic_assets,
                          download_remote_screenshot):
         # create pre-requisites
+        self.app.icon.save('test.png', io.BytesIO(b'foo'))
         repo = Repository.objects.create(name='test', user=User.objects.create(username='user2'))
         apk = Apk.objects.create(package_id='org.example')
         remote_apk_pointer = RemoteApkPointer.objects.create(apk=apk, app=self.app, url='test_url')
@@ -226,6 +227,7 @@ class RemoteAppTestCase(RmTestCase):
         apps = App.objects.all()
         self.assertEqual(1, apps.count())
         self.assertEqual(app, apps[0])
+        self.assertTrue(app.icon.name.endswith('repo/icons-640/test.png'))
 
         # assert that local ApkPointer got created properly
         apk_pointers = ApkPointer.objects.all()
