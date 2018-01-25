@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-09-23 22:47+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
-"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/f-droid/repomaker/nb_NO/>\n"
+"PO-Revision-Date: 2018-08-05 15:36+0000\n"
+"Last-Translator: Ty Moss <lavahd@protonmail.ch>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/f-droid/repomaker/nb/>\n"
 "Language: nb_NO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.17-dev\n"
+"X-Generator: Weblate 3.1.1\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -229,18 +229,16 @@ msgid "Drag and drop .apk files"
 msgstr "Dra og slipp .apk-filer"
 
 msgid "Back"
-msgstr ""
+msgstr "Tilbake"
 
 msgid "Editing Disabled"
-msgstr ""
+msgstr "Redigering avskrudd"
 
 msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
-msgstr ""
+msgstr "Dette programmet blir oppgradert automatisk fra pakkebrønnen annensteds hen. Hvis du ønsker å endre den selv, må du skru av automatiske oppgraderinger først. Merk deg at uten automatiske oppgraderinger, må du legge til nye versjoner manuelt."
 
-#, fuzzy
-#| msgid "Disable Storage"
 msgid "Disable Automatic Updates"
-msgstr "Skru av lager"
+msgstr "Skru av automatiske oppgraderinger"
 
 msgid "Delete Feature Graphic"
 msgstr "Slett funksjonsbilde"
@@ -269,7 +267,7 @@ msgstr "Oppdatert %(time)s siden"
 
 #, python-format
 msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
-msgstr ""
+msgstr "Dette programmet blir automatisk oppdatert fra pakkebrønnen annensteds hen \"%(repo_name)s\"."
 
 msgid "version history"
 msgstr "versjonshistorikk"
@@ -484,7 +482,7 @@ msgid "Add a repo"
 msgstr "Legg til pakkebrønn"
 
 msgid "Clear filters"
-msgstr ""
+msgstr "Fjern filtre"
 
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
@@ -527,10 +525,8 @@ msgstr "Pakkebrønnsadresse"
 msgid "Edit Storage"
 msgstr "Rediger lager"
 
-#, fuzzy
-#| msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
-msgstr "Forsikre deg om at du legger til denne offentlige SSH-nøkkelen til din Git-konto for at opplastingen skal virke. Her er instruksjonene for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">GitLab</a> og <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
+msgstr "Forsikre deg om at du legger til denne offentlige SSH-nøkkelen til din Git-konto for at opplastingen skal virke. Her er instruksjonene for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">GitLab</a> og <a href=\"developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
 msgstr "Forsikre deg også om at master-grenen i din pakkebrønn <b>ikke er beskyttet</b> mot tvungen opplasting."
@@ -638,7 +634,7 @@ msgid "Added"
 msgstr "Lagt til"
 
 msgid "There was an error creating the repository. Please try again!"
-msgstr ""
+msgstr "En feil inntraff under opprettelse av pakkebrønnen. Prøv igjen."
 
 msgid "Enter email"
 msgstr "Skriv inn e-post"

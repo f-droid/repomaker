@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-01-28 17:29+0000\n"
-"Last-Translator: Ajeje Brazorf <lmelonimamo@yahoo.it>\n"
-"Language-Team: Sardinian <https://hosted.weblate.org/projects/f-droid/repomaker-javascript/sc/>\n"
-"Language: sc\n"
+"PO-Revision-Date: 2018-04-22 17:24+0000\n"
+"Last-Translator: Myeongjin Lee <aranet100@gmail.com>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/f-droid/repomaker-javascript/ko/>\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.19-dev\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.0-dev\n"
 
 #, javascript-format
 msgid "Available %s"
@@ -63,7 +63,6 @@ msgstr ""
 msgid "%(sel)s of %(cnt)s selected"
 msgid_plural "%(sel)s of %(cnt)s selected"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid "You have unsaved changes on individual editable fields. If you run an action, your unsaved changes will be lost."
 msgstr ""
@@ -78,13 +77,11 @@ msgstr ""
 msgid "Note: You are %s hour ahead of server time."
 msgid_plural "Note: You are %s hours ahead of server time."
 msgstr[0] ""
-msgstr[1] ""
 
 #, javascript-format
 msgid "Note: You are %s hour behind server time."
 msgid_plural "Note: You are %s hours behind server time."
 msgstr[0] ""
-msgstr[1] ""
 
 msgid "Now"
 msgstr ""
@@ -108,7 +105,7 @@ msgid "6 p.m."
 msgstr ""
 
 msgid "Cancel"
-msgstr "Annulla"
+msgstr "취소"
 
 msgid "Today"
 msgstr ""
@@ -195,48 +192,46 @@ msgstr ""
 #, javascript-format
 msgid "%s app added"
 msgid_plural "%s apps added"
-msgstr[0] "%s aplicatzione annanta"
-msgstr[1] "%s aplicatziones annantas"
+msgstr[0] "앱 %s개 추가됨"
 
 msgid "Add"
-msgstr "Annanghe"
+msgstr "추가"
 
 #, javascript-format
 msgid "Sorry, there was an error deleting it: %s"
-msgstr "B'est istadu un'errore iscantzellande·lu: %s"
+msgstr "죄송하지만, 여기에 그것을 삭제하는 데 오류가 있었습니다: %s"
 
 msgid "Delete Screenshot"
-msgstr "Iscantzella ischermada"
+msgstr "스크린샷 삭제"
 
 msgid "Are you sure you want to delete this screenshot from your package?"
-msgstr "Seguru ses de chèrrere iscantzellare cust'ischermada dae su pachete tuo?"
+msgstr "당신의 패키지에서 이 스크린샷을 삭제하시는 것이 확실합니까?"
 
 msgid "Delete Feature Graphic"
-msgstr "Iscantzella s'immàgine superiore"
+msgstr "기능 그래픽 삭제"
 
 msgid "Are you sure you want to delete the feature graphic from your package?"
-msgstr "Seguru ses de chèrrere iscantzellare s'immàgine de presentada (superiore) dae su pachete tuo?"
+msgstr "당신의 패키지에서 기능 그래픽을 삭제하시는 것이 확실합니까?"
 
 msgid "Delete Version"
-msgstr "Iscantzella versione"
+msgstr "버전 삭제"
 
 msgid "Are you sure you want to delete this version from your package?"
-msgstr "Seguru ses de chèrrere iscantzellare custa versione dae su pachete tuo?"
+msgstr "당신의 패키지에서 이 버전을 삭제하시는 것이 확실합니까?"
 
 msgid "Confirm"
-msgstr "Cunfirma"
+msgstr "확인"
 
 msgid "Added"
-msgstr "Annantu"
+msgstr "추가됨"
 
 msgid "You can only upload images here."
-msgstr "Inoghe podes carrigare petzi immàgines."
+msgstr "여기에 그림만 업로드할 수 있습니다."
 
 #, javascript-format
 msgid "Uploading %s file..."
 msgid_plural "Uploading %s files..."
-msgstr[0] "Carrighende %s documentu..."
-msgstr[1] "Carrighende %s documentos..."
+msgstr[0] "파일 %s개를 업로드 중..."
 
 msgid "Try to drag and drop again!"
-msgstr "Torra a proare a trisinare e lassare!"
+msgstr "다시 드래그 앤 드롭을 해주세요!"

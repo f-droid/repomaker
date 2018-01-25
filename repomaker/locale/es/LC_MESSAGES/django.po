@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-10-09 20:48+0000\n"
-"Last-Translator: Laura Arjona Reina <larjona@larjona.net>\n"
+"PO-Revision-Date: 2018-07-16 23:07+0000\n"
+"Last-Translator: Markel <wakutiteo@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/f-droid/repomaker/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.17-dev\n"
+"X-Generator: Weblate 3.1-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -229,18 +229,16 @@ msgid "Drag and drop .apk files"
 msgstr "Arrastrar y soltar archivos .apk"
 
 msgid "Back"
-msgstr ""
+msgstr "Atrás"
 
 msgid "Editing Disabled"
-msgstr ""
+msgstr "Editar deshabilitado"
 
 msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
-msgstr ""
+msgstr "Esta aplicación se actualiza automáticamente desde el repositorio remoto. Si quiere editarla, necesita primero desactivar las actualizaciones automáticas. Por favor tenga en cuenta que sin actualizaciones automáticas, necesita agregar de manera manual las nuevas versiones."
 
-#, fuzzy
-#| msgid "Disable Storage"
 msgid "Disable Automatic Updates"
-msgstr "Desactivar almacenamiento"
+msgstr "Desactivar actualizaciones automáticas"
 
 msgid "Delete Feature Graphic"
 msgstr "Borrar Gráfico destacado"
@@ -269,7 +267,7 @@ msgstr "Actualizada hace %(time)s"
 
 #, python-format
 msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
-msgstr ""
+msgstr "Esta aplicación se actualiza automáticamente desde el repositorio remoto \"%(repo_name)s\"."
 
 msgid "version history"
 msgstr "historial de versiones"
@@ -484,7 +482,7 @@ msgid "Add a repo"
 msgstr "Agregar un repositorio"
 
 msgid "Clear filters"
-msgstr ""
+msgstr "Limpiar filtros"
 
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
@@ -527,10 +525,8 @@ msgstr "Dirección del repositorio"
 msgid "Edit Storage"
 msgstr "Editar el almacenamiento"
 
-#, fuzzy
-#| msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
-msgstr "Por favor, asegúrese de añadir su clave SSH pública a su cuenta de Git para que la carga funcione. Encontrará instrucciones para <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> y <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
+msgstr "Por favor, asegúrese de añadir esta clave SSH pública a su cuenta de Git para que la carga funcione. Encontrará instrucciones para <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> y <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
 msgstr "Asimismo, asegúrese de que la rama principal («master») de su repositorio <b>no esté protegida</b> para forzar envíos."
@@ -638,7 +634,7 @@ msgid "Added"
 msgstr "Agregado"
 
 msgid "There was an error creating the repository. Please try again!"
-msgstr ""
+msgstr "Hubo un error creando el repositorio. ¡Por favor, inténtelo de nuevo!"
 
 msgid "Enter email"
 msgstr "Introduzca una cuenta de correo electrónico"

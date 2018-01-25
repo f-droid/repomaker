@@ -3,150 +3,149 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-01 20:54+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2018-08-26 12:47+0000\n"
+"Last-Translator: AB <ao7nro+6ltrjuwxelfo4@sharklasers.com>\n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/f-droid/repomaker/uk/>\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.2-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
-msgstr ""
+msgstr "Файл не є оновленням для %s"
 
 msgid "This APK already exists in the current repo."
-msgstr ""
+msgstr "APK вже існує у чинному сховищеві."
 
 msgid "Invalid APK signature"
-msgstr ""
+msgstr "Неправильний підпис APK"
 
 msgid "Invalid APK."
-msgstr ""
+msgstr "Недійсний APK."
 
 msgid "Unsupported File Type"
-msgstr ""
+msgstr "Тип файлу не підтримується"
 
 msgid "This file is of a different type than the other versions of this app."
 msgstr ""
 
 msgid "APK"
-msgstr ""
+msgstr "APK"
 
 msgid "Book"
-msgstr ""
+msgstr "Книжка"
 
 msgid "Document"
-msgstr ""
+msgstr "Документ"
 
 msgid "Image"
-msgstr ""
+msgstr "Зображення"
 
 msgid "Audio"
-msgstr ""
+msgstr "Звук"
 
 msgid "Video"
-msgstr ""
+msgstr "Відео"
 
 msgid "Other"
-msgstr ""
+msgstr "Інші"
 
 msgid "This app does already exist in your repository."
-msgstr ""
+msgstr "На часі цей застосунок вже існує у вашому репозиторії."
 
 msgid "This app does not have any working versions available."
-msgstr ""
+msgstr "Цей застосунок не має доступних версій."
 
 msgid "Phone"
-msgstr ""
+msgstr "Телефон"
 
 msgid "7'' Tablet"
-msgstr ""
+msgstr "7'' планшет"
 
 msgid "10'' Tablet"
-msgstr ""
+msgstr "10'' планшет"
 
 msgid "TV"
-msgstr ""
+msgstr "Телевізор"
 
 msgid "Wearable"
-msgstr ""
+msgstr "Для носіння"
 
 msgid "US Standard"
-msgstr ""
+msgstr "Американський стандарт"
 
 msgid "Amazon S3 Storage"
-msgstr ""
+msgstr "Хмара Amazon S3"
 
 msgid "Enter a valid user name consisting of letters, numbers, underscores or hyphens."
-msgstr ""
+msgstr "Унесіть дійсну назву користувача, яка складається з літер, чисел та рисок."
 
 msgid "Enter a valid hostname."
-msgstr ""
+msgstr "Уведіть дісйну назву госту."
 
 msgid "Enter a valid path."
-msgstr ""
+msgstr "Уведіть дісйний шлях."
 
 msgid "SSH Storage"
-msgstr ""
+msgstr "Пам'ять SSH"
 
 msgid "Git Storage"
-msgstr ""
+msgstr "Пам'ять Git"
 
 msgid "Default Storage"
-msgstr ""
+msgstr "Типова пам'ять"
 
 msgid "American English"
-msgstr ""
+msgstr "Англійська (США)"
 
 msgid "Change E-mail"
-msgstr ""
+msgstr "Змінити електронну пошту"
 
 msgid "Sign Out"
-msgstr ""
+msgstr "Вийти"
 
 msgid "Sign In"
-msgstr ""
+msgstr "Увійти"
 
 msgid "Sign Up"
-msgstr ""
+msgstr "Зареєструватися"
 
 msgid "Distribute apps."
 msgstr ""
 
 msgid "Spread the love."
-msgstr ""
+msgstr "Поширити любов."
 
 msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
 msgstr ""
 
 msgid "Login"
-msgstr ""
+msgstr "Логін"
 
 msgid "Forgot Password"
-msgstr ""
+msgstr "Забули гасло"
 
 msgid "Or login with"
-msgstr ""
+msgstr "Або зайти за допомогою"
 
 msgid "Logout"
-msgstr ""
+msgstr "Вийти"
 
 msgid "See you later"
-msgstr ""
+msgstr "Побачимось"
 
 msgid "Your security is important to us. Please confirm that you want to logout."
-msgstr ""
+msgstr "Ваша безпека є для нас важливою. Засвідчте, що ви бажаєте вийти."
 
 msgid "logout"
-msgstr ""
+msgstr "вийти"
 
 msgid "submit"
 msgstr ""
@@ -165,7 +164,7 @@ msgid "Are you sure you want to delete this version <strong>%(version)s</strong>
 msgstr ""
 
 msgid "Confirm"
-msgstr ""
+msgstr "Підтвердити"
 
 msgid "Delete App"
 msgstr ""
@@ -242,7 +241,7 @@ msgid "Disable Automatic Updates"
 msgstr ""
 
 msgid "Delete Feature Graphic"
-msgstr ""
+msgstr "Видалити графічні функції"
 
 #, python-format
 msgid "Are you sure you want to delete the feature graphic from your app <strong>%(app)s</strong>?"
@@ -268,24 +267,24 @@ msgstr ""
 
 #, python-format
 msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
-msgstr ""
+msgstr "Застосунок автоматично оновлюється з віддаленого сховища \"%(repo_name)s\"."
 
 msgid "version history"
-msgstr ""
+msgstr "історія версій"
 
 #, python-format
 msgid "Version %(version)s (%(code)s)"
-msgstr ""
+msgstr "Версія %(version)s %(code)s"
 
 #, python-format
 msgid "Released %(date)s"
-msgstr ""
+msgstr "Оприлюднено %(date)s"
 
 msgid "APK is still downloading..."
-msgstr ""
+msgstr "APK все ще завантажується..."
 
 msgid "This app has no APK files."
-msgstr ""
+msgstr "Цей застосунок не має файлів APK."
 
 msgid "If you added this app from a remote repo, try deleting it and adding it again."
 msgstr ""
@@ -297,7 +296,7 @@ msgid "Next"
 msgstr ""
 
 msgid "Add"
-msgstr ""
+msgstr "Додати"
 
 msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
 msgstr ""
@@ -306,7 +305,7 @@ msgid "show screenshots"
 msgstr ""
 
 msgid "Delete Screenshot"
-msgstr ""
+msgstr "Видалити зняток"
 
 #, python-format
 msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
@@ -352,20 +351,20 @@ msgid "Make a collection of apps to share"
 msgstr ""
 
 msgid "Create Repo"
-msgstr ""
+msgstr "Створити комору даних"
 
 msgid "New Repo"
-msgstr ""
+msgstr "Нова комора даних"
 
 msgid "Create"
 msgstr ""
 
 msgid "Delete Repo"
-msgstr ""
+msgstr "Видалити сховище"
 
 #, python-format
 msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
-msgstr ""
+msgstr "Чи ви дійсно хочете видалити сховище <strong>%(repo)s</strong>?"
 
 msgid "This will also delete all apps and other files from your repo. You will not be able to get them back, users of your repo will not be able to use it anymore and not receive updates for the apps they received from you. There is no way to recover this repo!"
 msgstr ""
@@ -374,10 +373,10 @@ msgid "Please only proceed if you know what you are doing!"
 msgstr ""
 
 msgid "Yes, I want to delete the repo"
-msgstr ""
+msgstr "Так, я бажаю видалити сховище"
 
 msgid "Edit Repo"
-msgstr ""
+msgstr "Коригувати сховище"
 
 msgid "Save Changes"
 msgstr ""
@@ -420,7 +419,7 @@ msgid "Fingerprint"
 msgstr ""
 
 msgid "Remove Repo"
-msgstr ""
+msgstr "Усунути комору даних"
 
 msgid "Add storage to publish"
 msgstr ""
@@ -434,11 +433,12 @@ msgstr ""
 #, python-format
 msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
 msgid_plural "You have  <span>%(app_count)s apps</span> in your repo. Share it!"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ви маєте<span>%(app_count)s застосунок</span> у вашій коморі даних. Поширте його!"
+msgstr[1] "Ви маєте<span>%(app_count)s застосунки</span> у вашій коморі даних. Поширте їх!"
+msgstr[2] "Ви маєте<span>%(app_count)s застосунків</span> у вашій коморі даних. Поширте їх!"
 
 msgid "view repo"
-msgstr ""
+msgstr "переглянути комору даних"
 
 msgid "share public link"
 msgstr ""
@@ -460,7 +460,7 @@ msgstr ""
 
 #, python-format
 msgid "Check out this F-Droid repo: %(name)s"
-msgstr ""
+msgstr "Переглянути цю F-Droid'ову комору даних: %(name)s"
 
 msgid "Browse Gallery"
 msgstr ""
@@ -480,7 +480,7 @@ msgid "Source (%(count)s)"
 msgstr ""
 
 msgid "Add a repo"
-msgstr ""
+msgstr "Додати комору даних"
 
 msgid "Clear filters"
 msgstr ""
@@ -490,7 +490,7 @@ msgid "No apps found that match '%(search_term)s'. Please try a different search
 msgstr ""
 
 msgid "There are no apps in this repo."
-msgstr ""
+msgstr "Цей комора даних не має застосунків."
 
 msgid "There are no apps available in the repos."
 msgstr ""
@@ -521,7 +521,7 @@ msgid "Disable Storage"
 msgstr ""
 
 msgid "Repo Address"
-msgstr ""
+msgstr "Адреса комори даних"
 
 msgid "Edit Storage"
 msgstr ""
@@ -589,7 +589,7 @@ msgid "Here's how to copy the SSH Address from GitLab:"
 msgstr ""
 
 msgid "Setup a place to store your repo"
-msgstr ""
+msgstr "Налаштуй місце для зберігання вашої комори даних"
 
 msgid "Git"
 msgstr ""
@@ -632,7 +632,7 @@ msgid "Version %(version)s (%(date)s)"
 msgstr ""
 
 msgid "Added"
-msgstr ""
+msgstr "Додано"
 
 msgid "There was an error creating the repository. Please try again!"
 msgstr ""
@@ -684,7 +684,7 @@ msgid "Could not validate repository: %s"
 msgstr ""
 
 msgid "Describe the repo"
-msgstr ""
+msgstr "Опишіть комору даних"
 
 msgid "Bucket Name"
 msgstr ""

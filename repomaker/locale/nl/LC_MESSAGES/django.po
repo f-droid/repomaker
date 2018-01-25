@@ -3,246 +3,245 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-01 20:54+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2018-08-04 10:36+0000\n"
+"Last-Translator: Robin Wils <mrwils@protonmail.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/f-droid/repomaker/nl/>\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.1.1\n"
 
 #, python-format
 msgid "This file is not an update for %s"
-msgstr ""
+msgstr "Dit bestand is niet een update voor %s"
 
 msgid "This APK already exists in the current repo."
-msgstr ""
+msgstr "Dit APK bestaat al in de huidige bron."
 
 msgid "Invalid APK signature"
-msgstr ""
+msgstr "Ongeldige APK handtekening"
 
 msgid "Invalid APK."
-msgstr ""
+msgstr "Ongeldige APK."
 
 msgid "Unsupported File Type"
-msgstr ""
+msgstr "Niet ondersteund bestandstype"
 
 msgid "This file is of a different type than the other versions of this app."
-msgstr ""
+msgstr "Dit bestand heeft een ander type als de andere versies van deze app."
 
 msgid "APK"
-msgstr ""
+msgstr "APK"
 
 msgid "Book"
-msgstr ""
+msgstr "Boek"
 
 msgid "Document"
-msgstr ""
+msgstr "Document"
 
 msgid "Image"
-msgstr ""
+msgstr "Afbeelding"
 
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 msgid "Other"
-msgstr ""
+msgstr "Andere"
 
 msgid "This app does already exist in your repository."
-msgstr ""
+msgstr "Deze app bestaat al in je bron."
 
 msgid "This app does not have any working versions available."
-msgstr ""
+msgstr "Deze app heeft geen werkende versies beschikbaar."
 
 msgid "Phone"
-msgstr ""
+msgstr "Telefoon"
 
 msgid "7'' Tablet"
-msgstr ""
+msgstr "7'' Tablet"
 
 msgid "10'' Tablet"
-msgstr ""
+msgstr "10'' Tablet"
 
 msgid "TV"
-msgstr ""
+msgstr "TV"
 
 msgid "Wearable"
-msgstr ""
+msgstr "Wearable"
 
 msgid "US Standard"
-msgstr ""
+msgstr "US standaard"
 
 msgid "Amazon S3 Storage"
-msgstr ""
+msgstr "Amazon S3 Opslag"
 
 msgid "Enter a valid user name consisting of letters, numbers, underscores or hyphens."
-msgstr ""
+msgstr "Vul een geldige gebruikersnaam in bestaande uit letters, cijfers, lage streepjes of koppeltekens."
 
 msgid "Enter a valid hostname."
-msgstr ""
+msgstr "Vul een geldige hostnaam in."
 
 msgid "Enter a valid path."
-msgstr ""
+msgstr "Vul een geldig pad in."
 
 msgid "SSH Storage"
-msgstr ""
+msgstr "SSH Opslag"
 
 msgid "Git Storage"
-msgstr ""
+msgstr "Git Opslag"
 
 msgid "Default Storage"
-msgstr ""
+msgstr "Standaard Opslag"
 
 msgid "American English"
-msgstr ""
+msgstr "Amerikaans Engels"
 
 msgid "Change E-mail"
-msgstr ""
+msgstr "Verander E-mailadres"
 
 msgid "Sign Out"
-msgstr ""
+msgstr "Log uit"
 
 msgid "Sign In"
-msgstr ""
+msgstr "Log in"
 
 msgid "Sign Up"
-msgstr ""
+msgstr "Registreer"
 
 msgid "Distribute apps."
-msgstr ""
+msgstr "Distribueer apps."
 
 msgid "Spread the love."
-msgstr ""
+msgstr "Verspreid de liefde."
 
 msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
-msgstr ""
+msgstr "Repomaker is een gratis web app ontworpen voor het creëren van collecties van apps, muziek, boeken video's en afbeeldingen om te delen met je peers. Het gebruikt F-Droid als het mobiele distributieplatform. Alleen beschikbaar op Android."
 
 msgid "Login"
-msgstr ""
+msgstr "Login"
 
 msgid "Forgot Password"
-msgstr ""
+msgstr "Wachtwoord vergeten"
 
 msgid "Or login with"
-msgstr ""
+msgstr "Of login met"
 
 msgid "Logout"
-msgstr ""
+msgstr "Log uit"
 
 msgid "See you later"
-msgstr ""
+msgstr "Zie je later"
 
 msgid "Your security is important to us. Please confirm that you want to logout."
-msgstr ""
+msgstr "Je veiligheid is belangrijk voor ons. Bevestig alsjeblieft dat je wilt uitloggen."
 
 msgid "logout"
-msgstr ""
+msgstr "log uit"
 
 msgid "submit"
-msgstr ""
+msgstr "bevestigen"
 
 msgid "We have sent you an email with a link to reset your password."
-msgstr ""
+msgstr "We hebben je een email gestuurd met een link om je wachtwoord te resetten."
 
 msgid "Signup"
-msgstr ""
+msgstr "Registratie"
 
 msgid "Delete App Version"
-msgstr ""
+msgstr "Verwijder app versie"
 
 #, python-format
 msgid "Are you sure you want to delete this version <strong>%(version)s</strong> (%(code)s) from your app <strong>%(app)s</strong>?"
-msgstr ""
+msgstr "Weet je zeker dat je de versie <strong>%(version)s</strong> (%(code)s) van je app <strong>%(app)s</strong> wilt verwijderen?"
 
 msgid "Confirm"
-msgstr ""
+msgstr "Bevestigen"
 
 msgid "Delete App"
-msgstr ""
+msgstr "Verwijder app"
 
 #, python-format
 msgid "Are you sure you want to delete your app <strong>%(object)s</strong>?"
-msgstr ""
+msgstr "Weet je zeker dat je de app <strong>%(object)s</strong> wilt verwijderen?"
 
 #, python-format
 msgid "Edit %(app)s"
-msgstr ""
+msgstr "Bewerk %(app)s"
 
 msgid "Remove App"
-msgstr ""
+msgstr "Verwijder app"
 
 msgid "Done"
-msgstr ""
+msgstr "Klaar"
 
 msgid "By"
-msgstr ""
+msgstr "Door"
 
 msgid "Summary Override (40 characters)"
-msgstr ""
+msgstr "Samenvatting Overschrijven (40 tekens)"
 
 msgid "Short Summary (40 characters)"
-msgstr ""
+msgstr "Korte Samenvatting (40 tekens)"
 
 msgid "Category"
-msgstr ""
+msgstr "Categorie"
 
 msgid "Choose Category"
-msgstr ""
+msgstr "Kies categorie"
 
 msgid "Description Override"
-msgstr ""
+msgstr "Beschrijving Overschrijven (40 tekens)"
 
 msgid "Description"
-msgstr ""
+msgstr "Beschrijving"
 
 msgid "Screenshots"
-msgstr ""
+msgstr "Schermafdrukken"
 
 msgid "Add files"
-msgstr ""
+msgstr "Voeg bestanden toe"
 
 msgid "Drag and drop screenshots"
-msgstr ""
+msgstr "Schermafdrukken slepen en neer zetten"
 
 msgid "or"
-msgstr ""
+msgstr "of"
 
 msgid "browse to upload"
-msgstr ""
+msgstr "blader om te uploaden"
 
 msgid "Feature Graphic"
-msgstr ""
+msgstr "Functieafbeelding"
 
 msgid "Drag and drop a feature graphic"
-msgstr ""
+msgstr "Functieafbeelding slepen en neer zetten"
 
 msgid "Drag and drop .apk files"
-msgstr ""
+msgstr ".apk-bestanden slepen en neer zetten"
 
 msgid "Back"
-msgstr ""
+msgstr "Terug"
 
 msgid "Editing Disabled"
-msgstr ""
+msgstr "Bewerken uitgeschakeld"
 
 msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
-msgstr ""
+msgstr "Deze app wordt automatisch geüpdatet van de externe bron. Als je deze zelf wil bewerken, moet je eerst automatische updates uitzetten. Wees ervan bewust dat zonder automatische updates, je nieuwe versies handmatig moet toevoegen."
 
 msgid "Disable Automatic Updates"
-msgstr ""
+msgstr "Zet automatische updates uit"
 
 msgid "Delete Feature Graphic"
-msgstr ""
+msgstr "Verwijder Functieafbeelding"
 
 #, python-format
 msgid "Are you sure you want to delete the feature graphic from your app <strong>%(app)s</strong>?"
@@ -253,14 +252,14 @@ msgid "Languages (%(count)s)"
 msgstr ""
 
 msgid "Edit"
-msgstr ""
+msgstr "Bewerken"
 
 msgid "Add Translation"
-msgstr ""
+msgstr "Voeg vertaling toe"
 
 #, python-format
 msgid "By %(author)s"
-msgstr ""
+msgstr "Door %(author)s"
 
 #, python-format
 msgid "Updated %(time)s ago"
@@ -271,7 +270,7 @@ msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\
 msgstr ""
 
 msgid "version history"
-msgstr ""
+msgstr "versiegeschiedenis"
 
 #, python-format
 msgid "Version %(version)s (%(code)s)"
@@ -282,31 +281,31 @@ msgid "Released %(date)s"
 msgstr ""
 
 msgid "APK is still downloading..."
-msgstr ""
+msgstr "APK wordt nog steeds gedownload..."
 
 msgid "This app has no APK files."
-msgstr ""
+msgstr "Deze app heeft geen APK-bestanden."
 
 msgid "If you added this app from a remote repo, try deleting it and adding it again."
-msgstr ""
+msgstr "Als je deze app hebt toegevoegd vanaf een externe repository, probeer deze dan te verwijderen en opnieuw toe te voegen."
 
 msgid "Previous"
-msgstr ""
+msgstr "Vorige"
 
 msgid "Next"
-msgstr ""
+msgstr "Volgende"
 
 msgid "Add"
-msgstr ""
+msgstr "Toevoegen"
 
 msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
 msgstr ""
 
 msgid "show screenshots"
-msgstr ""
+msgstr "toon schermafbeeldingen"
 
 msgid "Delete Screenshot"
-msgstr ""
+msgstr "Verwijder schermafbeelding"
 
 #, python-format
 msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
@@ -580,7 +579,7 @@ msgid "Setup %(storage_name)s"
 msgstr ""
 
 msgid "cancel"
-msgstr ""
+msgstr "annuleer"
 
 msgid "save"
 msgstr ""
@@ -592,7 +591,7 @@ msgid "Setup a place to store your repo"
 msgstr ""
 
 msgid "Git"
-msgstr ""
+msgstr "Git"
 
 msgid "Easy, free, requires an account"
 msgstr ""

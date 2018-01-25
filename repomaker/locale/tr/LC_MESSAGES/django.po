@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-11-24 01:50+0000\n"
-"Last-Translator: monolifed <monolifed@gmail.com>\n"
+"PO-Revision-Date: 2018-07-20 20:44+0000\n"
+"Last-Translator: Ali Demirtas <alidemirtas94@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/f-droid/repomaker/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.18-dev\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.1-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -229,18 +229,16 @@ msgid "Drag and drop .apk files"
 msgstr ".apk dosyalarını sürükle ve bırak"
 
 msgid "Back"
-msgstr ""
+msgstr "Geri"
 
 msgid "Editing Disabled"
-msgstr ""
+msgstr "Düzenleme Devre Dışı"
 
 msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
-msgstr ""
+msgstr "Bu uygulama uzak depodan kendiliğinden güncellenir. Kendiniz düzenlemek isterseniz, ilk önce kendiliğinden güncellemeleri devre dışı bırakmalısınız. Lütfen kendiliğinden güncellemeler olmadan yeni sürümleri elle eklemeniz gerekeceğini unutmayın."
 
-#, fuzzy
-#| msgid "Disable Storage"
 msgid "Disable Automatic Updates"
-msgstr "Depolamayı Devre Dışı Kıl"
+msgstr "Kendiliğinden Güncellemeleri Devre Dışı Kıl"
 
 msgid "Delete Feature Graphic"
 msgstr "Öne Çıkan Görseli Sil"
@@ -269,7 +267,7 @@ msgstr "%(time)s önce güncellendi"
 
 #, python-format
 msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
-msgstr ""
+msgstr "Bu uygulama \"%(repo_name)s\" uzak deposundan kendiliğinden güncellenir."
 
 msgid "version history"
 msgstr "sürüm geçmişi"
@@ -301,7 +299,7 @@ msgid "Add"
 msgstr "Ekle"
 
 msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
-msgstr "Şu anda hiçbir ekran görüntüsü gösterilmiyor çünkü bu repo sahibine sizi takip olanağı sağlar."
+msgstr "Şu anda hiçbir ekran görüntüsü gösterilmiyor çünkü bu depo sahibine sizi takip olanağı sağlar."
 
 msgid "show screenshots"
 msgstr "ekran görüntülerini göster"
@@ -406,7 +404,7 @@ msgid "Accepted files include Android apps, documents, eBooks, audio and video."
 msgstr "Kabul edilen dosyalar Android uygulamalarını, belgeleri, e-kitapları, sesleri ve videoları içerir."
 
 msgid "Your search did not return any results."
-msgstr "Aramanız hiç sonuç döndürmedi."
+msgstr "Aramanız hiçbir sonuç döndürmedi."
 
 msgid "Name"
 msgstr "Ad"
@@ -484,7 +482,7 @@ msgid "Add a repo"
 msgstr "Bir depo ekle"
 
 msgid "Clear filters"
-msgstr ""
+msgstr "Filtreleri temizle"
 
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
@@ -513,7 +511,7 @@ msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong
 msgstr "Deponuzdan <strong>%(object)s</strong> konumundaki depolamayı kaldırmak istediğinize emin misiniz?"
 
 msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
-msgstr "Bu depolamadan içeriği kaldırmaz sadece reponuzun gelecek sürümlerini ona yayımlamayı durdurur."
+msgstr "Bu depolamadan içeriği kaldırmaz sadece deponuzun gelecek sürümlerini ona yayımlamayı durdurur."
 
 msgid "Enable Storage"
 msgstr "Depolamayı Etkinleştir"
@@ -527,10 +525,8 @@ msgstr "Depo Adresi"
 msgid "Edit Storage"
 msgstr "Depolamayı Düzenle"
 
-#, fuzzy
-#| msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
-msgstr "Lütfen karşıya yüklemenin çalışması için bu açık SSH anahtarını Git hesabınıza eklediğinizden emin olun. <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> ve <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a> için talimatlar vardır."
+msgstr "Lütfen karşıya yüklemenin çalışması için bu açık SSH anahtarını Git hesabınıza eklediğinizden emin olun. <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> ve <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a> için talimatlar vardır."
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
 msgstr "Ayrıca, lütfen deponuzun master dalının force push'tan <b>korunmadığına</b> emin olun."
@@ -638,7 +634,7 @@ msgid "Added"
 msgstr "Eklendi"
 
 msgid "There was an error creating the repository. Please try again!"
-msgstr ""
+msgstr "Depo oluşturulurken bir hata oluştu. Lütfen yeniden deneyin!"
 
 msgid "Enter email"
 msgstr "E-posta girin"

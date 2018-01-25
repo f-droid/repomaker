@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-01-24 12:06+0000\n"
+"PO-Revision-Date: 2018-07-16 23:04+0000\n"
 "Last-Translator: ezjerry liao <ezjerry@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/f-droid/repomaker/zh_Hant/>\n"
 "Language: zh_Hant\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.19-dev\n"
+"X-Generator: Weblate 3.1-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -229,18 +229,16 @@ msgid "Drag and drop .apk files"
 msgstr "拖放 .apk 檔案"
 
 msgid "Back"
-msgstr ""
+msgstr "返回"
 
 msgid "Editing Disabled"
-msgstr ""
+msgstr "編輯已停用"
 
 msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
-msgstr ""
+msgstr "這個並用程式已從遠端軟體庫自動更新。如果您想要自己編輯它，您必須先停用自動更新。請注意，如果取消自動更新，您將必須手動加入新版本。"
 
-#, fuzzy
-#| msgid "Disable Storage"
 msgid "Disable Automatic Updates"
-msgstr "停用存儲"
+msgstr "停用自動更新"
 
 msgid "Delete Feature Graphic"
 msgstr "刪除特徵圖形"
@@ -269,7 +267,7 @@ msgstr "%(time)s 前已更新"
 
 #, python-format
 msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
-msgstr ""
+msgstr "這個並用程式已從遠端軟體庫 \"%(repo_name)s\" 自動更新。"
 
 msgid "version history"
 msgstr "版本歷程"
@@ -483,7 +481,7 @@ msgid "Add a repo"
 msgstr "增加軟體庫"
 
 msgid "Clear filters"
-msgstr ""
+msgstr "清除篩選"
 
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
@@ -526,10 +524,8 @@ msgstr "軟體庫位址"
 msgid "Edit Storage"
 msgstr "編輯存儲"
 
-#, fuzzy
-#| msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
-msgstr "為使上傳工作正常，請務必將此公共 SSH 金鑰增加到您的 Git 帳戶。在<a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\"> Gitlab</a>和<a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\"> 3GitHub</a>有用法說明。"
+msgstr "為使上傳工作正常，請務必將此公共 SSH 金鑰增加到您的 Git 帳戶。在<a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\"> Gitlab</a>和<a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\"> GitHub</a>有用法說明。"
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
 msgstr "此外，因爲強力推送請查明您的軟體庫主分支是<b>未受保護</b>的。"
@@ -637,7 +633,7 @@ msgid "Added"
 msgstr "已加入"
 
 msgid "There was an error creating the repository. Please try again!"
-msgstr ""
+msgstr "在建立軟體庫時發生錯誤。請再試一次！"
 
 msgid "Enter email"
 msgstr "輸入電子郵件"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-12-02 14:51+0000\n"
+"PO-Revision-Date: 2018-07-18 16:08+0000\n"
 "Last-Translator: Ajeje Brazorf <lmelonimamo@yahoo.it>\n"
 "Language-Team: Sardinian <https://hosted.weblate.org/projects/f-droid/repomaker/sc/>\n"
 "Language: sc\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.18-dev\n"
+"X-Generator: Weblate 3.1-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -229,18 +229,16 @@ msgid "Drag and drop .apk files"
 msgstr "Trisina e lassa documentos .apk"
 
 msgid "Back"
-msgstr ""
+msgstr "In dae segus"
 
 msgid "Editing Disabled"
-msgstr ""
+msgstr "Modìficas disabilitadas"
 
 msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
-msgstr ""
+msgstr "Custa aplicatzione benit agiornada automaticamente dae su depòsitu remotu. Si la cheres modificare tue depes, in antis, disabilitare sos agiornamentos. Pro praghere ammenta·ti chi, chene sos agiornamentos automàticos, as a dèpere annànghere sas versiones noas manualmente."
 
-#, fuzzy
-#| msgid "Disable Storage"
 msgid "Disable Automatic Updates"
-msgstr "Disabìlita memòria"
+msgstr "Disabìlita sos agiornamentos automàticos"
 
 msgid "Delete Feature Graphic"
 msgstr "Iscantzella s'immàgine superiore"
@@ -269,7 +267,7 @@ msgstr "Agiornada %(time)s a como"
 
 #, python-format
 msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
-msgstr ""
+msgstr "Custa aplicatzione benit agiornada automaticamente dae su depòsitu remotu \"%(repo_name)s\"."
 
 msgid "version history"
 msgstr "cronologia de sas versiones"
@@ -484,7 +482,7 @@ msgid "Add a repo"
 msgstr "Annanghe unu depòsitu"
 
 msgid "Clear filters"
-msgstr ""
+msgstr "Inneta sos filtros"
 
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
@@ -527,10 +525,8 @@ msgstr "Indiritzu de su depòsitu"
 msgid "Edit Storage"
 msgstr "Modìfica memòria"
 
-#, fuzzy
-#| msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
-msgstr "Pro praghere assegura·ti de annànghere custa crae SSH a su contu Git tuo pro fàghere funtzionare su carrigamentu. Bi sunt istrutziones pro <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> e <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">Github</a>."
+msgstr "Pro praghere assegura·ti de annànghere custa crae SSH a su contu Git tuo pro fàghere funtzionare su carrigamentu. Bi sunt istrutziones pro <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> e <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
 msgstr "E, fintzas, assegura·ti chi sa camba printzipale de su depòsitu tuo siat <b>non amparada</b> dae sos imbios fortados."
@@ -638,7 +634,7 @@ msgid "Added"
 msgstr "Annantu"
 
 msgid "There was an error creating the repository. Please try again!"
-msgstr ""
+msgstr "B'est istadu un'errore cun sa creatzione de su depòsitu. Pro praghere torra a proare!"
 
 msgid "Enter email"
 msgstr "Inserta unu contu de posta eletrònica"

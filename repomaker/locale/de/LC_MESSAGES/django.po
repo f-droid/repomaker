@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-01-18 14:27+0000\n"
-"Last-Translator: Claus Rüdinger <Mail-an-CR@web.de>\n"
+"PO-Revision-Date: 2018-08-29 20:53+0000\n"
+"Last-Translator: Adrià García-Alzórriz <adria@fsfe.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/f-droid/repomaker/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.19-dev\n"
+"X-Generator: Weblate 3.2-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -76,7 +76,7 @@ msgid "TV"
 msgstr "Fernseher"
 
 msgid "Wearable"
-msgstr "Wearable"
+msgstr "Tragbar"
 
 msgid "US Standard"
 msgstr "US-Standard"
@@ -220,7 +220,7 @@ msgid "browse to upload"
 msgstr "suchen zum Hochladen"
 
 msgid "Feature Graphic"
-msgstr "Feature-Bild"
+msgstr "Funktionsgrafik"
 
 msgid "Drag and drop a feature graphic"
 msgstr "Feature-Bild ziehen und ablegen"
@@ -229,18 +229,16 @@ msgid "Drag and drop .apk files"
 msgstr ".apk-Dateien ziehen und ablegen"
 
 msgid "Back"
-msgstr ""
+msgstr "Zurück"
 
 msgid "Editing Disabled"
-msgstr ""
+msgstr "Bearbeitung deaktiviert"
 
 msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
-msgstr ""
+msgstr "Diese App wird automatisch vom Remote Repo aktualisiert. Wenn Sie es selbst bearbeiten möchten, müssen Sie zuerst die automatische Aktualisierung deaktivieren. Bitte beachten Sie, dass Sie ohne automatische Aktualisierungen neue Versionen manuell hinzufügen müssen."
 
-#, fuzzy
-#| msgid "Disable Storage"
 msgid "Disable Automatic Updates"
-msgstr "Speicher deaktivieren"
+msgstr "Automatische Aktualisierungen deaktivieren"
 
 msgid "Delete Feature Graphic"
 msgstr "Funktionsgrafik löschen"
@@ -269,7 +267,7 @@ msgstr "Vor %(time)s aktualisiert"
 
 #, python-format
 msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
-msgstr ""
+msgstr "Diese App wird automatisch vom Remote-Repo „%(repo_name)s” aktualisiert."
 
 msgid "version history"
 msgstr "Versionshistorie"
@@ -333,7 +331,7 @@ msgid "Try Again"
 msgstr "Bitte wiederholen"
 
 msgid "The button won't work for you. Please press F5 to try again."
-msgstr "Dieser Knopf wird nicht funktionieren. Bitte F5 zum Wiederholen drücken."
+msgstr "Der Schaltfläche funktioniert bei Ihnen nicht. Bitte drücken Sie F5, um es erneut zu versuchen."
 
 msgid "Error"
 msgstr "Fehler"
@@ -409,7 +407,7 @@ msgid "Your search did not return any results."
 msgstr "Deine Suche brachte keine Ergebnisse."
 
 msgid "Name"
-msgstr "Benutzername"
+msgstr "Name"
 
 msgid "Storage"
 msgstr "Speicherplatz"
@@ -424,19 +422,19 @@ msgid "Remove Repo"
 msgstr "Repo entfernen"
 
 msgid "Add storage to publish"
-msgstr "Speicherplatz zur Veröffentlichung hinzufügen"
+msgstr "Speicherort zur Veröffentlichung hinzufügen"
 
 msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
-msgstr "Dein Repo wird automatisch veröffentlicht, wenn Speicher hinzugefügt wurde. Repomaker wird deine Sachen nicht öffentlich bewerben. Nur Leute, die einen direkten Link zum Repo erhalten, werden es einsehen können."
+msgstr "Dein Repo wird automatisch veröffentlicht, wenn ein Speicherort hinzugefügt wurde. Repomaker wird deine Sachen nicht öffentlich bewerben. Nur Leute, die einen direkten Link zum Repo erhalten, werden es einsehen können."
 
 msgid "add storage"
-msgstr "Speicher hinzufügen"
+msgstr "Speicherort hinzufügen"
 
 #, python-format
 msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
 msgid_plural "You have  <span>%(app_count)s apps</span> in your repo. Share it!"
-msgstr[0] "Du hast <span>eine App</span> in deinem Repo. Teile sie!"
-msgstr[1] "Du hast <span>%(app_count)s Apps</span> in deinem Repo. Teile sie!"
+msgstr[0] "Sie haben <span>eine App</span> in Ihrer Repo. Teilen Sie sie!"
+msgstr[1] "Du haben <span>%(app_count)s Apps</span> in Ihrer Repo. Teilen Sie sie!"
 
 msgid "view repo"
 msgstr "Repo ansehen"
@@ -448,7 +446,7 @@ msgid "copy link"
 msgstr "Link kopieren"
 
 msgid "add to an android phone"
-msgstr "zu einem Android-Gerät hinzufügen"
+msgstr "Zu einem Android-Gerät hinzufügen"
 
 msgid "To install these apps on your Android phone, add them to F-Droid."
 msgstr "Um diese Apps auf deinem Android-Gerät zu installieren, füge sie zu F-Droid hinzu."
@@ -484,7 +482,7 @@ msgid "Add a repo"
 msgstr "Repo hinzufügen"
 
 msgid "Clear filters"
-msgstr ""
+msgstr "Filter löschen"
 
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
@@ -527,10 +525,8 @@ msgstr "Adresse des Repositorys"
 msgid "Edit Storage"
 msgstr "Speicher bearbeiten"
 
-#, fuzzy
-#| msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
-msgstr "Bitte sicherstellen, dass dieser öffentliche SSH-Schlüssel deinem Git-Account hinzugefügt wurde, damit das Hochladen funktioniert. Anweisungen hierzu unter: <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> und <a href=\"https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/\">GitHub</a>."
+msgstr "Bitte sicherstellen, dass dieser öffentliche SSH-Schlüssel deinem Git-Account hinzugefügt wurde, damit das Hochladen funktioniert. Anweisungen hierzu unter: <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> und <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
 msgstr "Bitte auch sicherstellen, dass der Master Branch deines Repositorys vor Force Pushing <b>nicht geschützt</b> ist."
@@ -638,13 +634,13 @@ msgid "Added"
 msgstr "Hinzugefügt"
 
 msgid "There was an error creating the repository. Please try again!"
-msgstr ""
+msgstr "Es gab einen Fehler beim Anlegen des Projektarchivs. Bitte versuchen Sie es erneut!"
 
 msgid "Enter email"
 msgstr "E-Mail eingeben"
 
 msgid "Enter your email address and we'll send a link to reset it. If you did not sign up with an email, we cannot help you securely reset your password."
-msgstr "Bitte gib deine E-Mail-Adresse an, damit wir einen Link zum Zurücksetzen schicken können. Wenn die Registrierung ohne eine Mail-Adresse erfolgte, ist das sichere Zurücksetzen des Passworts nicht möglich."
+msgstr "Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Link zum Zurücksetzen. Wenn Sie sich nicht mit einer E-Mail-Adresse angemeldet haben, können wir Ihnen nicht helfen, Ihr Passwort sicher zurückzusetzen."
 
 msgid "This is not a valid language code."
 msgstr "Dies ist kein gültiger Sprachcode."

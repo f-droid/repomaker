@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-01-28 17:29+0000\n"
-"Last-Translator: Ajeje Brazorf <lmelonimamo@yahoo.it>\n"
-"Language-Team: Sardinian <https://hosted.weblate.org/projects/f-droid/repomaker-javascript/sc/>\n"
-"Language: sc\n"
+"PO-Revision-Date: 2018-04-25 11:23+0000\n"
+"Last-Translator: Étienne Deparis <etienne@depar.is>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/f-droid/repomaker-javascript/fr/>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.19-dev\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.0-dev\n"
 
 #, javascript-format
 msgid "Available %s"
@@ -108,7 +108,7 @@ msgid "6 p.m."
 msgstr ""
 
 msgid "Cancel"
-msgstr "Annulla"
+msgstr "Annuler"
 
 msgid "Today"
 msgstr ""
@@ -195,48 +195,48 @@ msgstr ""
 #, javascript-format
 msgid "%s app added"
 msgid_plural "%s apps added"
-msgstr[0] "%s aplicatzione annanta"
-msgstr[1] "%s aplicatziones annantas"
+msgstr[0] "%s application ajoutée"
+msgstr[1] "%s applications ajoutées"
 
 msgid "Add"
-msgstr "Annanghe"
+msgstr "Ajouter"
 
 #, javascript-format
 msgid "Sorry, there was an error deleting it: %s"
-msgstr "B'est istadu un'errore iscantzellande·lu: %s"
+msgstr "Désolé, il y a eu une erreur en le supprimant : %s"
 
 msgid "Delete Screenshot"
-msgstr "Iscantzella ischermada"
+msgstr "Supprimer la capture d'écran"
 
 msgid "Are you sure you want to delete this screenshot from your package?"
-msgstr "Seguru ses de chèrrere iscantzellare cust'ischermada dae su pachete tuo?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette capture d'écran de votre paquet ?"
 
 msgid "Delete Feature Graphic"
-msgstr "Iscantzella s'immàgine superiore"
+msgstr "Supprimer une image descriptive"
 
 msgid "Are you sure you want to delete the feature graphic from your package?"
-msgstr "Seguru ses de chèrrere iscantzellare s'immàgine de presentada (superiore) dae su pachete tuo?"
+msgstr "Êtes-vous sûr de vouloir supprimer l'image descriptive de votre paquet ?"
 
 msgid "Delete Version"
-msgstr "Iscantzella versione"
+msgstr "Supprimer la version"
 
 msgid "Are you sure you want to delete this version from your package?"
-msgstr "Seguru ses de chèrrere iscantzellare custa versione dae su pachete tuo?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette version de votre paquet ?"
 
 msgid "Confirm"
-msgstr "Cunfirma"
+msgstr "Confirmer"
 
 msgid "Added"
-msgstr "Annantu"
+msgstr "Ajouté"
 
 msgid "You can only upload images here."
-msgstr "Inoghe podes carrigare petzi immàgines."
+msgstr "Vous ne pouvez télécharger que des images ici."
 
 #, javascript-format
 msgid "Uploading %s file..."
 msgid_plural "Uploading %s files..."
-msgstr[0] "Carrighende %s documentu..."
-msgstr[1] "Carrighende %s documentos..."
+msgstr[0] "Téléversement du fichier…"
+msgstr[1] "Téléversement des %s fichiers…"
 
 msgid "Try to drag and drop again!"
-msgstr "Torra a proare a trisinare e lassare!"
+msgstr "Essayez de glisser-déposer à nouveau !"
