@@ -8,7 +8,11 @@ services:
 
   web:
     image: registry.gitlab.com/fdroid/repomaker:latest
-    command: bash -c './wait-for db:5432 -- python3 manage.py migrate --settings repomaker.settings_docker && ./httpd-foreground'
+    hostname: ${REPOMAKER_HOSTNAME}
+    domainname: ${REPOMAKER_HOSTNAME}
+    env_file:
+      - .env
+    command: bash -c './wait-for db:5432 -- python3 manage.py migrate && ./httpd-foreground'
     volumes:
       - ./data:/repomaker/data
     ports:
@@ -18,6 +22,8 @@ services:
 
   tasks:
     image: registry.gitlab.com/fdroid/repomaker:latest
+    env_file:
+      - .env
     command: bash -c './wait-for web:80 -- su - www-data -p -s /bin/bash -c "cd /repomaker && python3 manage.py process_tasks"'
     volumes:
       - ./data:/repomaker/data

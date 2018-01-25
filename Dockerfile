@@ -3,6 +3,7 @@ MAINTAINER team@f-droid.org
 
 ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SETTINGS_MODULE repomaker.settings_docker
+ENV REPOMAKER_SECRET_KEY "913d6#u8@-*#3l)spwzurd#fd77bey-6mfs5fc$a=yhnh!n4p9"
 
 WORKDIR /repomaker
 

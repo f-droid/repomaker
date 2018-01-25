@@ -1,3 +1,4 @@
+import os
 from pkg_resources import Requirement, resource_filename
 from repomaker.settings import *
 
@@ -14,10 +15,13 @@ DATABASES = {
 
 SINGLE_USER_MODE = False
 
-# TODO
-ALLOWED_HOSTS = ['*']
-#SECRET_KEY = ''
+ALLOWED_HOSTS = [os.getenv('REPOMAKER_HOSTNAME')]
+SECRET_KEY = os.getenv('REPOMAKER_SECRET_KEY')
 DEBUG = False
+
+DEFAULT_REPO_STORAGE = [
+    (os.path.join(DATA_DIR, 'repos'), 'https://%s/repos/' % os.getenv('REPOMAKER_HOSTNAME')),
+]
 
 LOGIN_REDIRECT_URL = "/"
 # http://django-allauth.readthedocs.io/en/latest/installation.html
@@ -51,8 +55,6 @@ ACCOUNT_FORMS = {
 }
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
-# TODO
-#DEFAULT_REPO_STORAGE = [
-#    (os.path.join(DATA_DIR, 'repos'), 'http://127.0.0.1/repos/'),
-#]
+if DEBUG:
+    SASS_PROCESSOR_ENABLED = False
 
