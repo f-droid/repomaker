@@ -4,7 +4,8 @@ services:
   db:
     image: postgres
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - ${REPOMAKER_PATH}/pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
 
   web:
     image: registry.gitlab.com/fdroid/repomaker:latest
@@ -14,11 +15,12 @@ services:
       - .env
     command: bash -c './wait-for db:5432 -- python3 manage.py migrate && ./httpd-foreground'
     volumes:
-      - ./data:/repomaker/data
+      - ${REPOMAKER_PATH}/data:/repomaker/data
     ports:
-      - "80:80"
+      - "${REPOMAKER_PORT}:80"
     depends_on:
       - db
+    restart: unless-stopped
 
   tasks:
     image: registry.gitlab.com/fdroid/repomaker:latest
@@ -26,9 +28,10 @@ services:
       - .env
     command: bash -c './wait-for web:80 -- su - www-data -p -s /bin/bash -c "cd /repomaker && python3 manage.py process_tasks"'
     volumes:
-      - ./data:/repomaker/data
+      - ${REPOMAKER_PATH}/data:/repomaker/data
     depends_on:
       - db
       - web
+    restart: unless-stopped
 
 # vim: set tabstop=2:softtabstop=2:shiftwidth=2

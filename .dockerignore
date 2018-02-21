@@ -1,0 +1,17 @@
+.git
+.gitignore
+.gitlab-ci.yml
+.idea
+.pylintrc
+.travis.yml
+package.json
+MANIFEST.in
+README.md
+requirements*.txt
+/debian
+/doc
+/docker
+/node_modules
+/tests
+/setup.*
+/*.sh
