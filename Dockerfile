@@ -11,6 +11,7 @@ ADD . /repomaker
 
 COPY docker/settings_docker.py ./repomaker/
 COPY docker/apache.conf /etc/apache2/sites-available/repomaker.conf
+COPY docker/ssh_config /etc/ssh/ssh_config
 COPY docker/wait-for ./
 COPY docker/httpd-foreground ./
 
