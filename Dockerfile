@@ -11,12 +11,12 @@ ADD . /repomaker
 
 COPY docker/settings_docker.py ./repomaker/
 COPY docker/apache.conf /etc/apache2/sites-available/repomaker.conf
-COPY docker/ssh_config /etc/ssh/ssh_config
 COPY docker/wait-for ./
 COPY docker/httpd-foreground ./
 
 RUN apt update && \
-	apt install netcat gettext apache2 libapache2-mod-wsgi-py3 -y --no-install-recommends && \
+	apt install openssh-client netcat gettext apache2 libapache2-mod-wsgi-py3 -y --no-install-recommends && \
+	cat docker/ssh_config >> /etc/ssh/ssh_config && \
 	a2dissite 000-default && \
 	a2ensite repomaker && \
 	pip3 install -r requirements.txt && \
