@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+import lxml.html
 import django.http
 import django.urls
 from django.conf import settings
@@ -67,6 +68,53 @@ class RemoteRepositoryViewTest(RmTestCase):
                '  "name": "App2"}' \
                ']'
         self.assertJSONEqual(response.content.decode(), json)
+
+    def test_list_app_clear_filter_not_visible_when_no_active_filter(self):
+        response = self.client.get(reverse('add_app', kwargs={'repo_id': self.repo.id}))
+        html = lxml.html.fromstring(response.content)
+        elements = html.cssselect('.rm-app-clear-filters')
+
+        self.assertEqual(0, len(elements), 'clear filter link should not be here')
+
+    def test_list_app_clear_filter_visible_when_remote_repo_filter_active(self):
+        response = self.client.get(reverse('add_app', kwargs={
+            'repo_id': self.repo.id,
+            'remote_repo_id': self.remote_repo.id,
+        }))
+
+        html = lxml.html.fromstring(response.content)
+        elements = html.cssselect('.rm-app-clear-filters a')
+        expectedUrl = reverse('add_app', kwargs={'repo_id': self.repo.id})
+
+        self.assertEqual(1, len(elements), 'clear filter link must be here')
+        self.assertEqual(expectedUrl, elements[0].attrib['href'])
+
+    def test_list_app_clear_filter_visible_when_category_filter_active(self):
+        response = self.client.get(reverse('add_app_with_category', kwargs={
+            'repo_id': self.repo.id,
+            'category_id': 1,
+        }))
+
+        html = lxml.html.fromstring(response.content)
+        elements = html.cssselect('.rm-app-clear-filters a')
+        expectedUrl = reverse('add_app', kwargs={'repo_id': self.repo.id})
+
+        self.assertEqual(1, len(elements), 'clear filter link must be here')
+        self.assertEqual(expectedUrl, elements[0].attrib['href'])
+
+    def test_list_app_clear_filter_visible_when_both_remote_repo_and_category_filters_active(self):
+        response = self.client.get(reverse('add_app_with_category', kwargs={
+            'repo_id': self.repo.id,
+            'remote_repo_id': self.remote_repo.id,
+            'category_id': 1,
+        }))
+
+        html = lxml.html.fromstring(response.content)
+        elements = html.cssselect('.rm-app-clear-filters a')
+        expectedUrl = reverse('add_app', kwargs={'repo_id': self.repo.id})
+
+        self.assertEqual(1, len(elements), 'clear filter link must be here')
+        self.assertEqual(expectedUrl, elements[0].attrib['href'])
 
     def test_remote_app_details(self):
         # request remote app detail page

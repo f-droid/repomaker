@@ -1,3 +1,5 @@
 pep8
 coverage
 pylint-django
+lxml
+cssselect

@@ -32,7 +32,6 @@
 <div class="rm-app-add">
 	<div class="rm-app-add-filters">
 		<!-- TODO: Show with JS "in Multimedia and GuardianProject Official Releases" -->
-		<!-- TODO: Add ability to clear all filters -->
 		<form action="" method="get">
 			<div class="rm-app-add-filters-search mdl-js-textfield">
 				<i class="material-icons">search</i>
@@ -161,6 +160,18 @@
 					{% endfor %}
 				</noscript>
 			</div>
+			{% if category or remote_repo %}
+			<div class="rm-app-clear-filters-container">
+				<div class="rm-app-clear-filters">
+					<a
+						href="{% url 'add_app' repo.id %}"
+						class="mdl-button mdl-js-button mdl-js-ripple-effect"
+					>
+						{% trans 'Clear filters' %}
+					</a>
+				</div>
+			</div>
+			{% endif %}
 		</div>
 	</div>
 

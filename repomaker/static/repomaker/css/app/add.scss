@@ -40,11 +40,11 @@
 }
 
 .rm-app-add {
-    @extend .mdl-grid, .rm-grid--full-width, .rm-grid--center;
+    @extend .mdl-grid, .rm-grid--center;
 }
 
 .rm-app-add-filters {
-    @extend .mdl-cell, .mdl-cell--8-col;
+    @extend .mdl-cell, .mdl-cell--10-col;
 }
 
 .rm-app-add-filters-search {
@@ -76,19 +76,19 @@
 }
 
 .rm-app-add-filters-second-row {
-    @extend .mdl-grid, .rm-grid--full-width, .rm-grid--center;
+    @extend .mdl-grid, .rm-grid--full-width;
 }
 
 .rm-app-add-filters-category-container,
-.rm-app-add-filters-source-container {
-    @extend .mdl-cell, .mdl-cell--6-col, .center;
+.rm-app-add-filters-source-container,
+.rm-app-clear-filters-container {
+    @extend .mdl-cell, .mdl-cell--4-col;
 }
 
 .rm-app-add-filters-category,
 .rm-app-add-filters-source {
     align-items: center;
     display: flex;
-    justify-content: center;
 }
 
 .rm-app-add-filters-category-title,
