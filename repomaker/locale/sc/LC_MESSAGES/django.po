@@ -483,6 +483,9 @@ msgstr "Mitza (%(count)s)"
 msgid "Add a repo"
 msgstr "Annanghe unu depòsitu"
 
+msgid "Clear filters"
+msgstr ""
+
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
 msgstr "Peruna aplicatzione agatada cun  '%(search_term)s'. Pro praghere proa a fàghere una chirca diferente o boga àteros critèrios de filtru."

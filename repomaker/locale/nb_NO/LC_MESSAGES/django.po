@@ -483,6 +483,9 @@ msgstr "Kilde (%(count)s)"
 msgid "Add a repo"
 msgstr "Legg til pakkebrønn"
 
+msgid "Clear filters"
+msgstr ""
+
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
 msgstr "Ingen programmer samsvarer med '%(search_term)s'. Prøv å endre søket eller fjern andre filterkriterium."

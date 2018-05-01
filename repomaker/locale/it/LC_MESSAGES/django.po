@@ -491,6 +491,9 @@ msgstr "Sorgente (%(count)s)"
 msgid "Add a repo"
 msgstr "Aggiungi un repo"
 
+msgid "Clear filters"
+msgstr ""
+
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
 msgstr ""

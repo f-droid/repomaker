@@ -485,6 +485,9 @@ msgstr "来源 (%(count)s)"
 msgid "Add a repo"
 msgstr "添加资源库"
 
+msgid "Clear filters"
+msgstr ""
+
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
 msgstr "未找到匹配 '%(search_term)s' 的应用。请尝试其他搜索字或移除筛选器选项。"

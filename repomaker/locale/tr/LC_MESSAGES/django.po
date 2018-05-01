@@ -483,6 +483,9 @@ msgstr "Kaynak (%(count)s)"
 msgid "Add a repo"
 msgstr "Bir depo ekle"
 
+msgid "Clear filters"
+msgstr ""
+
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
 msgstr "'%(search_term)s' ile eşleşen uygulama bulunamadı. Lütfen farklı bir arama deneyin veya diğer süzme ölçütlerini kaldırın."

@@ -542,6 +542,9 @@ msgstr "Idioma (%(count)s)"
 msgid "Add a repo"
 msgstr "Afegir des dels repositoris"
 
+msgid "Clear filters"
+msgstr ""
+
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
 msgstr ""

@@ -483,6 +483,9 @@ msgstr "منبع (%(count)s 1)"
 msgid "Add a repo"
 msgstr "یک مخزن اضافه کن"
 
+msgid "Clear filters"
+msgstr ""
+
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
 msgstr "هیچ گونه اپلیکیشنی که با  '%(search_term)s 1' برابر باشد پیدا نشد. لطفا چیز دیگری را جستجو کنید یا فیلتر‌های دیگر را حذف کنید."

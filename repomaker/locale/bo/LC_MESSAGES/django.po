@@ -482,6 +482,9 @@ msgstr "འབྱུང་ཁུངས་(%(count)s 1)"
 msgid "Add a repo"
 msgstr "རེ་པོ་ལ་ཁ་སྣོན།"
 
+msgid "Clear filters"
+msgstr ""
+
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
 msgstr "མཉེན་ཆས་འདི་འདྲ་བ་'%(search_term)s 1'རྙེད་མ་སོང་། འཚོལ་ཐབས་གཞན་དང་ཡང་ན་ཆ་རྐྱེན་གཞན་གང་དགོས་མིན་སུབས།"

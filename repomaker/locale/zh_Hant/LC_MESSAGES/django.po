@@ -482,6 +482,9 @@ msgstr "來源 (%(count)s)"
 msgid "Add a repo"
 msgstr "增加軟體庫"
 
+msgid "Clear filters"
+msgstr ""
+
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
 msgstr "未找到符合 '%(search_term)s' 的應用程式。請嘗試不同的搜尋或移除其他篩選條件。"
