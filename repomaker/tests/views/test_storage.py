@@ -1,5 +1,7 @@
 import os
 
+from unittest.mock import patch
+from django.test import override_settings
 from django.conf import settings
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -109,3 +111,37 @@ class StorageViewsTestCase(RmTestCase):
         self.assertEqual('gitlab.com', storage.host)
         self.assertEqual('test2/test2', storage.path)
         self.assertEqual('https://gitlab.com/test2/test2/raw/master/fdroid', storage.url)
+
+    @patch('repomaker.models.repository.Repository._copy_page_assets')
+    @patch('repomaker.models.repository.Repository.update_async')
+    @patch('repomaker.models.storage.GitStorage.get_repo_url')
+    @override_settings(DEFAULT_REPO_STORAGE=[('repos', 'test')])
+    def test_storage_git_delete_performs_an_update_on_the_repository(
+        self,
+        get_repo_url,
+        update_async,
+        _copy_page_assets
+    ):
+        # Create a second storage on repo
+        storage = GitStorage.objects.create(
+            repo=self.repo,
+            host='gitlab.com',
+            path='test/test',
+            url='https://example.org'
+        )
+
+        # Simulate that created storage is the main (primary) storage
+        get_repo_url.return_value = 'https://example.org'
+
+        # Delete second storage
+        delete_url = reverse(GitStorage.delete_url_name, kwargs={
+            'repo_id': self.repo.id,
+            'pk': storage.pk
+        })
+
+        self.client.delete(delete_url, {'ssh_url': 'git@gitlab.com:test/test.git'})
+
+        # Check that repo.update_async has been called
+        # so that QR Code is updated in assets/qr_code.html
+        update_async.assert_called_once_with()
+        _copy_page_assets.assert_called_once_with()

@@ -116,6 +116,7 @@ class StorageDeleteView(RepositoryAuthorizationMixin, DeleteView):
                 # fallback to this storage if it isn't the same
                 if s.get_repo_url() != storage_url:
                     storage.repo.set_url(s.get_repo_url())
+                    storage.repo.update_async()
                     return super().delete(request, *args, **kwargs)
             # we did not find another storage to use, so unset the main repo URL
             storage.repo.set_url(None)
