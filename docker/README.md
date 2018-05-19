@@ -1,19 +1,27 @@
 # Docker Compose Deployment
 
-First download the files `docker-compose.yml` and `.env` from this directory.
+First, copy the files `docker-compose.yml` and `.env` from this directory:
+
+``` bash
+cp docker/docker-compose.yml docker/.env .
+```
 
 Decide on which domain name your repomaker instance will be running.
-Then generate a new secret key for your deployment.
-For example like so:
+Then edit your `.env` file:
 
-    echo "REPOMAKER_SECRET_KEY=$(pwgen -cny 64 1)"
+ - `REPOMAKER_HOSTNAME` Set your hostname, i.e `localhost`, `repomaker.domain.tld`, ...
+ - `REPOMAKER_PORT` Leave it as default (80), or set another port if you get a port conflict.
+ - `REPOMAKER_SECRET_KEY` Generate a new secret key for your deployment, for example like so:
 
-Edit the downloaded file `.env` and put your domain name and your secret key there.
+``` bash
+echo "REPOMAKER_SECRET_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1)"
+```
 
 Then start the docker containers:
 
-    docker-compose up
+```
+docker-compose up
+```
 
 If everything worked as it should,
 there should now be a repomaker instance running on your domain name.
-
