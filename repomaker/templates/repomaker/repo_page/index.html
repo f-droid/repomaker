@@ -6,7 +6,7 @@
 <div class="mdl-layout-title">
 	<span class="only-desktop">
 		To install these apps on your Android phone, add them to F-Droid.
-		<a href="https://f-droid.org" target="_blank">Get F-Droid</a>
+		<a href="https://f-droid.org" target="_blank" rel="noopener">Get F-Droid</a>
 	</span>
 
 	<div id="repo-buttons-add">
@@ -21,7 +21,7 @@
 		</button>
 	</a>
 	<div id="repo-buttons-install" class="only-mobile">
-		<a href="https://f-droid.org" target="_blank" class="rm-no-underline">
+		<a href="https://f-droid.org" target="_blank" rel="noopener" class="rm-no-underline">
 			<button id="repo-buttons-install-need"
 					class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
 				I need F-Droid
@@ -39,12 +39,12 @@
 <nav class="mdl-navigation">
 	{% with text='Check out this F-Droid repo: '|add:repo.name url=repo.get_fingerprint_url %}
 	<a href="https://twitter.com/intent/tweet?text={{ text|urlencode }}&url={{ url|urlencode }}"
-	   target="_blank">
+	   rel="noopener" target="_blank">
 		<img src="assets/twitter.png"/>
 	</a>
 	{% endwith %}
 	<a href="https://www.facebook.com/sharer/sharer.php?u={{ repo.get_fingerprint_url|urlencode }}"
-	   target="_blank">
+	   rel="noopener" target="_blank">
 		<img src="assets/facebook.png"/>
 	</a>
 </nav>

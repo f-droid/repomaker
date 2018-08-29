@@ -33,7 +33,7 @@
 				You have  <span>{{ app_count }} apps</span> in your repo. Share it!
 				{% endblocktrans %}
 			</div>
-			<a href="{{ repo.url }}" class="rm-repo-share-general-view" target="_blank">
+			<a href="{{ repo.url }}" class="rm-repo-share-general-view" target="_blank" rel="noopener">
 				<button class="mdl-js-button">
 					{% trans 'view repo' %}
 				</button>
@@ -55,7 +55,7 @@
 				{% trans 'To install these apps on your Android phone, add them to F-Droid.' %}<br />
 				{% trans 'F-Droid ensures access to secure app updates.' %}
 			</span>
-			<a href="{{ repo.url }}/assets/qr_code.html" class="rm-repo-share-add-scan" target="_blank">
+			<a href="{{ repo.url }}/assets/qr_code.html" class="rm-repo-share-add-scan" target="_blank" rel="noopener">
 				<button class="mdl-js-button">
 					{% trans 'Scan QR' %}
 				</button>
@@ -67,11 +67,11 @@
 			Check out this F-Droid repo: {{ name }}
 			{% endblocktrans %}
 			<a href="https://twitter.com/intent/tweet?text={{ text|urlencode }}&url={{ repo.get_fingerprint_url|urlencode }}"
-			   target="_blank">
+			   target="_blank" rel="noopener">
 				<img src="{% static 'repomaker/images/repo_page/twitter.png' %}"/>
 			</a>
 			<a href="https://www.facebook.com/sharer/sharer.php?u={{ repo.get_fingerprint_url|urlencode }}"
-			   target="_blank">
+			   target="_blank" rel="noopener">
 				<img src="{% static 'repomaker/images/repo_page/facebook.png' %}"/>
 			</a>
 		</div>
