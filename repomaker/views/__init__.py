@@ -13,9 +13,11 @@ from django.utils import formats
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, ListView
 from django.views.static import serve
+
 from repomaker import DEFAULT_USER_NAME
 from repomaker.models import RemoteRepository, Repository, RemoteApp
 from repomaker.storage import USER_RE, REMOTE_REPO_RE
+from repomaker.utils import clean
 
 
 # TODO remove when not needed anymore for testing
@@ -199,7 +201,9 @@ class DataListTextInput(TextInput):
         text_html = super().render(name, value, attrs, renderer)
         data_list = '<datalist id="list__%s">' % name
         for item in self._list:
-            data_list += '<option value="%s">%s</option>' % (item[0], item[1])
+            value = clean(str(item[0]))
+            name = clean(str(item[1]))
+            data_list += '<option value="%s">%s</option>' % (value, name)
         data_list += '</datalist>'
         return text_html + data_list
 
