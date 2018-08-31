@@ -17,12 +17,27 @@ terminate = False
 
 
 def main():
-    global task_process  # pylint: disable=global-statement
-
-    # create window
-    t_window = Thread(target=create_window)
+    # start stuff in thread
+    t_window = Thread(target=start)
     t_window.start()
 
+    create_window()
+
+
+def create_window():
+    global terminate  # pylint: disable=global-statement
+    try:
+        webview.config["USE_QT"] = True  # use Qt instead of Gtk for webview
+        webview.create_window("Repomaker", confirm_quit=True)
+        terminate = True
+    finally:
+        # halt background tasks
+        if task_process is not None:
+            task_process.terminate()
+
+
+def start():
+    global task_process  # pylint: disable=global-statement
     # show loading screen
     webview.load_html(get_loading_screen())
 
@@ -53,18 +68,6 @@ def main():
         if not terminate:
             # this needs to run as its own process
             task_process = subprocess.Popen(['repomaker-tasks'])
-
-
-def create_window():
-    global terminate  # pylint: disable=global-statement
-    try:
-        webview.config["USE_QT"] = True  # use Qt instead of Gtk for webview
-        webview.create_window("Repomaker", confirm_quit=True)
-        terminate = True
-    finally:
-        # halt background tasks
-        if task_process is not None:
-            task_process.terminate()
 
 
 def get_loading_screen():
