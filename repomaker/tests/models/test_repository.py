@@ -337,11 +337,11 @@ class RepositoryTestCase(RmTestCase):
         self.assertEqual({'de', 'en-us'}, set(app.get_available_languages()))
 
         # add non-apk app
-        apk_hash = '5ec4b30df6a98cc58628e763f35a560e1b333712f1d1f3c9f95f8a1ece54b254'
+        apk_hash = 'a75dc8d9251ed7dff845c98e7aee5cd959658516c00e5260a3366359ede1a0fc'
         app2 = App.objects.create(repo=repo, package_id='test', name='TestMedia', type=VIDEO)
         apk2 = Apk.objects.create(package_id='test', version_code=1337, hash=apk_hash)
-        with open(os.path.join(settings.TEST_FILES_DIR, 'test.webm'), 'rb') as f:
-            apk2.file.save('test.webm', File(f), save=True)
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test.mp4'), 'rb') as f:
+            apk2.file.save('test.mp4', File(f), save=True)
         apk_pointer2 = ApkPointer.objects.create(repo=repo, app=app2, apk=apk2)
         apk_pointer2.link_file_from_apk()
 

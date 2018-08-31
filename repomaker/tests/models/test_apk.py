@@ -180,7 +180,7 @@ class ApkTestCase(RmTestCase):
         self.remote_app.package_id = 'test'
         self.remote_app.save()
         self.apk.package_id = 'test'
-        self.apk.hash = '5ec4b30df6a98cc58628e763f35a560e1b333712f1d1f3c9f95f8a1ece54b254'
+        self.apk.hash = 'a75dc8d9251ed7dff845c98e7aee5cd959658516c00e5260a3366359ede1a0fc'
         self.apk.save()
 
         # create ApkPointer and assert it doesn't have a file
@@ -189,22 +189,22 @@ class ApkTestCase(RmTestCase):
 
         # fake return value of GET request for test file
         get.return_value.status_code = requests.codes.ok
-        with open(os.path.join(settings.TEST_FILES_DIR, 'test.webm'), 'rb') as f:
+        with open(os.path.join(settings.TEST_FILES_DIR, 'test.mp4'), 'rb') as f:
             get.return_value.content = f.read()
 
         # download file and assert there was a GET request for the URL
-        self.apk.download('url/test.webm')
-        get.assert_called_once_with('url/test.webm')
+        self.apk.download('url/test.mp4')
+        get.assert_called_once_with('url/test.mp4')
 
         # assert that downloaded file has been saved
-        self.assertEqual(get_apk_file_path(self.apk, 'test.webm'), self.apk.file.name)
-        path = os.path.join(settings.MEDIA_ROOT, get_apk_file_path(self.apk, 'test.webm'))
+        self.assertEqual(get_apk_file_path(self.apk, 'test.mp4'), self.apk.file.name)
+        path = os.path.join(settings.MEDIA_ROOT, get_apk_file_path(self.apk, 'test.mp4'))
         self.assertTrue(os.path.isfile(path))
 
         # assert that ApkPointer was updated with a new copy/link of the downloaded file
         apk_pointer = ApkPointer.objects.get(pk=apk_pointer.pk)
         self.assertTrue(apk_pointer.file)
-        self.assertEqual(get_apk_file_path(apk_pointer, 'test.webm'), apk_pointer.file.name)
+        self.assertEqual(get_apk_file_path(apk_pointer, 'test.mp4'), apk_pointer.file.name)
         path = os.path.join(settings.MEDIA_ROOT, apk_pointer.file.name)
         self.assertTrue(os.path.isfile(path))
 
@@ -317,13 +317,6 @@ class ApkTestCase(RmTestCase):
         # assert that video type was recognized
         self.assertEqual(repomaker.models.app.VIDEO, App.objects.get(package_id='test2').type)
 
-        # initialize the Apk with video file
-        ApkPointer.objects.all().delete()
-        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.webm'), 'test3.webm')
-        self.apk.initialize(self.repo)
-        # assert that video type was recognized
-        self.assertEqual(repomaker.models.app.VIDEO, App.objects.get(package_id='test3').type)
-
     def test_initialize_audios(self):
         # initialize the Apk with audio file
         self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.flac'), 'test1.flac')
@@ -351,13 +344,6 @@ class ApkTestCase(RmTestCase):
         self.apk.initialize(self.repo)
         # assert that book type was recognized
         self.assertEqual(repomaker.models.app.BOOK, App.objects.get(package_id='test1').type)
-
-        # initialize the Apk with book file
-        ApkPointer.objects.all().delete()
-        self.replace_apk_file(os.path.join(settings.TEST_FILES_DIR, 'test.mobi'), 'test2.mobi')
-        self.apk.initialize(self.repo)
-        # assert that book type was recognized
-        self.assertEqual(repomaker.models.app.BOOK, App.objects.get(package_id='test2').type)
 
     def test_initialize_documents(self):
         # initialize the Apk with document file

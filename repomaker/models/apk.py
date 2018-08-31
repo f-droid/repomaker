@@ -18,7 +18,7 @@ from repomaker import tasks
 from repomaker.models.repository import AbstractRepository
 from repomaker.storage import get_apk_file_path, RepoStorage
 from .apkpointer import ApkPointer, RemoteApkPointer
-from .app import OTHER, IMAGE, VIDEO, AUDIO, DOCUMENT, BOOK, APK
+from .app import IMAGE, VIDEO, AUDIO, DOCUMENT, BOOK, APK
 
 
 class Apk(models.Model):
@@ -181,24 +181,31 @@ class Apk(models.Model):
         return repo_file
 
     def _get_type(self):
+        """
+        Retrieves the file's type as str with mime-type checking if known to not be an APK.
+        If you need extra file-types, please make sure to add them safely(!) here.
+        :raises: ValidationError if doesn't match type on white-list.
+        """
+        ext = os.path.splitext(self.file.name)[1]
+        # exclude dangerous extensions right from the beginning
+        if ext.startswith('.php') or ext.startswith('.py') or ext == '.pl' or ext == '.cgi' or \
+                ext == '.js' or ext == '.html':
+            raise ValidationError(_('Unsupported File Type'))
+        # allow a white-list of mime-types
         mime = magic.from_file(self.file.path, mime=True)
         mime_start = mime.split('/', 1)[0]
-        ext = os.path.splitext(self.file.name)[1]
         if mime_start == 'image':
             return IMAGE
         if mime_start == 'video':
             return VIDEO
         if mime_start == 'audio':
             return AUDIO
-        if mime == 'application/epub+zip' or ext == '.mobi':
+        if mime == 'application/epub+zip':
             return BOOK
         if mime == 'application/pdf' or mime.startswith('application/vnd.oasis.opendocument') \
                 or ext == '.docx' or ext == '.txt':
             return DOCUMENT
-        # TODO add more types
-        if ext.startswith('.php') or ext == '.py' or ext == '.pl' or ext == '.cgi':
-            raise ValidationError(_('Unsupported File Type'))
-        return OTHER
+        raise ValidationError(_('Unsupported File Type'))
 
     def apply_json_package_info(self, package_info):
         """

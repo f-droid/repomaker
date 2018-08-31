@@ -25,7 +25,7 @@ DOCUMENT = 'document'
 IMAGE = 'image'
 AUDIO = 'audio'
 VIDEO = 'video'
-OTHER = 'other'
+OTHER = 'other'  # deprecated due to white-list
 TYPE_CHOICES = (
     (APK, _('APK')),
     (BOOK, _('Book')),
