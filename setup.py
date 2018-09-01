@@ -31,10 +31,10 @@ setup(
         'django-background-tasks>=1.1.9',
         'qrcode',
         'six>=1.9',  # until bleach depends on html5lib>=1.0
-        'bleach',
+        'bleach>=2.1.4',
         'python-magic',
         'cryptography>=1.4.0',
-        'fdroidserver>=0.8',
+        'fdroidserver==0.8',
     ],
 
     # List additional groups of dependencies here (e.g. development dependencies).
@@ -42,6 +42,7 @@ setup(
     # $ pip install -e .[dev,test]
     extras_require={
         'gui': [
+            'pyqt==5.10.0',
             'pywebview[qt5]',
         ],
         'test': [

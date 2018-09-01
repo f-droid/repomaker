@@ -2,20 +2,19 @@
 [![coverage report](https://gitlab.com/fdroid/repomaker/badges/master/coverage.svg)](https://gitlab.com/fdroid/repomaker/-/jobs)
 [![translation status](https://hosted.weblate.org/widgets/f-droid/-/repomaker/svg-badge.svg)](https://hosted.weblate.org/projects/f-droid/repomaker/)
 
-# Warning
+# Installation
 
-This tool is still under heavy development.
-**Don't use it in production, yet!**
-Database migrations are not yet supported, use `purge.sh` to purge your data
-and start from scratch after each update.
+## Requirements
 
-# Requirements
+Please make sure you have the following requirements installed
+before proceeding with the installation. 
 
-## Install
+### Install
 
 * pip for installation of Python 3 dependencies `apt install python3-pip`
+* virtualenv to create a isolated Python environment `apt install virtualenv`
 
-## Runtime
+### Runtime
 
 * keytool from Java Runtime Environment (JRE)
 * apksigner or alternatively jarsigner from Java Development Kit (JDK)
@@ -28,7 +27,36 @@ On Debian, you can simply run this:
 
 `sudo apt install openjdk-8-jre-headless apksigner aapt libmagic1 rsync git`
 
-## Development
+## Install into virtual environment
+
+To not mess with other Python libraries you have installed,
+we will install repomaker into its own isolated Python environment.
+
+    virtualenv repomaker
+    source repomaker/bin/activate
+    pip install repomaker[gui]
+
+You should now be able to start by typing:
+
+    repomaker
+
+## Troubleshooting
+
+First check that you really have all dependencies from above installed.
+
+If the installation fails with something about `openssl`,
+try to install `libssl-dev` with `apt install libssl-dev`.
+
+If starting repomaker fail with the error ```Could not find `keytool` program.```,
+you might run into [this known issue](https://gitlab.com/fdroid/repomaker/issues/192).
+Try if `apt install openjdk-8-jdk-headless` fixes it for you.
+
+If the graphical user interface fails to start,
+you can try running `repomaker-server` and `repomaker-tasks`.
+If that works, you should be able to open [127.0.0.1:8000](http://127.0.0.1:8000/)
+in your browser.
+
+# Development
 
 * npm to fetch CSS and JavaScript dependencies `apt install npm`
 
