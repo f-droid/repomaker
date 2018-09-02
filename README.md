@@ -11,17 +11,22 @@ before proceeding with the installation.
 
 ### Install
 
-* pip for installation of Python 3 dependencies `apt install python3-pip`
-* virtualenv to create a isolated Python environment `apt install virtualenv`
+* `pip` for installation of Python 3 dependencies
+* `virtualenv` to create a isolated Python environment `apt install `
+* Python development and build files for installing/building some dependencies
+
+On Debian, you can simply run this:
+
+`apt install python3-pip python3-wheel python3-dev virtualenv build-essential`
 
 ### Runtime
 
-* keytool from Java Runtime Environment (JRE)
-* apksigner or alternatively jarsigner from Java Development Kit (JDK)
-* Android Asset Packaging Tool (aapt)
-* libmagic for mime-type detection
-* rsync to publish repositories
-* git to publish repositories to git mirrors
+* `keytool` from Java Runtime Environment (JRE)
+* `apksigner` or alternatively jarsigner from Java Development Kit (JDK)
+* Android Asset Packaging Tool (`aapt`)
+* `libmagic` for mime-type detection
+* `rsync` to publish repositories
+* `git` to publish repositories to git mirrors
 
 On Debian, you can simply run this:
 
@@ -32,7 +37,7 @@ On Debian, you can simply run this:
 To not mess with other Python libraries you have installed,
 we will install repomaker into its own isolated Python environment.
 
-    virtualenv repomaker
+    virtualenv -p /usr/bin/python3 repomaker
     source repomaker/bin/activate
     pip install repomaker[gui]
 
