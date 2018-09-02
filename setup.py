@@ -15,7 +15,7 @@ setup(
     description='Create F-Droid repositories with ease',
     license='AGPL-3.0',
     url='https://f-droid.org/repomaker/',
-    python_requires='>=3',
+    python_requires='>=3, <3.7',
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
@@ -42,7 +42,7 @@ setup(
     # $ pip install -e .[dev,test]
     extras_require={
         'gui': [
-            'pyqt==5.10.0',
+            'PyQt5==5.10.0',
             'pywebview[qt5]',
         ],
         'test': [
