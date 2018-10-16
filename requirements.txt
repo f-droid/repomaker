@@ -7,3 +7,4 @@ six>=1.9  # until bleach depends on html5lib>=1.0
 bleach>=2.1.4
 python-magic
 cryptography>=1.4.0
+html5lib==1.0.1
