@@ -19,6 +19,13 @@ On Debian, you can simply run this:
 
 `apt install python3-pip python3-wheel python3-dev virtualenv build-essential`
 
+Currently, Repomaker only works with Python versions minor than 3.7 due to
+[a bug in Django](https://github.com/django/django/commit/931c60c5216bd71bc11f489e00e063331cf21f40).
+This means that you need to install older versions of Python, e.g. version 3.6,
+if you are on a bleeding edge distro like Arch Linux.
+If you try to get this running on Arch Linux,
+[this comment](https://gitlab.com/fdroid/repomaker/issues/197#note_114210540) might help.
+
 ### Runtime
 
 * `keytool` from Java Runtime Environment (JRE)
@@ -45,6 +52,9 @@ You should now be able to start by typing:
 
     repomaker
 
+If you want to work on repomaker,
+please see the development section below.
+
 ## Troubleshooting
 
 First check that you really have all dependencies from above installed.
@@ -63,9 +73,17 @@ in your browser.
 
 # Development
 
-* npm to fetch CSS and JavaScript dependencies `apt install npm`
+To work on repomaker, you need _npm_ to fetch CSS and JavaScript dependencies: `apt install npm`.
 
 Then run `npm install` to install these dependencies.
+
+If you want to run repomaker in your browser rather then using the GUI,
+you can start it like this:
+
+    virtualenv -p /usr/bin/python3 repomaker
+    source repomaker/bin/activate
+    ./setup.sh
+    ./run.sh
 
 ## Translation
 
