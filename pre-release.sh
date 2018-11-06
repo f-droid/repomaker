@@ -16,7 +16,8 @@ npm install
 rm -rf ${NODE}/dialog-polyfill/!(dialog-polyfill.*)
 
 # material-design-icons-iconfont remove unused files
-rm -rf ${NODE}/material-design-icons-iconfont/!(dist)
+rm -rf ${NODE}/material-design-icons-iconfont/!(src)
+rm -rf ${NODE}/material-design-icons-iconfont/src/!(material-design-icons.scss)
 rm -rf ${NODE}/material-design-icons-iconfont/.idea
 
 # material-design-lite remove unused files
