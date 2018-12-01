@@ -1,7 +1,6 @@
 # These requirements are not yet in Debian
 fdroidserver==0.8
-#git+https://gitlab.com/grote/fdroidserver.git@686c7423623035fc37dff26ff51e8aeccea9ba27#egg=fdroidserver
-django-background-tasks>=1.1.9
+django-background-tasks==1.1.13
 django-sass-processor
 django-allauth
 django-hvad>=1.8.0

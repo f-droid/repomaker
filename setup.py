@@ -28,7 +28,7 @@ setup(
         'django-compressor',
         'django-sass-processor',
         'django-hvad>=1.8.0',
-        'django-background-tasks>=1.1.9',
+        'django-background-tasks==1.1.13',
         'qrcode',
         'six>=1.9',  # until bleach depends on html5lib>=1.0
         'bleach>=2.1.4',
