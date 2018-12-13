@@ -138,9 +138,16 @@ class Repository(AbstractRepository):
         """
         Creates the repository on disk including the keystore.
         This also sets the public key and fingerprint for :param repo.
+
+        Because some keystore types (e.g. PKCS12) don't support
+        different passwords for store and key,
+        we give them the same password.
+        We still treat them differently to support former versions
+        of Repomaker which used different passwords but
+        did not work with all types of keystores.
         """
         self.key_store_pass = common.genpassword()
-        self.key_pass = common.genpassword()
+        self.key_pass = self.key_store_pass
 
         self.chdir()
         config = self.get_config()
