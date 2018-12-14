@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Repomaker
+Comment=Create F-Droid repos with ease
+Keywords=F-Droid;FDroid;Repository;Repositories;Repos;
+Exec=repomaker
+Terminal=false
+Type=Application
+Icon=org.fdroid.repomaker
+Categories=Development;Utility;
+StartupNotify=true

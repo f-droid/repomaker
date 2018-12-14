@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Repomaker
-Comment=Create F-Droid repositories with ease
-Exec=repomaker
-Terminal=false
-Type=Application
-Icon=repomaker.png
-Categories=Development;Utility;

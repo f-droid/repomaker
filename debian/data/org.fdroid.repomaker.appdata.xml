@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+​<component type="desktop-application">
+  <id>org.fdroid.repomaker</id>
+  <metadata_license>CC-BY-SA-4.0</metadata_license>
+  <project_license>AGPL-3.0</project_license>
+  <name>Repomaker</name>
+  <summary>Create F-Droid repos with ease</summary>
+
+  <description>
+    <p>
+      F-Droid is an installable catalogue of FOSS (Free and Open Source
+      Software) applications for the Android platform. The client makes it
+      easy to browse, install, and keep track of updates on your device.
+    </p>
+    <p>
+      F-Droid.org is just a repo out of hundreds of repos created by
+      individuals all around the globe. With the tools of F-Droid,
+      everyone can create their own repo. So whether you are a musician
+      who wants to publish their music or a developer who wants to serve
+      nightly builds of their app, you are free to create your own repo
+      and share it with other people independently of F-Droid.org.
+    </p>
+    <p>
+      In the past, creating a repo has been difficult because you had to
+      have knowledge on the command line, needed to edit text files to
+      edit your packages’ store details and had to paste screenshots in a
+      special system of directories to have them served well inside the
+      F-Droid app.
+    </p>
+    <p>
+      This all got easier now: with Repomaker, you are able to create your
+      own repo and do not need to have any special knowledge to do so.
+    </p>
+  </description>
+
+  <categories>
+    <category>Development</category>
+    <category>Utility</category>
+  </categories>
+
+  <launchable type="desktop-id">org.fdroid.repomaker.desktop</launchable>
+
+  <screenshots>
+    <screenshot type="default">
+      <image>https://f-droid.org/assets/repomaker-screenshots/repo-details.png</image>
+      <caption>Your repo can serve all types of media</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://f-droid.org/assets/repomaker-screenshots/package-details.png</image>
+      <caption>Editing your package store details never was easier</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://f-droid.org/assets/repomaker-screenshots/create-repo.png</image>
+      <caption>Creating a repo just takes you two clicks</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://f-droid.org/assets/repomaker-screenshots/add-storage.png</image>
+      <caption>You have many possibilities where to upload your repo</caption>
+    </screenshot>
+  </screenshots>
+
+
+  <url type="homepage">https://f-droid.org</url>
+  <url type="bugtracker">https://gitlab.com/fdroid/repomaker/issues</url>
+  <url type="faq">https://f-droid.org/docs/FAQ_-_General/</url>
+  <url type="donation">https://f-droid.org/about/</url>
+  <url type="translate">https://f-droid.org/docs/Translation_and_Localization/</url>
+
+  <update_contact>team@f-droid.org</update_contact>
+  <developer_name>F-Droid Team</developer_name>
+
+
+  <provides>
+    <binary>repomaker</binary>
+    <binary>repomaker-server</binary>
+    <binary>repomaker-tasks</binary>
+  </provides>
+
+  <releases>
+    <release version="0.0.5" date="2018-11-03">
+      <description>
+        <p>Initial Release</p>
+      </description>
+    </release>
+  </releases>
+
+  <content_rating type="oars-1.1" />
+</component>

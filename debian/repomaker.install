@@ -1,2 +1,3 @@
-debian/data/repomaker.desktop usr/share/applications/
-debian/data/repomaker.png usr/share/pixmaps/
+debian/data/org.fdroid.repomaker.appdata.xml usr/share/metainfo/
+debian/data/org.fdroid.repomaker.desktop usr/share/applications/
+debian/data/org.fdroid.repomaker.svg usr/share/icons/hicolor/scalable/apps/
