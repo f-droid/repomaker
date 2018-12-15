@@ -5,6 +5,6 @@ Keywords=F-Droid;FDroid;Repository;Repositories;Repos;
 Exec=repomaker
 Terminal=false
 Type=Application
-Icon=org.fdroid.repomaker
+Icon=org.fdroid.Repomaker
 Categories=Development;Utility;
 StartupNotify=true

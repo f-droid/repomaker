@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>org.fdroid.repomaker</id>
+  <id>org.fdroid.Repomaker</id>
   <metadata_license>CC-BY-SA-4.0</metadata_license>
   <project_license>AGPL-3.0</project_license>
   <name>Repomaker</name>
@@ -38,7 +38,7 @@
     <category>Utility</category>
   </categories>
 
-  <launchable type="desktop-id">org.fdroid.repomaker.desktop</launchable>
+  <launchable type="desktop-id">org.fdroid.Repomaker.desktop</launchable>
 
   <screenshots>
     <screenshot type="default">
