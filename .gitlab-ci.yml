@@ -42,7 +42,7 @@ docker:
     IMAGE: registry.gitlab.com/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}:latest
 
   before_script:
-    - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} registry.gitlab.com
+    - echo $CI_BUILD_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
   script:
     - docker build -t $IMAGE .
     - docker push $IMAGE
