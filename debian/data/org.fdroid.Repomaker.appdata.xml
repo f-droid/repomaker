@@ -77,14 +77,14 @@
   </provides>
 
   <releases>
-    <release version="0.0.5" date="2018-11-03">
-      <description>
-        <p>Initial Release</p>
-      </description>
-    </release>
     <release version="1.0.0b1" date="2019-01-29">
       <description>
         <p>First beta release of 1.0.0. It is intended to be stable, but not guaranteed.</p>
+      </description>
+    </release>
+    <release version="0.0.5" date="2018-11-03">
+      <description>
+        <p>Initial Release</p>
       </description>
     </release>
   </releases>
