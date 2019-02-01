@@ -4,15 +4,45 @@
 
 # Installation
 
-## Requirements
+There are several different ways to install Repomaker.
+
+## Ubuntu/Debian
+
+In F-Droid's Ubuntu ppa exists
+[a package of Repomaker](https://launchpad.net/~fdroid/+archive/ubuntu/repomaker)
+which might also work on Debian and other Debian based systems.
+You can install it like this:
+```bash
+sudo add-apt-repository ppa:fdroid/repomaker
+sudo apt update
+sudo apt install repomaker
+```
+
+## Flatpak
+
+Repomaker is available as Flatpak and
+[distributed on Flathub](https://flathub.org/apps/details/org.fdroid.Repomaker).
+Once you got [Flatpak installed on your system](https://flatpak.org/setup/),
+either go to your system's app store or execute the following commands:
+```bash
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak install flathub org.fdroid.Repomaker
+```
+
+## PyPi
+
+If you don't want or can't install Repomaker with one of the mentioned
+methods, you can install it with _pip_ from PyPi.
+
+### Requirements
 
 Please make sure you have the following requirements installed
 before proceeding with the installation. 
 
-### Install
+#### Install
 
 * `pip` for installation of Python 3 dependencies
-* `virtualenv` to create a isolated Python environment `apt install `
+* `virtualenv` to create an isolated Python environment
 * Python development and build files for installing/building some dependencies
 
 On Debian, you can simply run this:
@@ -26,7 +56,7 @@ if you are on a bleeding edge distro like Arch Linux.
 If you try to get this running on Arch Linux,
 [this comment](https://gitlab.com/fdroid/repomaker/issues/197#note_114210540) might help.
 
-### Runtime
+#### Runtime
 
 * `keytool` from Java Runtime Environment (JRE)
 * `apksigner` or alternatively jarsigner from Java Development Kit (JDK)
@@ -39,7 +69,7 @@ On Debian, you can simply run this:
 
 `sudo apt install openjdk-8-jre-headless apksigner aapt libmagic1 rsync git`
 
-## Install into virtual environment
+### Install into virtual environment
 
 To not mess with other Python libraries you have installed,
 we will install repomaker into its own isolated Python environment.
@@ -55,7 +85,7 @@ You should now be able to start by typing:
 If you want to work on repomaker,
 please see the development section below.
 
-## Troubleshooting
+### Troubleshooting
 
 First check that you really have all dependencies from above installed.
 
@@ -70,6 +100,15 @@ If the graphical user interface fails to start,
 you can try running `repomaker-server` and `repomaker-tasks`.
 If that works, you should be able to open [127.0.0.1:8000](http://127.0.0.1:8000/)
 in your browser.
+
+## On a server / Docker
+
+Note that you can run Repomaker on a server and make use of its
+multi user functionality.
+See [Docker docs](https://gitlab.com/fdroid/repomaker/tree/master/docker)
+and the
+[general docs](https://gitlab.com/fdroid/repomaker/tree/master/doc)
+for more information on that topic.
 
 # Development
 
