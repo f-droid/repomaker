@@ -15,13 +15,13 @@ setup(
     description='Create F-Droid repositories with ease',
     license='AGPL-3.0',
     url='https://f-droid.org/repomaker/',
-    python_requires='>=3, <3.7',
+    python_requires='>=3',
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
-        'django<2.0',
+        'django==1.11.20',
         'django-allauth',
         'django-tinymce',
         'django-js-reverse',

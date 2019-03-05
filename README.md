@@ -49,13 +49,6 @@ On Debian, you can simply run this:
 
 `apt install python3-pip python3-wheel python3-dev virtualenv build-essential`
 
-Currently, Repomaker only works with Python versions minor than 3.7 due to
-[a bug in Django](https://github.com/django/django/commit/931c60c5216bd71bc11f489e00e063331cf21f40).
-This means that you need to install older versions of Python, e.g. version 3.6,
-if you are on a bleeding edge distro like Arch Linux.
-If you try to get this running on Arch Linux,
-[this comment](https://gitlab.com/fdroid/repomaker/issues/197#note_114210540) might help.
-
 #### Runtime
 
 * `keytool` from Java Runtime Environment (JRE)
