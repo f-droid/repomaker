@@ -1,21 +1,9 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# Arthur <un-logic@ya.ru>, 2019.
 msgid ""
-msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-02-26 09:39+0000\n"
-"Last-Translator: Andrey <andrey@mailbox.org>\n"
-"Language-Team: Russian <https://hosted.weblate.org/projects/f-droid/repomaker/ru/>\n"
-"Language: ru\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.20-dev\n"
+msgstr "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2018-09-01 20:54+0000\nPO-Revision-Date: 2019-02-23 18:18+0000\nLast-Translator: Arthur <un-logic@ya.ru>\nLanguage-Team: Russian <https://hosted.weblate.org/projects/f-droid/repomaker/ru/>\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\nX-Generator: Weblate 3.5-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -241,7 +229,7 @@ msgid "Disable Automatic Updates"
 msgstr "Отключить автоматические обновления"
 
 msgid "Delete Feature Graphic"
-msgstr "Удалить графический объект"
+msgstr "Удалить Графическое оформление"
 
 #, python-format
 msgid "Are you sure you want to delete the feature graphic from your app <strong>%(app)s</strong>?"
@@ -287,434 +275,435 @@ msgid "This app has no APK files."
 msgstr "Это приложение не имеет файлов APK."
 
 msgid "If you added this app from a remote repo, try deleting it and adding it again."
-msgstr ""
+msgstr "Если это приложение из стороннего репозитория, попробуйте удалить его и снова добавить."
 
 msgid "Previous"
-msgstr ""
+msgstr "Назад"
 
 msgid "Next"
-msgstr ""
+msgstr "Дальше"
 
 msgid "Add"
-msgstr ""
+msgstr "Добавить"
 
 msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
-msgstr ""
+msgstr "Сейчас скриншоты не видны, потому что это позволит владельцу репозитория отследить вас."
 
 msgid "show screenshots"
-msgstr ""
+msgstr "показать скриншоты"
 
 msgid "Delete Screenshot"
-msgstr ""
+msgstr "Удалить скриншот"
 
 #, python-format
 msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
-msgstr ""
+msgstr "Уверены, что хотите удалить скриншот вашего приложения <strong>%(app)s</strong>?"
 
 msgid "Language Code"
-msgstr ""
+msgstr "Код языка"
 
 #, python-format
 msgid "Hello, %(user)s"
-msgstr ""
+msgstr "Здравствуйте, %(user)s."
 
 msgid "Please Wait!"
-msgstr ""
+msgstr "Пожалуйста, подождите."
 
 msgid "Background Operation in Progress"
-msgstr ""
+msgstr "Выполняется фоновая операция"
 
 msgid "Repomaker might be updating or publishing your repo. Or it might be updating a remote repo. Depending on the type and size of the background operation, this might take awhile."
-msgstr ""
+msgstr "Возможно, Repomaker обновляет или публикует Ваш репозиторий. Или, возможно, обновляет удалённый репозиторий. Это может занять некоторое время, в зависимости от вида и объёма фоновой операции."
 
 msgid "Try Again"
-msgstr ""
+msgstr "Попробуйте снова"
 
 msgid "The button won't work for you. Please press F5 to try again."
-msgstr ""
+msgstr "Для Вас эта кнопка недоступна. Пожалуйста, нажмите F5, чтобы попробовать снова"
 
 msgid "Error"
-msgstr ""
+msgstr "Ошибка"
 
 msgid "My Repos"
-msgstr ""
+msgstr "Мои репозитории"
 
 #, python-format
 msgid "Published %(time_ago)s"
-msgstr ""
+msgstr "Опубликовано %(time_ago)s"
 
 #, python-format
 msgid "Created %(time_ago)s"
-msgstr ""
+msgstr "Создан %(time_ago)s"
 
 msgid "Make a collection of apps to share"
-msgstr ""
+msgstr "Создайте коллекцию приложений, которыми вы хотите поделиться"
 
 msgid "Create Repo"
-msgstr ""
+msgstr "Создать репозиторий"
 
 msgid "New Repo"
-msgstr ""
+msgstr "Новый репозиторий"
 
 msgid "Create"
-msgstr ""
+msgstr "Создать"
 
 msgid "Delete Repo"
-msgstr ""
+msgstr "Удалить репозиторий"
 
 #, python-format
 msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
-msgstr ""
+msgstr "Вы действительно хотите удалить репозиторий <strong>%(repo)s</strong>?"
 
 msgid "This will also delete all apps and other files from your repo. You will not be able to get them back, users of your repo will not be able to use it anymore and not receive updates for the apps they received from you. There is no way to recover this repo!"
-msgstr ""
+msgstr "Все приложения и прочие файлы также будут удалены из вашего репозитория. Вы не сможете их вернуть, пользователи вашего репозитория больше не смогут его использовать, в том числе для обновления приложений, полученных от вас. Восстановление этого репозитория будет невозможно!"
 
 msgid "Please only proceed if you know what you are doing!"
-msgstr ""
+msgstr "Продолжайте только в том случае, если знаете, что делаете."
 
 msgid "Yes, I want to delete the repo"
-msgstr ""
+msgstr "Да, я хочу удалить репозиторий"
 
 msgid "Edit Repo"
-msgstr ""
+msgstr "Изменить Репозиторий"
 
 msgid "Save Changes"
-msgstr ""
+msgstr "Сохранить изменения"
 
 msgid "Content"
-msgstr ""
+msgstr "Содержание"
 
 msgid "Share"
-msgstr ""
+msgstr "Поделиться"
 
 msgid "Info"
-msgstr ""
+msgstr "Сведения"
 
 msgid "Search for apps in your repository"
-msgstr ""
+msgstr "Поиск приложений в Вашем репозитории"
 
 msgid "add from gallery"
-msgstr ""
+msgstr "добавить из галереи"
 
 #, python-format
 msgid "Alternatively, drag and drop or %(label_start)schoose files%(label_end)s"
-msgstr ""
+msgstr "Также можно перетащить или %(label_start)sвыбрать файлы%(label_end)s"
 
 msgid "Accepted files include Android apps, documents, eBooks, audio and video."
-msgstr ""
+msgstr "Допускаются файлы приложений Android, документы, электронные книги, аудио и видео."
 
 msgid "Your search did not return any results."
-msgstr ""
+msgstr "По Вашему запросу ничего не найдено."
 
 msgid "Name"
-msgstr ""
+msgstr "Название"
 
 msgid "Storage"
-msgstr ""
+msgstr "Хранилище"
 
 msgid "Add Storage"
-msgstr ""
+msgstr "Добавить хранилище"
 
 msgid "Fingerprint"
-msgstr ""
+msgstr "Отпечаток"
 
 msgid "Remove Repo"
-msgstr ""
+msgstr "Удалить репозиторий"
 
 msgid "Add storage to publish"
-msgstr ""
+msgstr "Подготовить хранилище для публикации"
 
 msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
-msgstr ""
+msgstr "После добавления хранилища репозиторий будет опубликован автоматически. Repomaker не распространяет свободно Ваших данных. Их увидят только те, кто получил прямую ссылку на Ваш репозиторий."
 
 msgid "add storage"
-msgstr ""
+msgstr "добавьте хранилище"
 
 #, python-format
 msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
 msgid_plural "You have  <span>%(app_count)s apps</span> in your repo. Share it!"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "У Вас в репозитории <span>%(app_count)s app</span> приложение. Поделитесь им!"
+msgstr[1] "У Вас в репозитории <span>%(app_count)s app</span> приложения. Поделитесь им!"
+msgstr[2] "У Вас в репозитории <span>%(app_count)s app</span> приложений. Поделитесь им!"
 
 msgid "view repo"
-msgstr ""
+msgstr "показать репозиторий"
 
 msgid "share public link"
-msgstr ""
+msgstr "опубликовать ссылку"
 
 msgid "copy link"
-msgstr ""
+msgstr "скопировать ссылку"
 
 msgid "add to an android phone"
-msgstr ""
+msgstr "добавить на аппарат с Android"
 
 msgid "To install these apps on your Android phone, add them to F-Droid."
-msgstr ""
+msgstr "Для того, чтобы установить эти приложения на свой аппарат Android, добавьте их в F-Droid."
 
 msgid "F-Droid ensures access to secure app updates."
-msgstr ""
+msgstr "F-Droid позволяет безопасно получать обновления приложения."
 
 msgid "Scan QR"
-msgstr ""
+msgstr "Сканировать код QR"
 
 #, python-format
 msgid "Check out this F-Droid repo: %(name)s"
-msgstr ""
+msgstr "Проверьте этот репозиторий F-Droid: %(name)s"
 
 msgid "Browse Gallery"
-msgstr ""
+msgstr "Просмотреть Галерею"
 
 msgid "Search"
-msgstr ""
+msgstr "Поиск"
 
 #, python-format
 msgid "Category (%(count)s)"
-msgstr ""
+msgstr "Категория (%(count)s)"
 
 msgid "All"
-msgstr ""
+msgstr "Все"
 
 #, python-format
 msgid "Source (%(count)s)"
-msgstr ""
+msgstr "Источник (%(count)s)"
 
 msgid "Add a repo"
-msgstr ""
+msgstr "Добавить репозиторий"
 
 msgid "Clear filters"
-msgstr ""
+msgstr "Сбросить фильтры"
 
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
-msgstr ""
+msgstr "По запросу '%(search_term)s' приложений не найдено. Попробуйте другой запрос или откажитесь от одного критериев фильтра."
 
 msgid "There are no apps in this repo."
-msgstr ""
+msgstr "Этот репозиторий пуст."
 
 msgid "There are no apps available in the repos."
-msgstr ""
+msgstr "Все репозитории пусты."
 
 msgid "If you just added a repo, wait for the apps to download and try again later."
-msgstr ""
+msgstr "Если Вы только что добавили репозиторий, дождитесь загрузки приложений и попробуйте снова."
 
 msgid "This repo has no apps in the selected category. Try clearing it or select a different repo."
-msgstr ""
+msgstr "В выбранных категориях этого репозитория приложений нет. Попробуйте её убрать или выберите другой репозиторий."
 
 msgid "There are no apps available in the selected category. Try clearing it."
-msgstr ""
+msgstr "В выбранных категориях нет приложений. Попробуйте их убрать."
 
 msgid "Delete Storage"
-msgstr ""
+msgstr "Удалить хранилище"
 
 #, python-format
 msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong> from your repo?"
-msgstr ""
+msgstr "Вы уверены, что хотите удалить хранилище в <strong>%(object)s</strong> из своего репозитория?"
 
 msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
-msgstr ""
+msgstr "Эта операция не удалит содержимое из данного хранилища, вместо этого прекратится публикация новых версий Вашего репозитория."
 
 msgid "Enable Storage"
-msgstr ""
+msgstr "Включить хранилище"
 
 msgid "Disable Storage"
-msgstr ""
+msgstr "Отключить хранилище"
 
 msgid "Repo Address"
-msgstr ""
+msgstr "Адрес репозитория"
 
 msgid "Edit Storage"
-msgstr ""
+msgstr "Изменить хранилище"
 
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
-msgstr ""
+msgstr "Чтобы выгрузка заработала, не забудьте добавить данный открытый ключ SSH в свою учётную запись Git. Вот инструкции для <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> и <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
-msgstr ""
+msgstr "Также убедитесь, что основная ветвь вашего репозитория <b>не защищена</b> от force pushing."
 
 msgid "Git Repository SSH Address"
-msgstr ""
+msgstr "Адрес SSH репозитория Git"
 
 msgid "Region"
-msgstr ""
+msgstr "Регион"
 
 msgid "Bucket"
-msgstr ""
+msgstr "Bucket"
 
 msgid "Access Key ID"
-msgstr ""
+msgstr "ID ключа доступа"
 
 msgid "Please make sure to add this public SSH key to your SSH server's <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> file,\tif you have not done so already."
-msgstr ""
+msgstr "Пожалуйста, убедитесь в том, что этот открытый ключ SSH добавлен в файл <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> Вашего сервера SSH."
 
 msgid "Security Warning: This gives repomaker write access to that storage. Please limit this user's access as much as possible."
-msgstr ""
+msgstr "Предупреждение по безопасности: Это даёт repomaker доступ на запись в данное хранилище. По возможности ограничьте права доступа этого пользователя."
 
 msgid "Username"
-msgstr ""
+msgstr "Имя пользователя"
 
 msgid "Host"
-msgstr ""
+msgstr "Адрес IP"
 
 msgid "Path"
-msgstr ""
+msgstr "Путь"
 
 msgid "Your local default SSH key will be used to connect to the storage."
-msgstr ""
+msgstr "Для подключения к хранилищу будет использован Ваш ключ SSH по-умолчанию."
 
 msgid "Please make sure to authorize this public SSH key for your remote storage, if you have not done so already."
-msgstr ""
+msgstr "Убедитесь в том, что данный открытый ключ SSH авторизован на Вашем удалённом хранилище, если нет, то исправьте это."
 
 msgid "Activate this storage only once you have added the SSH key."
-msgstr ""
+msgstr "Активируйте это хранилище только после добавления ключа SSH."
 
 msgid "If this storage is experiencing problems, please check that the SSH key works properly."
-msgstr ""
+msgstr "Если у Вас проблемы с хранилищем, пожалуйста, убедитесь, что ключ SSH подходит."
 
 #, python-format
 msgid "Update %(storage_name)s"
-msgstr ""
+msgstr "Обновить %(storage_name)s"
 
 #, python-format
 msgid "Setup %(storage_name)s"
-msgstr ""
+msgstr "Настроить %(storage_name)s"
 
 msgid "cancel"
-msgstr ""
+msgstr "отмена"
 
 msgid "save"
-msgstr ""
+msgstr "сохранить"
 
 msgid "Here's how to copy the SSH Address from GitLab:"
-msgstr ""
+msgstr "Вот так можно скопировать адрес SSH с GitLab:"
 
 msgid "Setup a place to store your repo"
-msgstr ""
+msgstr "Укажите место хранения своего репозитория"
 
 msgid "Git"
-msgstr ""
+msgstr "Git"
 
 msgid "Easy, free, requires an account"
-msgstr ""
+msgstr "Просто, бесплатно, требуется учётная запись"
 
 msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
-msgstr ""
+msgstr "Git — распространённый инструментарий для контроля версий. Можно безопасно публиковать свои репозитории на GitLab'е, GitHub'е и любых других сервисах поддерживающих Git. Для безопасного копирования файлов с Вашего компьютера на удалённые такие сервисы применяют SSH."
 
 msgid "Setup"
-msgstr ""
+msgstr "Настройка"
 
 msgid "GitLab"
-msgstr ""
+msgstr "GitLab"
 
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 msgid "SSH"
-msgstr ""
+msgstr "SSH"
 
 msgid "Requires a personal web server or host that supports SSH"
-msgstr ""
+msgstr "Требуется собственный веб-сервер или хост, поддерживающий SSH"
 
 msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
-msgstr ""
+msgstr "SSH — технология, применяемая для безопасного копирования файлов на удалённые компьютеры. При использовании в качестве хранилища Git'а файлы также копируются по SSH. Но вариант  \"SSH\" копирует файлы напрямую, без применения других технологий."
 
 msgid "Amazon S3"
-msgstr ""
+msgstr "Amazon S3"
 
 msgid "Requires an Amazon account, Pricing varies"
-msgstr ""
+msgstr "Требуется учётная запись Amazon, цены различные"
 
 msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
-msgstr ""
+msgstr "Amazon S3 — веб-сервис, предлагаемый Amazon Web Services. Amazon S3 предлагает хранилища при помощи веб-услуг. Цены различные. Подробности на сайте Amazon S3."
 
 #, python-format
 msgid "Version %(version)s (%(date)s)"
-msgstr ""
+msgstr "Версия %(version)s (%(date)s)"
 
 msgid "Added"
-msgstr ""
+msgstr "Добавлено"
 
 msgid "There was an error creating the repository. Please try again!"
-msgstr ""
+msgstr "При создании репозитория возникла ошибка. Попробуйте снова!"
 
 msgid "Enter email"
-msgstr ""
+msgstr "Введите адрес e-mail"
 
 msgid "Enter your email address and we'll send a link to reset it. If you did not sign up with an email, we cannot help you securely reset your password."
-msgstr ""
+msgstr "Введите свой адрес e-mail и мы вышлем ссылку для сброса. Если Вы регистрируетесь без указания e-mail, мы не сможем безопасно сбросить Ваш пароль."
 
 msgid "This is not a valid language code."
-msgstr ""
+msgstr "Неправильный код языка."
 
 msgid "This language already exists. Please choose another one!"
-msgstr ""
+msgstr "Такой язык уже есть. Пожалуйста, выберите другой!"
 
 msgid "Enter SSH URL"
-msgstr ""
+msgstr "Введите адрес SSH"
 
 msgid "Raw Git URL"
-msgstr ""
+msgstr "Исходный адрес Git"
 
 msgid "This is the location where the uploaded files can be accessed from in raw form. Leave empty for GitHub or GitLab.com repositories."
-msgstr ""
+msgstr "Это то место, откуда выгруженные файлы будут доступны в изначальном виде. Не заполняйте для репозиториев на GitHub или GitLab.com."
 
 msgid "This URL must start with 'git@'."
-msgstr ""
+msgstr "Адрес должен начинаться с \"git@\"."
 
 msgid "This URL must end with '.git'."
-msgstr ""
+msgstr "Адрес должен оканчиваться на \".git\"."
 
 msgid "This URL is invalid. Please copy the exact SSH URL of your git repository."
-msgstr ""
+msgstr "Неправильный адрес. Пожалуйста, точно скопируйте адрес SSH своего репозитория git."
 
 msgid "Please add a valid URLfor the raw content of this git repository."
-msgstr ""
+msgstr "Пожалуйста, добавьте правильную ссылку на изначальное содержимое данного репозитория git."
 
 msgid "Repository URL"
-msgstr ""
+msgstr "Адрес репозитория"
 
 msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
-msgstr ""
+msgstr "Пожалуйста, используйте ссылку с отпечатком на конце, так мы, сможем проверить репозиторий на соответствие."
 
 msgid "Please don't add one of your own repositories here."
-msgstr ""
+msgstr "Пожалуйста, не добавляйте сюда свои репозитории."
 
 #, python-format
 msgid "Could not validate repository: %s"
-msgstr ""
+msgstr "Не могу проверить репозиторий: %s"
 
 msgid "Describe the repo"
-msgstr ""
+msgstr "Опишите репозиторий"
 
+#, fuzzy
 msgid "Bucket Name"
-msgstr ""
+msgstr "Название Bucket"
 
 msgid "Secret Access Key"
-msgstr ""
+msgstr "Секретный ключ доступа"
 
 msgid "Other regions are currently not supported."
-msgstr ""
+msgstr "Другие регионы пока не поддерживаются."
 
 msgid "Language"
-msgstr ""
+msgstr "Язык"
 
 msgid "Select Screenshot for upload"
-msgstr ""
+msgstr "Выберите снимок экрана для загрузки"
 
 msgid "Use local default SSH Key"
-msgstr ""
+msgstr "Использовать локальный ключ SSH по-умолчанию"
 
 msgid "User Name"
-msgstr ""
+msgstr "Имя пользователя"
 
 msgid "URL"
-msgstr ""
+msgstr "Адрес"
 
 msgid "This is the location where the uploaded files can be accessed from."
-msgstr ""
+msgstr "Это то место, откуда можно получить доступ к выгруженным файлам."
 
 msgid "Primary Storage"
-msgstr ""
+msgstr "Основное хранилище"
 
 msgid "Make this storage the primary storage of the repository."
-msgstr ""
+msgstr "Сделать это хранилище основным для этого репозитория."
