@@ -7,7 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-04-22 17:24+0000\n"
+"POT-Creation-Date: 2018-09-01 20:55+0000\n"
+"PO-Revision-Date: 2018-11-30 18:08+0000\n"
 "Last-Translator: Myeongjin Lee <aranet100@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/f-droid/repomaker-javascript/ko/>\n"
 "Language: ko\n"
@@ -15,179 +16,179 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.0-dev\n"
+"X-Generator: Weblate 3.3\n"
 
 #, javascript-format
 msgid "Available %s"
-msgstr ""
+msgstr "사용 가능 %s"
 
 #, javascript-format
 msgid "This is the list of available %s. You may choose some by selecting them in the box below and then clicking the \"Choose\" arrow between the two boxes."
-msgstr ""
+msgstr "이는 사용 가능한 %s의 목록입니다. 여러분은 일부를 아래 상자에서 선택하고 나서 두 상자 사이의 \"선택\" 화살표를 클릭하여 선택할 수 있습니다."
 
 #, javascript-format
 msgid "Type into this box to filter down the list of available %s."
-msgstr ""
+msgstr "사용 가능한 %s의 목록을 필터하려면 이 상자 안으로 입력하세요."
 
 msgid "Filter"
-msgstr ""
+msgstr "필터"
 
 msgid "Choose all"
-msgstr ""
+msgstr "모두 선택"
 
 #, javascript-format
 msgid "Click to choose all %s at once."
-msgstr ""
+msgstr "한번에 모든 %s를 선택하려면 클릭하세요."
 
 msgid "Choose"
-msgstr ""
+msgstr "선택"
 
 msgid "Remove"
-msgstr ""
+msgstr "제거"
 
 #, javascript-format
 msgid "Chosen %s"
-msgstr ""
+msgstr "선택된 %s"
 
 #, javascript-format
 msgid "This is the list of chosen %s. You may remove some by selecting them in the box below and then clicking the \"Remove\" arrow between the two boxes."
-msgstr ""
+msgstr "이는 선택된 %s의 목록입니다. 여러분은 일부를 아래 상자에서 선택하고 나서 두 상자 사이의 \"제거\" 화살표를 클릭하여 제거할 수 있습니다."
 
 msgid "Remove all"
-msgstr ""
+msgstr "모두 제거"
 
 #, javascript-format
 msgid "Click to remove all chosen %s at once."
-msgstr ""
+msgstr "한번에 모든 선택된 %s를 제거하려면 클릭하세요."
 
 msgid "%(sel)s of %(cnt)s selected"
 msgid_plural "%(sel)s of %(cnt)s selected"
-msgstr[0] ""
+msgstr[0] "%(cnt)s개 중 %(sel)s개 선택됨"
 
 msgid "You have unsaved changes on individual editable fields. If you run an action, your unsaved changes will be lost."
-msgstr ""
+msgstr "당신은 개별 편집 가능 필드에 저장하지 않은 변경사항이 있습니다. 당신이 동작을 실행하면, 당신의 저장하지 않은 변경사항은 잃게 됩니다."
 
 msgid "You have selected an action, but you haven't saved your changes to individual fields yet. Please click OK to save. You'll need to re-run the action."
-msgstr ""
+msgstr "여러분은 작동을 선택했지만, 여러분의 변경사항은 개별 필드에 아직 저장되지 않았습니다. 저장하려면 확인을 클릭해주세요. 여러분은 작동을 다시 실행할 필요가 있을 것입니다."
 
 msgid "You have selected an action, and you haven't made any changes on individual fields. You're probably looking for the Go button rather than the Save button."
-msgstr ""
+msgstr "여러분은 작동을 선택했고, 여러분은 개별 필드에 아무 것도 변경하지 않았습니다. 여러분은 어쩌면 저장 버튼보다 이동 버튼을 찾고 계셨을 것입니다."
 
 #, javascript-format
 msgid "Note: You are %s hour ahead of server time."
 msgid_plural "Note: You are %s hours ahead of server time."
-msgstr[0] ""
+msgstr[0] "참고: 당신은 서버 시간보다 %s시간 앞에 있습니다."
 
 #, javascript-format
 msgid "Note: You are %s hour behind server time."
 msgid_plural "Note: You are %s hours behind server time."
-msgstr[0] ""
+msgstr[0] "참고: 당신은 서버 시간보다 %s시간 뒤에 있습니다."
 
 msgid "Now"
-msgstr ""
+msgstr "이제"
 
 msgid "Choose a Time"
-msgstr ""
+msgstr "시간 선택"
 
 msgid "Choose a time"
-msgstr ""
+msgstr "시간 선택"
 
 msgid "Midnight"
-msgstr ""
+msgstr "자정"
 
 msgid "6 a.m."
-msgstr ""
+msgstr "오전 6시"
 
 msgid "Noon"
-msgstr ""
+msgstr "정오"
 
 msgid "6 p.m."
-msgstr ""
+msgstr "오후 6시"
 
 msgid "Cancel"
 msgstr "취소"
 
 msgid "Today"
-msgstr ""
+msgstr "오늘"
 
 msgid "Choose a Date"
-msgstr ""
+msgstr "날짜 선택"
 
 msgid "Yesterday"
-msgstr ""
+msgstr "어제"
 
 msgid "Tomorrow"
-msgstr ""
+msgstr "내일"
 
 msgid "January"
-msgstr ""
+msgstr "1월"
 
 msgid "February"
-msgstr ""
+msgstr "2월"
 
 msgid "March"
-msgstr ""
+msgstr "3월"
 
 msgid "April"
-msgstr ""
+msgstr "4월"
 
 msgid "May"
-msgstr ""
+msgstr "5월"
 
 msgid "June"
-msgstr ""
+msgstr "6월"
 
 msgid "July"
-msgstr ""
+msgstr "7월"
 
 msgid "August"
-msgstr ""
+msgstr "8월"
 
 msgid "September"
-msgstr ""
+msgstr "9월"
 
 msgid "October"
-msgstr ""
+msgstr "10월"
 
 msgid "November"
-msgstr ""
+msgstr "11월"
 
 msgid "December"
-msgstr ""
+msgstr "12월"
 
 msgctxt "one letter Sunday"
 msgid "S"
-msgstr ""
+msgstr "일"
 
 msgctxt "one letter Monday"
 msgid "M"
-msgstr ""
+msgstr "월"
 
 msgctxt "one letter Tuesday"
 msgid "T"
-msgstr ""
+msgstr "화"
 
 msgctxt "one letter Wednesday"
 msgid "W"
-msgstr ""
+msgstr "수"
 
 msgctxt "one letter Thursday"
 msgid "T"
-msgstr ""
+msgstr "목"
 
 msgctxt "one letter Friday"
 msgid "F"
-msgstr ""
+msgstr "금"
 
 msgctxt "one letter Saturday"
 msgid "S"
-msgstr ""
+msgstr "토"
 
 msgid "Show"
-msgstr ""
+msgstr "보이기"
 
 msgid "Hide"
-msgstr ""
+msgstr "숨기기"
 
 #, javascript-format
 msgid "%s app added"
@@ -205,22 +206,22 @@ msgid "Delete Screenshot"
 msgstr "스크린샷 삭제"
 
 msgid "Are you sure you want to delete this screenshot from your package?"
-msgstr "당신의 패키지에서 이 스크린샷을 삭제하시는 것이 확실합니까?"
+msgstr "정말 당신의 패키지에서 이 스크린샷을 삭제하기를 원합니까?"
 
 msgid "Delete Feature Graphic"
 msgstr "기능 그래픽 삭제"
 
 msgid "Are you sure you want to delete the feature graphic from your package?"
-msgstr "당신의 패키지에서 기능 그래픽을 삭제하시는 것이 확실합니까?"
+msgstr "정말 당신의 패키지에서 기능 그래픽을 삭제하기를 원합니까?"
 
 msgid "Delete Version"
 msgstr "버전 삭제"
 
 msgid "Are you sure you want to delete this version from your package?"
-msgstr "당신의 패키지에서 이 버전을 삭제하시는 것이 확실합니까?"
+msgstr "정말 당신의 패키지에서 이 버전을 삭제하기를 원합니까?"
 
 msgid "Confirm"
-msgstr "확인"
+msgstr "확정"
 
 msgid "Added"
 msgstr "추가됨"
