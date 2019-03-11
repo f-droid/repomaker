@@ -1,21 +1,9 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# Roman Leo <roman.leo@gmx.de>, 2019.
 msgid ""
-msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-08-29 20:53+0000\n"
-"Last-Translator: Adrià García-Alzórriz <adria@fsfe.org>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/f-droid/repomaker/de/>\n"
-"Language: de\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.2-dev\n"
+msgstr "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2018-09-01 20:54+0000\nPO-Revision-Date: 2019-03-10 19:01+0000\nLast-Translator: Roman Leo <roman.leo@gmx.de>\nLanguage-Team: German <https://hosted.weblate.org/projects/f-droid/repomaker/de/>\nLanguage: de\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 3.5.1\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -67,10 +55,10 @@ msgid "Phone"
 msgstr "Telefon"
 
 msgid "7'' Tablet"
-msgstr "7'' Tablet"
+msgstr "7-Zoll-Tablet"
 
 msgid "10'' Tablet"
-msgstr "10'' Tablet"
+msgstr "10-Zoll-Tablet"
 
 msgid "TV"
 msgstr "Fernseher"
@@ -337,7 +325,7 @@ msgid "Error"
 msgstr "Fehler"
 
 msgid "My Repos"
-msgstr "Meine Repos."
+msgstr "Meine Verzeichnisse."
 
 #, python-format
 msgid "Published %(time_ago)s"
