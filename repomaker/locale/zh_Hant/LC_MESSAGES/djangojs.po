@@ -7,199 +7,200 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-12-10 11:30+0000\n"
-"Last-Translator: ezjerry liao <ezjerry@gmail.com>\n"
+"POT-Creation-Date: 2018-09-01 20:55+0000\n"
+"PO-Revision-Date: 2018-11-02 20:42+0000\n"
+"Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/f-droid/repomaker-javascript/zh_Hant/>\n"
 "Language: zh_Hant\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.18-dev\n"
+"X-Generator: Weblate 3.3-dev\n"
 
 #, javascript-format
 msgid "Available %s"
-msgstr ""
+msgstr "%s 已可供使用"
 
 #, javascript-format
 msgid "This is the list of available %s. You may choose some by selecting them in the box below and then clicking the \"Choose\" arrow between the two boxes."
-msgstr ""
+msgstr "這是可使用的 %s 列表。您可以透過在底下的核取框中選取您想要的項目，並點擊兩個核取框之間的「選擇」箭頭。"
 
 #, javascript-format
 msgid "Type into this box to filter down the list of available %s."
-msgstr ""
+msgstr "在這輸入框中輸入，以過濾可供使用的 %s 列表。"
 
 msgid "Filter"
-msgstr ""
+msgstr "過濾器"
 
 msgid "Choose all"
-msgstr ""
+msgstr "全部選取"
 
 #, javascript-format
 msgid "Click to choose all %s at once."
-msgstr ""
+msgstr "點擊以一次選取所有的 %s。"
 
 msgid "Choose"
-msgstr ""
+msgstr "選取"
 
 msgid "Remove"
-msgstr ""
+msgstr "移除"
 
 #, javascript-format
 msgid "Chosen %s"
-msgstr ""
+msgstr "已選取 %s"
 
 #, javascript-format
 msgid "This is the list of chosen %s. You may remove some by selecting them in the box below and then clicking the \"Remove\" arrow between the two boxes."
-msgstr ""
+msgstr "這是所選取的 %s 清單。您可以透過下面的方框中選擇它們，然後點選兩個方框之間的「刪除」箭頭來刪除。"
 
 msgid "Remove all"
-msgstr ""
+msgstr "全部移除"
 
 #, javascript-format
 msgid "Click to remove all chosen %s at once."
-msgstr ""
+msgstr "點擊以一次移除所有選取的 %s。"
 
 msgid "%(sel)s of %(cnt)s selected"
 msgid_plural "%(sel)s of %(cnt)s selected"
-msgstr[0] ""
+msgstr[0] "已選取 %(cnt) 中的 %(sel)"
 
 msgid "You have unsaved changes on individual editable fields. If you run an action, your unsaved changes will be lost."
-msgstr ""
+msgstr "您在編輯欄位中有未儲存的變更。若您執行動作，您的未儲存變更將會遺失。"
 
 msgid "You have selected an action, but you haven't saved your changes to individual fields yet. Please click OK to save. You'll need to re-run the action."
-msgstr ""
+msgstr "您已經選取了一個動作，但您尚未在單獨欄位中儲存您的變更。請點選確定以儲存。您將會需要重新執行動作。"
 
 msgid "You have selected an action, and you haven't made any changes on individual fields. You're probably looking for the Go button rather than the Save button."
-msgstr ""
+msgstr "您已經選取了動作，但您尚未在單獨欄位上做出任何變更。您可能在搜尋 Go 按鈕而不是儲存按鈕。"
 
 #, javascript-format
 msgid "Note: You are %s hour ahead of server time."
 msgid_plural "Note: You are %s hours ahead of server time."
-msgstr[0] ""
+msgstr[0] "注意：您的時間比伺服器快了 %s 個小時。"
 
 #, javascript-format
 msgid "Note: You are %s hour behind server time."
 msgid_plural "Note: You are %s hours behind server time."
-msgstr[0] ""
+msgstr[0] "注意：您的時間比伺服器慢了 %s 個小時。"
 
 msgid "Now"
-msgstr ""
+msgstr "現在"
 
 msgid "Choose a Time"
-msgstr ""
+msgstr "選取時間"
 
 msgid "Choose a time"
-msgstr ""
+msgstr "選擇取時間"
 
 msgid "Midnight"
-msgstr ""
+msgstr "午夜"
 
 msgid "6 a.m."
-msgstr ""
+msgstr "上午 6 點"
 
 msgid "Noon"
-msgstr ""
+msgstr "中午"
 
 msgid "6 p.m."
-msgstr ""
+msgstr "下午 6 點"
 
 msgid "Cancel"
 msgstr "取消"
 
 msgid "Today"
-msgstr ""
+msgstr "今天"
 
 msgid "Choose a Date"
-msgstr ""
+msgstr "選取日期"
 
 msgid "Yesterday"
-msgstr ""
+msgstr "昨天"
 
 msgid "Tomorrow"
-msgstr ""
+msgstr "明日"
 
 msgid "January"
-msgstr ""
+msgstr "一月"
 
 msgid "February"
-msgstr ""
+msgstr "二月"
 
 msgid "March"
-msgstr ""
+msgstr "三月"
 
 msgid "April"
-msgstr ""
+msgstr "四月"
 
 msgid "May"
-msgstr ""
+msgstr "五月"
 
 msgid "June"
-msgstr ""
+msgstr "六月"
 
 msgid "July"
-msgstr ""
+msgstr "七月"
 
 msgid "August"
-msgstr ""
+msgstr "八月"
 
 msgid "September"
-msgstr ""
+msgstr "九月"
 
 msgid "October"
-msgstr ""
+msgstr "十月"
 
 msgid "November"
-msgstr ""
+msgstr "十一月"
 
 msgid "December"
-msgstr ""
+msgstr "十二月"
 
 msgctxt "one letter Sunday"
 msgid "S"
-msgstr ""
+msgstr "日"
 
 msgctxt "one letter Monday"
 msgid "M"
-msgstr ""
+msgstr "一"
 
 msgctxt "one letter Tuesday"
 msgid "T"
-msgstr ""
+msgstr "二"
 
 msgctxt "one letter Wednesday"
 msgid "W"
-msgstr ""
+msgstr "三"
 
 msgctxt "one letter Thursday"
 msgid "T"
-msgstr ""
+msgstr "四"
 
 msgctxt "one letter Friday"
 msgid "F"
-msgstr ""
+msgstr "五"
 
 msgctxt "one letter Saturday"
 msgid "S"
-msgstr ""
+msgstr "六"
 
 msgid "Show"
-msgstr ""
+msgstr "顯示"
 
 msgid "Hide"
-msgstr ""
+msgstr "隱藏"
 
 #, javascript-format
 msgid "%s app added"
 msgid_plural "%s apps added"
-msgstr[0] "%s 應用程式已加入"
+msgstr[0] "%s 個應用程式已加入"
 
 msgid "Add"
 msgstr "新增"
 
 #, javascript-format
 msgid "Sorry, there was an error deleting it: %s"
-msgstr "抱歉，刪除時出錯：%s"
+msgstr "抱歉，在刪除時出現錯誤：%s"
 
 msgid "Delete Screenshot"
 msgstr "刪除螢幕快照"
@@ -231,7 +232,7 @@ msgstr "您只能在這裡上傳圖片。"
 #, javascript-format
 msgid "Uploading %s file..."
 msgid_plural "Uploading %s files..."
-msgstr[0] "正在上傳檔案 %s ..."
+msgstr[0] "正在上傳 %s 個檔案..."
 
 msgid "Try to drag and drop again!"
 msgstr "嘗試再次拖放！"
