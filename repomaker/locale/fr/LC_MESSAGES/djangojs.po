@@ -7,19 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-04-25 11:23+0000\n"
-"Last-Translator: Étienne Deparis <etienne@depar.is>\n"
+"POT-Creation-Date: 2018-09-01 20:55+0000\n"
+"PO-Revision-Date: 2018-09-02 15:13+0000\n"
+"Last-Translator: Ldm Public <ldmpub@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/f-droid/repomaker-javascript/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.0-dev\n"
+"X-Generator: Weblate 3.2-dev\n"
 
 #, javascript-format
 msgid "Available %s"
-msgstr ""
+msgstr "Disponible %s"
 
 #, javascript-format
 msgid "This is the list of available %s. You may choose some by selecting them in the box below and then clicking the \"Choose\" arrow between the two boxes."
@@ -30,20 +31,20 @@ msgid "Type into this box to filter down the list of available %s."
 msgstr ""
 
 msgid "Filter"
-msgstr ""
+msgstr "Filtrer"
 
 msgid "Choose all"
-msgstr ""
+msgstr "Sélectionner tout"
 
 #, javascript-format
 msgid "Click to choose all %s at once."
-msgstr ""
+msgstr "Cliquez pour sélectionner tous les %s."
 
 msgid "Choose"
-msgstr ""
+msgstr "Sélectionner"
 
 msgid "Remove"
-msgstr ""
+msgstr "Retirer"
 
 #, javascript-format
 msgid "Chosen %s"
@@ -54,11 +55,11 @@ msgid "This is the list of chosen %s. You may remove some by selecting them in t
 msgstr ""
 
 msgid "Remove all"
-msgstr ""
+msgstr "Retirer tout"
 
 #, javascript-format
 msgid "Click to remove all chosen %s at once."
-msgstr ""
+msgstr "Cliquez pour retirer tous les %s sélectionnés."
 
 msgid "%(sel)s of %(cnt)s selected"
 msgid_plural "%(sel)s of %(cnt)s selected"
@@ -87,110 +88,110 @@ msgstr[0] ""
 msgstr[1] ""
 
 msgid "Now"
-msgstr ""
+msgstr "Maintenant"
 
 msgid "Choose a Time"
-msgstr ""
+msgstr "Sélectionnez une heure"
 
 msgid "Choose a time"
-msgstr ""
+msgstr "Sélectionnez une heure"
 
 msgid "Midnight"
-msgstr ""
+msgstr "Minuit"
 
 msgid "6 a.m."
-msgstr ""
+msgstr "6h du matin"
 
 msgid "Noon"
-msgstr ""
+msgstr "Midi"
 
 msgid "6 p.m."
-msgstr ""
+msgstr "6h de l'après-midi"
 
 msgid "Cancel"
 msgstr "Annuler"
 
 msgid "Today"
-msgstr ""
+msgstr "Aujourd'hui"
 
 msgid "Choose a Date"
-msgstr ""
+msgstr "Sélectionnez une date"
 
 msgid "Yesterday"
-msgstr ""
+msgstr "Hier"
 
 msgid "Tomorrow"
-msgstr ""
+msgstr "Demain"
 
 msgid "January"
-msgstr ""
+msgstr "Janvier"
 
 msgid "February"
-msgstr ""
+msgstr "Février"
 
 msgid "March"
-msgstr ""
+msgstr "Mars"
 
 msgid "April"
-msgstr ""
+msgstr "Avril"
 
 msgid "May"
-msgstr ""
+msgstr "Mai"
 
 msgid "June"
-msgstr ""
+msgstr "Juin"
 
 msgid "July"
-msgstr ""
+msgstr "Juillet"
 
 msgid "August"
-msgstr ""
+msgstr "Août"
 
 msgid "September"
-msgstr ""
+msgstr "Septembre"
 
 msgid "October"
-msgstr ""
+msgstr "Octobre"
 
 msgid "November"
-msgstr ""
+msgstr "Novembre"
 
 msgid "December"
-msgstr ""
+msgstr "Décembre"
 
 msgctxt "one letter Sunday"
 msgid "S"
-msgstr ""
+msgstr "D"
 
 msgctxt "one letter Monday"
 msgid "M"
-msgstr ""
+msgstr "L"
 
 msgctxt "one letter Tuesday"
 msgid "T"
-msgstr ""
+msgstr "M"
 
 msgctxt "one letter Wednesday"
 msgid "W"
-msgstr ""
+msgstr "M"
 
 msgctxt "one letter Thursday"
 msgid "T"
-msgstr ""
+msgstr "J"
 
 msgctxt "one letter Friday"
 msgid "F"
-msgstr ""
+msgstr "V"
 
 msgctxt "one letter Saturday"
 msgid "S"
-msgstr ""
+msgstr "S"
 
 msgid "Show"
-msgstr ""
+msgstr "Afficher"
 
 msgid "Hide"
-msgstr ""
+msgstr "Masquer"
 
 #, javascript-format
 msgid "%s app added"

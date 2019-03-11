@@ -1,21 +1,9 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# Étienne Deparis <etienne@depar.is>, 2019.
 msgid ""
-msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-04-25 11:21+0000\n"
-"Last-Translator: Étienne Deparis <etienne@depar.is>\n"
-"Language-Team: French <https://hosted.weblate.org/projects/f-droid/repomaker/fr/>\n"
-"Language: fr\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.0-dev\n"
+msgstr "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2018-09-01 20:54+0000\nPO-Revision-Date: 2019-03-11 13:58+0000\nLast-Translator: Étienne Deparis <etienne@depar.is>\nLanguage-Team: French <https://hosted.weblate.org/projects/f-droid/repomaker/fr/>\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 3.5.1\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -482,7 +470,7 @@ msgid "Add a repo"
 msgstr "Ajouter un dépôt"
 
 msgid "Clear filters"
-msgstr ""
+msgstr "Effacer les filtres"
 
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
@@ -603,10 +591,10 @@ msgid "Setup"
 msgstr "Mettre en place"
 
 msgid "GitLab"
-msgstr "GitLab"
+msgstr "Gitlab"
 
 msgid "GitHub"
-msgstr "GitHub"
+msgstr "Github"
 
 msgid "SSH"
 msgstr "SSH"
