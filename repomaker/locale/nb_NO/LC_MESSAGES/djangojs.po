@@ -7,7 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-09-25 10:55+0000\n"
+"POT-Creation-Date: 2018-09-01 20:55+0000\n"
+"PO-Revision-Date: 2018-09-19 16:28+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/f-droid/repomaker-javascript/nb_NO/>\n"
 "Language: nb_NO\n"
@@ -15,188 +16,188 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.17-dev\n"
+"X-Generator: Weblate 3.2-dev\n"
 
 #, javascript-format
 msgid "Available %s"
-msgstr ""
+msgstr "Tilgjengelig %s"
 
 #, javascript-format
 msgid "This is the list of available %s. You may choose some by selecting them in the box below and then clicking the \"Choose\" arrow between the two boxes."
-msgstr ""
+msgstr "Dette er listen over tilgjengelige %s. Du kan velge noen ved å velge dem i boksen nedenfor, for så å klikke \"Velg\"-pilen mellom de to boksene."
 
 #, javascript-format
 msgid "Type into this box to filter down the list of available %s."
-msgstr ""
+msgstr "Skriv inn noe i denne boksen for å filtrere ned listen over tilgjengelige %s."
 
 msgid "Filter"
-msgstr ""
+msgstr "Filtrer"
 
 msgid "Choose all"
-msgstr ""
+msgstr "Velg alle"
 
 #, javascript-format
 msgid "Click to choose all %s at once."
-msgstr ""
+msgstr "Klikk for å velge alle %s samtidig."
 
 msgid "Choose"
-msgstr ""
+msgstr "Velg"
 
 msgid "Remove"
-msgstr ""
+msgstr "Fjern"
 
 #, javascript-format
 msgid "Chosen %s"
-msgstr ""
+msgstr "Valgt %s"
 
 #, javascript-format
 msgid "This is the list of chosen %s. You may remove some by selecting them in the box below and then clicking the \"Remove\" arrow between the two boxes."
-msgstr ""
+msgstr "Dette er listen over valgt %s. Du kan fjerne noen ved å velge dem i boksen nedenfor, for så å klikke på \"Fjern\"-pilen mellom de to boksene."
 
 msgid "Remove all"
-msgstr ""
+msgstr "Fjern alle"
 
 #, javascript-format
 msgid "Click to remove all chosen %s at once."
-msgstr ""
+msgstr "Klikk for å fjerne alle valgte %s samtidig."
 
 msgid "%(sel)s of %(cnt)s selected"
 msgid_plural "%(sel)s of %(cnt)s selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s(sel)s av %s(cnt)s valgt"
+msgstr[1] "%s(sel)s av %s(cnt)s valgt"
 
 msgid "You have unsaved changes on individual editable fields. If you run an action, your unsaved changes will be lost."
-msgstr ""
+msgstr "Du har ulagrede endringer i enkletstående redigerbare felter. Hvis du kjører en handling, vil dine ulagrede endringer gå tapt."
 
 msgid "You have selected an action, but you haven't saved your changes to individual fields yet. Please click OK to save. You'll need to re-run the action."
-msgstr ""
+msgstr "Du har valgt en handling, men har ikke lagret dine endringer i individuelle felter enda. Klikk \"OK\" for å lagre\". Du vil måtte kjøre handlingen igjen."
 
 msgid "You have selected an action, and you haven't made any changes on individual fields. You're probably looking for the Go button rather than the Save button."
-msgstr ""
+msgstr "Du har valgt en handling, og har ikke gjort noen endringer i individuelle felter. Du ser antagelig etter \"Gå\"-knappen, snarere en \"Lagre\"-knappen."
 
 #, javascript-format
 msgid "Note: You are %s hour ahead of server time."
 msgid_plural "Note: You are %s hours ahead of server time."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Merk: Du er én time foran tjenertid."
+msgstr[1] "Merk: Du er %s timer foran tjenertid."
 
 #, javascript-format
 msgid "Note: You are %s hour behind server time."
 msgid_plural "Note: You are %s hours behind server time."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Merk: Du er én time bak tjenertid."
+msgstr[1] "Merk: Du er %s timer bak tjenertid."
 
 msgid "Now"
-msgstr ""
+msgstr "Nå"
 
 msgid "Choose a Time"
-msgstr ""
+msgstr "Velg tid"
 
 msgid "Choose a time"
-msgstr ""
+msgstr "Velg tid"
 
 msgid "Midnight"
-msgstr ""
+msgstr "Midnatt"
 
 msgid "6 a.m."
-msgstr ""
+msgstr "6 på morgenen."
 
 msgid "Noon"
-msgstr ""
+msgstr "Middagstid"
 
 msgid "6 p.m."
-msgstr ""
+msgstr "6 på kvelden."
 
 msgid "Cancel"
 msgstr "Avbryt"
 
 msgid "Today"
-msgstr ""
+msgstr "I dag"
 
 msgid "Choose a Date"
-msgstr ""
+msgstr "Velg dato"
 
 msgid "Yesterday"
-msgstr ""
+msgstr "I går"
 
 msgid "Tomorrow"
-msgstr ""
+msgstr "I morgen"
 
 msgid "January"
-msgstr ""
+msgstr "Januar"
 
 msgid "February"
-msgstr ""
+msgstr "Februar"
 
 msgid "March"
-msgstr ""
+msgstr "Mars"
 
 msgid "April"
-msgstr ""
+msgstr "April"
 
 msgid "May"
-msgstr ""
+msgstr "Mai"
 
 msgid "June"
-msgstr ""
+msgstr "Juni"
 
 msgid "July"
-msgstr ""
+msgstr "Juli"
 
 msgid "August"
-msgstr ""
+msgstr "August"
 
 msgid "September"
-msgstr ""
+msgstr "September"
 
 msgid "October"
-msgstr ""
+msgstr "Oktober"
 
 msgid "November"
-msgstr ""
+msgstr "November"
 
 msgid "December"
-msgstr ""
+msgstr "Desember"
 
 msgctxt "one letter Sunday"
 msgid "S"
-msgstr ""
+msgstr "S"
 
 msgctxt "one letter Monday"
 msgid "M"
-msgstr ""
+msgstr "M"
 
 msgctxt "one letter Tuesday"
 msgid "T"
-msgstr ""
+msgstr "T"
 
 msgctxt "one letter Wednesday"
 msgid "W"
-msgstr ""
+msgstr "O"
 
 msgctxt "one letter Thursday"
 msgid "T"
-msgstr ""
+msgstr "T"
 
 msgctxt "one letter Friday"
 msgid "F"
-msgstr ""
+msgstr "F"
 
 msgctxt "one letter Saturday"
 msgid "S"
-msgstr ""
+msgstr "L"
 
 msgid "Show"
-msgstr ""
+msgstr "Vis"
 
 msgid "Hide"
-msgstr ""
+msgstr "Skjul"
 
 #, javascript-format
 msgid "%s app added"
 msgid_plural "%s apps added"
 msgstr[0] "%s program lagt til"
-msgstr[1] "%s program lagt til"
+msgstr[1] "%s programmer lagt til"
 
 msgid "Add"
 msgstr "Legg til"
