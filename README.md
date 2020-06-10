@@ -4,6 +4,8 @@
 
 # Installation
 
+**Unmaintained**: The last release of Repomaker happened on January 29, 2019. Since then, no more development happened due to the lack of volunteers. Please see [#233](https://gitlab.com/fdroid/repomaker/-/issues/233) for more information.
+
 There are several different ways to install Repomaker.
 
 ## Ubuntu/Debian
