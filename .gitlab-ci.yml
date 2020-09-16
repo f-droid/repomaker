@@ -1,17 +1,63 @@
-image: registry.gitlab.com/fdroid/ci-images-repomaker:latest
+image: debian:buster
 
 stages:
   - test
   - deploy
 
+variables:
+  LC_ALL: C.UTF-8
+  DEBIAN_FRONTEND: noninteractive
+
+# This template needs to be in text block format since `gitlab-runner
+# exec` cannot handle templates in list format.
+.apt-template: &apt-template |
+  set -e
+  set -x
+  echo Etc/UTC > /etc/timezone
+  echo 'quiet "1";' \
+       'APT::Install-Recommends "0";' \
+       'APT::Install-Suggests "0";' \
+       'APT::Acquire::Retries "20";' \
+       'APT::Get::Assume-Yes "true";' \
+       'Dpkg::Use-Pty "0";' \
+      > /etc/apt/apt.conf.d/99gitlab
+  apt-get update
+  apt-get dist-upgrade
+
+.setup-template: &setup-template
+- *apt-template
+- apt-get install
+      curl
+      default-jre-headless
+      git
+      libmagic1
+      python3-bleach
+      python3-cryptography
+      python3-libcloud
+      python3-libsass
+      python3-magic
+      python3-pip
+      python3-psycopg2
+      python3-qrcode
+      python3-rcssmin
+      python3-rjsmin
+      python3-setuptools
+      python3-webview
+      python3-wheel
+      rsync
+      aapt
+
 pep8:
   stage: test
   script:
+    - *apt-template
+    - apt-get install pep8
     - ./tests/test-pep8.sh
 
 pylint:
   stage: test
   before_script:
+    - *setup-template
     - pip3 install -r requirements.txt
     - pip3 install -r requirements-dev.txt
 
@@ -22,10 +68,12 @@ units:
   stage: test
   cache:
     paths:
-      - /usr/local/lib/python3.5/dist-packages
+      - /usr/local/lib/python*/dist-packages
       - node_modules
 
   before_script:
+    - *setup-template
+    - apt-get install npm
     - ./setup.sh
     - pip3 install -r requirements-dev.txt
     - npm install --user
