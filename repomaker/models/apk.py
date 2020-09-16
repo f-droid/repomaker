@@ -103,7 +103,7 @@ class Apk(models.Model):
             repo_file = self._get_info_from_file()
 
         if app is not None and app.package_id != repo_file['packageName']:
-            raise ValidationError(_('This file is not an update for %s' % str(app)))
+            raise ValidationError(_('This file is not an update for %s') % app.package_id)
 
         apk_set = Apk.objects.filter(package_id=repo_file['packageName'], hash=repo_file['hash'])
         if not apk_set.exists():

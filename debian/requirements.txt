@@ -1,5 +1,5 @@
 # These requirements are not yet in Debian
-fdroidserver==0.8
+fdroidserver >=1.1, < 2.0
 django-background-tasks==1.1.13
 django-sass-processor
 django-allauth

@@ -128,7 +128,8 @@ class RemoteRepositoryTestCase(RmTestCase):
 
         # assert that new repository icon was downloaded and changed
         get.assert_called_once_with(repo.url + '/icons/' + 'test-icon.png',
-                                    headers={'User-Agent': 'F-Droid'})
+                                    headers={'User-Agent': 'F-Droid'},
+                                    timeout=600)
         self.assertEqual(os.path.join(get_remote_repo_path(repo), 'test-icon.png'), repo.icon.name)
 
         # assert that an attempt was made to update the apps

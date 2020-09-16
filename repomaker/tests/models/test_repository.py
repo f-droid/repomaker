@@ -372,7 +372,8 @@ class RepositoryTestCase(RmTestCase):
         self.assertEqual(2, get.call_count)
         get.assert_called_with(  # last get call
             'test_url' + '/icons/default-repo-icon.png',
-            headers={'User-Agent': 'F-Droid'}
+            headers={'User-Agent': 'F-Droid'},
+            timeout=600
         )
 
         # assert that new remote apps have been created properly

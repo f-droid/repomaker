@@ -193,7 +193,7 @@ class AppViewTestCase(RmTestCase):
             form = response.context['form']
             self.assertTrue(form.has_error('apks'))
             self.assertContains(response,
-                                'test.pdf: This file is not an update ' +
+                                'This file is not an update ' +
                                 'for org.bitbucket.tickytacky.mirrormirror')
 
         self.assertEqual(1, App.objects.all().count())

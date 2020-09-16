@@ -400,3 +400,4 @@ class Options:
     delete_unknown = False
     rename_apks = False
     allow_disabled_algorithms = False
+    no_keep_git_mirror_archive = True

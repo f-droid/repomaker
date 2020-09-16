@@ -65,7 +65,7 @@ class StorageViewsTestCase(RmTestCase):
         # Assert that git storage has been created properly
         self.assertEqual('gitlab.com', storage.host)
         self.assertEqual('test/test', storage.path)
-        self.assertEqual('https://gitlab.com/test/test/raw/master/fdroid', storage.url)
+        self.assertEqual('https://test.gitlab.io/test/fdroid', storage.url)
         if create_key:
             self.assertTrue(storage.identity_file)
             self.assertTrue(os.path.isfile(storage.identity_file.path))
@@ -110,7 +110,7 @@ class StorageViewsTestCase(RmTestCase):
         storage = GitStorage.objects.get()
         self.assertEqual('gitlab.com', storage.host)
         self.assertEqual('test2/test2', storage.path)
-        self.assertEqual('https://gitlab.com/test2/test2/raw/master/fdroid', storage.url)
+        self.assertEqual('https://test2.gitlab.io/test2/fdroid', storage.url)
 
     @patch('repomaker.models.repository.Repository._copy_page_assets')
     @patch('repomaker.models.repository.Repository.update_async')

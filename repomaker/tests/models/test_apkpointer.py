@@ -52,7 +52,6 @@ class ApkPointerTestCase(RmTestCase):
         app = App.objects.get(pk=1)
         self.assertEqual(self.apk_pointer.repo, app.repo)
         self.assertEqual(self.apk.package_id, app.package_id)
-        self.assertEqual(app.package_id, app.name)  # this apk has no name, so use fallback
         self.assertEqual([settings.LANGUAGE_CODE], list(app.get_available_languages()))
 
         # assert that the app icon has been created properly
