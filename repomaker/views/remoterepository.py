@@ -113,7 +113,7 @@ class AppRemoteAddView(RepositoryAuthorizationMixin, AppScrollListView):
             app.added = app.is_in_repo(context['repo'])
         return context
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):  # pylint: disable=unused-argument
         if request.is_ajax():
             apps_to_add = json.loads(request.body.decode("utf-8"))
             for app in apps_to_add:
@@ -153,7 +153,7 @@ class RemoteAppImportView(RepositoryAuthorizationMixin, LanguageMixin, DetailVie
                                                                  language_code=self.get_language())
         return context
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):  # pylint: disable=unused-argument
         if not self.get_queryset().exists():
             return Http404()
 
