@@ -7,7 +7,7 @@
     "url": "https://gitlab.com/fdroid/repomaker.git"
   },
   "dependencies": {
-    "dialog-polyfill": ">=0.4.8",
+    "dialog-polyfill": "~0.4.8",
     "material-design-icons-iconfont": "4.0.2",
     "material-design-lite": "^1.3.0",
     "roboto-fontface": ">=0.8.0",
