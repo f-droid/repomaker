@@ -1,13 +1,27 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR Free Software Foundation, Inc.
 # Arthur <un-logic@ya.ru>, 2019.
 # Tiller Luna <t.luna@protonmail.com>, 2020.
 # Golubev Alexander <fatzer2@gmail.com>, 2020.
 # Andrey <andrey@mailbox.org>, 2020.
 # Nikita Epifanov <nikgreens@protonmail.com>, 2020.
+# Dmitry Mikhirev <mikhirev@gmail.com>, 2020.
+#
+#, fuzzy
 msgid ""
-msgstr "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2018-09-01 20:54+0000\nPO-Revision-Date: 2020-09-11 09:36+0000\nLast-Translator: Nikita Epifanov <nikgreens@protonmail.com>\nLanguage-Team: Russian <https://hosted.weblate.org/projects/f-droid/repomaker/ru/>\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\nX-Generator: Weblate 4.3-dev\n"
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-01 20:54+0000\n"
+"PO-Revision-Date: 2020-09-11 09:36+0000\n"
+"Last-Translator: Nikita Epifanov <nikgreens@protonmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/f-droid/repomaker/ru/>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -20,7 +34,7 @@ msgid "Invalid APK signature"
 msgstr "Недействительная подпись APK"
 
 msgid "Invalid APK."
-msgstr "Недействительный APK."
+msgstr "Некорректный APK."
 
 msgid "Unsupported File Type"
 msgstr "Неподдерживаемый тип файла"
@@ -116,7 +130,7 @@ msgid "Spread the love."
 msgstr "Распространять любовь."
 
 msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
-msgstr "Repomaker - это бесплатное веб-приложение для создания коллекций приложений, музыки, книг, видео и картинок для совместного использования с коллегами. Оно использует F-Droid в качестве мобильной платформы распространения. Доступно только на Android."
+msgstr "Repomaker — это бесплатное веб-приложение для создания коллекций приложений, музыки, книг, видео и картинок для совместного использования с коллегами. Оно использует F-Droid в качестве мобильной платформы распространения. Доступно только на Android."
 
 msgid "Login"
 msgstr "Вход"
