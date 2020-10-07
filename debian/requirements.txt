@@ -7,4 +7,4 @@ django-hvad>=1.8.0
 django-tinymce
 django-js-reverse
 apache-libcloud>=2.0.0
-pywebview
+pywebview < 3
