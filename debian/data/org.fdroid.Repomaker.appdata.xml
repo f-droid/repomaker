@@ -77,6 +77,13 @@
   </provides>
 
   <releases>
+    <release version="1.0.0b2" date="2020-10-07">
+      <description>
+        <p>Port to _fdroidserver_ v1.1.10</p>
+        <p>Update translations</p>
+        <p>Fix dependency pinning to use most recent stable versions</p>
+      </description>
+    </release>
     <release version="1.0.0b1" date="2019-01-29">
       <description>
         <p>First beta release of 1.0.0. It is intended to be stable, but not guaranteed.</p>
