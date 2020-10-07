@@ -21,20 +21,20 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
-        'django==1.11.20',
+        'django  >=1.11.29, < 1.12',
         'django-allauth',
         'django-tinymce',
         'django-js-reverse',
         'django-compressor',
         'django-sass-processor',
         'django-hvad>=1.8.0',
-        'django-background-tasks==1.1.13',
+        'django-background-tasks >=1.1.13, <1.2',
         'qrcode',
         'six>=1.9',  # until bleach depends on html5lib>=1.0
         'bleach>=2.1.4',
         'python-magic',
         'cryptography>=1.4.0',
-        'fdroidserver==0.8',
+        'fdroidserver >=1.1, < 2.0',
     ],
 
     # List additional groups of dependencies here (e.g. development dependencies).
@@ -43,7 +43,7 @@ setup(
     extras_require={
         'gui': [
             'PyQt5==5.10.0',
-            'pywebview[qt5]',
+            'pywebview[qt5] <3',
         ],
         'test': [
             'pep8',
