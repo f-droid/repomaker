@@ -2,8 +2,21 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Étienne Deparis <etienne@depar.is>, 2019.
+# Localisation Lab <ao@localizationlab.org>, 2020.
 msgid ""
-msgstr "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2018-09-01 20:54+0000\nPO-Revision-Date: 2019-03-11 13:58+0000\nLast-Translator: Étienne Deparis <etienne@depar.is>\nLanguage-Team: French <https://hosted.weblate.org/projects/f-droid/repomaker/fr/>\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 3.5.1\n"
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-01 20:54+0000\n"
+"PO-Revision-Date: 2020-04-11 14:09+0000\n"
+"Last-Translator: Localisation Lab <ao@localizationlab.org>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/f-droid/repomaker/fr/>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -526,13 +539,13 @@ msgid "Region"
 msgstr "Région"
 
 msgid "Bucket"
-msgstr "Groupe"
+msgstr "Compartiment"
 
 msgid "Access Key ID"
-msgstr "ID de la clé d'accès"
+msgstr "ID de la clé d’accès"
 
 msgid "Please make sure to add this public SSH key to your SSH server's <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> file,\tif you have not done so already."
-msgstr "Merci de vérifier que cette clé SSH publique est bien ajoutée dans le fichier <tt><a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a></tt> de votre serveur SSH."
+msgstr "Veuillez vous assurer d’ajouter cette clé SSH publique dans le fichier <tt><a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a></tt> de votre serveur SSH, si vous ne l’avez pas déjà fait."
 
 msgid "Security Warning: This gives repomaker write access to that storage. Please limit this user's access as much as possible."
 msgstr "Avertissement de sécurité : Ceci donne à repomaker un accès en écriture à ce stockage. Veuillez limiter autant que possible l'accès de cet utilisateur."

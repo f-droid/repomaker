@@ -1,215 +1,215 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-05-07 08:20+0000\n"
-"Last-Translator: Fabiola Maurice <fabiola.mauriceh@gmail.com>\n"
+"POT-Creation-Date: 2018-09-01 20:55+0000\n"
+"PO-Revision-Date: 2020-05-30 11:41+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/f-droid/repomaker-javascript/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #, javascript-format
 msgid "Available %s"
-msgstr ""
+msgstr "Disponible %s"
 
 #, javascript-format
 msgid "This is the list of available %s. You may choose some by selecting them in the box below and then clicking the \"Choose\" arrow between the two boxes."
-msgstr ""
+msgstr "Esta es la lista de %s disponibles. Puede elegir algunos elementos seleccionándolos en el cuadro de abajo y pulsando en la flecha «Elegir» entre ambos cuadros."
 
 #, javascript-format
 msgid "Type into this box to filter down the list of available %s."
-msgstr ""
+msgstr "Escriba en este cuadro para filtrar la lista de %s disponibles."
 
 msgid "Filter"
-msgstr ""
+msgstr "Filtrar"
 
 msgid "Choose all"
-msgstr ""
+msgstr "Seleccionar todo"
 
 #, javascript-format
 msgid "Click to choose all %s at once."
-msgstr ""
+msgstr "Pulse para seleccionar todos los elementos de %s a la vez."
 
 msgid "Choose"
-msgstr ""
+msgstr "Seleccionar"
 
 msgid "Remove"
-msgstr ""
+msgstr "Quitar"
 
 #, javascript-format
 msgid "Chosen %s"
-msgstr ""
+msgstr "Se seleccionó %s"
 
 #, javascript-format
 msgid "This is the list of chosen %s. You may remove some by selecting them in the box below and then clicking the \"Remove\" arrow between the two boxes."
-msgstr ""
+msgstr "Esta es la lista de %s seleccionados. Puede quitar algunos elementos seleccionándolos en el cuadro de abajo y pulsando en la flecha «Quitar» entre ambos cuadros."
 
 msgid "Remove all"
-msgstr ""
+msgstr "Quitar todo"
 
 #, javascript-format
 msgid "Click to remove all chosen %s at once."
-msgstr ""
+msgstr "Pulse para quitar todos los elementos de %s a la vez."
 
 msgid "%(sel)s of %(cnt)s selected"
 msgid_plural "%(sel)s of %(cnt)s selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Se seleccionó %(sel)s de %(cnt)s"
+msgstr[1] "Se seleccionaron %(sel)s de %(cnt)s"
 
 msgid "You have unsaved changes on individual editable fields. If you run an action, your unsaved changes will be lost."
-msgstr ""
+msgstr "Tiene cambios no guardados en campos editables individuales. Si efectúa una acción, se perderán los cambios."
 
 msgid "You have selected an action, but you haven't saved your changes to individual fields yet. Please click OK to save. You'll need to re-run the action."
-msgstr ""
+msgstr "Ha seleccionado una acción pero no ha guardado aún sus cambios en campos individuales. Pulse en Aceptar para guardarlos. Deberá reejecutar la acción."
 
 msgid "You have selected an action, and you haven't made any changes on individual fields. You're probably looking for the Go button rather than the Save button."
-msgstr ""
+msgstr "Ha seleccionado una acción y no ha realizado ningún cambio en campos individuales. Probablemente quiera utilizar el botón Ir en lugar del botón Guardar."
 
 #, javascript-format
 msgid "Note: You are %s hour ahead of server time."
 msgid_plural "Note: You are %s hours ahead of server time."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Nota: está %s hora por delante de la hora del servidor."
+msgstr[1] "Nota: está %s horas por delante de la hora del servidor."
 
 #, javascript-format
 msgid "Note: You are %s hour behind server time."
 msgid_plural "Note: You are %s hours behind server time."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Nota: está %s hora por detrás de la hora del servidor."
+msgstr[1] "Nota: está %s horas por detrás de la hora del servidor."
 
 msgid "Now"
-msgstr ""
+msgstr "Ahora"
 
 msgid "Choose a Time"
-msgstr ""
+msgstr "Escoja una hora"
 
 msgid "Choose a time"
-msgstr ""
+msgstr "Escoja una hora"
 
 msgid "Midnight"
-msgstr ""
+msgstr "Medianoche"
 
 msgid "6 a.m."
-msgstr ""
+msgstr "6 a. m."
 
 msgid "Noon"
-msgstr ""
+msgstr "Tarde"
 
 msgid "6 p.m."
-msgstr ""
+msgstr "6 p. m."
 
 msgid "Cancel"
 msgstr "Cancelar"
 
 msgid "Today"
-msgstr ""
+msgstr "Hoy"
 
 msgid "Choose a Date"
-msgstr ""
+msgstr "Elija una fecha"
 
 msgid "Yesterday"
-msgstr ""
+msgstr "Ayer"
 
 msgid "Tomorrow"
-msgstr ""
+msgstr "Mañana"
 
 msgid "January"
-msgstr ""
+msgstr "enero"
 
 msgid "February"
-msgstr ""
+msgstr "febrero"
 
 msgid "March"
-msgstr ""
+msgstr "marzo"
 
 msgid "April"
-msgstr ""
+msgstr "abril"
 
 msgid "May"
-msgstr ""
+msgstr "mayo"
 
 msgid "June"
-msgstr ""
+msgstr "junio"
 
 msgid "July"
-msgstr ""
+msgstr "julio"
 
 msgid "August"
-msgstr ""
+msgstr "agosto"
 
 msgid "September"
-msgstr ""
+msgstr "septiembre"
 
 msgid "October"
-msgstr ""
+msgstr "octubre"
 
 msgid "November"
-msgstr ""
+msgstr "noviembre"
 
 msgid "December"
-msgstr ""
+msgstr "diciembre"
 
 msgctxt "one letter Sunday"
 msgid "S"
-msgstr ""
+msgstr "D"
 
 msgctxt "one letter Monday"
 msgid "M"
-msgstr ""
+msgstr "L"
 
 msgctxt "one letter Tuesday"
 msgid "T"
-msgstr ""
+msgstr "M"
 
 msgctxt "one letter Wednesday"
 msgid "W"
-msgstr ""
+msgstr "X"
 
 msgctxt "one letter Thursday"
 msgid "T"
-msgstr ""
+msgstr "J"
 
 msgctxt "one letter Friday"
 msgid "F"
-msgstr ""
+msgstr "V"
 
 msgctxt "one letter Saturday"
 msgid "S"
-msgstr ""
+msgstr "S"
 
 msgid "Show"
-msgstr ""
+msgstr "Mostrar"
 
 msgid "Hide"
-msgstr ""
+msgstr "Ocultar"
 
 #, javascript-format
 msgid "%s app added"
 msgid_plural "%s apps added"
-msgstr[0] "%s app añadida"
-msgstr[1] "%s apps añadidas"
+msgstr[0] "%s aplicación añadida"
+msgstr[1] "%s aplicaciones añadidas"
 
 msgid "Add"
 msgstr "Añadir"
 
 #, javascript-format
 msgid "Sorry, there was an error deleting it: %s"
-msgstr "Lo sentimos, se produjo un error al eliminar:%s1"
+msgstr "Se produjo un error al eliminarlo: %s1"
 
 msgid "Delete Screenshot"
-msgstr "Borrar captura de pantalla"
+msgstr "Eliminar captura de pantalla"
 
 msgid "Are you sure you want to delete this screenshot from your package?"
-msgstr "¿Seguro que quieres eliminar esta captura de pantalla de tu paquete?"
+msgstr "¿Confirma que quiere eliminar esta captura de pantalla del paquete?"
 
 msgid "Delete Feature Graphic"
 msgstr "Borrar Gráfico destacado"

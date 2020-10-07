@@ -1,0 +1,719 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Besnik Bleta <besnik@programeshqip.org>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-01 20:54+0000\n"
+"PO-Revision-Date: 2020-04-21 15:11+0000\n"
+"Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
+"Language-Team: Albanian <https://hosted.weblate.org/projects/f-droid/repomaker/sq/>\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.0.2-dev\n"
+
+#, python-format
+msgid "This file is not an update for %s"
+msgstr "Kjo kartelë s’është përditësim për %s"
+
+msgid "This APK already exists in the current repo."
+msgstr "Kjo APK gjendet tashmë në depon e tanishme."
+
+msgid "Invalid APK signature"
+msgstr "Nënshkrim APK-je i pavlefshëm"
+
+msgid "Invalid APK."
+msgstr "APK e pavlefshme."
+
+msgid "Unsupported File Type"
+msgstr "Lloj i Pambuluar Kartele"
+
+msgid "This file is of a different type than the other versions of this app."
+msgstr "Kjo kartelë është e një lloji tjetër nga versione të tjera të këtij apliakcioni."
+
+msgid "APK"
+msgstr "APK"
+
+msgid "Book"
+msgstr "Libër"
+
+msgid "Document"
+msgstr "Dokument"
+
+msgid "Image"
+msgstr "Figurë"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Other"
+msgstr "Tjetër"
+
+msgid "This app does already exist in your repository."
+msgstr "Ky aplikacion gjendet tashmë në depon tuaj."
+
+msgid "This app does not have any working versions available."
+msgstr "Ky aplikacion s’ka të gatshëm ndonjë version funksional."
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "7'' Tablet"
+msgstr "Tablet 7\""
+
+msgid "10'' Tablet"
+msgstr "Tablet 10''"
+
+msgid "TV"
+msgstr "TV"
+
+msgid "Wearable"
+msgstr "<em>Wearable</em>"
+
+msgid "US Standard"
+msgstr "US Standard"
+
+msgid "Amazon S3 Storage"
+msgstr "Depozitim Amazon S3"
+
+msgid "Enter a valid user name consisting of letters, numbers, underscores or hyphens."
+msgstr "Jepni një emër të vlefshëm përdoruesi, të përbërë nga shkronja, numra, nënvija ose vija ndarëse."
+
+msgid "Enter a valid hostname."
+msgstr "Jepni strehëemër të vlefshëm."
+
+msgid "Enter a valid path."
+msgstr "Jepni një shteg të vlefshëm."
+
+msgid "SSH Storage"
+msgstr "Depozitë SSH"
+
+msgid "Git Storage"
+msgstr "Depozitë GIT"
+
+msgid "Default Storage"
+msgstr "Depozitë Parazgjedhje"
+
+msgid "American English"
+msgstr "Anglishte Amerikane"
+
+msgid "Change E-mail"
+msgstr "Ndryshoni Email"
+
+msgid "Sign Out"
+msgstr "Dilni"
+
+msgid "Sign In"
+msgstr "Hyni"
+
+msgid "Sign Up"
+msgstr "Regjistrohuni"
+
+msgid "Distribute apps."
+msgstr "Shpërndani aplikacione."
+
+msgid "Spread the love."
+msgstr "Përhapni dashurinë."
+
+msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
+msgstr "Repomaker është një aplikacion i lirë web i ndërtuar për krijim koleksionesh aplikacionesh, muzike, librash, videosh dhe fotosh që t’i ndani me shokët tuaj. Si platformë shpërndarjesh për celular përdor F-Droid. I përdorshëm vetëm në Android."
+
+msgid "Login"
+msgstr "Hyrje"
+
+msgid "Forgot Password"
+msgstr "U Harrua Fjalëkalimi"
+
+msgid "Or login with"
+msgstr "Ose hyni me"
+
+msgid "Logout"
+msgstr "Dalje"
+
+msgid "See you later"
+msgstr "Mirupafshim"
+
+msgid "Your security is important to us. Please confirm that you want to logout."
+msgstr "Siguria juaj është e rëndësishme për ne. Ju lutemi ripohoni se doni të dilni."
+
+msgid "logout"
+msgstr "dalje"
+
+msgid "submit"
+msgstr "parashtroje"
+
+msgid "We have sent you an email with a link to reset your password."
+msgstr "Ju kemi dërguar një email me një lidhje për ricaktimin e fjalëkalimit tuaj."
+
+msgid "Signup"
+msgstr "Regjistrim"
+
+msgid "Delete App Version"
+msgstr "Fshi Version Aplikacioni"
+
+#, python-format
+msgid "Are you sure you want to delete this version <strong>%(version)s</strong> (%(code)s) from your app <strong>%(app)s</strong>?"
+msgstr "Jeni i sigurt se doni të fshihet ky version <strong>%(version)s</strong> (%(code)s) nga aplikacioni juaj <strong>%(app)s</strong>?"
+
+msgid "Confirm"
+msgstr "Ripohojeni"
+
+msgid "Delete App"
+msgstr "Fshije Aplikacionin"
+
+#, python-format
+msgid "Are you sure you want to delete your app <strong>%(object)s</strong>?"
+msgstr "Jeni i sigurt se doni të fshihet aplikacioni juaj <strong>%(object)s</strong>?"
+
+#, python-format
+msgid "Edit %(app)s"
+msgstr "Përpunoni %(app)s"
+
+msgid "Remove App"
+msgstr "Hiqe Aplikacionin"
+
+msgid "Done"
+msgstr "U bë"
+
+msgid "By"
+msgstr "Nga"
+
+msgid "Summary Override (40 characters)"
+msgstr "Anashkalim Përmbledhjeje (40 shenjash)"
+
+msgid "Short Summary (40 characters)"
+msgstr "Përmbledhje e Shkurtër (40 shenja)"
+
+msgid "Category"
+msgstr "Kategori"
+
+msgid "Choose Category"
+msgstr "Zgjidhni Kategori"
+
+msgid "Description Override"
+msgstr "Anashkalim Përshkrimi"
+
+msgid "Description"
+msgstr "Përshkrim"
+
+msgid "Screenshots"
+msgstr "Foto ekrani"
+
+msgid "Add files"
+msgstr "Shtoni kartela"
+
+msgid "Drag and drop screenshots"
+msgstr "Tërhiqni dhe lini foto ekrani"
+
+msgid "or"
+msgstr "ose"
+
+msgid "browse to upload"
+msgstr "shfletoni për ngarkim"
+
+msgid "Feature Graphic"
+msgstr "Grafik i Zgjedhur"
+
+msgid "Drag and drop a feature graphic"
+msgstr "Tërhiqni dhe lini grafik të zgjedhur"
+
+msgid "Drag and drop .apk files"
+msgstr "Tërhiqni dhe lërini kartela .apk"
+
+msgid "Back"
+msgstr "Mbrapsht"
+
+msgid "Editing Disabled"
+msgstr "Përpunimet Janë të Çaktivizuara"
+
+msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
+msgstr "Ky aplikacion përditësohet vetvetiu prej depos së largët. Nëse doni ta përpunoni vetë, lypset së pari të çaktivizoni përditësimet e vetvetishme. Ju lutemi, mbani parasysh se pa përditësime të vetvetishme, do t’ju duhet t’i shtoni dorasi versionet e reja."
+
+msgid "Disable Automatic Updates"
+msgstr "Çaktivizoji Përditësimet e Vetvetishme"
+
+msgid "Delete Feature Graphic"
+msgstr "Fshi Grafik të Zgjedhur"
+
+#, python-format
+msgid "Are you sure you want to delete the feature graphic from your app <strong>%(app)s</strong>?"
+msgstr "Jeni i sigurt se doni të fshihet grafiku i zgjedhur prej aplikacionit tuaj <strong>%(app)s</strong>?"
+
+#, python-format
+msgid "Languages (%(count)s)"
+msgstr "Gjuhë (%(count)s)"
+
+msgid "Edit"
+msgstr "Përpunojeni"
+
+msgid "Add Translation"
+msgstr "Shtoni Përkthim"
+
+#, python-format
+msgid "By %(author)s"
+msgstr "Nga %(author)s"
+
+#, python-format
+msgid "Updated %(time)s ago"
+msgstr "Përditësuar %(time)s më parë"
+
+#, python-format
+msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
+msgstr "Ky aplikacion përditësohet vetvetiu prej depos së largët \"%(repo_name)s\"."
+
+msgid "version history"
+msgstr "historik versionesh"
+
+#, python-format
+msgid "Version %(version)s (%(code)s)"
+msgstr "Version %(version)s (%(code)s)"
+
+#, python-format
+msgid "Released %(date)s"
+msgstr "Hedhur Në Qarkullim Më %(date)s"
+
+msgid "APK is still downloading..."
+msgstr "APK ende po shkarkohet…"
+
+msgid "This app has no APK files."
+msgstr "Ky aplikacion s’ka kartela APK."
+
+msgid "If you added this app from a remote repo, try deleting it and adding it again."
+msgstr "Nëse këtë aplikacion e shtuat prej një depoje të largët, provoni ta fshini dhe ta rishtoni."
+
+msgid "Previous"
+msgstr "I mëparshëm"
+
+msgid "Next"
+msgstr "Më pas"
+
+msgid "Add"
+msgstr "Shtoni"
+
+msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
+msgstr "Hëpërhë s’ka foto ekrani të shfaqura, ngaqë kjo i jep të zotit të depos aftësinë t’ju gjurmojë."
+
+msgid "show screenshots"
+msgstr "shfaq foto ekrani"
+
+msgid "Delete Screenshot"
+msgstr "Fshi Foto Ekrani"
+
+#, python-format
+msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
+msgstr "Jeni i sigurt se doni të fshihet kjo foto ekrani prej aplikacionit tuaj <strong>%(app)s</strong>?"
+
+msgid "Language Code"
+msgstr "Kod Gjuhe"
+
+#, python-format
+msgid "Hello, %(user)s"
+msgstr "Tungjatjeta, %(user)s"
+
+msgid "Please Wait!"
+msgstr "Ju lutemi, Pritni!"
+
+msgid "Background Operation in Progress"
+msgstr "Veprim Prapaskene Në Punë e Sipër"
+
+msgid "Repomaker might be updating or publishing your repo. Or it might be updating a remote repo. Depending on the type and size of the background operation, this might take awhile."
+msgstr "Repomaker mund të jetë duke përditësuar ose publikuar depon tuaj. Ose mund të jetë duke përditësuar një depo të largët. Në varësi të llojit dhe madhësisë të operacionit në prapaskenë, kjo mund të zgjasë ca."
+
+msgid "Try Again"
+msgstr "Riprovoni"
+
+msgid "The button won't work for you. Please press F5 to try again."
+msgstr "Butoni s’do të funksionojë për ju. Ju lutemi, shtypni tastin F5 për të riprovuar."
+
+msgid "Error"
+msgstr "Gabim"
+
+msgid "My Repos"
+msgstr "Depot e Mia"
+
+#, python-format
+msgid "Published %(time_ago)s"
+msgstr "Publikuar %(time_ago)s"
+
+#, python-format
+msgid "Created %(time_ago)s"
+msgstr "Krijuar %(time_ago)s"
+
+msgid "Make a collection of apps to share"
+msgstr "Krijoni një koleksion aplikacionesh për ndarje me të tjerët"
+
+msgid "Create Repo"
+msgstr "Krijoje Depon"
+
+msgid "New Repo"
+msgstr "Depo e Re"
+
+msgid "Create"
+msgstr "Krijoje"
+
+msgid "Delete Repo"
+msgstr "Fshije Depon"
+
+#, python-format
+msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
+msgstr "Jeni i sigurt se doni të fshihet depoja <strong>%(repo)s</strong>?"
+
+msgid "This will also delete all apps and other files from your repo. You will not be able to get them back, users of your repo will not be able to use it anymore and not receive updates for the apps they received from you. There is no way to recover this repo!"
+msgstr "Kjo do të sjellë gjithashtu fshirjen prej depos tuaj të krejt aplikacioneve dhe kartelave të tjera. S’do të jeni në gjendje t’i rimerrni, përdoruesit e depos tuaj s’do të jenë në gjendje ta përdorin më dhe s’do të marrin përditësime për aplikacionet që kanë marrë prej jush. S’ka rrugë për ta rikthyer këtë depo!"
+
+msgid "Please only proceed if you know what you are doing!"
+msgstr "Ju lutemi, vazhdoni vetëm nëse e dini se ç’po bëni!"
+
+msgid "Yes, I want to delete the repo"
+msgstr "Po, dua ta fshij depon"
+
+msgid "Edit Repo"
+msgstr "Përpunoni Depon"
+
+msgid "Save Changes"
+msgstr "Ruaji Ndryshimet"
+
+msgid "Content"
+msgstr "Lëndë"
+
+msgid "Share"
+msgstr "Ndajeni me të tjerë"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Search for apps in your repository"
+msgstr "Kërkoni për aplikacione në depon tuaj"
+
+msgid "add from gallery"
+msgstr "shtoni prej galerie"
+
+#, python-format
+msgid "Alternatively, drag and drop or %(label_start)schoose files%(label_end)s"
+msgstr "Ndryshe, tërhiqni dhe lini ose %(label_start)szgjidhni kartela%(label_end)s"
+
+msgid "Accepted files include Android apps, documents, eBooks, audio and video."
+msgstr "Në kartelat e pranuara përfshihen aplikacione Android, dokumente, elibra, audio dhe video."
+
+msgid "Your search did not return any results."
+msgstr "Kërkimi juaj s’gjeti ndonjë përfundim."
+
+msgid "Name"
+msgstr "Emër"
+
+msgid "Storage"
+msgstr "Depozitë"
+
+msgid "Add Storage"
+msgstr "Shtoni Depozitë"
+
+msgid "Fingerprint"
+msgstr "Shenja gishtash"
+
+msgid "Remove Repo"
+msgstr "Hiqe Depon"
+
+msgid "Add storage to publish"
+msgstr "Shtoni depozitë për publikim"
+
+msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
+msgstr "Depoja juaj do të publikohet automatikisht kur shtoni depozitën tuaj. Repomaker nuk promovon publikisht gjëra tuajat. Vetëm personat që marrin lidhje të drejtpërdrejtë te depoja juaj do të jenë në gjendje ta shohin."
+
+msgid "add storage"
+msgstr "shtoni depozitë"
+
+#, python-format
+msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
+msgid_plural "You have  <span>%(app_count)s apps</span> in your repo. Share it!"
+msgstr[0] "Keni  <span>%(app_count)s aplikacion</span> në depon tuaj. Ndajeni me të tjerët!"
+msgstr[1] "Keni  <span>%(app_count)s aplikacione</span> në depon tuaj. Ndajini me të tjerët!"
+
+msgid "view repo"
+msgstr "shihni depon"
+
+msgid "share public link"
+msgstr "ndani me të tjerë lidhje publike"
+
+msgid "copy link"
+msgstr "kopjoji lidhjen"
+
+msgid "add to an android phone"
+msgstr "shtojeni te një telefon android"
+
+msgid "To install these apps on your Android phone, add them to F-Droid."
+msgstr "Që të instaloni këto aplikacione te telefoni juaj Android, shtojini te F-Droid."
+
+msgid "F-Droid ensures access to secure app updates."
+msgstr "F-Droid garanton përdorim të përditësimesh të parrezik aplikacionesh."
+
+msgid "Scan QR"
+msgstr "Skanoni kod QR"
+
+#, python-format
+msgid "Check out this F-Droid repo: %(name)s"
+msgstr "Klono këtë depo F-Droid: %(name)s"
+
+msgid "Browse Gallery"
+msgstr "Shfletoni Galerinë"
+
+msgid "Search"
+msgstr "Kërko"
+
+#, python-format
+msgid "Category (%(count)s)"
+msgstr "Kategori (%(count)s)"
+
+msgid "All"
+msgstr "Krejt"
+
+#, python-format
+msgid "Source (%(count)s)"
+msgstr "Burim (%(count)s)"
+
+msgid "Add a repo"
+msgstr "Shtoni një depo"
+
+msgid "Clear filters"
+msgstr "Spastroji filtrat"
+
+#, python-format
+msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
+msgstr "S’u gjetën aplikacione me përputhje me '%(search_term)s'. Ju lutemi, provoni tjetër kërkim ose hiqni kriter tjetër kërkimi."
+
+msgid "There are no apps in this repo."
+msgstr "S’ka aplikacione në këtë depo."
+
+msgid "There are no apps available in the repos."
+msgstr "S’ka aplikacione të gatshme te depot."
+
+msgid "If you just added a repo, wait for the apps to download and try again later."
+msgstr "Nëse sapo shtuat një depo, prisni që aplikacionet të shkarkohen dhe riprovoni më vonë."
+
+msgid "This repo has no apps in the selected category. Try clearing it or select a different repo."
+msgstr "Kjo depo nuk ka aplikacione në kategorinë e përzgjedhur. Provoni ta spastroni ose përzgjidhni një depo tjetër."
+
+msgid "There are no apps available in the selected category. Try clearing it."
+msgstr "S’ka aplikacione në kategorinë e përzgjedhur. Provoni ta spastroni."
+
+msgid "Delete Storage"
+msgstr "Fshi Depozitë"
+
+#, python-format
+msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong> from your repo?"
+msgstr "Jeni i sigurt se doni të hiqet nga depoja juaj depozita te <strong>%(object)s</strong>?"
+
+msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
+msgstr "Kjo s’do të heqë lëndën prej asaj depozite, por do të bëjë të reshtë publikimi në të i versioneve të ardhshme të depos tuaj."
+
+msgid "Enable Storage"
+msgstr "Aktivizo Depozitë"
+
+msgid "Disable Storage"
+msgstr "Çaktivizo Depozitë"
+
+msgid "Repo Address"
+msgstr "Adresë Depoje"
+
+msgid "Edit Storage"
+msgstr "Përpunoni Depozitë"
+
+msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
+msgstr "Që ngarkimi të funksionojë, ju lutemi, mos harroni ta shtoni këtë kyç publik SSH te llogaria juaj Git. Ka udhëzime për <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> dhe <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
+
+msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
+msgstr "Po ashtu, ju lutemi, sigurohuni që dega <em>master</em> e depos tuaj të <b>mos jetë e mbrojtur</b> kundër <em>force pushing</em>."
+
+msgid "Git Repository SSH Address"
+msgstr "Adresë SSH depoje Git"
+
+msgid "Region"
+msgstr "Rajon"
+
+msgid "Bucket"
+msgstr "<em>Bucket</em>"
+
+msgid "Access Key ID"
+msgstr "ID Kyçi Hyrjeje"
+
+msgid "Please make sure to add this public SSH key to your SSH server's <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> file,\tif you have not done so already."
+msgstr "Ju lutemi, mos harroni ta shtoni këtë kyç publik te kartela <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> e shërbyesit tuaj SSH,\tnëse s’e keni bërë tashmë."
+
+msgid "Security Warning: This gives repomaker write access to that storage. Please limit this user's access as much as possible."
+msgstr "Sinjalizim Sigurie: Kjo i jep krijuesit të depos të drejta shkrimi te ajo depozitë. Ju lutemi, kufizojeni hyrjen për këtë përdorues sa më shumë që të jetë e mundur."
+
+msgid "Username"
+msgstr "Emër përdoruesi"
+
+msgid "Host"
+msgstr "Strehë"
+
+msgid "Path"
+msgstr "Shteg"
+
+msgid "Your local default SSH key will be used to connect to the storage."
+msgstr "Për t’u lidhur me depozitën do të përdoret kyçi juaj vendor parazgjedhje SSH."
+
+msgid "Please make sure to authorize this public SSH key for your remote storage, if you have not done so already."
+msgstr "Ju lutemi, mos harroni të autorizoni këtë kyç publik SSH për depozitën tuaj të largët, nëse s’e keni bërë tashmë."
+
+msgid "Activate this storage only once you have added the SSH key."
+msgstr "Aktivizojeni këtë depozitë vetëm pasi të keni shtuar kyçin SSH."
+
+msgid "If this storage is experiencing problems, please check that the SSH key works properly."
+msgstr "Nëse kjo depozitë po has probleme, ju lutemi kontrolloni që kyçi SSH funksionon si duhet."
+
+#, python-format
+msgid "Update %(storage_name)s"
+msgstr "Përditësoni %(storage_name)s"
+
+#, python-format
+msgid "Setup %(storage_name)s"
+msgstr "Ujdisni %(storage_name)s"
+
+msgid "cancel"
+msgstr "anuloje"
+
+msgid "save"
+msgstr "ruaje"
+
+msgid "Here's how to copy the SSH Address from GitLab:"
+msgstr "Ja se si të kopjohet adresa SSH prej GitLab-it:"
+
+msgid "Setup a place to store your repo"
+msgstr "Ujdisni një vend ku të depozitohet depoja juaj"
+
+msgid "Git"
+msgstr "Git"
+
+msgid "Easy, free, requires an account"
+msgstr "I lehtë, lirisht, lyp një llogari"
+
+msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
+msgstr "Git është një mjet shumë i njohur për kontroll versionesh të diçkaje. Mund të publikoni në mënyrë të parrezik depo në GitLab, GitHub ose çfarëdo shërbimi tjetër Git. Shërbimet Git përdorin SSH-në për kopjim të parrezik kartelash nga kompjuteri juaj në kompjutera të largët."
+
+msgid "Setup"
+msgstr "Ujdisje"
+
+msgid "GitLab"
+msgstr "GitLab"
+
+msgid "GitHub"
+msgstr "GitHub"
+
+msgid "SSH"
+msgstr "SSH"
+
+msgid "Requires a personal web server or host that supports SSH"
+msgstr "Lyp një shërbyes personal ose strehë që mbulon SSH-në"
+
+msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
+msgstr "SSH-ja është një teknologji që mund të përdoret për të kopjuar te kompjuter të largët kartela në mënyrë të parrezik. Duke përdorur Git-in si depozitë, kartelat mund të kopjohen edhe përmes SSH-s. Por mundësia për SSH puro i kopjon drejtpërsëdrejti kartelat pa përdorur teknologji tjetër."
+
+msgid "Amazon S3"
+msgstr "Amazon S3"
+
+msgid "Requires an Amazon account, Pricing varies"
+msgstr "Lyp një llogari Amazon account, çmimet varen"
+
+msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
+msgstr "Amazon S3 është një shërbim web i ofruar nga Amazon Web Services. Amazon S3 furnizon depozita përmes ndërfaqesh shërbimi web. Çmimet janë të larmishme. Për hollësi, vizitoni sajtin Amazon S3."
+
+#, python-format
+msgid "Version %(version)s (%(date)s)"
+msgstr "Version %(version)s (%(date)s)"
+
+msgid "Added"
+msgstr "U shtua"
+
+msgid "There was an error creating the repository. Please try again!"
+msgstr "Pati një gabim gjatë krijimit të depos. Ju lutemi, riprovoni!"
+
+msgid "Enter email"
+msgstr "Jepni email-in"
+
+msgid "Enter your email address and we'll send a link to reset it. If you did not sign up with an email, we cannot help you securely reset your password."
+msgstr "Jepni adresën tuaj email dhe do t’ju dërgojmë një lidhje për ricaktim të tij. Nëse nuk u regjistruat me email, s’mund t’ju ndihmojmë të ricaktoni në mënyrë të parrezik fjalëkalimin tuaj."
+
+msgid "This is not a valid language code."
+msgstr "Ky s’është kod gjuhe i vlefshëm."
+
+msgid "This language already exists. Please choose another one!"
+msgstr "Kjo gjuhë ekziston tashmë. Ju lutemi, zgjidhni një tjetër!"
+
+msgid "Enter SSH URL"
+msgstr "Jepni URL SSH"
+
+msgid "Raw Git URL"
+msgstr "URL Git Bruto"
+
+msgid "This is the location where the uploaded files can be accessed from in raw form. Leave empty for GitHub or GitLab.com repositories."
+msgstr "Ky është vendi prej nga mund të hyhet te kartelat e ngarkuara në formë të papërpunuar. Për depo GitHub ose GitLab.com, lëreni të zbrazët."
+
+msgid "This URL must start with 'git@'."
+msgstr "Kjo URL duhet të fillojë me 'git@'."
+
+msgid "This URL must end with '.git'."
+msgstr "Kjo URL duhet të përfundojë me '.git'."
+
+msgid "This URL is invalid. Please copy the exact SSH URL of your git repository."
+msgstr "Kjo URL është e pavlefshme. Ju lutemi, kopjoni URL-në e saktë SSH të depos tuaj git."
+
+msgid "Please add a valid URLfor the raw content of this git repository."
+msgstr "Ju lutemi, shtoni një URL të vlefshme për lëndën e papërpunuar të kësaj depoje git."
+
+msgid "Repository URL"
+msgstr "URL Depoje"
+
+msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
+msgstr "Ju lutemi, përdorni një URL me shenja gishtash në fund, që të mund të vlerësojmë mirëfilltësinë e depos."
+
+msgid "Please don't add one of your own repositories here."
+msgstr "Ju lutemi, mos shtoni këtu depo tuajat."
+
+#, python-format
+msgid "Could not validate repository: %s"
+msgstr "S’u bë dot vleftësimi i depos: %s"
+
+msgid "Describe the repo"
+msgstr "Përshkruani depon"
+
+msgid "Bucket Name"
+msgstr "Emër Bucket-i"
+
+msgid "Secret Access Key"
+msgstr "Kyç Hyrjeje të Fshehtë"
+
+msgid "Other regions are currently not supported."
+msgstr "Hëpërhë nuk mbulohen rajone të tjera."
+
+msgid "Language"
+msgstr "Gjuhë"
+
+msgid "Select Screenshot for upload"
+msgstr "Përzgjidhni Foto Ekrani për ngarkim"
+
+msgid "Use local default SSH Key"
+msgstr "Përdor kyç vendor parazgjedhje SSH"
+
+msgid "User Name"
+msgstr "Emër Përdoruesi"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "This is the location where the uploaded files can be accessed from."
+msgstr "Ky është vendi nga ku mund të hyhet te kartelat e ngarkuara."
+
+msgid "Primary Storage"
+msgstr "Depozitë Parësore"
+
+msgid "Make this storage the primary storage of the repository."
+msgstr "Bëje këtë depozitë depozitën parësore të depos."

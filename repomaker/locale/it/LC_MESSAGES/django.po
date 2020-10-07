@@ -1,21 +1,23 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# random r <epsilin@yopmail.com>, 2020.
+# FrancescoSoave <fs@francescosoave.com>, 2020.
+# Anonymous <noreply@weblate.org>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-05-22 16:38+0000\n"
-"Last-Translator: random r <epsilin@yopmail.com>\n"
+"POT-Creation-Date: 2018-09-01 20:54+0000\n"
+"PO-Revision-Date: 2020-05-14 20:10+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/f-droid/repomaker/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -82,10 +84,10 @@ msgid "US Standard"
 msgstr "Standard US"
 
 msgid "Amazon S3 Storage"
-msgstr ""
+msgstr "Archiviazione Amazon S3"
 
 msgid "Enter a valid user name consisting of letters, numbers, underscores or hyphens."
-msgstr ""
+msgstr "Inserisci un nome utente valido fatto di lettere, numeri, trattini bassi o trattini normali."
 
 msgid "Enter a valid hostname."
 msgstr "Inserisci un hostname valido."
@@ -94,37 +96,37 @@ msgid "Enter a valid path."
 msgstr "Inserisci un percorso valido."
 
 msgid "SSH Storage"
-msgstr ""
+msgstr "Archiviazione SSH"
 
 msgid "Git Storage"
-msgstr ""
+msgstr "Archiviazione Git"
 
 msgid "Default Storage"
-msgstr ""
+msgstr "Archiviazione predefinita"
 
 msgid "American English"
-msgstr ""
+msgstr "Inglese americano"
 
 msgid "Change E-mail"
 msgstr "Cambia E-mail"
 
 msgid "Sign Out"
-msgstr ""
+msgstr "Esci"
 
 msgid "Sign In"
-msgstr ""
+msgstr "Accedi"
 
 msgid "Sign Up"
-msgstr ""
+msgstr "Registrazione"
 
 msgid "Distribute apps."
-msgstr ""
+msgstr "Distribuire le applicazioni."
 
 msgid "Spread the love."
 msgstr "Diffondi l'amore."
 
 msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
-msgstr ""
+msgstr "Repomaker è un'applicazione web gratuita costruita per creare collezioni di applicazioni, musica, libri, video e immagini da condividere con i tuoi coetanei. Utilizza F-Droid come piattaforma di distribuzione mobile. Disponibile solo su Android."
 
 msgid "Login"
 msgstr "Accedi"
@@ -148,20 +150,20 @@ msgid "logout"
 msgstr "disconnetti"
 
 msgid "submit"
-msgstr ""
+msgstr "inviare"
 
 msgid "We have sent you an email with a link to reset your password."
 msgstr "Ti abbiamo inviato una mail con il link per recuperare la tua password."
 
 msgid "Signup"
-msgstr ""
+msgstr "Iscriviti"
 
 msgid "Delete App Version"
-msgstr ""
+msgstr "Cancella versione App"
 
 #, python-format
 msgid "Are you sure you want to delete this version <strong>%(version)s</strong> (%(code)s) from your app <strong>%(app)s</strong>?"
-msgstr ""
+msgstr "Sei sicuro di voler cancellare questa versione <strong> %(version)s </strong> (%(code)s) dalla tua app <strong> %(app)s </strong>?"
 
 msgid "Confirm"
 msgstr "Conferma"
@@ -186,10 +188,8 @@ msgstr "Finito"
 msgid "By"
 msgstr "Di"
 
-#, fuzzy
-#| msgid "Short Summary (40 characters)"
 msgid "Summary Override (40 characters)"
-msgstr "Piccolo Riassunto (40 caratteri)"
+msgstr "Riscrittura del riassunto (40 caratteri)"
 
 msgid "Short Summary (40 characters)"
 msgstr "Piccolo Riassunto (40 caratteri)"
@@ -200,49 +200,47 @@ msgstr "Categoria"
 msgid "Choose Category"
 msgstr "Scegli categoria"
 
-#, fuzzy
-#| msgid "Description"
 msgid "Description Override"
-msgstr "Descrizione"
+msgstr "Riscrittura della descrizione"
 
 msgid "Description"
 msgstr "Descrizione"
 
 msgid "Screenshots"
-msgstr ""
+msgstr "Schermate"
 
 msgid "Add files"
 msgstr "Aggiungi file"
 
 msgid "Drag and drop screenshots"
-msgstr ""
+msgstr "Trascina e rilascia schermata"
 
 msgid "or"
 msgstr "o"
 
 msgid "browse to upload"
-msgstr ""
+msgstr "sfogliare per caricare"
 
 msgid "Feature Graphic"
-msgstr ""
+msgstr "Caratteristica grafica"
 
 msgid "Drag and drop a feature graphic"
-msgstr ""
+msgstr "Trascina e rilascia una caratteristica grafica"
 
 msgid "Drag and drop .apk files"
-msgstr ""
+msgstr "Trascina e rilascia i file .apk"
 
 msgid "Back"
 msgstr "Indietro"
 
 msgid "Editing Disabled"
-msgstr ""
+msgstr "Modifica disabilitata"
 
 msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
-msgstr ""
+msgstr "Questa app viene aggiornata automaticamente dal repo remoto. Se volete modificarla voi stessi, dovete prima disattivare gli aggiornamenti automatici. Si prega di notare che senza aggiornamenti automatici, è necessario aggiungere manualmente le nuove versioni."
 
 msgid "Disable Automatic Updates"
-msgstr ""
+msgstr "Disattivare gli aggiornamenti automatici"
 
 msgid "Delete Feature Graphic"
 msgstr "Elimina immagine descrittiva"
@@ -267,11 +265,11 @@ msgstr "Di %(author)s"
 
 #, python-format
 msgid "Updated %(time)s ago"
-msgstr ""
+msgstr "Aggiornato %(time)s fa"
 
 #, python-format
 msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
-msgstr ""
+msgstr "Questa app viene aggiornata automaticamente dal repo remoto \"%(repo_name)s\"."
 
 msgid "version history"
 msgstr "cronologia versioni"
@@ -285,13 +283,13 @@ msgid "Released %(date)s"
 msgstr "Rilasciato %(date)s"
 
 msgid "APK is still downloading..."
-msgstr ""
+msgstr "APK è ancora in download..."
 
 msgid "This app has no APK files."
 msgstr "Questa app non ha file APK."
 
 msgid "If you added this app from a remote repo, try deleting it and adding it again."
-msgstr ""
+msgstr "Se avete aggiunto questa app da un repo remoto, provate a cancellarla e ad aggiungerla di nuovo."
 
 msgid "Previous"
 msgstr "Precedente"
@@ -303,17 +301,17 @@ msgid "Add"
 msgstr "Aggiungi"
 
 msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
-msgstr ""
+msgstr "Al momento non ci sono schermate mostrate perché questo dà al proprietario del repo la possibilità di rintracciarti."
 
 msgid "show screenshots"
-msgstr ""
+msgstr "mostra schermate"
 
 msgid "Delete Screenshot"
 msgstr "Elimina schermata"
 
 #, python-format
 msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
-msgstr ""
+msgstr "Sei sicuro di voler cancellare questa schermata dalla tua app <strong>%(app)s</strong>?"
 
 msgid "Language Code"
 msgstr "Codice della lingua"
@@ -323,19 +321,19 @@ msgid "Hello, %(user)s"
 msgstr "Ciao, %(user)s"
 
 msgid "Please Wait!"
-msgstr ""
+msgstr "Attendere prego!"
 
 msgid "Background Operation in Progress"
-msgstr ""
+msgstr "Operazioni in background in corso"
 
 msgid "Repomaker might be updating or publishing your repo. Or it might be updating a remote repo. Depending on the type and size of the background operation, this might take awhile."
-msgstr ""
+msgstr "Repomaker potrebbe aggiornare o pubblicare il vostro repo. O potrebbe essere l'aggiornamento di un repo remoto. A seconda del tipo e della dimensione dell'operazione in background, questo potrebbe richiedere un po' di tempo."
 
 msgid "Try Again"
 msgstr "Riprova"
 
 msgid "The button won't work for you. Please press F5 to try again."
-msgstr ""
+msgstr "Il pulsante non funziona per te. Premete F5 per riprovare."
 
 msgid "Error"
 msgstr "Errore"
@@ -345,14 +343,14 @@ msgstr "I miei repo"
 
 #, python-format
 msgid "Published %(time_ago)s"
-msgstr ""
+msgstr "Pubblicato %(time_ago)s"
 
 #, python-format
 msgid "Created %(time_ago)s"
-msgstr ""
+msgstr "Creato %(time_ago)s"
 
 msgid "Make a collection of apps to share"
-msgstr ""
+msgstr "Fai una raccolta di applicazioni da condividere"
 
 msgid "Create Repo"
 msgstr "Crea repo"
@@ -371,7 +369,7 @@ msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
 msgstr "Sei sicuro di voler cancellare il repo <strong>%(repo)s</strong>?"
 
 msgid "This will also delete all apps and other files from your repo. You will not be able to get them back, users of your repo will not be able to use it anymore and not receive updates for the apps they received from you. There is no way to recover this repo!"
-msgstr ""
+msgstr "Questo cancellerà anche tutte le app e gli altri file dal vostro repo. Non sarà possibile recuperarli, gli utenti del vostro repo non potranno più utilizzarli e non potranno più ricevere aggiornamenti per le app che hanno ricevuto da voi. Non c'è modo di recuperare questo repo!"
 
 msgid "Please only proceed if you know what you are doing!"
 msgstr "Per favore procedi solo se sai cosa stai facendo!"
@@ -386,7 +384,7 @@ msgid "Save Changes"
 msgstr "Salva cambiamenti"
 
 msgid "Content"
-msgstr ""
+msgstr "Contenuto"
 
 msgid "Share"
 msgstr "Condividi"
@@ -395,17 +393,17 @@ msgid "Info"
 msgstr "Informazioni"
 
 msgid "Search for apps in your repository"
-msgstr ""
+msgstr "Cerca le app nel tuo repository"
 
 msgid "add from gallery"
 msgstr "aggiungi dalla galleria"
 
 #, python-format
 msgid "Alternatively, drag and drop or %(label_start)schoose files%(label_end)s"
-msgstr ""
+msgstr "In alternativa, trascinare e rilasciare o %(label_start)s scegliere files%(label_end)s"
 
 msgid "Accepted files include Android apps, documents, eBooks, audio and video."
-msgstr ""
+msgstr "I file accettati includono applicazioni Android, documenti, eBook, audio e video."
 
 msgid "Your search did not return any results."
 msgstr "La tua ricerca non ha restituito risultati."
@@ -414,31 +412,31 @@ msgid "Name"
 msgstr "Nome"
 
 msgid "Storage"
-msgstr ""
+msgstr "Archivio"
 
 msgid "Add Storage"
-msgstr ""
+msgstr "Aggiungi spazio di archiviazione"
 
 msgid "Fingerprint"
-msgstr ""
+msgstr "Impronta digitale"
 
 msgid "Remove Repo"
 msgstr "Rimuovi repo"
 
 msgid "Add storage to publish"
-msgstr ""
+msgstr "Aggiungi spazio di archiviazione da pubblicare"
 
 msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
-msgstr ""
+msgstr "Il vostro repo sarà pubblicato automaticamente quando aggiungerete la memoria. Repomaker non promuove pubblicamente la tua roba. Solo le persone che ricevono il link diretto al vostro repo potranno vederlo."
 
 msgid "add storage"
-msgstr ""
+msgstr "aggiungi spazio di archiviazione"
 
 #, python-format
 msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
 msgid_plural "You have  <span>%(app_count)s apps</span> in your repo. Share it!"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Hai  <span>%(app_count)s app </span> nel tuo repository. Condividilo!"
+msgstr[1] "Hai  <span>%(app_count)s apps </span> nel tuo repository. Condividilo!"
 
 msgid "view repo"
 msgstr "vedi repo"
@@ -450,23 +448,23 @@ msgid "copy link"
 msgstr "copia link"
 
 msgid "add to an android phone"
-msgstr ""
+msgstr "aggiungi a un telefono Android"
 
 msgid "To install these apps on your Android phone, add them to F-Droid."
-msgstr ""
+msgstr "Per installare queste applicazioni sul tuo telefono Android, aggiungile a F-Droid."
 
 msgid "F-Droid ensures access to secure app updates."
-msgstr ""
+msgstr "F-Droid garantisce l'accesso ad aggiornamenti sicuri delle app."
 
 msgid "Scan QR"
 msgstr "Scansione QR"
 
 #, python-format
 msgid "Check out this F-Droid repo: %(name)s"
-msgstr ""
+msgstr "Dai un'occhiata a questo repository F-Droid: %(name)s"
 
 msgid "Browse Gallery"
-msgstr ""
+msgstr "Sfoglia la galleria"
 
 msgid "Search"
 msgstr "Cerca"
@@ -486,11 +484,11 @@ msgid "Add a repo"
 msgstr "Aggiungi un repo"
 
 msgid "Clear filters"
-msgstr ""
+msgstr "Cancella filtri"
 
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
-msgstr ""
+msgstr "Nessuna app trovata che corrisponda a '%(search_term)s'. Si prega di provare una ricerca diversa o di rimuovere altri criteri di filtro."
 
 msgid "There are no apps in this repo."
 msgstr "Non ci sono app in questo repo."
@@ -502,77 +500,77 @@ msgid "If you just added a repo, wait for the apps to download and try again lat
 msgstr "Se hai appena aggiunto un repo attendi che le app vengano scaricate e prova ancora dopo."
 
 msgid "This repo has no apps in the selected category. Try clearing it or select a different repo."
-msgstr ""
+msgstr "Questo repo non ha applicazioni nella categoria selezionata. Provate a cancellarlo o a selezionare un repo diverso."
 
 msgid "There are no apps available in the selected category. Try clearing it."
-msgstr ""
+msgstr "Non ci sono applicazioni disponibili nella categoria selezionata. Prova a cancellarla."
 
 msgid "Delete Storage"
-msgstr ""
+msgstr "Elimina spazio di archiviazione"
 
 #, python-format
 msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong> from your repo?"
-msgstr ""
+msgstr "Sei sicuro di voler rimuovere il deposito a <strong>%(object)s</strong> dal tuo repo?"
 
 msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
-msgstr ""
+msgstr "Questo non rimuoverà il contenuto da quel deposito, ma smetterà di pubblicare versioni future del vostro repo ad esso."
 
 msgid "Enable Storage"
-msgstr ""
+msgstr "Abilita archiviazione"
 
 msgid "Disable Storage"
-msgstr ""
+msgstr "Disabilita archiviazione"
 
 msgid "Repo Address"
-msgstr ""
+msgstr "Indirizzo Repo"
 
 msgid "Edit Storage"
-msgstr ""
+msgstr "Modifica la memoria"
 
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
-msgstr ""
+msgstr "Assicurati di aggiungere questa chiave pubblica SSH al tuo account Git per l'upload al lavoro. Ci sono istruzioni per <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> e <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
-msgstr ""
+msgstr "Inoltre, si prega di assicurarsi che il ramo master del vostro deposito non sia <b>non protetto</b> dalla spinta della forza."
 
 msgid "Git Repository SSH Address"
-msgstr ""
+msgstr "Indirizzo del deposito di Git SSH"
 
 msgid "Region"
-msgstr ""
+msgstr "Regione"
 
 msgid "Bucket"
-msgstr ""
+msgstr "Secchio"
 
 msgid "Access Key ID"
-msgstr ""
+msgstr "ID chiave di accesso"
 
 msgid "Please make sure to add this public SSH key to your SSH server's <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> file,\tif you have not done so already."
-msgstr ""
+msgstr "Assicuratevi di aggiungere questa chiave pubblica SSH al file <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> del vostro server SSH, se non l'avete già fatto."
 
 msgid "Security Warning: This gives repomaker write access to that storage. Please limit this user's access as much as possible."
-msgstr ""
+msgstr "Avviso di sicurezza: Questo dà accesso in scrittura al repomaker a quella memoria. Si prega di limitare il più possibile l'accesso di questo utente."
 
 msgid "Username"
 msgstr "Nome utente"
 
 msgid "Host"
-msgstr ""
+msgstr "Host"
 
 msgid "Path"
 msgstr "Percorso"
 
 msgid "Your local default SSH key will be used to connect to the storage."
-msgstr ""
+msgstr "La vostra chiave SSH locale predefinita verrà utilizzata per connettersi allo spazio di archiviazione."
 
 msgid "Please make sure to authorize this public SSH key for your remote storage, if you have not done so already."
-msgstr ""
+msgstr "Assicuratevi di autorizzare questa chiave pubblica SSH per la vostra memoria remota, se non l'avete già fatto."
 
 msgid "Activate this storage only once you have added the SSH key."
-msgstr ""
+msgstr "Attivare questa memoria solo dopo aver aggiunto il tasto SSH."
 
 msgid "If this storage is experiencing problems, please check that the SSH key works properly."
-msgstr ""
+msgstr "Se questa memoria presenta problemi, verificare che la chiave SSH funzioni correttamente."
 
 #, python-format
 msgid "Update %(storage_name)s"
@@ -580,19 +578,19 @@ msgstr "Aggiorna %(storage_name)s"
 
 #, python-format
 msgid "Setup %(storage_name)s"
-msgstr ""
+msgstr "Impostazione %(storage_name)s"
 
 msgid "cancel"
-msgstr ""
+msgstr "Annulla"
 
 msgid "save"
 msgstr "salva"
 
 msgid "Here's how to copy the SSH Address from GitLab:"
-msgstr ""
+msgstr "Ecco come copiare l'indirizzo SSH da GitLab:"
 
 msgid "Setup a place to store your repo"
-msgstr ""
+msgstr "Preparate un posto dove riporre il vostro repo"
 
 msgid "Git"
 msgstr "Git"
@@ -601,7 +599,7 @@ msgid "Easy, free, requires an account"
 msgstr "Semplice, gratis, richiede un account"
 
 msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
-msgstr ""
+msgstr "Git è uno strumento popolare per il controllo delle versioni. Puoi pubblicare in modo sicuro i repo su GitLab, GitHub o qualsiasi altro servizio Git. I servizi Git utilizzano SSH per copiare in modo sicuro i file dal tuo computer ai computer remoti."
 
 msgid "Setup"
 msgstr "Imposta"
@@ -616,19 +614,19 @@ msgid "SSH"
 msgstr "SSH"
 
 msgid "Requires a personal web server or host that supports SSH"
-msgstr ""
+msgstr "Richiede un server web personale o un host che supporti SSH"
 
 msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
-msgstr ""
+msgstr "SSH è una tecnologia che può essere utilizzata per copiare file in modo sicuro su computer remoti. Quando si usa Git come memoria, i file vengono copiati anche tramite SSH. Ma l'opzione SSH puro copia direttamente i file senza usare altre tecnologie."
 
 msgid "Amazon S3"
 msgstr "Amazon S3"
 
 msgid "Requires an Amazon account, Pricing varies"
-msgstr ""
+msgstr "Richiede un conto su Amazon, i prezzi variano"
 
 msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
-msgstr ""
+msgstr "Amazon S3 è un servizio web offerto da Amazon Web Services. Amazon S3 fornisce magazzini attraverso interfacce di servizio web. Il prezzo varia. Visitate il sito web di Amazon S3 per i dettagli."
 
 #, python-format
 msgid "Version %(version)s (%(date)s)"
@@ -638,28 +636,28 @@ msgid "Added"
 msgstr "Aggiunto"
 
 msgid "There was an error creating the repository. Please try again!"
-msgstr ""
+msgstr "C'è stato un errore nella creazione del repository. Si prega di riprovare!"
 
 msgid "Enter email"
 msgstr "Inserisci email"
 
 msgid "Enter your email address and we'll send a link to reset it. If you did not sign up with an email, we cannot help you securely reset your password."
-msgstr ""
+msgstr "Inserisci il tuo indirizzo e-mail e ti invieremo un link per resettarlo. Se non ti sei registrato con un'e-mail, non possiamo aiutarti a reimpostare la password in modo sicuro."
 
 msgid "This is not a valid language code."
-msgstr ""
+msgstr "Questo non è un codice lingua valido."
 
 msgid "This language already exists. Please choose another one!"
-msgstr ""
+msgstr "Questo linguaggio esiste già. Sceglietene un'altra!"
 
 msgid "Enter SSH URL"
-msgstr ""
+msgstr "Inserire l'URL SSH"
 
 msgid "Raw Git URL"
-msgstr ""
+msgstr "URL Raw Git"
 
 msgid "This is the location where the uploaded files can be accessed from in raw form. Leave empty for GitHub or GitLab.com repositories."
-msgstr ""
+msgstr "Questo è il luogo da cui è possibile accedere ai file caricati in forma grezza. Lasciare vuoto per i repository GitHub o GitLab.com."
 
 msgid "This URL must start with 'git@'."
 msgstr "Questo URL deve iniziare con 'git@'."
@@ -668,32 +666,32 @@ msgid "This URL must end with '.git'."
 msgstr "Questo URL deve finire con '.git'."
 
 msgid "This URL is invalid. Please copy the exact SSH URL of your git repository."
-msgstr ""
+msgstr "Questo URL non è valido. Si prega di copiare l'esatto URL SSH del vostro repository git."
 
 msgid "Please add a valid URLfor the raw content of this git repository."
-msgstr ""
+msgstr "Si prega di aggiungere un URL valido per il contenuto grezzo di questo repository git."
 
 msgid "Repository URL"
-msgstr ""
+msgstr "URL del repository"
 
 msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
-msgstr ""
+msgstr "Si prega di utilizzare un URL con un'impronta digitale alla fine, in modo da poter convalidare l'autenticità del repository."
 
 msgid "Please don't add one of your own repositories here."
 msgstr "Per favore, non aggiungere uno dei tuoi repository qui."
 
 #, python-format
 msgid "Could not validate repository: %s"
-msgstr ""
+msgstr "Impossibile validare il repository: %s"
 
 msgid "Describe the repo"
 msgstr "Descrivi il repo"
 
 msgid "Bucket Name"
-msgstr ""
+msgstr "Nome di Bucket"
 
 msgid "Secret Access Key"
-msgstr ""
+msgstr "Chiave d'accesso segreta"
 
 msgid "Other regions are currently not supported."
 msgstr "Altre regioni non sono attualmente supportate."
@@ -702,10 +700,10 @@ msgid "Language"
 msgstr "Lingua"
 
 msgid "Select Screenshot for upload"
-msgstr ""
+msgstr "Seleziona Screenshot per il caricamento"
 
 msgid "Use local default SSH Key"
-msgstr ""
+msgstr "Usa chiave SSH predefinita locale"
 
 msgid "User Name"
 msgstr "Nome utente"
@@ -714,10 +712,10 @@ msgid "URL"
 msgstr "URL"
 
 msgid "This is the location where the uploaded files can be accessed from."
-msgstr ""
+msgstr "In questa posizione potete accedere ai files caricati."
 
 msgid "Primary Storage"
-msgstr ""
+msgstr "Spazio di archiviazione Primario"
 
 msgid "Make this storage the primary storage of the repository."
-msgstr ""
+msgstr "Fare di questo deposito lo spazio di archiviazione primario del repository."

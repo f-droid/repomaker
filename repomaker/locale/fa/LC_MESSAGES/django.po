@@ -1,21 +1,9 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Tetra Homer <tetrahomer@gmail.com>, 2020.
 msgid ""
-msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-01 20:54+0000\n"
-"PO-Revision-Date: 2018-07-28 11:19+0000\n"
-"Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
-"Language-Team: Persian <https://hosted.weblate.org/projects/f-droid/repomaker/fa/>\n"
-"Language: fa\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.1.1\n"
+msgstr "Project-Id-Version: \nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2018-09-01 20:54+0000\nPO-Revision-Date: 2020-07-20 19:03+0000\nLast-Translator: Tetra Homer <tetrahomer@gmail.com>\nLanguage-Team: Persian <https://hosted.weblate.org/projects/f-droid/repomaker/fa/>\nLanguage: fa\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 4.2-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -171,14 +159,14 @@ msgstr "حذف کاره"
 
 #, python-format
 msgid "Are you sure you want to delete your app <strong>%(object)s</strong>?"
-msgstr "آیا از حذف این کاره اطمینان دارید  <strong> 1%(object)s 2</strong> 3 ؟"
+msgstr "آیا شما مطمئنید که می‌خواهید برنامه خود را حذف کنید <strong>%(object)s</strong>?"
 
 #, python-format
 msgid "Edit %(app)s"
-msgstr "ویرایش %(app)s 1"
+msgstr "ویرایش %(app)s"
 
 msgid "Remove App"
-msgstr "برداشتن کاره"
+msgstr "حذف برنامه"
 
 msgid "Done"
 msgstr "انجام شد"
@@ -452,14 +440,14 @@ msgid "To install these apps on your Android phone, add them to F-Droid."
 msgstr "برای نصب این کاره‌ها روی تلفن اندرویدیتان، آن‌ها را به اف‌دروید بیفزایید."
 
 msgid "F-Droid ensures access to secure app updates."
-msgstr "اف‌دروید دسترسی به به‌روز رسانی‌های کارهٔ امن را ممکن می‌کند."
+msgstr "اف-‌دروید دسترسی به بروزرسانی‌های برنامه امن را ممکن می‌کند."
 
 msgid "Scan QR"
 msgstr "پویش QR"
 
 #, python-format
 msgid "Check out this F-Droid repo: %(name)s"
-msgstr "این مخزن اف‌دروید را ببینید:  %(name)s"
+msgstr "این مخزن اف-‌دروید را ببینید: %(name)s"
 
 msgid "Browse Gallery"
 msgstr "مرور جُنگ"
@@ -501,7 +489,7 @@ msgid "This repo has no apps in the selected category. Try clearing it or select
 msgstr "این مخزن هیچ کاره‌ای در دستهٔ گزیده ندارد. دسته را پاک کرده یا مخزن دیگری را برگزینید."
 
 msgid "There are no apps available in the selected category. Try clearing it."
-msgstr "هیچ کاره‌ای در دستهٔ گزیده موجود نیست.  دسته را پاک کنید."
+msgstr "هیچ برنامه‌ای در دستهٔ گزیده موجود نیست. دسته را پاک کنید."
 
 msgid "Delete Storage"
 msgstr "حذف ذخیره‌ساز"
@@ -511,7 +499,7 @@ msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong
 msgstr "مطمئنید که می‌خواهید ذخیرهٔ موجود در <strong>%(object)s</strong> را از مخزنتان بردارید؟"
 
 msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
-msgstr "این کار محتوا را از ‌آن ذخیره‌ساز  برنمی‌دارد، ولی جلوی انتشار نگار‌ش‌های آیندهٔ مخزنتان در آن را می‌گیرد."
+msgstr "این کار محتوا را از ‌آن محل ذخیره حذف نمی‌کند، ولی جلوی انتشار نگار‌ش‌های آیندهٔ مخزنتان در آن را می‌گیرد."
 
 msgid "Enable Storage"
 msgstr "فعّال کردن ذخیره‌ساز"
@@ -568,7 +556,7 @@ msgid "Activate this storage only once you have added the SSH key."
 msgstr "این ذخیره‌ساز را فقط پس از افزودن کلید SSH فعّال کنید."
 
 msgid "If this storage is experiencing problems, please check that the SSH key works properly."
-msgstr "اگر  این ذخیره‌ساز با مشکل مواجه است، لطفاً بررسی کنید که کلید SSH درست کار می‌کند."
+msgstr "اگر این محل ذخیره با مشکل مواجه است، لطفاً بررسی کنید که کلید SSH درست کار می‌کند."
 
 #, python-format
 msgid "Update %(storage_name)s"
@@ -597,7 +585,7 @@ msgid "Easy, free, requires an account"
 msgstr "ساده، آزاد، نیاز به حساب کاربری"
 
 msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
-msgstr "گیت ابزاری محبوب برای واپایش نگارش‌های چیزهاست. می‌توانید مخزن‌ها را به صورت امن به گیت لب، گیت هاب و یا هر خدمت گیت دیگری منتشر کنید. خدمت‌های گیت برای رونوشت امن پرونده‌ها از رایانه‌تان به رایانه‌های دوردست از SSH  استفاده می‌کنند."
+msgstr "گیت ابزاری محبوب برای مهار نسخه چیزهاست. می‌توانید مخزن‌ها را به صورت امن به گیت‌لب، گیت‌هاب و یا هر خدمت گیت دیگری منتشر کنید. خدمت‌های گیت برای رونوشت امن پرونده‌ها از رایانه‌تان به رایانه‌های دوردست از SSH استفاده می‌کنند."
 
 msgid "Setup"
 msgstr "برپاسازی"
@@ -615,7 +603,7 @@ msgid "Requires a personal web server or host that supports SSH"
 msgstr "نیاز به یک کارساز وب شخصی یا میزبانی که SSH را پشتیبانی کند"
 
 msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
-msgstr "SSH فن‌آوری‌ای است که می تواند برای رونوشت امن پرونده‌ها به صورت امن به رایانانه‌های دوردست استفاده شود. هنگام استفاده از گیت به عنوان ذخیره‌ساز هم پرونده‌ها از طریق SSH رونوشت می شوند. ولی انتخاب SSH خالص، پرونده‌ها را  مستقیم و بدون استفاده از هر فن‌آوری دیگری رونویسی می‌کند."
+msgstr "SSH فناوری‌ای است که می تواند برای رونوشت امن پرونده‌ها به صورت امن به رایانامه‌های دوردست استفاده شود. هنگام استفاده از گیت به عنوان منبع هم پرونده‌ها از طریق SSH رونوشت می شوند. ولی انتخاب SSH خالص، پرونده‌ها را مستقیم و بدون استفاده از هر فناوری دیگری رونویسی می‌کند."
 
 msgid "Amazon S3"
 msgstr "آمازون S3"

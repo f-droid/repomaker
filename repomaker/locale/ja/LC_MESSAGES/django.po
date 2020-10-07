@@ -1,706 +1,717 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# kak mi <wavelake@outlook.com>, 2020.
+# Hinaloe <hina@hinaloe.net>, 2020.
 msgid ""
-msgstr "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2018-09-01 20:54+0000\nPO-Revision-Date: 2020-08-06 21:32+0000\nLast-Translator: kak mi <wavelake@outlook.com>\nLanguage-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/f-droid/repomaker/zh_Hans/>\nLanguage: zh_Hans\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.2-dev\n"
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-01 20:54+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #, python-format
 msgid "This file is not an update for %s"
-msgstr "该文件不是 %s 的更新"
+msgstr ""
 
 msgid "This APK already exists in the current repo."
-msgstr "当前应用源中已有相同的 APK 文件。"
+msgstr ""
 
 msgid "Invalid APK signature"
-msgstr "无效 APK 签名"
+msgstr ""
 
 msgid "Invalid APK."
-msgstr "无效 APK 文件。"
+msgstr ""
 
 msgid "Unsupported File Type"
-msgstr "不支持的文件类型"
+msgstr ""
 
 msgid "This file is of a different type than the other versions of this app."
-msgstr "文件类型与该应用的其他版本不同。"
+msgstr ""
 
 msgid "APK"
-msgstr "APK"
+msgstr ""
 
 msgid "Book"
-msgstr "书籍"
+msgstr ""
 
 msgid "Document"
-msgstr "文档"
+msgstr ""
 
 msgid "Image"
-msgstr "图片"
+msgstr ""
 
 msgid "Audio"
-msgstr "音频"
+msgstr ""
 
 msgid "Video"
-msgstr "视频"
+msgstr ""
 
 msgid "Other"
-msgstr "其他"
+msgstr ""
 
 msgid "This app does already exist in your repository."
-msgstr "您的应用源中已有此应用。"
+msgstr ""
 
 msgid "This app does not have any working versions available."
-msgstr "该应用没有可正常工作的版本。"
+msgstr ""
 
 msgid "Phone"
-msgstr "电话"
+msgstr ""
 
 msgid "7'' Tablet"
-msgstr "7 吋平板"
+msgstr ""
 
 msgid "10'' Tablet"
-msgstr "10 吋平板"
+msgstr ""
 
 msgid "TV"
-msgstr "电视"
+msgstr ""
 
 msgid "Wearable"
-msgstr "可穿戴设备"
+msgstr ""
 
 msgid "US Standard"
-msgstr "美国标准"
+msgstr ""
 
 msgid "Amazon S3 Storage"
-msgstr "Amazon S3 存储"
+msgstr ""
 
 msgid "Enter a valid user name consisting of letters, numbers, underscores or hyphens."
-msgstr "请输入有效的用户名，可使用字母、数字、下划线或连字符。"
+msgstr ""
 
 msgid "Enter a valid hostname."
-msgstr "请输入有效的主机名。"
+msgstr ""
 
 msgid "Enter a valid path."
-msgstr "请输入有效的路径。"
+msgstr ""
 
 msgid "SSH Storage"
-msgstr "SSH 存储"
+msgstr ""
 
 msgid "Git Storage"
-msgstr "Git 存储"
+msgstr ""
 
 msgid "Default Storage"
-msgstr "默认存储"
+msgstr ""
 
 msgid "American English"
-msgstr "美式英语"
+msgstr ""
 
 msgid "Change E-mail"
-msgstr "更改电子邮箱"
+msgstr ""
 
 msgid "Sign Out"
-msgstr "退出登录"
+msgstr ""
 
 msgid "Sign In"
-msgstr "登录"
+msgstr ""
 
 msgid "Sign Up"
-msgstr "注册"
+msgstr ""
 
 msgid "Distribute apps."
-msgstr "分发应用。"
+msgstr ""
 
 msgid "Spread the love."
-msgstr "传播爱心。"
+msgstr ""
 
 msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
-msgstr "作为免费的 Web 应用生成器，Repomaker 可用于创建包含应用程序、音乐、书籍、视频和图片的资料库，并与用户分享。以 F-Droid 作为移动分发平台，它仅支持 Android 系统。"
+msgstr ""
 
 msgid "Login"
-msgstr "登录"
+msgstr ""
 
 msgid "Forgot Password"
-msgstr "忘记密码"
+msgstr ""
 
 msgid "Or login with"
-msgstr "或使用其方式登录"
+msgstr ""
 
 msgid "Logout"
-msgstr "退出登录"
+msgstr ""
 
 msgid "See you later"
-msgstr "再见"
+msgstr ""
 
 msgid "Your security is important to us. Please confirm that you want to logout."
-msgstr "您的安全对我们至关重要。请确认是否要退出登录。"
+msgstr ""
 
 msgid "logout"
-msgstr "退出登录"
+msgstr ""
 
 msgid "submit"
-msgstr "提交"
+msgstr ""
 
 msgid "We have sent you an email with a link to reset your password."
-msgstr "带有链接的密码重置电子邮件已发送。"
+msgstr ""
 
 msgid "Signup"
-msgstr "注册"
+msgstr ""
 
 msgid "Delete App Version"
-msgstr "删除应用版本"
+msgstr ""
 
 #, python-format
 msgid "Are you sure you want to delete this version <strong>%(version)s</strong> (%(code)s) from your app <strong>%(app)s</strong>?"
-msgstr "是否确定删除 <strong>%(version)s</strong> (%(code)s) 版本的 <strong>%(app)s</strong>？"
+msgstr ""
 
 msgid "Confirm"
-msgstr "确认"
+msgstr ""
 
 msgid "Delete App"
-msgstr "删除应用"
+msgstr ""
 
 #, python-format
 msgid "Are you sure you want to delete your app <strong>%(object)s</strong>?"
-msgstr "是否要删除应用 <strong>%(object)s</strong>？"
+msgstr ""
 
 #, python-format
 msgid "Edit %(app)s"
-msgstr "编辑 %(app)s"
+msgstr ""
 
 msgid "Remove App"
-msgstr "移除应用"
+msgstr ""
 
 msgid "Done"
-msgstr "完成"
+msgstr ""
 
 msgid "By"
-msgstr "发布者"
+msgstr ""
 
 msgid "Summary Override (40 characters)"
-msgstr "自定义简介（40字）"
+msgstr ""
 
 msgid "Short Summary (40 characters)"
-msgstr "简介（40字）"
+msgstr ""
 
 msgid "Category"
-msgstr "类别"
+msgstr ""
 
 msgid "Choose Category"
-msgstr "选择类别"
+msgstr ""
 
 msgid "Description Override"
-msgstr "自定义描述"
+msgstr ""
 
 msgid "Description"
-msgstr "描述"
+msgstr ""
 
 msgid "Screenshots"
-msgstr "应用截图"
+msgstr ""
 
 msgid "Add files"
-msgstr "添加文件"
+msgstr ""
 
 msgid "Drag and drop screenshots"
-msgstr "拖放添加应用截图"
+msgstr ""
 
 msgid "or"
-msgstr "或"
+msgstr ""
 
 msgid "browse to upload"
-msgstr "从本地上传"
+msgstr ""
 
 msgid "Feature Graphic"
-msgstr "特征图片"
+msgstr ""
 
 msgid "Drag and drop a feature graphic"
-msgstr "拖放添加特征图片"
+msgstr ""
 
 msgid "Drag and drop .apk files"
-msgstr "拖放添加 .apk 文件"
+msgstr ""
 
 msgid "Back"
-msgstr "返回"
+msgstr ""
 
 msgid "Editing Disabled"
-msgstr "编辑已禁用"
+msgstr ""
 
 msgid "This app gets updated automatically from the remote repo. If you want to edit it yourself, you need to disable automatic updates first. Please note that without automatic updates, you will need to add new versions manually."
-msgstr "这个应用已从远程仓库自动更新。如果您想自己编辑它，需要先禁用自动更新。请注意，如果没有自动更新，您需要手动加入新版本。"
+msgstr ""
 
 msgid "Disable Automatic Updates"
-msgstr "禁用自动更新"
+msgstr ""
 
 msgid "Delete Feature Graphic"
-msgstr "删除特征图片"
+msgstr ""
 
 #, python-format
 msgid "Are you sure you want to delete the feature graphic from your app <strong>%(app)s</strong>?"
-msgstr "确定删除您的应用 <strong>%(app)s</strong> 的特征图片？"
+msgstr ""
 
 #, python-format
 msgid "Languages (%(count)s)"
-msgstr "语言 (%(count)s)"
+msgstr ""
 
 msgid "Edit"
-msgstr "编辑"
+msgstr ""
 
 msgid "Add Translation"
-msgstr "添加翻译"
+msgstr ""
 
 #, python-format
 msgid "By %(author)s"
-msgstr "作者 %(author)s"
+msgstr ""
 
 #, python-format
 msgid "Updated %(time)s ago"
-msgstr "更新：%(time)s 前"
+msgstr ""
 
 #, python-format
 msgid "This app gets automatically updated from the remote repo \"%(repo_name)s\"."
-msgstr "这个应用已从远程仓库“%(repo_name)s”自动更新。"
+msgstr ""
 
 msgid "version history"
-msgstr "版本历史"
+msgstr ""
 
 #, python-format
 msgid "Version %(version)s (%(code)s)"
-msgstr "版本 %(version)s (%(code)s)"
+msgstr ""
 
 #, python-format
 msgid "Released %(date)s"
-msgstr "发布日期：%(date)s"
+msgstr ""
 
 msgid "APK is still downloading..."
-msgstr "APK 仍在下载中..."
+msgstr ""
 
 msgid "This app has no APK files."
-msgstr "该应用没有 APK 文件。"
+msgstr ""
 
 msgid "If you added this app from a remote repo, try deleting it and adding it again."
-msgstr "如果该应用是从远程应用源添加的，试试将它删除并重新添加。"
+msgstr ""
 
 msgid "Previous"
-msgstr "上一步"
+msgstr ""
 
 msgid "Next"
-msgstr "下一步"
+msgstr ""
 
 msgid "Add"
-msgstr "添加"
+msgstr ""
 
 msgid "There are currently no screenshots shown because this gives the repo owner the ability to track you."
-msgstr "目前没有显示应用截图，因为应用源所有者可利用此功能追踪用户。"
+msgstr ""
 
 msgid "show screenshots"
-msgstr "显示应用截图"
+msgstr ""
 
 msgid "Delete Screenshot"
-msgstr "删除应用截图"
+msgstr ""
 
 #, python-format
 msgid "Are you sure you want to delete this screenshot from your app <strong>%(app)s</strong>?"
-msgstr "是否确定删除应用 <strong>%(app)s</strong> 的应用截图？"
+msgstr ""
 
 msgid "Language Code"
-msgstr "语言代码"
+msgstr ""
 
 #, python-format
 msgid "Hello, %(user)s"
-msgstr "你好，%(user)s"
+msgstr ""
 
 msgid "Please Wait!"
-msgstr "请稍等！"
+msgstr ""
 
 msgid "Background Operation in Progress"
-msgstr "操作正在后台运行"
+msgstr ""
 
 msgid "Repomaker might be updating or publishing your repo. Or it might be updating a remote repo. Depending on the type and size of the background operation, this might take awhile."
-msgstr "Repomaker 可能正在更新或发布应用源。或者，正在更新远程应用源。这需要一段时间，时间长短取决于后台进程的类型和大小。"
+msgstr ""
 
 msgid "Try Again"
-msgstr "再试"
+msgstr ""
 
 msgid "The button won't work for you. Please press F5 to try again."
-msgstr "该按钮无法解决问题，请再次按 F5。"
+msgstr ""
 
 msgid "Error"
-msgstr "错误"
+msgstr ""
 
 msgid "My Repos"
-msgstr "我的应用源"
+msgstr ""
 
 #, python-format
 msgid "Published %(time_ago)s"
-msgstr "发布于 %(time_ago)s"
+msgstr ""
 
 #, python-format
 msgid "Created %(time_ago)s"
-msgstr "创建于 %(time_ago)s"
+msgstr ""
 
 msgid "Make a collection of apps to share"
-msgstr "创建用以分享的一组应用"
+msgstr ""
 
 msgid "Create Repo"
-msgstr "创建应用源"
+msgstr ""
 
 msgid "New Repo"
-msgstr "新建应用源"
+msgstr ""
 
 msgid "Create"
-msgstr "创建"
+msgstr ""
 
 msgid "Delete Repo"
-msgstr "删除应用源"
+msgstr ""
 
 #, python-format
 msgid "Are you sure you want to delete the repo <strong>%(repo)s</strong>?"
-msgstr "是否确定删除应用源 <strong>%(repo)s</strong>？"
+msgstr ""
 
 msgid "This will also delete all apps and other files from your repo. You will not be able to get them back, users of your repo will not be able to use it anymore and not receive updates for the apps they received from you. There is no way to recover this repo!"
-msgstr "该操作将删除该应用源中的全部应用以及其他文件。删除之后不可恢复，用户将无法再使用该应用源，已安装应用也无法更新。没有任何方式可恢复该应用源！"
+msgstr ""
 
 msgid "Please only proceed if you know what you are doing!"
-msgstr "继续删除操作之前，请务必再三确认！"
+msgstr ""
 
 msgid "Yes, I want to delete the repo"
-msgstr "是，确定删除该应用源"
+msgstr ""
 
 msgid "Edit Repo"
-msgstr "编辑应用源"
+msgstr ""
 
 msgid "Save Changes"
-msgstr "保存更改"
+msgstr ""
 
 msgid "Content"
-msgstr "内容"
+msgstr ""
 
 msgid "Share"
-msgstr "分享"
+msgstr ""
 
 msgid "Info"
-msgstr "信息"
+msgstr ""
 
 msgid "Search for apps in your repository"
-msgstr "搜索该应用源中应用"
+msgstr ""
 
 msgid "add from gallery"
-msgstr "从库中添加"
+msgstr ""
 
 #, python-format
 msgid "Alternatively, drag and drop or %(label_start)schoose files%(label_end)s"
-msgstr "另外，可拖放添加或 %(label_start)s选择文件%(label_end)s"
+msgstr ""
 
 msgid "Accepted files include Android apps, documents, eBooks, audio and video."
-msgstr "可接收文件包括 Android 应用、文档、电子书、音频和视频。"
+msgstr ""
 
 msgid "Your search did not return any results."
-msgstr "搜索未返回任何结果。"
+msgstr ""
 
 msgid "Name"
-msgstr "名称"
+msgstr ""
 
 msgid "Storage"
-msgstr "存储"
+msgstr ""
 
 msgid "Add Storage"
-msgstr "添加存储"
+msgstr ""
 
 msgid "Fingerprint"
-msgstr "指纹"
+msgstr ""
 
 msgid "Remove Repo"
-msgstr "移除应用源"
+msgstr ""
 
 msgid "Add storage to publish"
-msgstr "添加存储以发布"
+msgstr ""
 
 msgid "Your repo will be automatically published when you add storage. Repomaker does not publically promote your stuff. Only people who receive the direct link to your repo will be able to see it."
-msgstr "添加存储之后，将自动发布应用源。Repomaker 不会公开推广您的内容。只有收到应用源链接的人可以查看。"
+msgstr ""
 
 msgid "add storage"
-msgstr "添加存储"
+msgstr ""
 
 #, python-format
 msgid "You have  <span>%(app_count)s app</span> in your repo. Share it!"
 msgid_plural "You have  <span>%(app_count)s apps</span> in your repo. Share it!"
-msgstr[0] "该应用源共有 <span>%(app_count)s 应用</span>。马上分享吧！"
+msgstr[0] ""
 
 msgid "view repo"
-msgstr "查看应用源"
+msgstr ""
 
 msgid "share public link"
-msgstr "分享公开链接"
+msgstr ""
 
 msgid "copy link"
-msgstr "复制链接"
+msgstr ""
 
 msgid "add to an android phone"
-msgstr "添加至 Android 手机"
+msgstr ""
 
 msgid "To install these apps on your Android phone, add them to F-Droid."
-msgstr "为了在 Android 手机上安装这些应用，请将其添加至 F-Droid。"
+msgstr ""
 
 msgid "F-Droid ensures access to secure app updates."
-msgstr "F-Droid 可为应用提供安全的更新。"
+msgstr ""
 
 msgid "Scan QR"
-msgstr "扫描二维码"
+msgstr ""
 
 #, python-format
 msgid "Check out this F-Droid repo: %(name)s"
-msgstr "试试这个 F-Droid 应用源： %(name)s"
+msgstr ""
 
 msgid "Browse Gallery"
-msgstr "浏览库"
+msgstr ""
 
 msgid "Search"
-msgstr "搜索"
+msgstr ""
 
 #, python-format
 msgid "Category (%(count)s)"
-msgstr "类别 (%(count)s)"
+msgstr ""
 
 msgid "All"
-msgstr "全部"
+msgstr ""
 
 #, python-format
 msgid "Source (%(count)s)"
-msgstr "来源 (%(count)s)"
+msgstr ""
 
 msgid "Add a repo"
-msgstr "添加应用源"
+msgstr ""
 
 msgid "Clear filters"
-msgstr "清除筛选器"
+msgstr ""
 
 #, python-format
 msgid "No apps found that match '%(search_term)s'. Please try a different search or remove other filter criteria."
-msgstr "未找到匹配 '%(search_term)s' 的应用。请尝试其他搜索字或移除筛选器选项。"
+msgstr ""
 
 msgid "There are no apps in this repo."
-msgstr "该应用源没有应用。"
+msgstr ""
 
 msgid "There are no apps available in the repos."
-msgstr "应用源没有可用应用。"
+msgstr ""
 
 msgid "If you just added a repo, wait for the apps to download and try again later."
-msgstr "如果刚刚添加了应用源，请等待应用下载完成，然后再试。"
+msgstr ""
 
 msgid "This repo has no apps in the selected category. Try clearing it or select a different repo."
-msgstr "该应用源在所选类别中没有应用。请清除选项或选择不同的应用源。"
+msgstr ""
 
 msgid "There are no apps available in the selected category. Try clearing it."
-msgstr "所选类别中没有应用。请清除选项。"
+msgstr ""
 
 msgid "Delete Storage"
-msgstr "删除存储"
+msgstr ""
 
 #, python-format
 msgid "Are you sure you want to remove the storage at <strong>%(object)s</strong> from your repo?"
-msgstr "是否从应用源删除<strong>%(object)s</strong>存储？"
+msgstr ""
 
 msgid "This will not remove the content from that storage but will stop to publish future versions of your repo to it."
-msgstr "该操作不会从存储中删除内容，并且将停止发布新版本应用源至该存储。"
+msgstr ""
 
 msgid "Enable Storage"
-msgstr "启用存储"
+msgstr ""
 
 msgid "Disable Storage"
-msgstr "禁用存储"
+msgstr ""
 
 msgid "Repo Address"
-msgstr "应用源地址"
+msgstr ""
 
 msgid "Edit Storage"
-msgstr "编辑存储"
+msgstr ""
 
 msgid "Please make sure to add this public SSH key to your Git account for the upload to work. There are instructions for <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> and <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>."
-msgstr "为了正常上传，请确保将该 SSH 公钥添加至您的 Git 账号。相关指南请参阅： <a href=\"https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#how-to-create-your-ssh-keys\">Gitlab</a> 和 <a href=\"https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys\">GitHub</a>。"
+msgstr ""
 
 msgid "Also, please make sure that the master branch of your repository is <b>not protected</b> from force pushing."
-msgstr "另外，请确保对于强制推送操作，该应用源主分支是<b>未保护</b>状态。"
+msgstr ""
 
 msgid "Git Repository SSH Address"
-msgstr "Git 应用源 SSH 地址"
+msgstr ""
 
 msgid "Region"
-msgstr "国家与地区"
+msgstr ""
 
 msgid "Bucket"
-msgstr "存储桶"
+msgstr ""
 
 msgid "Access Key ID"
-msgstr "访问键 ID"
+msgstr ""
 
 msgid "Please make sure to add this public SSH key to your SSH server's <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> file,\tif you have not done so already."
-msgstr "如果尚未添加，请确保添加该 SSH 公钥至 SSH 服务器的 <tt> <a href=\"https://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys\">~/.ssh/authorized_keys</a> </tt> 文件。"
+msgstr ""
 
 msgid "Security Warning: This gives repomaker write access to that storage. Please limit this user's access as much as possible."
-msgstr "安全警告：这将授予 repomaker 对该存储的覆写权限。请尽可能限制该用户的权限。"
+msgstr ""
 
 msgid "Username"
-msgstr "用户名"
+msgstr ""
 
 msgid "Host"
-msgstr "主机"
+msgstr ""
 
 msgid "Path"
-msgstr "路径"
+msgstr ""
 
 msgid "Your local default SSH key will be used to connect to the storage."
-msgstr "连接该存储时将使用本地默认 SSH 密钥。"
+msgstr ""
 
 msgid "Please make sure to authorize this public SSH key for your remote storage, if you have not done so already."
-msgstr "如果尚未授权，请确保对您的远程存储授权使用该 SSH 公钥。"
+msgstr ""
 
 msgid "Activate this storage only once you have added the SSH key."
-msgstr "请仅在添加该 SSH 公钥之后激活该存储。"
+msgstr ""
 
 msgid "If this storage is experiencing problems, please check that the SSH key works properly."
-msgstr "如果该存储出现问题，请检查 SSH 公钥是否正常工作。"
+msgstr ""
 
 #, python-format
 msgid "Update %(storage_name)s"
-msgstr "更新 %(storage_name)s"
+msgstr ""
 
 #, python-format
 msgid "Setup %(storage_name)s"
-msgstr "设置 %(storage_name)s"
+msgstr ""
 
 msgid "cancel"
-msgstr "取消"
+msgstr ""
 
 msgid "save"
-msgstr "保存"
+msgstr ""
 
 msgid "Here's how to copy the SSH Address from GitLab:"
-msgstr "如何从 GitLab 复制 SSH 地址："
+msgstr ""
 
 msgid "Setup a place to store your repo"
-msgstr "设置应用源的保存位置"
+msgstr ""
 
 msgid "Git"
-msgstr "Git"
+msgstr ""
 
 msgid "Easy, free, requires an account"
-msgstr "简易，免费，需注册账号"
+msgstr ""
 
 msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
-msgstr "Git 是一款广为使用的版本控制工具，可用于安全地将应用源发布至 GitLab、GitHub 或其他 Git 服务。Git 服务使用 SSH 以安全地将本地文件复制至远程计算机。"
+msgstr ""
 
 msgid "Setup"
-msgstr "设置"
+msgstr ""
 
 msgid "GitLab"
-msgstr "GitLab"
+msgstr ""
 
 msgid "GitHub"
-msgstr "GitHub"
+msgstr ""
 
 msgid "SSH"
-msgstr "SSH"
+msgstr ""
 
 msgid "Requires a personal web server or host that supports SSH"
-msgstr "需支持 SSH 的个人 web 服务器或主机"
+msgstr ""
 
 msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
-msgstr "SSH 可用于安全地将文件复制至远程计算机。如果使用 Git 作为存储，可使用 SSH 复制文件。SSH 选项可无需其他工具而直接复制文件。"
+msgstr ""
 
 msgid "Amazon S3"
-msgstr "Amazon S3"
+msgstr ""
 
 msgid "Requires an Amazon account, Pricing varies"
-msgstr "需亚马逊账号，价格随需求而变"
+msgstr ""
 
 msgid "Amazon S3 is a web service offered by Amazon Web Services. Amazon S3 provides storages through web service interfaces. Pricing varies. Visit the Amazon S3 website for details."
-msgstr "Amazon S3 是 Amazon Web Services 提供的一款 web 服务。Amazon S3 通过 web 服务介面提供存储 。价格随需求而变。具体信息，请访问 Amazon S3 网站。"
+msgstr ""
 
 #, python-format
 msgid "Version %(version)s (%(date)s)"
-msgstr "版本 %(version)s (%(date)s)"
+msgstr ""
 
 msgid "Added"
-msgstr "已添加"
+msgstr ""
 
 msgid "There was an error creating the repository. Please try again!"
-msgstr "创建仓库发生错误。请重试！"
+msgstr ""
 
 msgid "Enter email"
-msgstr "输入电子邮箱"
+msgstr ""
 
 msgid "Enter your email address and we'll send a link to reset it. If you did not sign up with an email, we cannot help you securely reset your password."
-msgstr "请输入您的电子邮箱地址，然后将会收到我们发送的重置链接。如果注册时未使用电子邮箱，我们将无法帮助您安全地重置密码。"
+msgstr ""
 
 msgid "This is not a valid language code."
-msgstr "语言代码无效。"
+msgstr ""
 
 msgid "This language already exists. Please choose another one!"
-msgstr "该语言已存在，请选择其他语言代码！"
+msgstr ""
 
 msgid "Enter SSH URL"
-msgstr "输入 SSH 网址"
+msgstr ""
 
 msgid "Raw Git URL"
-msgstr "Raw Git 网址"
+msgstr ""
 
 msgid "This is the location where the uploaded files can be accessed from in raw form. Leave empty for GitHub or GitLab.com repositories."
-msgstr "通过该地址能够以 raw 格式访问所上传的文件。对于 Github 或 GitLab 应用源，请留空。"
+msgstr ""
 
 msgid "This URL must start with 'git@'."
-msgstr "该 URL 的开头必须为“git@”。"
+msgstr ""
 
 msgid "This URL must end with '.git'."
-msgstr "该 URL 的结尾必须为“.git”。"
+msgstr ""
 
 msgid "This URL is invalid. Please copy the exact SSH URL of your git repository."
-msgstr "该 URL 无效。请复制 git 应用源的正确 SSH URL。"
+msgstr ""
 
 msgid "Please add a valid URLfor the raw content of this git repository."
-msgstr "请为该 git 应用源的原始内容添加有效 URL。"
+msgstr ""
 
 msgid "Repository URL"
-msgstr "应用源 URL"
+msgstr ""
 
 msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
-msgstr "请使用底部带有指纹的 URL，以便我们对该应用源进行验证。"
+msgstr ""
 
 msgid "Please don't add one of your own repositories here."
-msgstr "请勿在这里添加您自己的应用源。"
+msgstr ""
 
 #, python-format
 msgid "Could not validate repository: %s"
-msgstr "无法验证应用源：%s"
+msgstr ""
 
 msgid "Describe the repo"
-msgstr "应用源描述"
+msgstr ""
 
 msgid "Bucket Name"
-msgstr "存储桶名称"
+msgstr ""
 
 msgid "Secret Access Key"
-msgstr "访问私钥"
+msgstr ""
 
 msgid "Other regions are currently not supported."
-msgstr "目前不支持其他国家与地区。"
+msgstr ""
 
 msgid "Language"
-msgstr "语言"
+msgstr ""
 
 msgid "Select Screenshot for upload"
-msgstr "选择上传应用截图"
+msgstr ""
 
 msgid "Use local default SSH Key"
-msgstr "使用本地默认 SSH 密钥"
+msgstr ""
 
 msgid "User Name"
-msgstr "用户名"
+msgstr ""
 
 msgid "URL"
-msgstr "URL"
+msgstr ""
 
 msgid "This is the location where the uploaded files can be accessed from."
-msgstr "通过该地址可访问上传的文件。"
+msgstr ""
 
 msgid "Primary Storage"
-msgstr "主存储"
+msgstr ""
 
 msgid "Make this storage the primary storage of the repository."
-msgstr "将该存储设为应用源的主存储。"
+msgstr ""

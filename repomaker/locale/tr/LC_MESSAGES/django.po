@@ -1,22 +1,9 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# Oğuz Ersen <oguzersen@protonmail.com>, 2020.
 msgid ""
-msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-01 20:54+0000\n"
-"PO-Revision-Date: 2018-07-20 20:44+0000\n"
-"Last-Translator: Ali Demirtas <alidemirtas94@gmail.com>\n"
-"Language-Team: Turkish <https://hosted.weblate.org/projects/f-droid/repomaker/tr/>\n"
-"Language: tr\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.1-dev\n"
+msgstr "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2018-09-01 20:54+0000\nPO-Revision-Date: 2020-07-20 20:29+0000\nLast-Translator: Oğuz Ersen <oguzersen@protonmail.com>\nLanguage-Team: Turkish <https://hosted.weblate.org/projects/f-droid/repomaker/tr/>\nLanguage: tr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.2-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -125,7 +112,7 @@ msgid "Spread the love."
 msgstr "Aşkı yay."
 
 msgid "Repomaker is a free web app built for creating collections of apps, music, books, videos and pictures to share with your peers. It uses F-Droid as the mobile distribution platform. Available on Android only."
-msgstr "Repomaker, arkadaşlarınız ile paylaşmak için uygulamaların, müziklerin, kitapların ve resimlerin kolleksiyonlarını oluşturmak için inşa edilmiş  özgür bir web uygulamasıdır. F-Droid'i mobil dağıtım platformu olarak kullanır. Sadece Android'de kullanılabilir."
+msgstr "Repomaker, arkadaşlarınızla paylaşmak üzere uygulama, müzik, kitap, video ve resim koleksiyonları oluşturmak için tasarlanmış özgür bir web uygulamasıdır. Mobil dağıtım platformu olarak F-Droid kullanmaktadır. Sadece Android'de kullanılabilir."
 
 msgid "Login"
 msgstr "Oturum Aç"
@@ -371,7 +358,7 @@ msgid "This will also delete all apps and other files from your repo. You will n
 msgstr "Bu ayrıca deponuzdan tüm uygulamaları ve diğer dosyaları silecek. Onları geri alamayacaksınız, deponuzun kullanıcıları onu artık kullanamayacaklar ve sizden aldıkları uygulamalar için güncellemeler alamayacaklar. Bu depoyu kurtarmanın yolu yoktur!"
 
 msgid "Please only proceed if you know what you are doing!"
-msgstr "Lütfen sadece ne yaptığınızı biliyorsanız  devam edin!"
+msgstr "Lütfen sadece ne yaptığınızı biliyorsanız devam edin!"
 
 msgid "Yes, I want to delete the repo"
 msgstr "Evet, depoyu silmek istiyorum"
@@ -560,7 +547,7 @@ msgid "Path"
 msgstr "Konum"
 
 msgid "Your local default SSH key will be used to connect to the storage."
-msgstr "Depolamaya bağlamak için yerel öntanımlı SSH anahtarınız  kullanılacak."
+msgstr "Depolamaya bağlanmak için yerel öntanımlı SSH anahtarınız kullanılacak."
 
 msgid "Please make sure to authorize this public SSH key for your remote storage, if you have not done so already."
 msgstr "Lütfen hala yapmadıysanız, uzak depolamanız için bu açık SSH anahtarını yetkilendirdiğinizden emin olun."

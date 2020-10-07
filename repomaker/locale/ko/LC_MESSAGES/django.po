@@ -1,22 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# Seokyong Jung <syjung6967@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-01 20:54+0000\n"
-"PO-Revision-Date: 2019-01-15 03:43+0000\n"
-"Last-Translator: Myeongjin Lee <aranet100@gmail.com>\n"
+"PO-Revision-Date: 2020-04-13 22:11+0000\n"
+"Last-Translator: Seokyong Jung <syjung6967@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/f-droid/repomaker/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.4-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -597,7 +596,7 @@ msgid "Easy, free, requires an account"
 msgstr "쉽고, 무료이며, 계정이 필요합니다"
 
 msgid "Git is a popular tool to version control things. You can securely publish repos to GitLab, GitHub or any other Git service. Git services use SSH to securely copy files from your computer to remote computers."
-msgstr ""
+msgstr "Git은 버전 관리에 널리 사용되는 도구입니다. GitLab, GitHub 등의 Git 서비스에 저장소를 안전하게 게시할 수 있습니다. Git 서비스는 SSH를 사용하여 컴퓨터에서 원격 컴퓨터로 파일을 안전하게 복사합니다."
 
 msgid "Setup"
 msgstr "설정"
@@ -615,7 +614,7 @@ msgid "Requires a personal web server or host that supports SSH"
 msgstr "개인 웹 서버 또는 SSH를 지원하는 호스트 필요"
 
 msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
-msgstr ""
+msgstr "SSH는 파일을 원격 컴퓨터에 안전하게 복사하기 위해 사용하는 기술입니다. Git을 스토리지로 사용하는 경우 파일은 SSH를 통해 복사되기도 합니다. 그러나 SSH 자체는 다른 기술에 의존하지 않고 파일을 직접 복사합니다."
 
 msgid "Amazon S3"
 msgstr "Amazon S3"

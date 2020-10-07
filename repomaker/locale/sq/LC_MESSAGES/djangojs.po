@@ -1,242 +1,242 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Nathan Follens <nthn@unseen.is>, 2019.
+# Besnik Bleta <besnik@programeshqip.org>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-01 20:55+0000\n"
-"PO-Revision-Date: 2019-02-10 12:09+0000\n"
-"Last-Translator: Nathan Follens <nthn@unseen.is>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/f-droid/repomaker-javascript/nl/>\n"
-"Language: nl\n"
+"PO-Revision-Date: 2020-04-21 15:11+0000\n"
+"Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
+"Language-Team: Albanian <https://hosted.weblate.org/projects/f-droid/repomaker-javascript/sq/>\n"
+"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.5-dev\n"
+"X-Generator: Weblate 4.0.2-dev\n"
 
 #, javascript-format
 msgid "Available %s"
-msgstr "Beschikbare %s"
+msgstr "%s të gatshëm"
 
 #, javascript-format
 msgid "This is the list of available %s. You may choose some by selecting them in the box below and then clicking the \"Choose\" arrow between the two boxes."
-msgstr "Dit is de lijst met beschikbare %s. U kunt er enkele kiezen door ze hieronder te selecteren, en vervolgens te klikken op de pijl ‘Kiezen’, tussen de twee vakken."
+msgstr "Kjo është lista e %s të gatshëm. Mund të zgjidhni disa duke i përzgjedhur te kuadrati më poshtë dhe mandej duke klikuar mbi shigjetën \"Zgjidhe\" mes dy kuadrateve."
 
 #, javascript-format
 msgid "Type into this box to filter down the list of available %s."
-msgstr "Typ in dit vak om de lijst met beschikbare %s te filteren."
+msgstr "Shkruani brenda kuadratit që të filtrohet lista e %s të passhme."
 
 msgid "Filter"
-msgstr "Filter"
+msgstr "Filtroji"
 
 msgid "Choose all"
-msgstr "Alles kiezen"
+msgstr "Zgjidhini krejt"
 
 #, javascript-format
 msgid "Click to choose all %s at once."
-msgstr "Klik om alle %s te selecteren."
+msgstr "Klikoni që të zgjidhen krejt %s njëherësh."
 
 msgid "Choose"
-msgstr "Kiezen"
+msgstr "Zgjidhni"
 
 msgid "Remove"
-msgstr "Verwijderen"
+msgstr "Hiqe"
 
 #, javascript-format
 msgid "Chosen %s"
-msgstr "Gekozen %s"
+msgstr "U zgjodh %s"
 
 #, javascript-format
 msgid "This is the list of chosen %s. You may remove some by selecting them in the box below and then clicking the \"Remove\" arrow between the two boxes."
-msgstr "Dit is de lijst met gekozen %s. Je kan er enkele verwijderen door ze hieronder te selecteren, en vervolgens te klikken op de pijl ‘Verwijderen’, tussen de twee vakken."
+msgstr "Kjo është lista e %s që janë zgjedhur. Mund të hiqni disa duke i përzgjedhur te kuadrati më poshtë e mandej duke klikuar mbi shigjetën \"Hiqe\" mes dy kuadrateve."
 
 msgid "Remove all"
-msgstr "Alles verwijderen"
+msgstr "Hiqi krejt"
 
 #, javascript-format
 msgid "Click to remove all chosen %s at once."
-msgstr "Klik om alle gekozen %s te verwijderen."
+msgstr "Klikoni që të hiqen krejt %s e zgjedhura njëherësh."
 
 msgid "%(sel)s of %(cnt)s selected"
 msgid_plural "%(sel)s of %(cnt)s selected"
-msgstr[0] "%(sel)s van %(cnt)s geselecteerd"
-msgstr[1] "%(sel)s van %(cnt)s geselecteerd"
+msgstr[0] "%(sel)s nga %(cnt)s të përzgjedhur"
+msgstr[1] "%(sel)s nga %(cnt)s të përzgjedhur"
 
 msgid "You have unsaved changes on individual editable fields. If you run an action, your unsaved changes will be lost."
-msgstr "U heeft onopgeslagen wijzigingen in invididueel bewerkbare velden. Als u een actie uitvoert, zullen de onopgeslagen wijzigingen verloren gaan."
+msgstr "Keni ndryshime të paruajtura te fusha individuale të përpunueshme. Nëse kryeni një veprim, ndryshimet e paruajtura do të humbin."
 
 msgid "You have selected an action, but you haven't saved your changes to individual fields yet. Please click OK to save. You'll need to re-run the action."
-msgstr "U heeft een actie geselecteerd, maar uw wijzigingen aan invididuele velden nog niet opgeslagen. Klik op Oké om op te slaan. U zult de actie opnieuw moeten uitvoeren."
+msgstr "Keni përzgjedhur një veprim, por nuk keni ruajtur ende ndryshimet që bëtë te fusha individuale. Ju lutemi, klikoni OK që të bëhet ruajtja. Do t’ju duhet ta ribëni veprimin."
 
 msgid "You have selected an action, and you haven't made any changes on individual fields. You're probably looking for the Go button rather than the Save button."
-msgstr "U heeft een actie geselecteerd, en u heeft nog geen wijzigingen aan invididuele velden toegebracht. U zoekt waarschijnlijk de knop ‘Gaan’, en niet de knop ‘Opslaan’."
+msgstr "Keni përzgjedhur një veprim, dhe nuk keni bërë ndonjë ndryshim te fusha individuale. Ndoshta po kërkonit për butonin Shko, në vend se për butonin Ruaje."
 
 #, javascript-format
 msgid "Note: You are %s hour ahead of server time."
 msgid_plural "Note: You are %s hours ahead of server time."
-msgstr[0] "Let op: u loopt %s uur voor op de servertijd."
-msgstr[1] "Let op: u loopt %s uur voor op de servertijd."
+msgstr[0] "Shënim: Jeni %s orë përpara nga koha e shërbyesit."
+msgstr[1] "Shënim: Jeni %s orë përpara nga koha e shërbyesit."
 
 #, javascript-format
 msgid "Note: You are %s hour behind server time."
 msgid_plural "Note: You are %s hours behind server time."
-msgstr[0] "Let op: u loopt %s uur achter op de servertijd."
-msgstr[1] "Let op: u loopt %s uur achter op de servertijd."
+msgstr[0] "Shënim: Jeni %s orë prapa nga koha e shërbyesit."
+msgstr[1] "Shënim: Jeni %s orë prapa nga koha e shërbyesit."
 
 msgid "Now"
-msgstr "Nu"
+msgstr "Tani"
 
 msgid "Choose a Time"
-msgstr "Kies een tijdstip"
+msgstr "Zgjidhni një Kohë"
 
 msgid "Choose a time"
-msgstr "Kies een tijdstip"
+msgstr "Zgjidhni një kohë"
 
 msgid "Midnight"
-msgstr "Middernacht"
+msgstr "Mesnatë"
 
 msgid "6 a.m."
-msgstr "6 uur ’s ochtends"
+msgstr "6 a.m."
 
 msgid "Noon"
-msgstr "Middag"
+msgstr "Mesditë"
 
 msgid "6 p.m."
-msgstr "6 uur ’s avonds"
+msgstr "6 p.m."
 
 msgid "Cancel"
-msgstr "Annuleren"
+msgstr "Anuloje"
 
 msgid "Today"
-msgstr "Vandaag"
+msgstr "Sot"
 
 msgid "Choose a Date"
-msgstr "Kies een dag"
+msgstr "Zgjidhni një Datë"
 
 msgid "Yesterday"
-msgstr "Gisteren"
+msgstr "Dje"
 
 msgid "Tomorrow"
-msgstr "Morgen"
+msgstr "Nesër"
 
 msgid "January"
-msgstr "Januari"
+msgstr "Janar"
 
 msgid "February"
-msgstr "Februari"
+msgstr "Shkurt"
 
 msgid "March"
-msgstr "Maart"
+msgstr "Mars"
 
 msgid "April"
-msgstr "April"
+msgstr "Prill"
 
 msgid "May"
-msgstr "Mei"
+msgstr "Maj"
 
 msgid "June"
-msgstr "Juni"
+msgstr "Qershor"
 
 msgid "July"
-msgstr "Juli"
+msgstr "Korrik"
 
 msgid "August"
-msgstr "Augustus"
+msgstr "Gusht"
 
 msgid "September"
-msgstr "September"
+msgstr "Shtator"
 
 msgid "October"
-msgstr "Oktober"
+msgstr "Tetor"
 
 msgid "November"
-msgstr "November"
+msgstr "Nëntor"
 
 msgid "December"
-msgstr "December"
+msgstr "Dhjetor"
 
 msgctxt "one letter Sunday"
 msgid "S"
-msgstr "Zo"
+msgstr "D"
 
 msgctxt "one letter Monday"
 msgid "M"
-msgstr "Ma"
+msgstr "H"
 
 msgctxt "one letter Tuesday"
 msgid "T"
-msgstr "Di"
+msgstr "M"
 
 msgctxt "one letter Wednesday"
 msgid "W"
-msgstr "Wo"
+msgstr "M"
 
 msgctxt "one letter Thursday"
 msgid "T"
-msgstr "Do"
+msgstr "E"
 
 msgctxt "one letter Friday"
 msgid "F"
-msgstr "Vr"
+msgstr "P"
 
 msgctxt "one letter Saturday"
 msgid "S"
-msgstr "Za"
+msgstr "S"
 
 msgid "Show"
-msgstr "Weergeven"
+msgstr "Shfaqe"
 
 msgid "Hide"
-msgstr "Verbergen"
+msgstr "Fshihe"
 
 #, javascript-format
 msgid "%s app added"
 msgid_plural "%s apps added"
-msgstr[0] "%s app toegevoegd"
-msgstr[1] "%s apps toegevoegd"
+msgstr[0] "U shtua %s aplikacion"
+msgstr[1] "U shtuan %s aplikacione"
 
 msgid "Add"
-msgstr "Toevoegen"
+msgstr "Shtoje"
 
 #, javascript-format
 msgid "Sorry, there was an error deleting it: %s"
-msgstr "Sorry, er is een fout opgetreden bij het verwijderen: %s"
+msgstr "Na ndjeni, pati një gabim në fshirjen: %s"
 
 msgid "Delete Screenshot"
-msgstr "Schermafdruk verwijderen"
+msgstr "Fshi Foto Ekrani"
 
 msgid "Are you sure you want to delete this screenshot from your package?"
-msgstr "Weet u zeker dat u deze schermafdruk uit uw pakket wilt verwijderen?"
+msgstr "Jeni i sigurt se doni të fshihet kjo foto ekrani nga paketa juaj?"
 
 msgid "Delete Feature Graphic"
-msgstr "Beschrijvende afbeelding verwijderen"
+msgstr "Fshi Grafik të Zgjedhur"
 
 msgid "Are you sure you want to delete the feature graphic from your package?"
-msgstr "Weet u zeker dat u de beschrijvende afbeelding uit uw pakket wilt verwijderen?"
+msgstr "Jeni i sigurt se doni të fshihet nga paketa juaj grafiku i zgjedhur?"
 
 msgid "Delete Version"
-msgstr "Versie verwijderen"
+msgstr "Fshije Versionin"
 
 msgid "Are you sure you want to delete this version from your package?"
-msgstr "Weet u zeker dat u deze versie uit uw pakket wilt verwijderen?"
+msgstr "Jeni i sigurt se doni të fshihet ky version prej paketës tuaj?"
 
 msgid "Confirm"
-msgstr "Bevestigen"
+msgstr "Ripohojeni"
 
 msgid "Added"
-msgstr "Toegevoegd"
+msgstr "U shtua"
 
 msgid "You can only upload images here."
-msgstr "U kunt hier enkel afbeeldingen uploaden."
+msgstr "Këtu mund të ngarkohen vetëm figura."
 
 #, javascript-format
 msgid "Uploading %s file..."
 msgid_plural "Uploading %s files..."
-msgstr[0] "Bezig met uploaden van %s bestand…"
-msgstr[1] "Bezig met uploaden van %s bestanden…"
+msgstr[0] "Po ngarkohet %s kartelë…"
+msgstr[1] "Po ngarkohen %s kartela…"
 
 msgid "Try to drag and drop again!"
-msgstr "Probeer het opnieuw te verslepen!"
+msgstr "Riprovoni ta tërhiqni dhe lini!"

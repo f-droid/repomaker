@@ -2,8 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Arthur <un-logic@ya.ru>, 2019.
+# Tiller Luna <t.luna@protonmail.com>, 2020.
+# Golubev Alexander <fatzer2@gmail.com>, 2020.
+# Andrey <andrey@mailbox.org>, 2020.
+# Nikita Epifanov <nikgreens@protonmail.com>, 2020.
 msgid ""
-msgstr "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2018-09-01 20:54+0000\nPO-Revision-Date: 2019-02-23 18:18+0000\nLast-Translator: Arthur <un-logic@ya.ru>\nLanguage-Team: Russian <https://hosted.weblate.org/projects/f-droid/repomaker/ru/>\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\nX-Generator: Weblate 3.5-dev\n"
+msgstr "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2018-09-01 20:54+0000\nPO-Revision-Date: 2020-09-11 09:36+0000\nLast-Translator: Nikita Epifanov <nikgreens@protonmail.com>\nLanguage-Team: Russian <https://hosted.weblate.org/projects/f-droid/repomaker/ru/>\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\nX-Generator: Weblate 4.3-dev\n"
 
 #, python-format
 msgid "This file is not an update for %s"
@@ -304,7 +308,7 @@ msgstr "Код языка"
 
 #, python-format
 msgid "Hello, %(user)s"
-msgstr "Здравствуйте, %(user)s."
+msgstr "Здравствуйте, %(user)s"
 
 msgid "Please Wait!"
 msgstr "Пожалуйста, подождите."
@@ -319,7 +323,7 @@ msgid "Try Again"
 msgstr "Попробуйте снова"
 
 msgid "The button won't work for you. Please press F5 to try again."
-msgstr "Для Вас эта кнопка недоступна. Пожалуйста, нажмите F5, чтобы попробовать снова"
+msgstr "Вам недоступна эта кнопка. Пожалуйста, нажмите F5, чтобы попробовать снова."
 
 msgid "Error"
 msgstr "Ошибка"
@@ -358,7 +362,7 @@ msgid "This will also delete all apps and other files from your repo. You will n
 msgstr "Все приложения и прочие файлы также будут удалены из вашего репозитория. Вы не сможете их вернуть, пользователи вашего репозитория больше не смогут его использовать, в том числе для обновления приложений, полученных от вас. Восстановление этого репозитория будет невозможно!"
 
 msgid "Please only proceed if you know what you are doing!"
-msgstr "Продолжайте только в том случае, если знаете, что делаете."
+msgstr "Продолжайте только в том случае, если вы знаете, что делаете."
 
 msgid "Yes, I want to delete the repo"
 msgstr "Да, я хочу удалить репозиторий"
@@ -395,7 +399,7 @@ msgid "Your search did not return any results."
 msgstr "По Вашему запросу ничего не найдено."
 
 msgid "Name"
-msgstr "Название"
+msgstr "Имя"
 
 msgid "Storage"
 msgstr "Хранилище"
@@ -527,7 +531,7 @@ msgid "Region"
 msgstr "Регион"
 
 msgid "Bucket"
-msgstr "Bucket"
+msgstr "Корзина"
 
 msgid "Access Key ID"
 msgstr "ID ключа доступа"
@@ -604,7 +608,7 @@ msgid "Requires a personal web server or host that supports SSH"
 msgstr "Требуется собственный веб-сервер или хост, поддерживающий SSH"
 
 msgid "SSH is a technology that can be used to copy files securely to remote computers. When using Git as storage, the files will also be copied via SSH. But the pure SSH option directly copies the files without using any other technology."
-msgstr "SSH — технология, применяемая для безопасного копирования файлов на удалённые компьютеры. При использовании в качестве хранилища Git'а файлы также копируются по SSH. Но вариант  \"SSH\" копирует файлы напрямую, без применения других технологий."
+msgstr "SSH — это технология, которую можно использовать для безопасного копирования файлов на удалённые компьютеры. При использовании Git в качестве хранилища файлы также копируются с помощью SSH. Но в варианте с «чистым SSH» файлы будут копироваться напрямую, без применения других технологий."
 
 msgid "Amazon S3"
 msgstr "Amazon S3"
@@ -659,24 +663,23 @@ msgid "Please add a valid URLfor the raw content of this git repository."
 msgstr "Пожалуйста, добавьте правильную ссылку на изначальное содержимое данного репозитория git."
 
 msgid "Repository URL"
-msgstr "Адрес репозитория"
+msgstr "URL репозитория"
 
 msgid "Please use a URL with a fingerprint at the end, so we can validate the authenticity of the repository."
-msgstr "Пожалуйста, используйте ссылку с отпечатком на конце, так мы, сможем проверить репозиторий на соответствие."
+msgstr "Пожалуйста, используйте URL с отпечатком на конце, чтобы мы смогли проверить подлинность репозитория."
 
 msgid "Please don't add one of your own repositories here."
 msgstr "Пожалуйста, не добавляйте сюда свои репозитории."
 
 #, python-format
 msgid "Could not validate repository: %s"
-msgstr "Не могу проверить репозиторий: %s"
+msgstr "Не удалось проверить репозиторий: %s"
 
 msgid "Describe the repo"
 msgstr "Опишите репозиторий"
 
-#, fuzzy
 msgid "Bucket Name"
-msgstr "Название Bucket"
+msgstr "Имя корзины"
 
 msgid "Secret Access Key"
 msgstr "Секретный ключ доступа"
@@ -691,16 +694,16 @@ msgid "Select Screenshot for upload"
 msgstr "Выберите снимок экрана для загрузки"
 
 msgid "Use local default SSH Key"
-msgstr "Использовать локальный ключ SSH по-умолчанию"
+msgstr "Использовать локальный ключ SSH по умолчанию"
 
 msgid "User Name"
 msgstr "Имя пользователя"
 
 msgid "URL"
-msgstr "Адрес"
+msgstr "URL"
 
 msgid "This is the location where the uploaded files can be accessed from."
-msgstr "Это то место, откуда можно получить доступ к выгруженным файлам."
+msgstr "Отсюда можно получить доступ к выгруженным файлам."
 
 msgid "Primary Storage"
 msgstr "Основное хранилище"

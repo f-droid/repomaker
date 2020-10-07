@@ -1,22 +1,25 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# Ldm Public <ldmpub@gmail.com>, 2020.
+# Éfrit <Efrit@posteo.net>, 2020.
+# Tristan Grunert <tristan.grunert87@gmail.com>, 2020.
+# Localisation Lab <ao@localizationlab.org>, 2020.
+# Mattherix <mattherix@protonmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-01 20:55+0000\n"
-"PO-Revision-Date: 2018-09-02 15:13+0000\n"
-"Last-Translator: Ldm Public <ldmpub@gmail.com>\n"
+"PO-Revision-Date: 2020-04-11 14:09+0000\n"
+"Last-Translator: Localisation Lab <ao@localizationlab.org>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/f-droid/repomaker-javascript/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.2-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #, javascript-format
 msgid "Available %s"
@@ -24,11 +27,11 @@ msgstr "Disponible %s"
 
 #, javascript-format
 msgid "This is the list of available %s. You may choose some by selecting them in the box below and then clicking the \"Choose\" arrow between the two boxes."
-msgstr ""
+msgstr "Voici la liste des %s proposés. Vous pouvez en choisir en les sélectionnant dans la boîte ci-dessous, puis en cliquant sur la flèche « Choisir » entre les deux boîtes."
 
 #, javascript-format
 msgid "Type into this box to filter down the list of available %s."
-msgstr ""
+msgstr "Renseignez cette zone pour filtrer la liste des %s disponibles."
 
 msgid "Filter"
 msgstr "Filtrer"
@@ -48,11 +51,11 @@ msgstr "Retirer"
 
 #, javascript-format
 msgid "Chosen %s"
-msgstr ""
+msgstr "%s choisi"
 
 #, javascript-format
 msgid "This is the list of chosen %s. You may remove some by selecting them in the box below and then clicking the \"Remove\" arrow between the two boxes."
-msgstr ""
+msgstr "Voici la liste de %s choisis. Vous pouvez en supprimer en les sélectionnant dans la boîte ci-dessous, puis en cliquant sur la flèche « Supprimer » entre les deux boîtes."
 
 msgid "Remove all"
 msgstr "Retirer tout"
@@ -63,59 +66,59 @@ msgstr "Cliquez pour retirer tous les %s sélectionnés."
 
 msgid "%(sel)s of %(cnt)s selected"
 msgid_plural "%(sel)s of %(cnt)s selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(sel)s de %(cnt)s a été sélectionné"
+msgstr[1] "%(sel)s de %(cnt)s ont été sélectionnés"
 
 msgid "You have unsaved changes on individual editable fields. If you run an action, your unsaved changes will be lost."
-msgstr ""
+msgstr "Vous avez des changements non enregistrés dans des champs individuels modifiables. Si vous lancez une action, vos changements non enregistrés seront perdus."
 
 msgid "You have selected an action, but you haven't saved your changes to individual fields yet. Please click OK to save. You'll need to re-run the action."
-msgstr ""
+msgstr "Vous avez sélectionné une action, mais vous n’avez pas encore enregistré vos changements dans les champs individuels. Veuillez cliquer sur Valider pour enregistrer. Vous devrez relancer l’action."
 
 msgid "You have selected an action, and you haven't made any changes on individual fields. You're probably looking for the Go button rather than the Save button."
-msgstr ""
+msgstr "Vous avez sélectionné une action et vous n’avez apporté aucun changement aux champs individuels. Vous cherchez probablement le bouton Continuer plutôt que le bouton Enregistrer."
 
 #, javascript-format
 msgid "Note: You are %s hour ahead of server time."
 msgid_plural "Note: You are %s hours ahead of server time."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Note : Vous êtes en avance d’%s heure par rapport à l’heure du serveur."
+msgstr[1] "Note : Vous êtes en avance de %s heures par rapport à l’heure du serveur."
 
 #, javascript-format
 msgid "Note: You are %s hour behind server time."
 msgid_plural "Note: You are %s hours behind server time."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Note : Vous êtes en retard d’%s heure par rapport à l’heure du serveur."
+msgstr[1] "Note : Vous êtes en retard de %s heures par rapport à l’heure du serveur."
 
 msgid "Now"
 msgstr "Maintenant"
 
 msgid "Choose a Time"
-msgstr "Sélectionnez une heure"
+msgstr "Choisissez une heure"
 
 msgid "Choose a time"
-msgstr "Sélectionnez une heure"
+msgstr "Choisissez une heure"
 
 msgid "Midnight"
 msgstr "Minuit"
 
 msgid "6 a.m."
-msgstr "6h du matin"
+msgstr "6 h"
 
 msgid "Noon"
 msgstr "Midi"
 
 msgid "6 p.m."
-msgstr "6h de l'après-midi"
+msgstr "18 h"
 
 msgid "Cancel"
 msgstr "Annuler"
 
 msgid "Today"
-msgstr "Aujourd'hui"
+msgstr "Aujourd’hui"
 
 msgid "Choose a Date"
-msgstr "Sélectionnez une date"
+msgstr "Choisissez une date"
 
 msgid "Yesterday"
 msgstr "Hier"
@@ -124,74 +127,74 @@ msgid "Tomorrow"
 msgstr "Demain"
 
 msgid "January"
-msgstr "Janvier"
+msgstr "janvier"
 
 msgid "February"
-msgstr "Février"
+msgstr "février"
 
 msgid "March"
-msgstr "Mars"
+msgstr "mars"
 
 msgid "April"
-msgstr "Avril"
+msgstr "avril"
 
 msgid "May"
-msgstr "Mai"
+msgstr "mai"
 
 msgid "June"
-msgstr "Juin"
+msgstr "juin"
 
 msgid "July"
-msgstr "Juillet"
+msgstr "juillet"
 
 msgid "August"
-msgstr "Août"
+msgstr "août"
 
 msgid "September"
-msgstr "Septembre"
+msgstr "septembre"
 
 msgid "October"
-msgstr "Octobre"
+msgstr "octobre"
 
 msgid "November"
-msgstr "Novembre"
+msgstr "novembre"
 
 msgid "December"
-msgstr "Décembre"
+msgstr "décembre"
 
 msgctxt "one letter Sunday"
 msgid "S"
-msgstr "D"
+msgstr "d"
 
 msgctxt "one letter Monday"
 msgid "M"
-msgstr "L"
+msgstr "l"
 
 msgctxt "one letter Tuesday"
 msgid "T"
-msgstr "M"
+msgstr "m"
 
 msgctxt "one letter Wednesday"
 msgid "W"
-msgstr "M"
+msgstr "m"
 
 msgctxt "one letter Thursday"
 msgid "T"
-msgstr "J"
+msgstr "j"
 
 msgctxt "one letter Friday"
 msgid "F"
-msgstr "V"
+msgstr "v"
 
 msgctxt "one letter Saturday"
 msgid "S"
-msgstr "S"
+msgstr "s"
 
 msgid "Show"
 msgstr "Afficher"
 
 msgid "Hide"
-msgstr "Masquer"
+msgstr "Cacher"
 
 #, javascript-format
 msgid "%s app added"
@@ -236,8 +239,8 @@ msgstr "Vous ne pouvez télécharger que des images ici."
 #, javascript-format
 msgid "Uploading %s file..."
 msgid_plural "Uploading %s files..."
-msgstr[0] "Téléversement du fichier…"
-msgstr[1] "Téléversement des %s fichiers…"
+msgstr[0] "Envoi en cours de %s fichier ..."
+msgstr[1] "Envoi en cours de %s fichiers ..."
 
 msgid "Try to drag and drop again!"
 msgstr "Essayez de glisser-déposer à nouveau !"
