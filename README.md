@@ -2,9 +2,9 @@
 [![coverage report](https://gitlab.com/fdroid/repomaker/badges/master/coverage.svg)](https://gitlab.com/fdroid/repomaker/-/jobs)
 [![translation status](https://hosted.weblate.org/widgets/f-droid/-/repomaker/svg-badge.svg)](https://hosted.weblate.org/projects/f-droid/repomaker/)
 
-# Installation
+Repomaker needs a maintainer, please adopt me!  Repomaker currently runs on Django 1.11, which went out of security support in July 2020. Please see [#234](https://gitlab.com/fdroid/repomaker/-/issues/233) for more information.
 
-**Unmaintained**: The last release of Repomaker happened on January 29, 2019. Since then, no more development happened due to the lack of volunteers. Please see [#233](https://gitlab.com/fdroid/repomaker/-/issues/233) for more information.
+# Installation
 
 There are several different ways to install Repomaker.
 
