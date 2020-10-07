@@ -28,10 +28,18 @@ variables:
 - *apt-template
 - apt-get install
       curl
+      fdroidserver
       git
-      libmagic1
+      python3-babel
       python3-bleach
       python3-cryptography
+      python3-django-allauth
+      python3-django-compat
+      python3-django-compressor
+      python3-django-hvad
+      python3-django-js-reverse
+      python3-django-sass-processor
+      python3-dockerpycreds
       python3-libcloud
       python3-libsass
       python3-magic
@@ -41,10 +49,11 @@ variables:
       python3-rcssmin
       python3-rjsmin
       python3-setuptools
+      python3-websocket
       python3-webview
       python3-wheel
       rsync
-      aapt
+
 
 pep8:
   stage: test
