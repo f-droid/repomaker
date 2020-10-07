@@ -1,5 +1,5 @@
 -r debian/requirements.txt
-django==1.11.20
+django >=1.11.29, < 1.12
 django-compressor
 libsass
 qrcode
