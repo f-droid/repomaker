@@ -3,6 +3,8 @@ version: '2'
 services:
   db:
     image: postgres
+    env_file:
+      - .env
     volumes:
       - ${REPOMAKER_PATH}/pgdata:/var/lib/postgresql/data
     restart: unless-stopped
