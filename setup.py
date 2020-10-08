@@ -23,7 +23,7 @@ setup(
     install_requires=[
         'django  >=1.11.29, < 1.12',
         'django-allauth',
-        'django-tinymce',
+        'django-tinymce >=2.6.0, <3',
         'django-js-reverse',
         'django-compressor',
         'django-sass-processor',
