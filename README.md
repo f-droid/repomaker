@@ -55,14 +55,13 @@ On Debian, you can simply run this:
 
 * `keytool` from Java Runtime Environment (JRE)
 * `apksigner` or alternatively jarsigner from Java Development Kit (JDK)
-* Android Asset Packaging Tool (`aapt`)
 * `libmagic` for mime-type detection
 * `rsync` to publish repositories
 * `git` to publish repositories to git mirrors
 
 On Debian, you can simply run this:
 
-`sudo apt install openjdk-8-jre-headless apksigner aapt libmagic1 rsync git`
+`sudo apt install default-jre-headless apksigner libmagic1 rsync git`
 
 ### Install into virtual environment
 
@@ -89,7 +88,7 @@ try to install `libssl-dev` with `apt install libssl-dev`.
 
 If starting repomaker fail with the error ```Could not find `keytool` program.```,
 you might run into [this known issue](https://gitlab.com/fdroid/repomaker/issues/192).
-Try if `apt install openjdk-8-jdk-headless` fixes it for you.
+Try if `apt install default-jdk-headless` fixes it for you.
 
 If the graphical user interface fails to start,
 you can try running `repomaker-server` and `repomaker-tasks`.

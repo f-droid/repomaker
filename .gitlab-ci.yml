@@ -28,7 +28,6 @@ variables:
 - *apt-template
 - apt-get install
       curl
-      default-jre-headless
       git
       libmagic1
       python3-bleach

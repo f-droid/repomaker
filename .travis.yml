@@ -30,7 +30,6 @@ addons:
     - pep8
     - libjpeg-dev
     - zlib1g-dev
-    - aapt
     - fdroidserver
     - npm
 

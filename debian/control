@@ -18,7 +18,6 @@ Package: repomaker
 Architecture: all
 Depends: ${misc:Depends},
          ${python3:Depends},
-         aapt,
          apksigner,
          fdroidserver,
          fonts-materialdesignicons-webfont,
