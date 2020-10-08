@@ -48,11 +48,16 @@ DATA_PREFIX = os.path.join('share', 'repomaker')
 packages = find_packages()
 print("Packages: %s" % str(packages))
 
+with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.md')) as f:
+    long_description = f.read()
+
 setup(
     name='repomaker',
     version=VERSION,
     packages=packages + ['repomaker-static'],
     description='Create F-Droid repositories with ease',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     license='AGPL-3.0',
     url='https://f-droid.org/repomaker/',
     python_requires='>=3',
