@@ -22,6 +22,8 @@ repomaker/static/repomaker/css/styles.css
 repomaker/static/repomaker/css/repo/page.css
 repomaker-static/
 
+/.vagrant/
+
 .idea/*
 !.idea/codeStyleSettings.xml
 
