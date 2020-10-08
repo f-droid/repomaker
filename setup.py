@@ -1,7 +1,47 @@
-import os
+#!/usr/bin/env python3
 
-from setuptools import setup, find_packages
+import os
+import subprocess
+import sys
+
+from setuptools import setup, find_packages, Command
 from repomaker import VERSION
+
+
+class RepomakerStaticCheckCommand(Command):
+    """Make sure git tag and version match before uploading"""
+    user_options = []
+
+    def initialize_options(self):
+        """Abstract method that is required to be overwritten"""
+
+    def finalize_options(self):
+        """Abstract method that is required to be overwritten"""
+
+    def run(self):
+        if not os.path.isdir('repomaker-static'):
+            print('ERROR: repomaker-static is missing, run ./pre-release.sh')
+            sys.exit(1)
+
+class VersionCheckCommand(Command):
+    """Make sure git tag and version match before uploading"""
+    user_options = []
+
+    def initialize_options(self):
+        """Abstract method that is required to be overwritten"""
+
+    def finalize_options(self):
+        """Abstract method that is required to be overwritten"""
+
+    def run(self):
+        version = self.distribution.get_version()
+        version_git = subprocess.check_output(['git', 'describe', '--tags', '--always']).rstrip().decode('utf-8')
+        if version != version_git:
+            print('ERROR: Release version mismatch! setup.py (%s) does not match git (%s)'
+                  % (version, version_git))
+            sys.exit(1)
+        print('Upload using: twine upload --sign dist/repomaker-%s.tar.gz' % version)
+
 
 DATA_PREFIX = os.path.join('share', 'repomaker')
 
@@ -16,6 +56,13 @@ setup(
     license='AGPL-3.0',
     url='https://f-droid.org/repomaker/',
     python_requires='>=3',
+    cmdclass={
+        'repomaker_static_check': RepomakerStaticCheckCommand,
+        'version_check': VersionCheckCommand,
+    },
+    setup_requires=[
+        'babel',
+    ],
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
