@@ -8,18 +8,6 @@ Repomaker needs a maintainer, please adopt me!  Repomaker currently runs on Djan
 
 There are several different ways to install Repomaker.
 
-## Ubuntu/Debian
-
-In F-Droid's Ubuntu ppa exists
-[a package of Repomaker](https://launchpad.net/~fdroid/+archive/ubuntu/repomaker)
-which might also work on Debian and other Debian based systems.
-You can install it like this:
-```bash
-sudo add-apt-repository ppa:fdroid/repomaker
-sudo apt update
-sudo apt install repomaker
-```
-
 ## Flatpak
 
 Repomaker is available as Flatpak and
@@ -30,6 +18,16 @@ either go to your system's app store or execute the following commands:
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak install flathub org.fdroid.Repomaker
 ```
+
+## On a server / Docker
+
+Note that you can run Repomaker on a server and make use of its
+multi user functionality.
+See [Docker docs](https://gitlab.com/fdroid/repomaker/tree/master/docker)
+and the
+[general docs](https://gitlab.com/fdroid/repomaker/tree/master/doc)
+for more information on that topic.
+
 
 ## PyPi
 
@@ -54,14 +52,17 @@ On Debian, you can simply run this:
 #### Runtime
 
 * `keytool` from Java Runtime Environment (JRE)
-* `apksigner` or alternatively jarsigner from Java Development Kit (JDK)
+* `jarsigner` from Java JDK for signing the repo indexes
 * `libmagic` for mime-type detection
 * `rsync` to publish repositories
 * `git` to publish repositories to git mirrors
 
 On Debian, you can simply run this:
 
-`sudo apt install default-jre-headless apksigner libmagic1 rsync git`
+```
+sudo apt install fdroidserver libmagic1 rsync git \
+    python3-pyqt5.qtwebengine python3-pyqt5.qtwebkit
+```
 
 ### Install into virtual environment
 
@@ -76,8 +77,6 @@ You should now be able to start by typing:
 
     repomaker
 
-If you want to work on repomaker,
-please see the development section below.
 
 ### Troubleshooting
 
@@ -86,23 +85,11 @@ First check that you really have all dependencies from above installed.
 If the installation fails with something about `openssl`,
 try to install `libssl-dev` with `apt install libssl-dev`.
 
-If starting repomaker fail with the error ```Could not find `keytool` program.```,
-you might run into [this known issue](https://gitlab.com/fdroid/repomaker/issues/192).
-Try if `apt install default-jdk-headless` fixes it for you.
-
 If the graphical user interface fails to start,
 you can try running `repomaker-server` and `repomaker-tasks`.
 If that works, you should be able to open [127.0.0.1:8000](http://127.0.0.1:8000/)
 in your browser.
 
-## On a server / Docker
-
-Note that you can run Repomaker on a server and make use of its
-multi user functionality.
-See [Docker docs](https://gitlab.com/fdroid/repomaker/tree/master/docker)
-and the
-[general docs](https://gitlab.com/fdroid/repomaker/tree/master/doc)
-for more information on that topic.
 
 # Development
 
@@ -117,6 +104,23 @@ you can start it like this:
     source repomaker/bin/activate
     ./setup.sh
     ./run.sh
+
+## Vagrant VM
+
+There also a Vagrant setup based on the GitLab CI setup, it is a quick
+way to get a development setup.  First, set up Vagrant on your machine,
+then run:
+
+```console
+$ cd repomaker
+$ vagrant up
+$ vagrant ssh
+vagrant@basebox-buster64:~$ ip a | sed -En 's,.*inet +(192\.168\.[0-9]+\.[0-9]+).*,open http://\1:8000,p'
+open http://192.168.121.37:8000
+vagrant@basebox-buster64:~$ cd $CI_PROJECT_DIR
+vagrant@basebox-buster64:/builds/fdroid/repomaker$ ./tests/test-units.sh
+```
+
 
 ## Translation
 
