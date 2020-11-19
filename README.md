@@ -13,18 +13,20 @@ There are several different ways to install Repomaker.
 Repomaker is available as Flatpak and
 [distributed on Flathub](https://flathub.org/apps/details/org.fdroid.Repomaker).
 Once you got [Flatpak installed on your system](https://flatpak.org/setup/),
-either go to your system's app store or execute the following commands:
-```bash
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub org.fdroid.Repomaker
+either go to your system's app store or execute the following commands (without `sudo`!):
+
+```console
+$ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+$ flatpak install flathub org.fdroid.Repomaker
+$ flatpak run --runtime=org.gnome.Sdk org.fdroid.Repomaker
 ```
 
 ## On a server / Docker
 
-Note that you can run Repomaker on a server and make use of its
-multi user functionality.
-See [Docker docs](https://gitlab.com/fdroid/repomaker/tree/master/docker)
-and the
+There is a test image available in Docker for quickly trying out
+Repomaker.  Note that you can run Repomaker on a server and make use
+of its multi user functionality.  See [Docker
+docs](https://gitlab.com/fdroid/repomaker/tree/master/docker) and the
 [general docs](https://gitlab.com/fdroid/repomaker/tree/master/doc)
 for more information on that topic.
 
@@ -34,10 +36,12 @@ for more information on that topic.
 If you don't want or can't install Repomaker with one of the mentioned
 methods, you can install it with _pip_ from PyPi.
 
+
 ### Requirements
 
 Please make sure you have the following requirements installed
 before proceeding with the installation. 
+
 
 #### Install
 
