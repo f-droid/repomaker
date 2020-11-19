@@ -13,6 +13,10 @@ COPY docker/settings_docker.py ./repomaker/
 COPY docker/apache.conf /etc/apache2/sites-available/repomaker.conf
 COPY docker/wait-for ./
 COPY docker/httpd-foreground ./
+# Debian has apksigner depend on binfmt support which isn't very
+# docker friendly, use a shell wrapper instead.
+COPY docker/apksigner /usr/local/bin/apksigner
+RUN chmod 0755 /usr/local/bin/apksigner
 
 # Debian setup
 ENV LANG=C.UTF-8 \
