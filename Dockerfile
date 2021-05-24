@@ -79,3 +79,7 @@ RUN apt-get update && apt-get dist-upgrade && apt-get install \
 	pip3 install -r requirements.txt && \
 	npm install && \
 	./pre-release.sh
+
+
+RUN find /repomaker/ -perm -o=w  -exec chmod go-w {} \;
+RUN chmod 644 /etc/apache2/sites-available/repomaker.conf
