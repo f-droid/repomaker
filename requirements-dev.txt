@@ -1,5 +1,6 @@
 pep8
 coverage
-pylint-django
+pylint<2.7
+pylint-django<2.4
 lxml
 cssselect
