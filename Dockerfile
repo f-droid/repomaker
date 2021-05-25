@@ -13,10 +13,6 @@ COPY docker/settings_docker.py ./repomaker/
 COPY docker/apache.conf /etc/apache2/sites-available/repomaker.conf
 COPY docker/wait-for ./
 COPY docker/httpd-foreground ./
-# Debian has apksigner depend on binfmt support which isn't very
-# docker friendly, use a shell wrapper instead.
-COPY docker/apksigner /usr/local/bin/apksigner
-RUN chmod 0755 /usr/local/bin/apksigner
 
 # Debian setup
 ENV LANG=C.UTF-8 \
@@ -28,7 +24,7 @@ RUN echo Etc/UTC > /etc/timezone \
 		'APT::Get::Assume-Yes "true";' \
 		'Dpkg::Use-Pty "0";'\
 		> /etc/apt/apt.conf.d/99headless \
-	&& printf "Package: apksigner fdroidserver s3cmd\nPin: release a=buster-backports\nPin-Priority: 500\n" \
+	&& printf "Package: apksigner libapksig-java fdroidserver s3cmd\nPin: release a=buster-backports\nPin-Priority: 500\n" \
 		> /etc/apt/preferences.d/buster-backports.pref \
 	&& echo "deb http://deb.debian.org/debian/ buster-backports main" \
 		> /etc/apt/sources.list.d/buster-backports.list
