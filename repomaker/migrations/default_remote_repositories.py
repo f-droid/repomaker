@@ -24,7 +24,7 @@ def forwards_func(apps, schema_editor):
         last_change_date=datetime.datetime.fromtimestamp(0, timezone.utc),
         update_scheduled=True,
     )
-    repo.users = User.objects.all()
+    repo.users.set(User.objects.all())
     repo.save()
     tasks.update_remote_repo(repo.pk, repeat=Task.DAILY, priority=tasks.PRIORITY_REMOTE_REPO)
 
@@ -38,7 +38,7 @@ def forwards_func(apps, schema_editor):
         last_change_date=datetime.datetime.fromtimestamp(0, timezone.utc),
         update_scheduled=True,
     )
-    repo.users = User.objects.all()
+    repo.users.set(User.objects.all())
     repo.save()
     tasks.update_remote_repo(repo.pk, repeat=Task.DAILY, priority=tasks.PRIORITY_REMOTE_REPO)
 

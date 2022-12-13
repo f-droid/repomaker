@@ -181,7 +181,7 @@ class DefaultStorageTestCase(TestCase):
         url = 'https://example.com/repos/WRK98dKjNKjR5XJy5sjH_Ptuxrs4QgNK/repo'
         self.assertEqual(url, config['mirrors'][0])
 
-    @patch('fdroidserver.server.update_serverwebroot')
+    @patch('fdroidserver.update_serverwebroot')
     def test_publish(self, update_serverwebroot):
         storage = StorageManager.get_storage(self.repo)[0]
         storage.publish()

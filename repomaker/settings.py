@@ -71,7 +71,7 @@ INSTALLED_APPS = [
     'compressor',
     'sass_processor',
     'background_task',
-    'hvad',  # model i18n
+    'modeltranslation',  # model i18n
     'tinymce',
     'django_js_reverse',
     'django.forms',
@@ -196,6 +196,11 @@ MAX_ATTEMPTS = 23  # the number of attempts for marking a task as permanently fa
 
 LANGUAGE_CODE = 'en'
 LANGUAGES = [('en-us', ugettext_lazy('American English'))] + global_settings.LANGUAGES
+
+# defaults to the value of LANGUAGES
+# for the unit tests to pass, this list need to include at least:
+# en, en-us, de, and de-de
+MODELTRANSLATION_LANGUAGES = ('en-us', 'en', 'de-de', 'de', 'fr', 'zh-cn')
 
 TIME_ZONE = 'UTC'
 

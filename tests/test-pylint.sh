@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
 
-pylint=pylint
-if which pylint3; then
-    pylint=pylint3
-fi
-$pylint --disable=C,R,fixme repomaker
+export DJANGO_SETTINGS_MODULE=repomaker.settings_test
+pylint --load-plugins=pylint_django --disable=C,R,fixme repomaker

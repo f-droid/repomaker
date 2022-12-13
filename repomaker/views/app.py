@@ -5,17 +5,17 @@ import os
 from django.conf import settings
 from django.db.models import Q
 from django.forms import FileField, ImageField, ClearableFileInput, CharField
-from django.http import HttpResponseRedirect, HttpResponseServerError, JsonResponse
-from django.shortcuts import redirect
+from django.http import Http404, HttpResponseRedirect, HttpResponseServerError, JsonResponse
 from django.urls import reverse_lazy
-from django.utils import formats
+from django.utils import formats, translation
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation.trans_real import language_code_re
 from django.views.generic import DetailView
-from django.views.generic.edit import DeleteView
-from hvad.forms import translatable_modelform_factory, \
-    TranslatableModelForm
-from hvad.views import TranslatableUpdateView
+from django.views.generic.base import TemplateResponseMixin
+from django.views.generic.edit import BaseUpdateView, DeleteView
+from modeltranslation.forms import TranslationModelForm
+from modeltranslation import settings as modeltranslation_settings
+from modeltranslation.utils import get_language
 from tinymce.widgets import TinyMCE
 
 from repomaker.models import App, ApkPointer, Screenshot
@@ -54,10 +54,8 @@ class AppDetailView(RepositoryAuthorizationMixin, LanguageMixin, DetailView):
     def get_repo(self):
         return self.get_object().repo
 
-    def get_queryset(self):
-        return self.model.objects.language(self.get_language()).fallbacks().all()
-
     def get_context_data(self, **kwargs):
+        self.activate_language()
         context = super(AppDetailView, self).get_context_data(**kwargs)
         app = context['app']
         context['screenshots'] = Screenshot.objects.filter(app=app, type=PHONE,
@@ -65,18 +63,13 @@ class AppDetailView(RepositoryAuthorizationMixin, LanguageMixin, DetailView):
         context['apks'] = ApkPointer.objects.filter(app=app).order_by('-apk__version_code')
         return context
 
-    def get(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if obj.language_code != self.get_language():
-            return redirect(obj)
-        return super().get(request, *args, **kwargs)
 
-
-class AppForm(TranslatableModelForm):
+class AppForm(TranslationModelForm):
     screenshots = ImageField(required=False, widget=ClearableFileInput(attrs={'multiple': True}))
     apks = FileField(required=False, widget=ClearableFileInput(attrs={'multiple': True}))
 
     def __init__(self, *args, **kwargs):
+        self.queryset = queryset = App.objects.all()
         super(AppForm, self).__init__(*args, **kwargs)
         if self.instance.category:
             # Show only own and default categories
@@ -90,7 +83,7 @@ class AppForm(TranslatableModelForm):
             old_graphic = self.initial['feature_graphic'].path
             if os.path.exists(old_graphic):
                 os.remove(old_graphic)
-        return super().save(commit)
+        return super(AppForm, self).save(commit)
 
     class Meta:
         model = App
@@ -99,24 +92,24 @@ class AppForm(TranslatableModelForm):
         widgets = {'description': MDLTinyMCE(), 'description_override': MDLTinyMCE()}
 
 
-class AppEditView(ApkUploadMixin, LanguageMixin, TranslatableUpdateView):
+class AppEditView(ApkUploadMixin, LanguageMixin, TemplateResponseMixin, BaseUpdateView):
     model = App
     object = None
     pk_url_kwarg = 'app_id'
     context_object_name = 'app'
     template_name = 'repomaker/app/edit.html'
+    form_class = AppForm
 
     def get_repo(self):
         return self.get_object().repo
 
-    def get_form_class(self):
-        return translatable_modelform_factory(self.get_language(), self.model, AppForm)
-
-    def get_queryset(self):
-        # no fallbacks here, returns 404 if language does not exist
-        return self.model.objects.language(self.get_language()).all()
-
     def get_context_data(self, **kwargs):
+        app = self.get_object()
+        self.activate_language()
+        language = get_language()
+        if language not in app.get_available_languages():
+            raise Http404()
+
         context = super().get_context_data(**kwargs)
         context['screenshots'] = Screenshot.objects.filter(app=self.get_object(),
                                                            type=PHONE,
@@ -231,6 +224,12 @@ class AppTranslationCreateForm(AppForm):
         self.fields['lang'] = CharField(required=True, min_length=2,
                                         widget=DataListTextInput(settings.LANGUAGES))
 
+    def clean(self):
+        lang = self.data.get('lang')
+        if lang and lang in modeltranslation_settings.AVAILABLE_LANGUAGES:
+            translation.activate(lang)
+        return super(AppTranslationCreateForm, self).clean()
+
     def clean_lang(self):
         lang = self.cleaned_data['lang'].lower()
         if not re.match(language_code_re, lang):
@@ -238,6 +237,9 @@ class AppTranslationCreateForm(AppForm):
         if lang in self.instance.get_available_languages():
             self._errors['lang'] = _('This language already exists. Please choose another one!')
         return lang
+
+    def save(self, commit=True):
+        return super(AppTranslationCreateForm, self).save(commit=commit)
 
 
 class AppTranslationCreateView(AppEditView):
@@ -251,7 +253,16 @@ class AppTranslationCreateView(AppEditView):
 
     def form_valid(self, form):
         self.object.translate(form.cleaned_data['lang'])
+        translation.activate(form.cleaned_data['lang'])
         return super().form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        # in this case, the requested language is a POST arg rather than being
+        # part of the URL
+        post_lang = request.POST.get('lang')
+        if post_lang and post_lang.lower() in modeltranslation_settings.AVAILABLE_LANGUAGES:
+            translation.activate(post_lang)
+        return super(AppTranslationCreateView, self).post(request, *args, **kwargs)
 
 
 class AppDeleteView(RepositoryAuthorizationMixin, DeleteView):

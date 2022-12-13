@@ -203,7 +203,7 @@ class TasksTest(TestCase):
         tasks.download_remote_screenshot.now(screenshot.id, 1337)
 
         # assert that screenshot was downloaded
-        get.assert_called_once_with(screenshot.url)
+        get.assert_called_once_with(screenshot.url, timeout=60)
 
     def test_priorities(self):
         # create an actual repository and an APK

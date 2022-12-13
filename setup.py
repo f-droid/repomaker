@@ -10,6 +10,7 @@ from repomaker import VERSION
 
 class RepomakerStaticCheckCommand(Command):
     """Make sure git tag and version match before uploading"""
+
     user_options = []
 
     def initialize_options(self):
@@ -23,8 +24,10 @@ class RepomakerStaticCheckCommand(Command):
             print('ERROR: repomaker-static is missing, run ./pre-release.sh')
             sys.exit(1)
 
+
 class VersionCheckCommand(Command):
     """Make sure git tag and version match before uploading"""
+
     user_options = []
 
     def initialize_options(self):
@@ -73,22 +76,21 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
-        'django  >=1.11.29, < 1.12',
+        'django >=2.0, <3.0',
         'django-allauth',
         'django-tinymce >=2.6.0, <3',
-        'django-js-reverse',
+        'django-js-reverse>=0.9.0',
         'django-compressor',
+        'django-modeltranslation <0.17',
         'django-sass-processor',
-        'django-hvad>=1.8.0',
         'django-background-tasks >=1.1.13, <1.2',
-        'qrcode',
-        'six>=1.9',  # until bleach depends on html5lib>=1.0
-        'bleach>=2.1.4',
+        'bleach >=2.1.4, <5.0',
+        'html5lib >= 1.1, <1.2',
         'python-magic',
+        'qrcode',
         'cryptography>=1.4.0',
-        'fdroidserver >=1.1, < 2.0',
+        'fdroidserver>=2.0',
     ],
-
     # List additional groups of dependencies here (e.g. development dependencies).
     # You can install these using the following syntax, for example:
     # $ pip install -e .[dev,test]
@@ -98,15 +100,13 @@ setup(
             'pywebview[qt5] <3',
         ],
         'test': [
-            'pep8',
+            'pycodestyle',
             'coverage',
             'pylint-django',
         ],
     },
-
     include_package_data=True,
     package_data={},
-
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow
     # pip to create the appropriate form of executable for the target platform.

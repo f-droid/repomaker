@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 MAINTAINER team@f-droid.org
 
 ENV PYTHONUNBUFFERED 1
@@ -24,10 +24,10 @@ RUN echo Etc/UTC > /etc/timezone \
 		'APT::Get::Assume-Yes "true";' \
 		'Dpkg::Use-Pty "0";'\
 		> /etc/apt/apt.conf.d/99headless \
-	&& printf "Package: apksigner libapksig-java fdroidserver s3cmd\nPin: release a=buster-backports\nPin-Priority: 500\n" \
-		> /etc/apt/preferences.d/buster-backports.pref \
-	&& echo "deb http://deb.debian.org/debian/ buster-backports main" \
-		> /etc/apt/sources.list.d/buster-backports.list
+	&& printf "Package: apksigner libapksig-java\nPin: release a=bullseye-backports\nPin-Priority: 500\n" \
+		> /etc/apt/preferences.d/bullseye-backports.pref \
+	&& echo "deb https://deb.debian.org/debian/ bullseye-backports main" \
+		> /etc/apt/sources.list.d/bullseye-backports.list
 
 # a version of the Debian package list is also in .gitlab-ci.yml
 RUN apt-get update && apt-get dist-upgrade && apt-get install \
@@ -46,10 +46,8 @@ RUN apt-get update && apt-get dist-upgrade && apt-get install \
 		python3-cryptography \
 		python3-dev \
 		python3-django-allauth \
-		python3-django-compat \
 		python3-django-compressor \
-		python3-django-hvad \
-		python3-django-js-reverse \
+		python3-django-modeltranslation \
 		python3-django-sass-processor \
 		python3-dockerpycreds \
 		python3-libcloud \

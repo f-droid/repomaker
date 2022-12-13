@@ -96,7 +96,7 @@ class RemoteScreenshot(AbstractScreenshot):
         and creates a local Screenshot if successful.
         """
         screenshot = Screenshot(language_code=self.language_code, type=self.type, app_id=app_id)
-        r = requests.get(self.url)
+        r = requests.get(self.url, timeout=60)
         if r.status_code == requests.codes.ok:
             screenshot.file.save(os.path.basename(self.url), BytesIO(r.content), save=True)
 

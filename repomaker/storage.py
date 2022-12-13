@@ -3,6 +3,7 @@ import re
 
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from modeltranslation.utils import get_language
 from repomaker.utils import to_universal_language_code
 
 REPO_DIR = 'repo'
@@ -37,9 +38,8 @@ def get_apk_file_path(apk, filename):
         return os.path.join('packages', filename)
 
 
-def get_graphic_asset_file_path(app_translation, filename):
-    app = app_translation.master
-    language_code = to_universal_language_code(app_translation.language_code)
+def get_graphic_asset_file_path(app, filename):
+    language_code = to_universal_language_code(get_language())
     path = os.path.join(get_repo_path(app.repo), app.package_id, language_code)
     return os.path.join(path, filename)
 

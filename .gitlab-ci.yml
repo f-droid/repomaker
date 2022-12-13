@@ -1,4 +1,4 @@
-image: debian:buster
+image: debian:bullseye
 
 stages:
   - test
@@ -34,10 +34,8 @@ variables:
       python3-bleach
       python3-cryptography
       python3-django-allauth
-      python3-django-compat
       python3-django-compressor
-      python3-django-hvad
-      python3-django-js-reverse
+      python3-django-modeltranslation
       python3-django-sass-processor
       python3-dockerpycreds
       python3-libcloud
@@ -55,11 +53,11 @@ variables:
       rsync
 
 
-pep8:
+pycodestyle:
   stage: test
   script:
     - *apt-template
-    - apt-get install pep8
+    - apt-get install pycodestyle
     - ./tests/test-pep8.sh
 
 pylint:
@@ -99,11 +97,11 @@ docker:
     - echo $CI_BUILD_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
   script:
     - docker build -t $CI_REGISTRY_IMAGE:latest .
-    - docker tag $CI_REGISTRY_IMAGE:latest $CI_REGISTRY_IMAGE:buster
-    - docker tag $CI_REGISTRY_IMAGE:latest $CI_REGISTRY_IMAGE:django-1.11
+    - docker tag $CI_REGISTRY_IMAGE:latest $CI_REGISTRY_IMAGE:bullseye
+    - docker tag $CI_REGISTRY_IMAGE:latest $CI_REGISTRY_IMAGE:django-2
     - docker push $CI_REGISTRY_IMAGE:latest
-    - docker push $CI_REGISTRY_IMAGE:buster
-    - docker push $CI_REGISTRY_IMAGE:django-1.11
+    - docker push $CI_REGISTRY_IMAGE:bullseye
+    - docker push $CI_REGISTRY_IMAGE:django-2
 
   when: on_success
   only:

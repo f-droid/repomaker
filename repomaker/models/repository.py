@@ -1,3 +1,4 @@
+import fdroidserver
 import logging
 import os
 from io import BytesIO
@@ -15,7 +16,7 @@ from django.template.loader import render_to_string
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils import timezone
-from fdroidserver import common, index, server, update
+from fdroidserver import common, deploy, update
 from repomaker import tasks
 from repomaker.storage import REPO_DIR, get_repo_file_path, get_repo_root_path, \
     get_icon_file_path
@@ -79,10 +80,10 @@ class AbstractRepository(models.Model):
         common.fill_config_defaults(config)
         common.config = config
         common.options = Options
+        deploy.config = config
+        deploy.options = Options
         update.config = config
         update.options = Options
-        server.config = config
-        server.options = Options
         return config
 
 
@@ -118,9 +119,6 @@ class Repository(AbstractRepository):
         })
         if self.icon:
             config['repo_icon'] = self.icon.name
-        else:
-            config['repo_icon'] = os.path.join(settings.BASE_DIR, 'repomaker', 'static',
-                                               REPO_DEFAULT_ICON)
         if self.public_key is not None:
             config['repo_pubkey'] = self.public_key
         return config
@@ -159,7 +157,8 @@ class Repository(AbstractRepository):
 
         # Generate keystore
         pubkey, fingerprint = common.genkeystore(config)
-        self.public_key = pubkey
+        # pubkey is returned as bytes in fdroidserver 2.1.x
+        self.public_key = pubkey.decode('ascii')
         self.fingerprint = fingerprint.replace(" ", "")
 
         # Generate and save QR Code
@@ -337,13 +336,14 @@ class Repository(AbstractRepository):
                 file['packageName'] = pointer.apk.package_id
                 apks.append(file)
 
+        update.read_added_date_from_all_apks(apps, apks)
         update.apply_info_from_latest_apk(apps, apks)
 
         # Sort the app list by name
         sortedids = sorted(apps.keys(), key=lambda app_id: apps[app_id].Name.upper())
 
         # Make the index for the repo
-        index.make(apps, sortedids, apks, REPO_DIR, False)
+        fdroidserver.make_index(apps, apks, REPO_DIR, False)
         update.make_categories_txt(REPO_DIR, categories)
 
         # Update cache if it changed
@@ -366,7 +366,7 @@ class Repository(AbstractRepository):
             return  # bail out if there is no remote storage to publish to
 
         # Publish to remote storage
-        self.chdir()  # expected by server.update_awsbucket()
+        self.chdir()  # expected by update_awsbucket()
         for storage in remote_storage:
             storage.publish()
 

@@ -38,7 +38,7 @@
 		{% trans 'There are currently no screenshots shown because this gives the repo owner the ability to track you.' %}
 	</div>
 	<div class="rm-remote-app-privacy-button-container">
-		<a href="{% url 'add_remote_app_screenshots' repo.id app.repo.id app.id app.language_code %}">
+		<a href="{% url 'add_remote_app_screenshots' repo.id app.repo.id app.id language_code %}">
 			<button class="rm-button">{% trans 'show screenshots' %}</button>
 		</a>
 	</div>

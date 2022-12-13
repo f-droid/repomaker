@@ -132,7 +132,7 @@ class RemoteScreenshotTestCase(TestCase):
         get.return_value.status_code = 200
         get.return_value.content = b'foo'
         self.remote_screenshot.download(self.app.pk)
-        get.assert_called_once_with('test_url/test.png')
+        get.assert_called_once_with('test_url/test.png', timeout=60)
 
         # exactly one Screenshot was created
         self.assertEqual(1, Screenshot.objects.all().count())

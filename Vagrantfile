@@ -30,12 +30,16 @@ end
 before_script_file.rewind
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "fdroid/basebox-buster64"
+  config.vm.box = "debian/bullseye64"
   config.vm.network "forwarded_port", guest: 8000, host: 8000
   config.vm.synced_folder '.', '/vagrant', disabled: true
   config.vm.provision "file", source: env_file.path, destination: 'env.sh'
   config.vm.provision :shell, inline: <<-SHELL
     set -ex
+
+    apt-get update
+    apt-get -qy install git
+
     mv ~vagrant/env.sh #{sourcepath}
     source #{sourcepath}
     mkdir -p $(dirname $CI_PROJECT_DIR)

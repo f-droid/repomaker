@@ -1,4 +1,5 @@
 import pathlib
+import logging
 
 from allauth.account.forms import LoginForm, SignupForm, ResetPasswordForm
 from django.conf import settings
@@ -7,12 +8,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.utils import OperationalError
 from django.forms import TextInput, ModelForm
-from django.http import HttpResponseForbidden, HttpResponse, JsonResponse
+from django.http import Http404, HttpResponseForbidden, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
-from django.utils import formats
+from django.utils import formats, translation
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, ListView
 from django.views.static import serve
+from modeltranslation import settings as modeltranslation_settings
 
 from repomaker import DEFAULT_USER_NAME
 from repomaker.models import RemoteRepository, Repository, RemoteApp
@@ -109,23 +111,26 @@ class AppScrollListView(ListView):
             apps = self.get_context_data(**kwargs)['apps']
             apps_json = []
             for app in apps:
-                app_json = {'id': app.id, 'name': app.name, 'icon': app.icon_url,
-                            'summary': app.summary, 'description': app.description,
-                            'lang': app.language_code}
+                for lang in app.get_available_languages():
+                    with translation.override(lang):
+                        app_json = {'id': app.id, 'name': app.name, 'icon': app.icon_url,
+                                    'summary': app.summary, 'description': app.description,
+                                    'lang': lang}
 
-                app_latest_version = app.get_latest_version()
-                if app_latest_version is not None:
-                    version = app_latest_version.version_name
-                    date = formats.date_format(app_latest_version.added_date, 'DATE_FORMAT')
-                    app_json['updated'] = \
-                        _('Version %(version)s (%(date)s)') % {'version': version, 'date': date}
+                        app_latest_version = app.get_latest_version()
+                        if app_latest_version is not None:
+                            version = app_latest_version.version_name
+                            date = formats.date_format(app_latest_version.added_date, 'DATE_FORMAT')
+                            app_json['updated'] = \
+                                _('Version %(version)s (%(date)s)') % {'version': version,
+                                                                       'date': date}
 
-                if self.model == RemoteApp:
-                    app_json['repo_id'] = app.repo.pk
-                    app_json['added'] = app.is_in_repo(self.get_repo())
-                app_json['categories'] = list(app.category.all().values('name'))
+                        if self.model == RemoteApp:
+                            app_json['repo_id'] = app.repo.pk
+                            app_json['added'] = app.is_in_repo(self.get_repo())
+                        app_json['categories'] = list(app.category.all().values('name'))
 
-                apps_json.append(app_json)
+                        apps_json.append(app_json)
             return JsonResponse(apps_json, safe=False)
         return super().get(request, *args, **kwargs)
 
@@ -236,3 +241,11 @@ class LanguageMixin:
         if 'lang' in self.kwargs:
             return self.kwargs['lang']
         return None
+
+    def activate_language(self):
+        language = self.get_language()
+        if language:
+            if language in modeltranslation_settings.AVAILABLE_LANGUAGES:
+                translation.activate(language)
+            else:
+                raise Http404()

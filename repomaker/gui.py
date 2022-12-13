@@ -28,7 +28,7 @@ def create_window():
     global terminate  # pylint: disable=global-statement
     try:
         webview.config["USE_QT"] = True  # use Qt instead of Gtk for webview
-        webview.create_window("Repomaker", confirm_quit=True)
+        webview.create_window("Repomaker", confirm_close=True)
         terminate = True
     finally:
         # halt background tasks
@@ -82,6 +82,6 @@ def get_loading_screen():
 
 def server_started():
     try:
-        return requests.head(URL).status_code == requests.codes.OK
+        return requests.head(URL, timeout=60).status_code == requests.codes.OK
     except Exception:
         return False

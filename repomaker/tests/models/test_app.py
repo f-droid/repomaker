@@ -6,6 +6,7 @@ import os
 from background_task.models import Task
 from django.conf import settings
 from django.core.files.base import ContentFile, File
+from django.utils import translation
 
 from repomaker.models import RemoteRepository, App, Apk, RemoteApkPointer, RemoteApp, Screenshot, \
     ApkPointer, Category
@@ -36,26 +37,28 @@ class AppTestCase(RmTestCase):
 
         # add two translations to RemoteApp
         remote_app.translate('en-us')
-        remote_app.summary = 'dog'
-        remote_app.description = 'cat'
-        remote_app.save()
+        with translation.override('en-us'):
+            remote_app.summary = 'dog'
+            remote_app.description = 'cat'
         remote_app.translate('de')
-        remote_app.summary = 'hund'
-        remote_app.description = 'katze'
+        with translation.override('de'):
+            remote_app.summary = 'hund'
+            remote_app.description = 'katze'
         remote_app.save()
 
         # copy the translations to the App
         app.copy_translations_from_remote_app(remote_app)
 
+        app = App.objects.get(pk=app.pk)
         # assert that English translation was copied
-        app = App.objects.language('en-us').get(pk=app.pk)
-        self.assertEqual('dog', app.summary)
-        self.assertEqual('cat', app.description)
+        with translation.override('en-us'):
+            self.assertEqual('dog', app.summary)
+            self.assertEqual('cat', app.description)
 
         # assert that German translation was copied
-        app = App.objects.language('de').get(pk=app.pk)
-        self.assertEqual('hund', app.summary)
-        self.assertEqual('katze', app.description)
+        with translation.override('de'):
+            self.assertEqual('hund', app.summary)
+            self.assertEqual('katze', app.description)
 
     def test_copy_translations_from_remote_app_default_translation(self):
         # copy the non-existent translations to the App
@@ -99,15 +102,16 @@ class AppTestCase(RmTestCase):
         self.assertEqual({'en-us', 'de'}, set(self.app.get_available_languages()))
 
         # add also graphic assets
-        app = App.objects.language('de').get(pk=self.app.pk)
-        app.feature_graphic.save('feature.png', io.BytesIO(b'foo'), save=False)
-        app.high_res_icon.save('icon.png', io.BytesIO(b'foo'), save=False)
-        app.tv_banner.save('tv.png', io.BytesIO(b'foo'), save=False)
-        app.save()
+        with translation.override('de'):
+            app = App.objects.get(pk=self.app.pk)
+            app.feature_graphic.save('feature.png', io.BytesIO(b'foo'), save=False)
+            app.high_res_icon.save('icon.png', io.BytesIO(b'foo'), save=False)
+            app.tv_banner.save('tv.png', io.BytesIO(b'foo'), save=False)
+            app.save()
 
         # get localized dict
         localized = {'en-US': {'otherKey': 'test'}}
-        # noinspection PyProtectedMember
+
         app._add_translations_to_localized(localized)  # pylint: disable=protected-access
 
         # assert that dict was created properly
@@ -142,31 +146,32 @@ class AppTestCase(RmTestCase):
         # set initial feature graphic for app
         app.translate('de')
         app.save()  # needs to be saved for ForeignKey App to be available when saving file
-        app.feature_graphic.save('feature.png', io.BytesIO(b'foo'), save=True)
-        old_feature_graphic_path = app.feature_graphic.path
-        self.assertTrue(os.path.isfile(old_feature_graphic_path))
+        with translation.override('de'):
+            app.feature_graphic.save('feature.png', io.BytesIO(b'foo'), save=True)
+            old_feature_graphic_path = app.feature_graphic.path
+            self.assertTrue(os.path.isfile(old_feature_graphic_path))
 
-        # add graphics to remote app
-        remote_app.translate('de')
-        remote_app.feature_graphic_url = 'http://url/feature-graphic.png'
-        remote_app.feature_graphic_etag = 'etag'
-        remote_app.save()
+            remote_app.translate('de')
 
-        # download graphic assets
-        http_get.return_value = b'icon-data', 'new_etag'
-        app.download_graphic_assets_from_remote_app(remote_app)
-        http_get.assert_called_once_with(remote_app.feature_graphic_url, 'etag')
+            remote_app.feature_graphic_url = 'http://url/feature-graphic.png'
+            remote_app.feature_graphic_etag = 'etag'
+            remote_app.save()
 
-        # assert that old feature graphic got deleted and new one was saved
-        app = App.objects.language('de').get(pk=app.pk)
-        self.assertFalse(os.path.isfile(old_feature_graphic_path))
-        self.assertEqual('user_1/repo_1/repo/org.example/de/feature-graphic.png',
-                         app.feature_graphic.name)
-        self.assertTrue(os.path.isfile(app.feature_graphic.path))
+            # download graphic assets
+            http_get.return_value = b'icon-data', 'new_etag'
+            app.download_graphic_assets_from_remote_app(remote_app)
+            http_get.assert_called_once_with(remote_app.feature_graphic_url, 'etag')
 
-        # assert that new etag was saved
-        remote_app = RemoteApp.objects.language('de').get(pk=remote_app.pk)
-        self.assertEqual('new_etag', remote_app.feature_graphic_etag)
+            # assert that old feature graphic got deleted and new one was saved
+            app = App.objects.get(pk=app.pk)
+            self.assertFalse(os.path.isfile(old_feature_graphic_path))
+            self.assertEqual('user_1/repo_1/repo/org.example/de/feature-graphic.png',
+                             app.feature_graphic.name)
+            self.assertTrue(os.path.isfile(app.feature_graphic.path))
+
+            # assert that new etag was saved
+            remote_app = RemoteApp.objects.get(pk=remote_app.pk)
+            self.assertEqual('new_etag', remote_app.feature_graphic_etag)
 
     @patch('repomaker.models.app.App.copy_translations_from_remote_app')
     @patch('repomaker.models.app.App.add_apk_from_tracked_remote_app')
@@ -270,8 +275,8 @@ class AppTestCase(RmTestCase):
         self.app.update_icon(new_icon)
 
         # assert that new icon has been saved properly
-        with open(self.app.icon.path, 'r') as f1:
-            with open(self.remote_app.icon.path, 'r') as f2:
+        with open(self.app.icon.path, 'rb') as f1:
+            with open(self.remote_app.icon.path, 'rb') as f2:
                 self.assertEqual(f1.read(), f2.read())
         self.assertTrue(self.app.icon.name.endswith('test2.png'))
 

@@ -4,6 +4,8 @@ import os
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils import translation
+from modeltranslation.utils import get_language
 
 from repomaker import DEFAULT_USER_NAME
 from repomaker.models import App, Apk, ApkPointer, Repository, Screenshot, RemoteRepository, \
@@ -27,14 +29,16 @@ class AppViewTestCase(RmTestCase):
         self.app.description = 'Test Description'
         self.app.save()
 
-    def test_app_detail_default_lang_redirect(self):
-        kwargs = {'repo_id': self.app.repo.pk, 'app_id': self.app.pk}
-        response = self.client.get(reverse('app', kwargs=kwargs))
-        self.assertRedirects(response, self.app.get_absolute_url())
+    # this shouldn't be necessary as modeltranslaton always uses the current
+    # languange, and handles fallbacks internally
+    # def test_app_detail_default_lang_redirect(self):
+    #     kwargs = {'repo_id': self.app.repo.pk, 'app_id': self.app.pk}
+    #     response = self.client.get(reverse('app', kwargs=kwargs))
+    #     self.assertRedirects(response, self.app.get_absolute_url())
 
     def test_app_detail_default_lang(self):
         # save screenshot and feature graphic
-        screenshot = Screenshot.objects.create(app=self.app, language_code=self.app.language_code)
+        screenshot = Screenshot.objects.create(app=self.app, language_code=get_language())
         screenshot.file.save('screenshot.png', io.BytesIO(b'foo'), save=True)
         self.app.feature_graphic.save('feature.png', io.BytesIO(b'foo'), save=True)
 
@@ -49,17 +53,19 @@ class AppViewTestCase(RmTestCase):
 
     def test_app_detail_other_lang(self):
         self.translate_to_de()
-        self.assertTrue('/de/' in self.app.get_absolute_url())
+        with translation.override('de'):
+            self.assertTrue('/de/' in self.app.get_absolute_url())
 
-        response = self.client.get(self.app.get_absolute_url())
-        self.assertContains(response, 'Test-Zusammenfassung')
-        self.assertContains(response, 'Test-Beschreibung')
+            response = self.client.get(self.app.get_absolute_url())
+            self.assertContains(response, 'Test-Zusammenfassung')
+            self.assertContains(response, 'Test-Beschreibung')
 
         # ensure that there is a link to the default language
-        app = App.objects.language(settings.LANGUAGE_CODE).get(pk=self.app.pk)
-        self.assertFalse('/de/' in app.get_absolute_url())
-        self.assertTrue('/' + settings.LANGUAGE_CODE + '/' in app.get_absolute_url())
-        self.assertContains(response, app.get_absolute_url())
+        # app = App.objects.language(settings.LANGUAGE_CODE).get(pk=self.app.pk)
+        with translation.override(settings.LANGUAGE_CODE):
+            self.assertFalse('/de/' in self.app.get_absolute_url())
+            self.assertTrue('/' + settings.LANGUAGE_CODE + '/' in self.app.get_absolute_url())
+            self.assertContains(response, self.app.get_absolute_url())
 
     def test_app_detail_prev_next(self):
         # create a second app in a different language
@@ -91,17 +97,18 @@ class AppViewTestCase(RmTestCase):
 
     def test_app_edit_other_lang(self):
         self.translate_to_de()
-        self.assertTrue('/de/' in self.app.get_edit_url())
+        with translation.override('de'):
+            self.assertTrue('/de/' in self.app.get_edit_url())
 
-        response = self.client.get(self.app.get_edit_url())
-        self.assertContains(response, 'Test-Zusammenfassung')
-        self.assertContains(response, 'Test-Beschreibung')
+            response = self.client.get(self.app.get_edit_url())
+            self.assertContains(response, 'Test-Zusammenfassung')
+            self.assertContains(response, 'Test-Beschreibung')
 
         # ensure that there is a link to the default language
-        app = App.objects.language(settings.LANGUAGE_CODE).get(pk=self.app.pk)
-        self.assertFalse('/de/' in app.get_absolute_url())
-        self.assertTrue('/' + settings.LANGUAGE_CODE + '/' in app.get_edit_url())
-        self.assertContains(response, app.get_edit_url())
+        # app = App.objects.language(settings.LANGUAGE_CODE).get(pk=self.app.pk)
+        self.assertFalse('/de/' in self.app.get_absolute_url())
+        self.assertTrue('/' + settings.LANGUAGE_CODE + '/' in self.app.get_edit_url())
+        self.assertContains(response, self.app.get_edit_url())
 
     def test_app_edit_unknown_lang(self):
         kwargs = {'repo_id': self.repo.pk, 'app_id': self.app.pk, 'lang': 'xxx'}
@@ -111,7 +118,7 @@ class AppViewTestCase(RmTestCase):
     def test_app_edit_prev_next(self):
         # create a second app in a different language
         app2 = App.objects.create(repo=self.repo, package_id='org.example', name='Example')
-        app2.translate('de')
+        app2.translate(settings.LANGUAGE_CODE)
         app2.save()
 
         # ensure first app has a link to the next one
@@ -362,13 +369,18 @@ class AppViewTestCase(RmTestCase):
         response = self.client.post(reverse('app_add_lang', kwargs=kwargs), data)
         kwargs['lang'] = 'de'
         self.assertRedirects(response, reverse('app', kwargs=kwargs))
+
+        # TODO: this get saved, but the self.app copy doesn't get updated?
+        # something's not right with that...
+        self.app = App.objects.get(pk=self.app.pk)
         self.assertTrue('de' in self.app.get_available_languages())
 
         # assert data was saved properly
-        self.app = App.objects.language('de').get(pk=self.app.pk)
-        self.assertEqual(data['summary'], self.app.summary)
-        self.assertEqual(data['description'], self.app.description)
-        self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
+        # self.app = App.objects.language('de').get(pk=self.app.pk)
+        with translation.override('de'):
+            self.assertEqual(data['summary'], self.app.summary)
+            self.assertEqual(data['description'], self.app.description)
+            self.assertTrue(Repository.objects.get(pk=self.repo.pk).update_scheduled)
 
     def test_add_lang_exists(self):
         self.translate_to_de()
@@ -392,6 +404,8 @@ class AppViewTestCase(RmTestCase):
         response = self.client.post(reverse('app_add_lang', kwargs=kwargs), {'lang': 'de-DE'})
         kwargs['lang'] = 'de-de'
         self.assertRedirects(response, reverse('app', kwargs=kwargs))
+        # TODO another case were we have to reload to see changes
+        self.app = App.objects.get(pk=self.app.pk)
         self.assertEqual({settings.LANGUAGE_CODE, 'de-de'}, set(self.app.get_available_languages()))
 
     def test_delete_feature_graphic(self):
@@ -414,6 +428,7 @@ class AppViewTestCase(RmTestCase):
 
     def translate_to_de(self):
         self.app.translate('de')
-        self.app.summary = 'Test-Zusammenfassung'
-        self.app.description = 'Test-Beschreibung'
+        with translation.override('de'):
+            self.app.summary = 'Test-Zusammenfassung'
+            self.app.description = 'Test-Beschreibung'
         self.app.save()

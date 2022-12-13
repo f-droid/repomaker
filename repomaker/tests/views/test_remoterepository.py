@@ -6,6 +6,7 @@ import django.urls
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils import translation
 from repomaker.models import RemoteRepository, RemoteApp, RemoteScreenshot, \
     RemoteApkPointer
 
@@ -21,28 +22,30 @@ class RemoteRepositoryViewTest(RmTestCase):
 
         # Add remote repo to all multi-user mode users
         if not settings.SINGLE_USER_MODE:
-            self.remote_repo.users = User.objects.all()
+            self.remote_repo.users.set(User.objects.all())
 
         self.app = RemoteApp.objects.create(repo=self.remote_repo, package_id='org.example',
                                             last_updated_date=self.remote_repo.last_updated_date,
                                             name='App')
-        self.app.translate('en')
-        self.app.summary = 'Test Summary'
-        self.app.description = 'Test Description'
-        self.app.save()
+        self.app.translate('en-us')
+        with translation.override('en-us'):
+            self.app.summary = 'Test Summary'
+            self.app.description = 'Test Description'
+            self.app.save()
 
         # Add second app only available in German
         self.app2 = RemoteApp.objects.create(repo=self.remote_repo, package_id='org.example2',
                                              last_updated_date=self.remote_repo.last_updated_date,
                                              name='App2')
         self.app2.translate('de')
-        self.app2.summary = 'Test Zusammenfassung'
-        self.app2.description = 'Test Beschreibung'
-        self.app2.save()
+        with translation.override('de'):
+            self.app2.summary = 'Test Zusammenfassung'
+            self.app2.description = 'Test Beschreibung'
+            self.app2.save()
 
         # add a remote screenshot
         self.screenshot = RemoteScreenshot.objects.create(app=self.app, url='test-url',
-                                                          language_code=self.app.language_code)
+                                                          language_code='en-us')
 
     def test_list_app_translation(self):
         # Request repo app list page and ensure all localized descriptions are shown
@@ -59,7 +62,7 @@ class RemoteRepositoryViewTest(RmTestCase):
         self.assertTrue(isinstance(response, django.http.JsonResponse))
         json = '[' \
                '{ "categories": [], "description": "Test Description", "repo_id": 1,' \
-               '  "lang": "en", "id": 1, "summary": "Test Summary",' \
+               '  "lang": "en-us", "id": 1, "summary": "Test Summary",' \
                '  "icon": "/static/repomaker/images/default-app-icon.png", "added": false,' \
                '  "name": "App"},' \
                '{ "categories": [], "description": "Test Beschreibung", "repo_id": 1,' \
@@ -119,7 +122,7 @@ class RemoteRepositoryViewTest(RmTestCase):
     def test_remote_app_details(self):
         # request remote app detail page
         kwargs = {'repo_id': self.repo.id, 'remote_repo_id': self.remote_repo.id,
-                  'app_id': self.app.id, 'lang': self.app.language_code}
+                  'app_id': self.app.id, 'lang': 'en-us'}
         response = self.client.get(reverse('add_remote_app', kwargs=kwargs))
 
         # assert that localized metadata is shown on the page
@@ -132,7 +135,7 @@ class RemoteRepositoryViewTest(RmTestCase):
     def test_remote_app_details_screenshot(self):
         # request remote app detail page
         kwargs = {'repo_id': self.repo.id, 'remote_repo_id': self.remote_repo.id,
-                  'app_id': self.app.id, 'lang': self.app.language_code}
+                  'app_id': self.app.id, 'lang': 'en-us'}
         response = self.client.get(reverse('add_remote_app_screenshots', kwargs=kwargs))
 
         # assert that localized metadata is shown on the page
@@ -155,11 +158,11 @@ class RemoteRepositoryViewTest(RmTestCase):
 
         # request remote app detail page
         kwargs = {'repo_id': self.repo.id, 'remote_repo_id': self.remote_repo.id,
-                  'app_id': self.app.id, 'lang': self.app.language_code}
+                  'app_id': self.app.id, 'lang': 'de'}
         response = self.client.get(reverse('add_remote_app', kwargs=kwargs))
 
         # assert that link to both languages is shown on the page
-        kwargs['lang'] = 'en'
+        kwargs['lang'] = 'en-us'
         self.assertContains(response, 'href="' + reverse('add_remote_app', kwargs=kwargs))
         kwargs['lang'] = 'de'
         self.assertContains(response, 'href="' + reverse('add_remote_app', kwargs=kwargs))
@@ -178,7 +181,7 @@ class RemoteRepositoryViewTest(RmTestCase):
 
         # request remote app detail page
         kwargs = {'repo_id': self.repo.id, 'remote_repo_id': self.remote_repo.id,
-                  'app_id': self.app.id, 'lang': self.app.language_code}
+                  'app_id': self.app.id, 'lang': 'en-us'}
         response = self.client.post(reverse('add_remote_app', kwargs=kwargs))
 
         # ensure that app was added and we are redirected to proper page

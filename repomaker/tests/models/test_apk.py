@@ -87,7 +87,7 @@ class ApkTestCase(RmTestCase):
 
         # download file and assert there was a GET request for the URL
         self.apk.download('url/download.apk')
-        get.assert_called_once_with('url/download.apk')
+        get.assert_called_once_with('url/download.apk', timeout=60)
 
         # assert that downloaded file has been saved
         self.assertEqual(get_apk_file_path(self.apk, 'download.apk'), self.apk.file.name)
@@ -194,7 +194,7 @@ class ApkTestCase(RmTestCase):
 
         # download file and assert there was a GET request for the URL
         self.apk.download('url/test.mp4')
-        get.assert_called_once_with('url/test.mp4')
+        get.assert_called_once_with('url/test.mp4', timeout=60)
 
         # assert that downloaded file has been saved
         self.assertEqual(get_apk_file_path(self.apk, 'test.mp4'), self.apk.file.name)
@@ -225,12 +225,6 @@ class ApkTestCase(RmTestCase):
         self.assertTrue(datetime_is_recent(apk.added_date))
         self.assertFalse(apk.is_downloading)
 
-    def test_initialize_rejects_md5_apk(self):
-        with open(os.path.join(settings.TEST_FILES_DIR, 'test_md5_signature.apk'), 'rb') as f:
-            self.apk.file.save('test_md5_signature.apk', f, save=True)
-        with self.assertRaises(ValidationError):
-            self.apk.initialize()
-
     def test_initialize_rejects_invalid_apk(self):
         # overwrite APK file with rubbish
         self.apk.file.delete()
@@ -238,7 +232,7 @@ class ApkTestCase(RmTestCase):
         with self.assertRaises(ValidationError):
             self.apk.initialize()
 
-    @patch('fdroidserver.update.scan_apk')
+    @patch('fdroidserver.scan_apk')
     def test_initialize_rejects_invalid_apk_scan(self, scan_apk):
         scan_apk.side_effect = BuildException
         with self.assertRaises(ValidationError):

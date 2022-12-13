@@ -1,5 +1,5 @@
 from django.contrib import admin
-from hvad.admin import TranslatableAdmin
+from modeltranslation.admin import TranslationAdmin
 
 from .models import Repository, RemoteRepository, App, RemoteApp, Apk, ApkPointer, \
     RemoteApkPointer, Category, Screenshot, RemoteScreenshot
@@ -7,8 +7,8 @@ from .models.storage import StorageManager
 
 admin.site.register(Repository)
 admin.site.register(RemoteRepository)
-admin.site.register(App, TranslatableAdmin)  # hides untranslated apps which should not exist
-admin.site.register(RemoteApp, TranslatableAdmin)  # hides untranslated apps which should not exist
+admin.site.register(App, TranslationAdmin)  # hides untranslated apps which should not exist
+admin.site.register(RemoteApp, TranslationAdmin)  # hides untranslated apps which should not exist
 admin.site.register(Apk)
 admin.site.register(ApkPointer)
 admin.site.register(RemoteApkPointer)

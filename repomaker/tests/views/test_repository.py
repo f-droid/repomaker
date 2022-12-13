@@ -49,7 +49,7 @@ class RepositoryTestCase(RmTestCase):
         self.assertContains(response, 'New Repo', 2)
 
         # fake keystore creation to speed up test
-        genkeystore.return_value = 'TestPubKey', 'TestFingerprint'
+        genkeystore.return_value = b'TestPubKey', 'TestFingerprint'
 
         # post data for a new repository to be created
         query = {'name': 'TestRepo', 'description': 'TestDescription'}
@@ -71,7 +71,7 @@ class RepositoryTestCase(RmTestCase):
     @override_settings(DEFAULT_REPO_STORAGE=[('repos', 'test')])
     def test_create_with_default_storage(self, _copy_page_assets, genkeystore):
         # fake keystore creation to speed up test
-        genkeystore.return_value = 'TestPubKey', 'TestFingerprint'
+        genkeystore.return_value = b'TestPubKey', 'TestFingerprint'
 
         # post data for a new repository to be created
         query = {'name': 'TestRepo', 'description': 'TestDescription'}

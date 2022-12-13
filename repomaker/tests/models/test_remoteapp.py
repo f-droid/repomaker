@@ -6,7 +6,9 @@ import os
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.utils import translation
 
+from repomaker import DEFAULT_USER_NAME
 from repomaker.models import Repository, RemoteRepository, App, RemoteApp, Apk, ApkPointer, \
     RemoteApkPointer, RemoteScreenshot
 from repomaker.models.screenshot import PHONE
@@ -18,13 +20,24 @@ from .. import datetime_is_recent, RmTestCase
 class RemoteAppTestCase(RmTestCase):
     repo = None
     app = None
+    local_repo = None
 
     def setUp(self):
+        if not settings.SINGLE_USER_MODE:
+            self.user = User.objects.create(username=DEFAULT_USER_NAME)
+            self.client.force_login(user=self.user)
+        else:
+            self.user = User.objects.get()
+
         date = datetime.fromtimestamp(1337, timezone.utc)
         self.repo = RemoteRepository.objects.create(name='Test', url='http://repo_url',
                                                     last_change_date=date)
         self.app = RemoteApp.objects.create(repo=self.repo, package_id="org.example",
                                             last_updated_date=date)
+        self.local_repo = Repository.objects.create(name='Test Local',
+                                                    url='http://repo_local',
+                                                    fingerprint="local_fp",
+                                                    user=self.user)
 
     def test_update_from_json_only_when_update(self):
         json = {'name': 'app', 'lastUpdated': 10000}
@@ -86,7 +99,8 @@ class RemoteAppTestCase(RmTestCase):
         self.assertTrue(os.path.isfile(old_icon_path))
 
         # create one local app tracking the remote one
-        App.objects.create(repo_id=1, package_id=self.app.package_id, tracked_remote=self.app)
+        App.objects.create(repo_id=self.local_repo.pk, package_id=self.app.package_id,
+                           tracked_remote=self.app)
 
         # update icon
         http_get.return_value = b'icon-data', 'new_etag'
@@ -114,61 +128,66 @@ class RemoteAppTestCase(RmTestCase):
         self.app._update_translations(localized)  # pylint: disable=protected-access
 
         # assert that translation has been saved
-        app = RemoteApp.objects.language('en').get(pk=self.app.pk)
-        self.assertEqual(localized['en']['summary'], app.summary)
-        self.assertEqual(localized['en']['description'], app.description)
+        with translation.override('en'):
+            app = RemoteApp.objects.get(pk=self.app.pk)
+            self.assertEqual(localized['en']['summary'], app.summary)
+            self.assertEqual(localized['en']['description'], app.description)
 
     def test_update_translations_existing(self):
         # add a new translation
         self.test_update_translations_new()
-        self.assertTrue(RemoteApp.objects.language('en').exists())
+        self.assertTrue('en' in self.app.get_available_languages())
+        # self.assertTrue(RemoteApp.objects.language('en').exists())
 
         # update existing translation
         localized = {'en': {'summary': 'newfoo', 'description': 'newbar', 'video': 'bla'}}
         self.app._update_translations(localized)  # pylint: disable=protected-access
 
         # assert that translation has been updated
-        app = RemoteApp.objects.language('en').get(pk=self.app.pk)
-        self.assertEqual(localized['en']['summary'], app.summary)
-        self.assertEqual(localized['en']['description'], app.description)
+        with translation.override('en'):
+            self.assertEqual(localized['en']['summary'], self.app.summary)
+            self.assertEqual(localized['en']['description'], self.app.description)
 
     def test_update_translations_lowercase_language_code(self):
         # update remote app translation with a new one
         localized = {'en-US': {'summary': 'foo', 'description': 'bar', 'featureGraphic': 'test'}}
         self.app._update_translations(localized)  # pylint: disable=protected-access
 
-        # assert that translation has been saved with an all lower-case language code
-        app = RemoteApp.objects.language('en-us').get(pk=self.app.pk)
-        self.assertEqual(localized['en-US']['summary'], app.summary)
-        self.assertEqual(localized['en-US']['description'], app.description)
+        with translation.override('en'):
+            # assert that translation has been saved with an all lower-case language code
+            self.assertEqual(localized['en-US']['summary'], self.app.summary)
+            self.assertEqual(localized['en-US']['description'], self.app.description)
 
-        # assert that language_code in URL was not changed
-        self.assertEqual('http://repo_url/org.example/en-US/test', app.feature_graphic_url)
+            # assert that language_code in URL was not changed
+            self.assertEqual('http://repo_url/org.example/en-US/test', self.app.feature_graphic_url)
 
     def test_apply_translation(self):
         # apply new translation
-        translation = {'summary': 'test1', 'description': 'test2', 'featureGraphic': 'feature.png',
-                       'icon': 'icon.png', 'tvBanner': 'tv.png'}
+        new_translation = {'summary': 'test1', 'description': 'test2',
+                           'featureGraphic': 'feature.png', 'icon': 'icon.png',
+                           'tvBanner': 'tv.png'}
         self.app.translate('de')
-        self.app.apply_translation('de', translation)
+        with translation.override('de'):
+            self.app.apply_translation('de', new_translation)
 
-        # assert that translation has been saved
-        app = RemoteApp.objects.language('de').get(pk=self.app.pk)
-        self.assertEqual(translation['summary'], app.summary)
-        self.assertEqual(translation['description'], app.description)
-        self.assertEqual('http://repo_url/org.example/de/feature.png', app.feature_graphic_url)
-        self.assertEqual('http://repo_url/org.example/de/icon.png', app.high_res_icon_url)
-        self.assertEqual('http://repo_url/org.example/de/tv.png', app.tv_banner_url)
+            # assert that translation has been saved
+            self.assertEqual(new_translation['summary'], self.app.summary)
+            self.assertEqual(new_translation['description'], self.app.description)
+            self.assertEqual('http://repo_url/org.example/de/feature.png',
+                             self.app.feature_graphic_url)
+            self.assertEqual('http://repo_url/org.example/de/icon.png', self.app.high_res_icon_url)
+            self.assertEqual('http://repo_url/org.example/de/tv.png', self.app.tv_banner_url)
 
     def test_apply_translation_sanitation(self):
         # apply new translation
-        translation = {'summary': 'foo', 'description': 'test2<script>'}
+        de_translation = {'summary': 'foo', 'description': 'test2<script>'}
         self.app.translate('de')
-        self.app.apply_translation('de', translation)
+        with translation.override('de'):
+            self.app.apply_translation('de', de_translation)
 
-        # assert that translation has no <script> tag
-        self.assertEqual(translation['summary'], self.app.summary)
-        self.assertEqual('test2', self.app.description)
+            # assert that translation has no <script> tag
+            self.assertEqual(de_translation['summary'], self.app.summary)
+            self.assertEqual('test2', self.app.description)
 
     def test_update_screenshots(self):
         self.assertEqual(0, RemoteScreenshot.objects.all().count())

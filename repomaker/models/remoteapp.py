@@ -7,10 +7,9 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
-from django.utils import timezone
+from django.utils import timezone, translation
 from django.utils.translation import ugettext_lazy as _
 from fdroidserver import net
-from hvad.models import TranslatedFields
 
 from repomaker import tasks
 from repomaker.tasks import PRIORITY_REMOTE_APP_ICON
@@ -24,14 +23,13 @@ class RemoteApp(AbstractApp):
     repo = models.ForeignKey(RemoteRepository, on_delete=models.CASCADE)
     icon_etag = models.CharField(max_length=128, blank=True, null=True)
     last_updated_date = models.DateTimeField(blank=True)
-    translations = TranslatedFields(
-        feature_graphic_url=models.URLField(blank=True, max_length=2048),
-        feature_graphic_etag=models.CharField(max_length=128, blank=True, null=True),
-        high_res_icon_url=models.URLField(blank=True, max_length=2048),
-        high_res_icon_etag=models.CharField(max_length=128, blank=True, null=True),
-        tv_banner_url=models.URLField(blank=True, max_length=2048),
-        tv_banner_etag=models.CharField(max_length=128, blank=True, null=True),
-    )
+    # Translated fields
+    feature_graphic_url = models.URLField(blank=True, max_length=2048)
+    feature_graphic_etag = models.CharField(max_length=128, blank=True, null=True)
+    high_res_icon_url = models.URLField(blank=True, max_length=2048)
+    high_res_icon_etag = models.CharField(max_length=128, blank=True, null=True)
+    tv_banner_url = models.URLField(blank=True, max_length=2048)
+    tv_banner_etag = models.CharField(max_length=128, blank=True, null=True)
 
     def update_from_json(self, app):
         """
@@ -139,37 +137,34 @@ class RemoteApp(AbstractApp):
         # TODO also support 'name, 'whatsNew' and 'video'
         supported_fields = ['summary', 'description', 'featureGraphic', 'icon', 'tvBanner']
         available_languages = self.get_available_languages()
-        for original_language_code, translation in localized.items():
-            if set(supported_fields).isdisjoint(translation.keys()):
+        for original_language_code, app_translation in localized.items():
+            if set(supported_fields).isdisjoint(app_translation.keys()):
                 continue  # no supported fields in translation
             # store language code in lower-case, because in Django they are all lower-case as well
             language_code = original_language_code.lower()
             # TODO not only add, but also remove old translations again
-            if language_code in available_languages:
-                # we need to retrieve the existing translation
-                app = RemoteApp.objects.language(language_code).get(pk=self.pk)
-                app.apply_translation(original_language_code, translation)
-            else:
-                # create a new translation
+            if language_code not in available_languages:
                 self.translate(language_code)
-                self.apply_translation(original_language_code, translation)
+
+            with translation.override(language_code):
+                self.apply_translation(original_language_code, app_translation)
 
     # pylint: disable=attribute-defined-outside-init
     # noinspection PyAttributeOutsideInit
-    def apply_translation(self, original_language_code, translation):
+    def apply_translation(self, original_language_code, new_translation):
         # textual metadata
-        if 'summary' in translation:
-            self.summary = translation['summary']
-        if 'description' in translation:
-            self.description = clean(translation['description'])
+        if 'summary' in new_translation:
+            self.summary = new_translation['summary']
+        if 'description' in new_translation:
+            self.description = clean(new_translation['description'])
         # graphic assets
         url = self._get_base_url(original_language_code)
-        if 'featureGraphic' in translation:
-            self.feature_graphic_url = url + translation['featureGraphic']
-        if 'icon' in translation:
-            self.high_res_icon_url = url + translation['icon']
-        if 'tvBanner' in translation:
-            self.tv_banner_url = url + translation['tvBanner']
+        if 'featureGraphic' in new_translation:
+            self.feature_graphic_url = url + new_translation['featureGraphic']
+        if 'icon' in new_translation:
+            self.high_res_icon_url = url + new_translation['icon']
+        if 'tvBanner' in new_translation:
+            self.tv_banner_url = url + new_translation['tvBanner']
         self.save()
 
     def _update_screenshots(self, localized):

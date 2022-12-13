@@ -1,6 +1,6 @@
-pep8
+pycodestyle
 coverage
-pylint<2.7
-pylint-django<2.4
+pylint
+pylint-django
 lxml
 cssselect

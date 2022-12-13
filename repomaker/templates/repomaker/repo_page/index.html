@@ -56,7 +56,7 @@
 				<h3>{{ repo.name }}</h3>
 				<p>{{ repo.description }}</p>
 			</div>
-			{% for app in repo.app_set.language.fallbacks.all %}
+			{% for app in repo.app_set.all %}
 			{% include "repomaker/widgets/app.html" with repo_page=True width=6 no_hover=True %}
 			{% endfor %}
 		</section>

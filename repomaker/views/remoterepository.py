@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView
 from fdroidserver import index
+from modeltranslation.utils import get_language
 
 from repomaker.models import Repository, RemoteRepository, RemoteApp
 from repomaker.models.category import Category
@@ -87,7 +88,7 @@ class AppRemoteAddView(RepositoryAuthorizationMixin, AppScrollListView):
     template_name = "repomaker/repo/remotes.html"
 
     def get_queryset(self):
-        qs = RemoteApp.objects.language().fallbacks().filter(repo__users__id=self.request.user.id) \
+        qs = RemoteApp.objects.filter(repo__users__id=self.request.user.id) \
             .order_by('added_date')
         if 'remote_repo_id' in self.kwargs:
             qs = qs.filter(repo__pk=self.kwargs['remote_repo_id'])
@@ -143,7 +144,7 @@ class RemoteAppImportView(RepositoryAuthorizationMixin, LanguageMixin, DetailVie
     def get_queryset(self):
         # restricting query set for security and to add language selector
         remote_repo_id = self.kwargs['remote_repo_id']
-        qs = RemoteApp.objects.language(self.get_language())
+        qs = RemoteApp.objects.all()
         return qs.filter(repo__id=remote_repo_id, repo__users__id=self.request.user.id)
 
     def get_context_data(self, **kwargs):
@@ -151,13 +152,27 @@ class RemoteAppImportView(RepositoryAuthorizationMixin, LanguageMixin, DetailVie
         context['repo'] = self.get_repo()
         context['screenshots'] = RemoteScreenshot.objects.filter(app=self.get_object(), type=PHONE,
                                                                  language_code=self.get_language())
+        context['language_code'] = self.get_language() or get_language()
         return context
+
+    def get(self, request, *args, **kwargs):
+        """
+        raise a 404 if the requested app isn't tranlated in to the requested
+        language
+        """
+        app = self.get_object()
+        self.activate_language()
+        language = get_language()
+        if language not in app.get_available_languages():
+            raise Http404('App is not translated in to the requested language')
+        return super(RemoteAppImportView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):  # pylint: disable=unused-argument
         if not self.get_queryset().exists():
             return Http404()
 
         remote_app = self.get_object()
+        self.activate_language()
         # TODO catch ValidationError and display proper error message on a page
         app = remote_app.add_to_repo(self.get_repo())
 

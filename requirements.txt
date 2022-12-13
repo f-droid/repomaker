@@ -1,16 +1,15 @@
 -r debian/requirements.txt
 apache-libcloud>=2.0.0
-bleach>=2.1.4
+bleach>=2.1.4, <5.0
 cryptography>=1.4.0
-django >=1.11.29, < 1.12
+django >=2.0, <3.0
 django-allauth
 django-compressor
-django-hvad >=1.8.0
-django-js-reverse
+django-modeltranslation >=0.15
+django-js-reverse >=0.9.0
 django-sass-processor
-fdroidserver >=1.1, < 2.0
-html5lib >=1.0.1, < 1.1
+fdroidserver >=2.0
+html5lib >= 1.1, <1.2
 libsass
 python-magic
 qrcode
-six>=1.9  # until bleach depends on html5lib>=1.0

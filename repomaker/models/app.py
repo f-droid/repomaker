@@ -7,11 +7,10 @@ from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.templatetags.static import static
 from django.urls import reverse
-from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _, get_language
+from django.utils import timezone, translation
+from django.utils.translation import ugettext_lazy as _
 from fdroidserver import metadata, net
-from hvad.models import TranslatableModel, TranslatedFields
-from hvad.utils import load_translation
+from modeltranslation.utils import get_language
 
 from repomaker.storage import get_icon_file_path_for_app, \
     get_graphic_asset_file_path
@@ -38,7 +37,7 @@ TYPE_CHOICES = (
 APP_DEFAULT_ICON = os.path.join('repomaker', 'images', 'default-app-icon.png')
 
 
-class AbstractApp(TranslatableModel):
+class AbstractApp(models.Model):
     package_id = models.CharField(max_length=255, blank=True)
     name = models.CharField(max_length=255, blank=True)
     summary_override = models.CharField(max_length=255, blank=True)
@@ -48,11 +47,15 @@ class AbstractApp(TranslatableModel):
     icon = models.ImageField(upload_to=get_icon_file_path_for_app)
     category = models.ManyToManyField(Category, blank=True, limit_choices_to={'user': None})
     added_date = models.DateTimeField(default=timezone.now)
-    translations = TranslatedFields(
-        # for historic reasons summary and description are also included non-localized in the index
-        summary=models.CharField(max_length=255, blank=True),
-        description=models.TextField(blank=True),  # always clean and then consider safe
-    )
+
+    # Translated fields
+    # for historic reasons summary and description are also included non-localized in the index
+    summary = models.CharField(max_length=255, blank=True)
+    description = models.TextField(blank=True)  # always clean and then consider safe
+    # hvad kept track of what translations exist, modeltranslation doesn't so we
+    # keep track in this field (max_lenght just affects admin display)
+    # we keep a comma separated list
+    available_languages = models.TextField(max_length=8, default="")
 
     def __str__(self):
         return self.name
@@ -63,23 +66,37 @@ class AbstractApp(TranslatableModel):
             return self.icon.url
         return static(APP_DEFAULT_ICON)
 
+    def translate(self, language):
+        """
+        This was a method from hvad, we're keeping track becasue modeltranslation
+        doesn't
+
+        order of the list is significant, the first item is assumed to be the
+        default language
+        """
+
+        if self.available_languages == "":
+            self.available_languages = language
+        else:
+            lang_list = self.available_languages.split(',')
+            lang_list.append(language)
+            lang_list = list(set(lang_list))  # remove duplicate values
+            self.available_languages = ','.join(lang_list)
+
     def default_translate(self):
         """Creates a new default translation"""
-        language = get_language()
-        if language is None:
-            self.translate(settings.LANGUAGE_CODE)
-        else:
-            self.translate(language)
+        self.translate(get_language())
 
-    def get_translation(self, language_code=get_language()):
+    def get_available_languages(self):
         """
-        Returns a translation of this instance for the given language_code
+        This method was originally provided by django-hvad
 
-        A valid translation instance is always returned.
-        It will be loaded from the database as required.
-        If this fails, a new, empty, ready-to-use translation will be returned.
+        TODO: should we just keep track of what translations are provided
+        in a separate field?
         """
-        return load_translation(self, language_code, enforce=True)
+        if self.available_languages == '':
+            return []
+        return self.available_languages.split(',')
 
     def get_available_languages_as_dicts(self):
         """
@@ -123,28 +140,32 @@ class App(AbstractApp):
     last_updated_date = models.DateTimeField(auto_now=True)
     tracked_remote = models.ForeignKey('RemoteApp', null=True, default=None,
                                        on_delete=models.SET_NULL)
-    translations = TranslatedFields(
-        feature_graphic=models.ImageField(blank=True, max_length=1024,
-                                          upload_to=get_graphic_asset_file_path),
-        high_res_icon=models.ImageField(blank=True, max_length=1024,
-                                        upload_to=get_graphic_asset_file_path),
-        tv_banner=models.ImageField(blank=True, max_length=1024,
-                                    upload_to=get_graphic_asset_file_path),
-    )
+
+    # Translated fields
+    feature_graphic = models.ImageField(blank=True, max_length=1024,
+                                        upload_to=get_graphic_asset_file_path)
+    high_res_icon = models.ImageField(blank=True, max_length=1024,
+                                      upload_to=get_graphic_asset_file_path)
+    tv_banner = models.ImageField(blank=True, max_length=1024,
+                                  upload_to=get_graphic_asset_file_path)
 
     def get_absolute_url(self):
         kwargs = {'repo_id': self.repo.pk, 'app_id': self.pk}
-        try:
-            kwargs['lang'] = self.language_code
-        except AttributeError:
+
+        lang = get_language()
+        if lang in self.get_available_languages():
+            kwargs['lang'] = lang
+        else:
             kwargs['lang'] = self.get_available_languages()[0]
         return reverse('app', kwargs=kwargs)
 
     def get_edit_url(self):
         kwargs = {'repo_id': self.repo.pk, 'app_id': self.pk}
-        try:
-            kwargs['lang'] = self.language_code
-        except AttributeError:
+
+        lang = get_language()
+        if lang in self.get_available_languages():
+            kwargs['lang'] = lang
+        else:
             kwargs['lang'] = self.get_available_languages()[0]
         return reverse('app_edit', kwargs=kwargs)
 
@@ -174,21 +195,21 @@ class App(AbstractApp):
             language_code = to_universal_language_code(original_language_code)
             if language_code not in localized:
                 localized[language_code] = dict()
-            app = self.get_translation(original_language_code)
-            if app.summary:
-                localized[language_code]['summary'] = app.summary
-            if app.description:
-                localized[language_code]['description'] = app.description
-            if app.feature_graphic:
-                localized[language_code]['featureGraphic'] = os.path.basename(
-                    app.feature_graphic.name)
-            if app.high_res_icon:
-                localized[language_code]['icon'] = os.path.basename(app.high_res_icon.name)
-            if app.tv_banner:
-                localized[language_code]['tvBanner'] = os.path.basename(app.tv_banner.name)
-            if localized[language_code] == {}:
-                # remove empty translation
-                del localized[language_code]
+            with translation.override(original_language_code):
+                if self.summary:
+                    localized[language_code]['summary'] = self.summary
+                if self.description:
+                    localized[language_code]['description'] = self.description
+                if self.feature_graphic:
+                    localized[language_code]['featureGraphic'] = os.path.basename(
+                        self.feature_graphic.name)
+                if self.high_res_icon:
+                    localized[language_code]['icon'] = os.path.basename(self.high_res_icon.name)
+                if self.tv_banner:
+                    localized[language_code]['tvBanner'] = os.path.basename(self.tv_banner.name)
+                if localized[language_code] == {}:
+                    # remove empty translation
+                    del localized[language_code]
 
     def _get_screenshot_dict(self):
         from . import Screenshot
@@ -212,24 +233,26 @@ class App(AbstractApp):
         and ensures that at least one translation exists at the end.
         """
         from .remoteapp import RemoteApp
+        remote_app = RemoteApp.objects.get(pk=remote_app.pk)
         for language_code in remote_app.get_available_languages():
-            # get the translation for current language_code
-            remote_app = RemoteApp.objects.language(language_code).get(pk=remote_app.pk)
-            # copy the translation to this App instance
-            if language_code in self.get_available_languages():
-                app = App.objects.language(language_code).get(pk=self.pk)
-                app.summary = remote_app.summary
-                app.description = clean(remote_app.description)
-                app.save()
-            else:
+            summary_field = 'summary_{}'.format(language_code.replace('-', '_'))
+            description_field = 'description_{}'.format(language_code.replace('-', '_'))
+
+            if language_code not in self.get_available_languages():
                 self.translate(language_code)
-                self.summary = remote_app.summary
-                self.description = clean(remote_app.description)
-                self.save()
+
+            summary = getattr(remote_app, summary_field)
+            if summary:
+                setattr(self, summary_field, summary)
+            description = getattr(remote_app, description_field)
+            if description:
+                setattr(self, description_field, clean(description))
+
         # ensure that at least one translation exists
         if len(self.get_available_languages()) == 0:
             self.default_translate()
-            self.save()
+
+        self.save()
 
     def download_graphic_assets_from_remote_app(self, remote_app):
         """
@@ -240,34 +263,34 @@ class App(AbstractApp):
         from .remoteapp import RemoteApp
         for language_code in remote_app.get_available_languages():
             # get the translation for current language_code
-            app = self.get_translation(language_code)
-            remote_app = RemoteApp.objects.language(language_code).get(pk=remote_app.pk)
-            if remote_app.feature_graphic_url:
-                graphic, etag = net.http_get(remote_app.feature_graphic_url,
-                                             remote_app.feature_graphic_etag)
-                if graphic is not None:
-                    app.feature_graphic.delete()
-                    graphic_name = os.path.basename(remote_app.feature_graphic_url)
-                    app.feature_graphic.save(graphic_name, BytesIO(graphic), save=False)
-                    remote_app.feature_graphic_etag = etag
-            if remote_app.high_res_icon_url:
-                graphic, etag = net.http_get(remote_app.high_res_icon_url,
-                                             remote_app.high_res_icon_etag)
-                if graphic is not None:
-                    app.high_res_icon.delete()
-                    graphic_name = os.path.basename(remote_app.high_res_icon_url)
-                    app.high_res_icon.save(graphic_name, BytesIO(graphic), save=False)
-                    remote_app.high_res_icon_etag = etag
-            if remote_app.tv_banner_url:
-                graphic, etag = net.http_get(remote_app.tv_banner_url,
-                                             remote_app.tv_banner_etag)
-                if graphic is not None:
-                    app.tv_banner.delete()
-                    graphic_name = os.path.basename(remote_app.tv_banner_url)
-                    app.tv_banner.save(graphic_name, BytesIO(graphic), save=False)
-                    remote_app.tv_banner_etag = etag
-            app.save()
-            remote_app.save()
+            with translation.override(language_code):
+                remote_app = RemoteApp.objects.get(pk=remote_app.pk)
+                if remote_app.feature_graphic_url:
+                    graphic, etag = net.http_get(remote_app.feature_graphic_url,
+                                                 remote_app.feature_graphic_etag)
+                    if graphic is not None:
+                        self.feature_graphic.delete()
+                        graphic_name = os.path.basename(remote_app.feature_graphic_url)
+                        self.feature_graphic.save(graphic_name, BytesIO(graphic), save=False)
+                        remote_app.feature_graphic_etag = etag
+                if remote_app.high_res_icon_url:
+                    graphic, etag = net.http_get(remote_app.high_res_icon_url,
+                                                 remote_app.high_res_icon_etag)
+                    if graphic is not None:
+                        self.high_res_icon.delete()
+                        graphic_name = os.path.basename(remote_app.high_res_icon_url)
+                        self.high_res_icon.save(graphic_name, BytesIO(graphic), save=False)
+                        remote_app.high_res_icon_etag = etag
+                if remote_app.tv_banner_url:
+                    graphic, etag = net.http_get(remote_app.tv_banner_url,
+                                                 remote_app.tv_banner_etag)
+                    if graphic is not None:
+                        self.tv_banner.delete()
+                        graphic_name = os.path.basename(remote_app.tv_banner_url)
+                        self.tv_banner.save(graphic_name, BytesIO(graphic), save=False)
+                        remote_app.tv_banner_etag = etag
+                self.save()
+                remote_app.save()
 
     # noinspection PyTypeChecker
     def update_from_tracked_remote_app(self, remote_apk_pointer):
@@ -286,7 +309,7 @@ class App(AbstractApp):
 
         if not self.pk:
             self.save()  # save before adding categories, so pk exists
-        self.category = self.tracked_remote.category.all()
+        self.category.set(self.tracked_remote.category.all())
 
         self.copy_translations_from_remote_app(self.tracked_remote)
 

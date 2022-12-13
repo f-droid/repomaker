@@ -1,4 +1,5 @@
 import base64
+import fdroidserver
 import hashlib
 import hmac
 import logging
@@ -12,12 +13,12 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.files.base import ContentFile
-from django.core.validators import RegexValidator, ValidationError, slug_re, force_text
+from django.core.validators import RegexValidator, ValidationError, slug_re
 from django.db import models
 from django.urls import reverse_lazy
 from django.utils.deconstruct import deconstructible
+from django.utils.encoding import force_str
 from django.utils.translation import ugettext_lazy as _
-from fdroidserver import server
 from libcloud.storage.types import Provider
 
 from repomaker.storage import get_identity_file_path, PrivateStorage, REPO_DIR
@@ -92,7 +93,7 @@ class S3Storage(AbstractStorage):
         config['awsbucket'] = self.bucket
         config['awsaccesskeyid'] = self.accesskeyid
         config['awssecretkey'] = self.secretkey
-        server.update_awsbucket(REPO_DIR)
+        fdroidserver.update_awsbucket(REPO_DIR)
 
 
 @deconstructible
@@ -125,7 +126,7 @@ class HostnameValidator(RegexValidator):
     message = _('Enter a valid hostname.')
 
     def __call__(self, value):
-        value = force_text(value)
+        value = force_str(value)
         # The maximum length of a full host name is 253 characters per RFC 1034
         # section 3.1. It's defined to be 255 bytes or less, but this includes
         # one byte for the length of the name and one byte for the trailing dot
@@ -227,7 +228,7 @@ class SshStorage(AbstractSshStorage):
         super(SshStorage, self).publish()
         local = self.repo.get_repo_path()
         remote = self.get_remote_url()
-        server.update_serverwebroot(remote, local)
+        fdroidserver.update_serverwebroot(remote, local)
 
 
 class GitStorage(AbstractSshStorage):
@@ -252,7 +253,7 @@ class GitStorage(AbstractSshStorage):
     def publish(self):
         super(GitStorage, self).publish()
         remote = [self.get_remote_url()]  # a list is expected
-        server.update_servergitmirrors(remote, REPO_DIR)
+        fdroidserver.update_servergitmirrors(remote, REPO_DIR)
 
 
 class StorageManager:
@@ -347,4 +348,4 @@ class DefaultStorage:
         remote = os.path.join(self.path, self.get_identifier())
         if not os.path.exists(remote):
             os.makedirs(remote)
-        server.update_serverwebroot(remote, local)
+        fdroidserver.update_serverwebroot(remote, local)

@@ -142,7 +142,7 @@ class RepositoryView(ApkUploadMixin, AppScrollListView):
     template_name = 'repomaker/repo/index.html'
 
     def get_queryset(self):
-        qs = App.objects.language().fallbacks().filter(repo=self.get_repo()).order_by('added_date')
+        qs = App.objects.filter(repo=self.get_repo()).order_by('added_date')
         if 'search' in self.request.GET:
             query = self.request.GET['search']
             # TODO do a better weighted search query that takes description into account

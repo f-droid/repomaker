@@ -1,3 +1,5 @@
+import fdroidserver
+import hashlib
 import logging
 import os
 import zipfile
@@ -12,7 +14,6 @@ from django.db.models.signals import post_delete, pre_delete
 from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from fdroidserver import common, exception, update
 
 from repomaker import tasks
 from repomaker.models.repository import AbstractRepository
@@ -55,7 +56,7 @@ class Apk(models.Model):
 
         # download and store file
         file_name = url.rsplit('/', 1)[-1]
-        r = requests.get(url)
+        r = requests.get(url, timeout=60)
         if r.status_code != requests.codes.ok:
             # TODO delete self and ApkPointer when this fails permanently
             r.raise_for_status()
@@ -95,7 +96,7 @@ class Apk(models.Model):
         if ext == '.apk':
             try:
                 repo_file = self._get_info_from_apk()
-            except exception.BuildException as e:
+            except fdroidserver.exception.BuildException as e:
                 raise ValidationError(e)
             except zipfile.BadZipFile as e:
                 raise ValidationError(e)
@@ -143,14 +144,14 @@ class Apk(models.Model):
         AbstractRepository().get_config()
 
         # Verify that the signature is correct
-        if not common.verify_apk_signature(self.file.path):
+        if not fdroidserver.verify_apk_signature(self.file.path):
             raise ValidationError(_('Invalid APK signature'))
 
         # scan APK and extract information about it
         try:
-            repo_file = update.scan_apk(self.file.path)
+            repo_file = fdroidserver.scan_apk(self.file.path)
             repo_file['type'] = APK
-        except exception.BuildException as e:
+        except fdroidserver.exception.BuildException as e:
             raise ValidationError(e)
 
         if 'packageName' not in repo_file:
@@ -161,13 +162,13 @@ class Apk(models.Model):
     def _get_info_from_file(self):
         repo_file = {
             'sig': None,
-            'hash': update.sha256sum(self.file.path),
+            'hash': sha256sum(self.file.path),
             'hashType': 'sha256',
             'size': self.file.size,
             'type': self._get_type()
         }
         file_name = os.path.basename(self.file.name)
-        match = common.STANDARD_FILE_NAME_REGEX.match(file_name)
+        match = fdroidserver.common.STANDARD_FILE_NAME_REGEX.match(file_name)
         if match:
             repo_file['packageName'] = match.group(1)
             repo_file['versionName'] = match.group(2)
@@ -248,3 +249,15 @@ def apk_post_delete_handler(**kwargs):
     if apk.file:
         logging.info("Deleting APK: %s", apk.file.name)
         apk.file.delete(save=False)
+
+
+def sha256sum(filename):
+    """Calculate the sha256 of the given file."""
+    sha = hashlib.sha256()
+    with open(filename, 'rb') as f:
+        while True:
+            t = f.read(16384)
+            if len(t) == 0:
+                break
+            sha.update(t)
+    return sha.hexdigest()
